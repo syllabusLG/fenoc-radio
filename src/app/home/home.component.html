@@ -1,0 +1,10 @@
+<div class="row body">
+  <div class="col-lg-2" *ngIf="showHideSideBar">
+    <app-sidebare></app-sidebare>
+  </div>
+  <div class="col-lg-10">
+    <app-navebar [showSideBar]="showHideSideBar"
+                 (showSideBarChange)="onShowSideBarChange($event)"></app-navebar>
+    <app-content></app-content>
+  </div>
+</div>
