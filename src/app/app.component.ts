@@ -16,7 +16,7 @@ export class AppComponent implements OnInit{
     if(!this.appService.authenticated){
       this.router.navigateByUrl('/login')
     }else{
-      this.router.navigateByUrl('home/(contentOutlet:upload)')
+      this.router.navigateByUrl('home/(contentOutlet:file)')
     }
   }
 }

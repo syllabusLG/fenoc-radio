@@ -1,0 +1,126 @@
+<div class="custom-file">
+  <input type="file"  id="customFile" #fileUploadInput (change)="selectFile($event)" accept=".csv">
+  <label class="custom-file-label" for="customFile">{{fileName ? fileName : 'Choisissez un fichier!'}}</label>
+</div>
+<div class="checkout-wrap">
+  <ul class="checkout-bar">
+    <li [ngClass]="{active: currentStep == 1, visited: currentStep>1}" (click)="selectedStep=1;">Importer un fichier</li>
+    <li [ngClass]="{active: currentStep == 2, visited: currentStep>2}" (click)="selectedStep=2;">Envoyer</li>
+    <li [ngClass]="{active: currentStep == 3, visited: currentStep>3}" (click)="selectedStep=3;">Récupérer les données</li>
+  </ul>
+</div>
+<div [ngSwitch]="selectedStep">
+  <div *ngSwitchCase="1">
+    <div *ngIf="!company_cd_required">
+      <p class=" badge-danger ">Le code de l'entreprise de la ligne {{company_cd_required_line}} n'est pas renseigné !</p>
+    </div>
+    <div *ngIf="!company_cd_unique && company_cd_required">
+      <p class=" badge-danger ">Votre fichier doit être mono-entreprise. Il comporte plusieurs codes entreprises !</p>
+    </div>
+    <div *ngIf="!numIdentityUniqueRequired">
+      <p class=" badge-danger ">Le numéro unique d'identification de la ligne {{numIdentityUniqueRequiredLine}} n'est pas renseigné !</p>
+    </div>
+    <div *ngIf="!employee_id_required">
+      <p class=" badge-danger ">Le matricule du salarié de la ligne {{employee_id_required_line}} n'est pas renseigné !</p>
+    </div>
+    <div *ngIf="!employeeIdWellFormatted && employee_id_required && company_cd_required && numIdentityUniqueRequired && company_cd_unique">
+      <p class=" badge-danger ">Le matricule du salarié de la ligne {{employeeIdWellFormattedLine}} est mal renseigné il doit être composé du numéro d'identification et du code entreprise !</p>
+    </div>
+    <div *ngIf="!noEmployeeDuplicated">
+      <p class=" badge-danger ">L'employée {{duplicateFirstName}} {{duplicateLastName}} est dupliqué car son numéro d'identification et son matricule salarié apparaissent plusieurs fois dans le fichier!</p>
+    </div>
+    <div *ngIf="!civilityRequired">
+      <p class="badge-warning">La civilité de l'affilié de la ligne {{civilityRequiredLine}} n'est pas renseignée si vous continuez cette ligne sera ignorée !</p>
+    </div>
+    <div *ngIf="!civilityFalseValue && civilityRequired">
+      <p class="badge-warning">Le code de la civilité de la ligne {{civilityRequiredLine}} est invalide. il doit être égale à 1, 2, 3  si vous continuez cette ligne sera ignorée !</p>
+    </div>
+    <div *ngIf="!lastNameGiven">
+      <p class="badge-warning">Le nom de l'affilié de la ligne {{lastNameGivenline}} n'est pas renseigné si vous continuez cette ligne sera ignorée !</p>
+    </div>
+    <div *ngIf="!firstNameGiven">
+      <p class="badge-warning">Le prénom de l'affilié de la ligne {{firstNameGivenline}} n'est pas renseigné si vous continuez cette ligne sera ignorée !</p>
+    </div>
+    <div *ngIf="!personalEmailValid">
+      <p class="badge-warning">le format du mail personnel de la ligne {{personalEmailValidLine}} est invalide si vous continuez cette ligne sera ignorée !</p>
+    </div>
+    <div *ngIf="!businessEmailValid">
+      <p class="badge-warning">le format du mail professionel de la ligne {{businessEmailValidLine}} est invalide si vous continuez cette ligne sera ignorée !</p>
+    </div>
+    <div *ngIf="!birthDateGiven">
+      <p class="badge-warning">La date de naissance de l'affilié à la ligne {{birthDateValidLine}} n'est pas renseigné si vous continuez cette ligne sera ignorée !</p>
+    </div>
+    <div *ngIf="!birthDateValid">
+      <p class="badge-warning">La date de naissance de l'affilié à la ligne {{birthDateValidLine}} est invalide. Le format doit être DD/MM/YYYY si vous continuez cette ligne sera ignorée !</p>
+    </div>
+    <div *ngIf="!statusGiven">
+      <p class="badge-warning">Le statut de l'affilié de la ligne {{statusGivenLine}} n'est pas renseignée si vous continuez cette ligne sera ignorée !</p>
+    </div>
+    <div *ngIf="!statusValid">
+      <p class="badge-warning">Le statut de l'affilié de la ligne {{statusGivenLine}} du fichier est invalide. Il doit être égale à A ou D si vous continuez cette ligne sera ignorée !</p>
+    </div>
+    <div *ngIf="!vipGiven">
+      <p class="badge-warning">Le champ VIP de l'affilié de la ligne {{vipGivenLine}} n'est pas renseignée si vous continuez cette ligne sera ignorée !</p>
+    </div>
+    <div *ngIf="!vipValid">
+      <p class="badge-warning">Le champ VIP de l'affilié de la ligne {{vipGivenLine}} du fichier est invalide. Il doit être égale à Y ou N si vous continuez cette ligne sera ignorée !</p>
+    </div>
+    <div *ngIf="!sensitiveGiven">
+      <p class="badge-warning">Le champ SENSITIVE de l'affilié de la ligne {{sensitiveGivenLine}} n'est pas renseignée si vous continuez cette ligne sera ignorée !</p>
+    </div>
+    <div *ngIf="!sensitiveValid">
+      <p class="badge-warning">Le champ SENSITIVE de l'affilié de la ligne {{sensitiveGivenLine}} du fichier est invalide. Il doit être égale à Y ou N si vous continuez cette ligne sera ignorée !</p>
+    </div>
+    <div *ngIf="!dateEndSensitiveValid">
+      <p class="badge-warning">Le format de la date de fin de sensibilité de la ligne {{dateEndSensitiveValidLine}} est invalide. Le format doit être DD/MM/YYYY si vous continuez cette ligne sera ignorée !</p>
+    </div>
+    <div *ngIf="!conformFlagSensitive">
+      <p class="badge-warning">La date de fin de sensibilité est renseignée à la ligne {{conformFlagSensitiveLine}} alors le flag sensitive doit être renseigneé à Y. Si vous continuez cette ligne sera ignorée !</p>
+    </div>
+    <div *ngIf="dataArray; else emptyData">
+      <table class="table table-hover">
+        <thead>
+        <tr>
+          <th *ngFor="let dataModel of dataModelListFiltred">{{dataModel.columnReference}}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of dataArray">
+          <td *ngFor="let dataModel of dataModelListFiltred">{{item[dataModel.columnName]}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="!dataArray">
+      <p>Aucune donnée importée.</p>
+    </div>
+  </div>
+  <div *ngSwitchCase="2">
+    <div *ngIf="!dataSentToServer && company_cd_required">
+      <p>Cliquez pour envoyer les données au serveur !</p>
+      <button class="btn btn-default" (click)="sendDataToServer()">Send</button>
+    </div>
+    <div *ngIf="dataSentToServer">
+      <p>L'envoie est terminé.</p>
+    </div>
+  </div>
+  <div *ngSwitchCase="3">
+    <div *ngIf="dataFromServer">
+      <table class="table table-hover">
+        <thead>
+        <tr>
+          <th *ngFor="let dataModel of dataModelList">{{dataModel.columnReference}}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of dataFromServer">
+          <td *ngFor="let dataModel of dataModelList">{{item[dataModel.columnName]}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="!dataFromServer">
+      <p>Aucune donnée récupérée.</p>
+    </div>
+  </div>
+</div>

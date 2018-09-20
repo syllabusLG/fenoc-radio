@@ -1,13 +1,19 @@
 <nav class="hidden-xs-down bg-faded sidebar">
   <ul class="nav nav-pills flex-column">
     <li class="nav-item">
-    <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'upload'}}]" routerLinkActive="active">Home</a>
-  </li>
-    <li class="nav-item">
-      <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'dashboard'}}]" routerLinkActive="active">Dashboard</a>
+      <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'file'}}]"
+                          routerLinkActive="active"
+                          *ngIf="hasRoleUser()">Home</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link">Utilisateurs</a>
+      <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'dashboard'}}]"
+                          routerLinkActive="active"
+                          *ngIf="hasRoleUser()">Dashboard</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'user'}}]"
+                          routerLinkActive="active"
+                          *ngIf="hasRoleAdmin()">Utilisateurs</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" href="#">Export</a>

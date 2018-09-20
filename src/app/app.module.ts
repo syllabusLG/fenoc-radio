@@ -12,10 +12,18 @@ import {AppRoutingModule} from './app.routing.module';
 import { HomeComponent } from './home/home.component';
 import {AppService} from './app.service';
 import {ReactiveFormsModule} from '@angular/forms';
-import { UploadComponent } from './upload/upload.component';
+import { UploadComponent } from './shared/crud/upload/upload.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {XhrInterceptor} from './xhr.interceptor';
 import {CookieService} from 'ngx-cookie-service';
+import { UserComponent } from './user/user.component';
+import {StoreModule} from '@ngrx/store';
+import {principalReducer} from './shared/principal.reducer';
+import {UserService} from './user/user.service';
+import { CrudComponent } from './shared/crud/crud.component';
+import { SampleComponent } from './shared/crud/sample/sample.component';
+import { FileComponent } from './file/file.component';
+import {FileService} from './file/file.service';
 
 
 @NgModule({
@@ -27,18 +35,25 @@ import {CookieService} from 'ngx-cookie-service';
     DashboardComponent,
     ContentComponent,
     HomeComponent,
-    UploadComponent
+    UploadComponent,
+    UserComponent,
+    CrudComponent,
+    SampleComponent,
+    FileComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    StoreModule.forRoot({principal: principalReducer})
   ],
   providers: [
     AppService,
     {provide: HTTP_INTERCEPTORS, useClass: XhrInterceptor, multi: true},
-    CookieService
+    CookieService,
+    UserService,
+    FileService
   ],
   bootstrap: [AppComponent]
 })
