@@ -1,8 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {DataModel} from '../../data.model';
 import {CrudService} from '../../crud.service';
-
-import {Pays} from '../pays.model';
+import {COUNTRY} from '../../countries.code';
 
 @Component({
   selector: 'app-upload',
@@ -13,8 +12,6 @@ export class UploadComponent implements OnInit {
 
   @ViewChild("fileUploadInput")
   fileUploadInput: any;
-
-  listPays: Pays[];
 
   @Input()
   dataModelList: DataModel[];
@@ -78,8 +75,11 @@ export class UploadComponent implements OnInit {
   businessEmailValid: boolean = true;
   businessEmailValidLine: number = 1;
 
-  codeIsoFound: boolean = true;
-  codeIsoFoundLine: number = 1;
+  codePaysFound: boolean = true;
+  codePaysFoundLine: number = 1;
+
+  listCodePays: string[] = [];
+  listLibPays: string[] = [];
 
 
   birthDateGiven: boolean = true;
@@ -96,6 +96,8 @@ export class UploadComponent implements OnInit {
   dataModelListFiltred: any;
 
   fileName: string = '';
+
+  COUNTRY = COUNTRY;
 
   constructor() { }
 
@@ -170,15 +172,6 @@ export class UploadComponent implements OnInit {
         //Gestion des contrôles du module individus
         this.controleModuleIndividu(this.dataArray);
 
-        /*for(let i = 0; i < this.listPays.length; i++){
-          console.log('-----------'+this.listPays[i].alpha2);
-        }*/
-
-        /*
-*/
-
-        console.log(this.isValidateDate('18/09/1800'));
-
         this.currentStep++;
 
       };
@@ -209,7 +202,7 @@ export class UploadComponent implements OnInit {
     this.sensitiveValid = this.isSensitiveValid(dataArray);
     this.dateEndSensitiveValid = this.isDateEndSensitiveValid(dataArray);
     this.conformFlagSensitive = this.isConformFlagSensitive(dataArray);
-    console.log('code :',this.isCodeIsoValid(dataArray));
+    this.codePaysFound = this.isCodeIsoValid(dataArray);
   }
 
   sendDataToServer(){
@@ -438,32 +431,32 @@ export class UploadComponent implements OnInit {
     }
     return true;
   }
-  /*getListPays(){
-    this.service.getAll().subscribe(
-      data =>{ list = data
-        return list;
-      },
-      error1 => {console.log('An error was occured')}
-    )
-    return list;
-  }*/
+
   isCodeIsoValid(dataArray){
-    for (let i = 0; i < dataArray.length; i++){
-      this.service.getAll().subscribe(
-        data => {
-          this.listPays = data;
-          this.listPays.forEach(pays =>{
-            if(pays.alpha2 === dataArray[i].birthCountry.toUpperCase()){
-              console.log(pays.alpha2+" "+dataArray[i].birthCountry+" "+i);
-              return true;
-            }
-            console.log(pays.alpha2+" "+dataArray[i].birthCountry+" "+i);
-          })
+    let isFound = false;
+    for (let i = 0; i < this.COUNTRY.length; i++){
+
+      for (let j = 0; j < dataArray.length; j++){
+        if (this.COUNTRY[i].code.toUpperCase() === dataArray[j].birthCountry.toUpperCase()){
+          isFound = true;
+          this.listCodePays.push(this.COUNTRY[i].code);
+          this.listLibPays.push(this.COUNTRY[i].name);
         }
-      );
+      }
+
     }
 
-    return false;
+    for (let i = 0; i < dataArray.length; i++) {
+      console.log('fichier: ',i, dataArray[i].birthCountry);
+      console.log('country: ',i, this.listCodePays[i]+' ', this.listLibPays[i]);
+      if(!this.listCodePays.includes(dataArray[i].birthCountry.toUpperCase())){
+        isFound = false;
+        this.codePaysFoundLine+=i;
+        break;
+      }
+    }
+
+    return isFound;
   }
 
 

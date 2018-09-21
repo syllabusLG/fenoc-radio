@@ -53,6 +53,9 @@
     <div *ngIf="!birthDateValid">
       <p class="badge-warning">La date de naissance de l'affilié à la ligne {{birthDateValidLine}} est invalide. Le format doit être DD/MM/YYYY si vous continuez cette ligne sera ignorée !</p>
     </div>
+    <div *ngIf="!codePaysFound">
+      <p class="badge-warning">Le code ISO du champ birthCountry de la ligne {{codePaysFoundLine}} est invalide. Si vous continuez cette ligne sera ignorée !</p>
+    </div>
     <div *ngIf="!statusGiven">
       <p class="badge-warning">Le statut de l'affilié de la ligne {{statusGivenLine}} n'est pas renseignée si vous continuez cette ligne sera ignorée !</p>
     </div>
