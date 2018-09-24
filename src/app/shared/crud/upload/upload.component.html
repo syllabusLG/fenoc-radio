@@ -12,73 +12,73 @@
 <div [ngSwitch]="selectedStep">
   <div *ngSwitchCase="1">
     <div *ngIf="!company_cd_required">
-      <p class=" badge-danger ">Le code de l'entreprise de la ligne {{company_cd_required_line}} n'est pas renseigné !</p>
+      <p class=" badge-dark ">Le code de l'entreprise de la ligne {{company_cd_required_line}} n'est pas renseigné !</p>
     </div>
     <div *ngIf="!company_cd_unique && company_cd_required">
-      <p class=" badge-danger ">Votre fichier doit être mono-entreprise. Il comporte plusieurs codes entreprises !</p>
+      <p class=" badge-dark ">Votre fichier doit être mono-entreprise. Il comporte plusieurs codes entreprises !</p>
     </div>
     <div *ngIf="!numIdentityUniqueRequired">
-      <p class=" badge-danger ">Le numéro unique d'identification de la ligne {{numIdentityUniqueRequiredLine}} n'est pas renseigné !</p>
+      <p class=" badge-dark ">Le numéro unique d'identification de la ligne {{numIdentityUniqueRequiredLine}} n'est pas renseigné !</p>
     </div>
     <div *ngIf="!employee_id_required">
-      <p class=" badge-danger ">Le matricule du salarié de la ligne {{employee_id_required_line}} n'est pas renseigné !</p>
+      <p class=" badge-dark ">Le matricule du salarié de la ligne {{employee_id_required_line}} n'est pas renseigné !</p>
     </div>
     <div *ngIf="!employeeIdWellFormatted && employee_id_required && company_cd_required && numIdentityUniqueRequired && company_cd_unique">
-      <p class=" badge-danger ">Le matricule du salarié de la ligne {{employeeIdWellFormattedLine}} est mal renseigné il doit être composé du numéro d'identification et du code entreprise !</p>
+      <p class=" badge-dark ">Le matricule du salarié de la ligne {{employeeIdWellFormattedLine}} est mal renseigné il doit être composé du numéro d'identification et du code entreprise !</p>
     </div>
     <div *ngIf="!noEmployeeDuplicated">
-      <p class=" badge-danger ">L'employée {{duplicateFirstName}} {{duplicateLastName}} est dupliqué car son numéro d'identification et son matricule salarié apparaissent plusieurs fois dans le fichier!</p>
+      <p class=" badge-dark ">L'employée {{duplicateFirstName}} {{duplicateLastName}} est dupliqué car son numéro d'identification et son matricule salarié apparaissent plusieurs fois dans le fichier!</p>
     </div>
     <div *ngIf="!civilityRequired">
-      <p class="badge-warning">La civilité de l'affilié de la ligne {{civilityRequiredLine}} n'est pas renseignée si vous continuez cette ligne sera ignorée !</p>
+      <p class="badge-danger">La civilité de l'affilié de la ligne {{civilityRequiredLine}} n'est pas renseignée si vous continuez cette ligne sera ignorée !</p>
     </div>
     <div *ngIf="!civilityFalseValue && civilityRequired">
-      <p class="badge-warning">Le code de la civilité de la ligne {{civilityRequiredLine}} est invalide. il doit être égale à 1, 2, 3  si vous continuez cette ligne sera ignorée !</p>
+      <p class="badge-danger">Le code de la civilité de la ligne {{civilityRequiredLine}} est invalide. il doit être égale à 1, 2, 3  si vous continuez cette ligne sera ignorée !</p>
     </div>
     <div *ngIf="!lastNameGiven">
-      <p class="badge-warning">Le nom de l'affilié de la ligne {{lastNameGivenline}} n'est pas renseigné si vous continuez cette ligne sera ignorée !</p>
+      <p class="badge-danger">Le nom de l'affilié de la ligne {{lastNameGivenline}} n'est pas renseigné si vous continuez cette ligne sera ignorée !</p>
     </div>
     <div *ngIf="!firstNameGiven">
-      <p class="badge-warning">Le prénom de l'affilié de la ligne {{firstNameGivenline}} n'est pas renseigné si vous continuez cette ligne sera ignorée !</p>
+      <p class="badge-danger">Le prénom de l'affilié de la ligne {{firstNameGivenline}} n'est pas renseigné si vous continuez cette ligne sera ignorée !</p>
     </div>
     <div *ngIf="!personalEmailValid">
-      <p class="badge-warning">le format du mail personnel de la ligne {{personalEmailValidLine}} est invalide si vous continuez cette ligne sera ignorée !</p>
+      <p class="badge-warning">le format du mail personnel de la ligne {{personalEmailValidLine}} est invalide si vous continuez ce champ ne sera pas renseigné!</p>
     </div>
     <div *ngIf="!businessEmailValid">
-      <p class="badge-warning">le format du mail professionel de la ligne {{businessEmailValidLine}} est invalide si vous continuez cette ligne sera ignorée !</p>
+      <p class="badge-warning">le format du mail professionel de la ligne {{businessEmailValidLine}} est invalide si vous continuez ce champ ne sera pas renseigné !</p>
     </div>
     <div *ngIf="!birthDateGiven">
-      <p class="badge-warning">La date de naissance de l'affilié à la ligne {{birthDateValidLine}} n'est pas renseigné si vous continuez cette ligne sera ignorée !</p>
+      <p class="badge-danger">La date de naissance de l'affilié à la ligne {{birthDateValidLine}} n'est pas renseigné si vous continuez cette ligne sera ignorée !</p>
     </div>
     <div *ngIf="!birthDateValid">
-      <p class="badge-warning">La date de naissance de l'affilié à la ligne {{birthDateValidLine}} est invalide. Le format doit être DD/MM/YYYY si vous continuez cette ligne sera ignorée !</p>
+      <p class="badge-danger">La date de naissance de l'affilié à la ligne {{birthDateValidLine}} est invalide. Le format doit être DD/MM/YYYY si vous continuez cette ligne sera ignorée !</p>
     </div>
     <div *ngIf="!codePaysFound">
-      <p class="badge-warning">Le code ISO du champ birthCountry de la ligne {{codePaysFoundLine}} est invalide. Si vous continuez cette ligne sera ignorée !</p>
+      <p class="badge-danger">Le code ISO du champ birthCountry de la ligne {{codePaysFoundLine}} est invalide. Si vous continuez cette ligne sera ignorée !</p>
     </div>
     <div *ngIf="!statusGiven">
-      <p class="badge-warning">Le statut de l'affilié de la ligne {{statusGivenLine}} n'est pas renseignée si vous continuez cette ligne sera ignorée !</p>
+      <p class="badge-danger">Le statut de l'affilié de la ligne {{statusGivenLine}} n'est pas renseignée si vous continuez cette ligne sera ignorée !</p>
     </div>
     <div *ngIf="!statusValid">
-      <p class="badge-warning">Le statut de l'affilié de la ligne {{statusGivenLine}} du fichier est invalide. Il doit être égale à A ou D si vous continuez cette ligne sera ignorée !</p>
+      <p class="badge-danger">Le statut de l'affilié de la ligne {{statusGivenLine}} du fichier est invalide. Il doit être égale à A ou D si vous continuez cette ligne sera ignorée !</p>
     </div>
     <div *ngIf="!vipGiven">
-      <p class="badge-warning">Le champ VIP de l'affilié de la ligne {{vipGivenLine}} n'est pas renseignée si vous continuez cette ligne sera ignorée !</p>
+      <p class="badge-danger">Le champ VIP de l'affilié de la ligne {{vipGivenLine}} n'est pas renseignée si vous continuez cette ligne sera ignorée !</p>
     </div>
     <div *ngIf="!vipValid">
-      <p class="badge-warning">Le champ VIP de l'affilié de la ligne {{vipGivenLine}} du fichier est invalide. Il doit être égale à Y ou N si vous continuez cette ligne sera ignorée !</p>
+      <p class="badge-danger">Le champ VIP de l'affilié de la ligne {{vipGivenLine}} du fichier est invalide. Il doit être égale à Y ou N si vous continuez cette ligne sera ignorée !</p>
     </div>
     <div *ngIf="!sensitiveGiven">
-      <p class="badge-warning">Le champ SENSITIVE de l'affilié de la ligne {{sensitiveGivenLine}} n'est pas renseignée si vous continuez cette ligne sera ignorée !</p>
+      <p class="badge-danger">Le champ SENSITIVE de l'affilié de la ligne {{sensitiveGivenLine}} n'est pas renseignée si vous continuez cette ligne sera ignorée !</p>
     </div>
     <div *ngIf="!sensitiveValid">
-      <p class="badge-warning">Le champ SENSITIVE de l'affilié de la ligne {{sensitiveGivenLine}} du fichier est invalide. Il doit être égale à Y ou N si vous continuez cette ligne sera ignorée !</p>
+      <p class="badge-danger">Le champ SENSITIVE de l'affilié de la ligne {{sensitiveGivenLine}} du fichier est invalide. Il doit être égale à Y ou N si vous continuez cette ligne sera ignorée !</p>
     </div>
     <div *ngIf="!dateEndSensitiveValid">
-      <p class="badge-warning">Le format de la date de fin de sensibilité de la ligne {{dateEndSensitiveValidLine}} est invalide. Le format doit être DD/MM/YYYY si vous continuez cette ligne sera ignorée !</p>
+      <p class="badge-danger">Le format de la date de fin de sensibilité de la ligne {{dateEndSensitiveValidLine}} est invalide. Le format doit être DD/MM/YYYY si vous continuez cette ligne sera ignorée !</p>
     </div>
     <div *ngIf="!conformFlagSensitive">
-      <p class="badge-warning">La date de fin de sensibilité est renseignée à la ligne {{conformFlagSensitiveLine}} alors le flag sensitive doit être renseigneé à Y. Si vous continuez cette ligne sera ignorée !</p>
+      <p class="badge-danger">La date de fin de sensibilité est renseignée à la ligne {{conformFlagSensitiveLine}} alors le flag sensitive doit être renseigneé à Y. Si vous continuez cette ligne sera ignorée !</p>
     </div>
     <div *ngIf="dataArray; else emptyData">
       <table class="table table-hover">
