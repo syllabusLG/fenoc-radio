@@ -24,6 +24,7 @@
     "@ngrx/store": "^5.2.0",
     "bootstrap": "^4.0.0-beta.2",
     "core-js": "^2.4.1",
+    "datejs": "^1.0.0-rc3",
     "font-awesome": "^4.7.0",
     "jquery": "^3.3.1",
     "ngx-cookie-service": "^1.0.10",

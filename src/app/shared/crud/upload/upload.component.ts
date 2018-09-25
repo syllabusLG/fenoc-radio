@@ -52,6 +52,10 @@ export class UploadComponent implements OnInit {
   statusGivenLine: number = 1;
   statusValid: boolean = true;
 
+  employeStatusGiven: boolean = true;
+  employeStatusGivenLine: number = 1;
+  employeStatusValid: boolean = true;
+
   vipGiven: boolean = true;
   vipGivenLine: number = 1;
   vipValid: boolean = true;
@@ -88,6 +92,24 @@ export class UploadComponent implements OnInit {
 
   dateEndSensitiveValid: boolean = true;
   dateEndSensitiveValidLine: number = 1;
+
+  hireDateValid: boolean = true;
+  hireDateValidLine: number = 1;
+
+  lastHireDateValid: boolean = true;
+  lastHireDateValidLine: number = 1;
+
+  departDateValid: boolean = true;
+  departDateValidLine: number = 1;
+
+  lastDepartDateValid: boolean = true;
+  lastDepartDateValidLine: number = 1;
+
+  employeNoDepartDate: boolean = true;
+  employeNoDepartDateLine: number = 1;
+
+  employeDepartDate: boolean = true;
+  employeDepartDateLine: number = 1;
 
   noEmployeeDuplicated = true;
   duplicateFirstName: string = '';
@@ -171,6 +193,8 @@ export class UploadComponent implements OnInit {
         this.controlePrealable(this.dataArray);
         //Gestion des contrôles du module individus
         this.controleModuleIndividu(this.dataArray);
+        //Gestion des contrôles du module salarie
+        this.controleSalarie(this.dataArray);
 
         this.currentStep++;
 
@@ -203,6 +227,16 @@ export class UploadComponent implements OnInit {
     this.dateEndSensitiveValid = this.isDateEndSensitiveValid(dataArray);
     this.conformFlagSensitive = this.isConformFlagSensitive(dataArray);
     this.codePaysFound = this.isCodeIsoValid(dataArray);
+  }
+  controleSalarie(dataArray){
+    this.employeStatusGiven = this.isEmployeStatusGiven(dataArray);
+    this.employeStatusValid = this.isEmployeStatusValid(dataArray);
+    this.hireDateValid = this.isHireDateValide(dataArray);
+    this.departDateValid = this.isDepartDateValide(dataArray);
+    this.employeNoDepartDate = this.isEmployeNoDepartDate(dataArray);
+    this.employeDepartDate = this.isEmployeDepartDate(dataArray);
+    this.lastHireDateValid = this.isLastHireDateValide(dataArray);
+    this.lastDepartDateValid = this.isLastDepartDateValide(dataArray);
   }
 
   sendDataToServer(){
@@ -353,12 +387,24 @@ export class UploadComponent implements OnInit {
         this.birthDateValidLine += i;
         return false;
       }
+      if(dataArray[i].birthDate.length !== 0 && this.isValidateDate(dataArray[i].birthDate) && !this.isDateValide(dataArray[i].birthDate)){
+        this.birthDateValidLine += i;
+        return false;
+      }
+      if(dataArray[i].birthDate.length !== 0 && this.isValidateDate(dataArray[i].birthDate) && this.isDateValide(dataArray[i].birthDate) && !this.isAgeValide(dataArray[i].birthDate)){
+        this.birthDateValidLine += i;
+        return false;
+      }
     }
     return true;
   }
   isDateEndSensitiveValid(dataArray){
     for (let i = 0; i < dataArray.length; i++){
       if(dataArray[i].dateEndSensitive.length !== 0 && !this.isValidateDate(dataArray[i].dateEndSensitive)){
+        this.dateEndSensitiveValidLine += i;
+        return false;
+      }
+      if(dataArray[i].dateEndSensitive.length !== 0 && this.isValidateDate(dataArray[i].dateEndSensitive) && !this.isDateValide(dataArray[i].dateEndSensitive)){
         this.dateEndSensitiveValidLine += i;
         return false;
       }
@@ -379,6 +425,25 @@ export class UploadComponent implements OnInit {
     for (let i = 0; i < dataArray.length; i++){
       if(dataArray[i].statut.length !== 0 && dataArray[i].statut.toUpperCase() !== 'A' && dataArray[i].statut.toUpperCase() !== 'D'){
         this.statusGivenLine += i;
+        return false;
+      }
+    }
+    return true;
+  }
+
+  isEmployeStatusGiven(dataArray){
+    for (let i = 0; i < dataArray.length; i++){
+      if(dataArray[i].employeeStatus.length === 0){
+        this.employeStatusGivenLine += i;
+        return false;
+      }
+    }
+    return true;
+  }
+  isEmployeStatusValid(dataArray){
+    for (let i = 0; i < dataArray.length; i++){
+      if(dataArray[i].employeeStatus.length !== 0 && dataArray[i].employeeStatus.toUpperCase() !== 'P' && dataArray[i].employeeStatus.toUpperCase() !== 'S' && dataArray[i].employeeStatus.toUpperCase() !== 'R'){
+        this.employeStatusGivenLine += i;
         return false;
       }
     }
@@ -458,6 +523,140 @@ export class UploadComponent implements OnInit {
 
     return isFound;
   }
+  isBissextile(year){
+    //vérifier que le l année est bien fournie et la convertir en string si il faut
+    return (year % 400 === 0 || (year % 4 === 0 && year % 100 !== 0));
+  }
 
+  isDateValide(date){
+    let parts = date.split('/');
+    let year =  new Date(Date.parse(date)).getFullYear();
+    let month = new Date(Date.parse(date)).getMonth()+1;
+    let day = new Date(Date.parse(date)).getDate();
 
+    if (year === 1970 && month ===1 && day ===1 && year !== +parts[2]){
+      return false;
+    }else {
+      return true;
+    }
+  }
+  isAgeValide(date){
+    let year =  new Date(Date.parse(date)).getFullYear();
+    let thisYear = new Date().getFullYear();
+    if ( thisYear - year < 18 || thisYear - year > 100){
+      return false;
+    }else{
+      return true;
+    }
+  }
+  isPossibleHireDate(birthdate, hireDate){
+    let birthYear =  new Date(Date.parse(birthdate));
+    let hireYear = new Date(Date.parse(hireDate));
+    let currentYear = new Date();
+    if ( birthYear >= hireYear || hireYear > currentYear || (hireYear.getFullYear() - birthYear.getFullYear()) < 18){
+      return false;
+    }else{
+      return true;
+    }
+  }
+  isPossibleDepartDate(hireDate, departDate){
+    let hireYear =  new Date(Date.parse(hireDate));
+    let departYear = new Date(Date.parse(departDate));
+    let currentYear = new Date();
+    if ( hireYear >= departYear || departYear > currentYear ){
+      return false;
+    }else{
+      return true;
+    }
+  }
+  isHireDateValide(dataArray){
+    for (let i = 0; i < dataArray.length; i++){
+      if(dataArray[i].hireDate.length !== 0 && !this.isValidateDate(dataArray[i].hireDate)){
+        this.hireDateValidLine += i;
+        return false;
+      }
+      if(dataArray[i].hireDate.length !== 0 && this.isValidateDate(dataArray[i].hireDate) && !this.isDateValide(dataArray[i].hireDate)){
+        this.hireDateValidLine += i;
+        return false;
+      }
+      if(dataArray[i].hireDate.length !== 0 && this.isValidateDate(dataArray[i].hireDate) && this.isDateValide(dataArray[i].hireDate) && !this.isPossibleHireDate(dataArray[i].birthDate, dataArray[i].hireDate)){
+        this.hireDateValidLine += i;
+        return false;
+      }
+    }
+    return true;
+  }
+  isLastHireDateValide(dataArray){
+    for (let i = 0; i < dataArray.length; i++){
+      if(dataArray[i].lastHireDate.length !== 0 && !this.isValidateDate(dataArray[i].lastHireDate)){
+        this.lastHireDateValidLine += i;
+        return false;
+      }
+      if(dataArray[i].lastHireDate.length !== 0 && this.isValidateDate(dataArray[i].lastHireDate) && !this.isDateValide(dataArray[i].lastHireDate)){
+        this.lastHireDateValidLine += i;
+        return false;
+      }
+      if(dataArray[i].lastHireDate.length !== 0 && this.isValidateDate(dataArray[i].lastHireDate) && this.isDateValide(dataArray[i].lastHireDate) && !this.isPossibleDepartDate(dataArray[i].hireDate, dataArray[i].lastHireDate)){
+        this.lastHireDateValidLine += i;
+        return false;
+      }
+    }
+    return true;
+  }
+  isDepartDateValide(dataArray){
+    for (let i = 0; i < dataArray.length; i++){
+      if(dataArray[i].departDate.length !== 0 && !this.isValidateDate(dataArray[i].departDate)){
+        this.departDateValidLine += i;
+        return false;
+      }
+      if(dataArray[i].departDate.length !== 0 && this.isValidateDate(dataArray[i].departDate) && !this.isDateValide(dataArray[i].departDate)){
+        this.departDateValidLine += i;
+        return false;
+      }
+      if(dataArray[i].departDate.length !== 0 && this.isValidateDate(dataArray[i].departDate) && this.isDateValide(dataArray[i].departDate) && !this.isPossibleDepartDate(dataArray[i].hireDate, dataArray[i].departDate)){
+        this.departDateValidLine += i;
+        return false;
+      }
+    }
+    return true;
+  }
+  isLastDepartDateValide(dataArray){
+    for (let i = 0; i < dataArray.length; i++){
+      if(dataArray[i].lastDepartDate.length !== 0 && !this.isValidateDate(dataArray[i].lastDepartDate)){
+        this.lastDepartDateValidLine += i;
+        return false;
+      }
+      if(dataArray[i].lastDepartDate.length !== 0 && this.isValidateDate(dataArray[i].lastDepartDate) && !this.isDateValide(dataArray[i].lastDepartDate)){
+        this.lastDepartDateValidLine += i;
+        return false;
+      }
+      if(dataArray[i].lastDepartDate.length !== 0 && this.isValidateDate(dataArray[i].lastDepartDate) && this.isDateValide(dataArray[i].lastDepartDate) && !this.isPossibleDepartDate(dataArray[i].departDate, dataArray[i].lastDepartDate)){
+        this.lastDepartDateValidLine += i;
+        return false;
+      }
+      if(dataArray[i].lastDepartDate.length !== 0 && this.isValidateDate(dataArray[i].lastDepartDate) && this.isDateValide(dataArray[i].lastDepartDate) && !this.isPossibleDepartDate(dataArray[i].lastHireDate, dataArray[i].lastDepartDate)){
+        this.lastDepartDateValidLine += i;
+        return false;
+      }
+    }
+    return true;
+  }
+  isEmployeNoDepartDate(dataArray){
+    for (let i = 0; i < dataArray.length; i++){
+      if (dataArray[i].employeeStatus.toUpperCase() === 'P' && dataArray[i].departDate.length !== 0){
+        this.employeNoDepartDateLine += i;
+        return false;
+      }
+    }
+    return true;
+  }
+  isEmployeDepartDate(dataArray){
+    for (let i = 0; i < dataArray.length; i++){
+      if ((dataArray[i].employeeStatus.toUpperCase() === 'S' || dataArray[i].employeeStatus.toUpperCase() === 'R') && dataArray[i].departDate.length === 0){
+        this.employeDepartDateLine += i;
+        return false;
+      }
+    }
+    return true;
+  }
 }
