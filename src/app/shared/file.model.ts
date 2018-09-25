@@ -31,7 +31,7 @@ export class FileModel {
               public lastHireDate?: any,
               public lastDepartDate?: any,
               public branch_CD?: string,
-              public numberRue?: number,
+              public numberStreet?: number,
               public street?: string,
               public additionalAdress_1?: string,
               public additionalAdress_2?: string,

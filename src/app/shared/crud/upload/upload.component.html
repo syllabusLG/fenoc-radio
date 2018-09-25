@@ -104,6 +104,15 @@
     <div *ngIf="!lastDepartDateValid">
       <p class="badge-danger">Le format de la dernière date de depart de la ligne {{lastDepartDateValidLine}} est invalide. Le format doit être DD/MM/YYYY et valide si vous continuez cette ligne sera ignorée !</p>
     </div>
+    <div *ngIf="!numberStreetIncomplet">
+      <p class="badge-warning">Au moins une informartion suplémentaire est necessaire pour completer l'adresse à la ligne {{numberStreetIncompletLine}}. Si vous continuez ce champ ne sera pas renseigné!</p>
+    </div>
+    <div *ngIf="!adressValid">
+      <p class="badge-warning">L'adresse de l'affilié à la ligne {{adressValidLine}} est invalide. Si vous continuez ce champ ne sera pas renseigné!</p>
+    </div>
+    <div *ngIf="!codeIsoCountryValid">
+      <p class="badge-warning">Le code ISO du champ country de l'adresse de la ligne {{codeIsoCountryValidLine}} est invalide. Si vous continuez ce champ ne sera pas renseigné!</p>
+    </div>
     <div *ngIf="dataArray; else emptyData">
       <table class="table table-hover">
         <thead>

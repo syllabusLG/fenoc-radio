@@ -70,6 +70,11 @@ export class UploadComponent implements OnInit {
   lastNameGiven: boolean = true;
   lastNameGivenline: number = 1;
 
+  numberStreetIncomplet: boolean = true;
+  numberStreetIncompletLine: number = 1;
+  adressValid: boolean = true;
+  adressValidLine: number = 1;
+
   firstNameGiven: boolean = true;
   firstNameGivenline: number = 1;
 
@@ -84,6 +89,13 @@ export class UploadComponent implements OnInit {
 
   listCodePays: string[] = [];
   listLibPays: string[] = [];
+
+  codeIsoCountryValid: boolean = true;
+  codeIsoCountryValidLine: number = 1;
+
+  listCodeCountry: string[] = [];
+  listLibCountry: string[] = [];
+
 
 
   birthDateGiven: boolean = true;
@@ -194,7 +206,9 @@ export class UploadComponent implements OnInit {
         //Gestion des contrôles du module individus
         this.controleModuleIndividu(this.dataArray);
         //Gestion des contrôles du module salarie
-        this.controleSalarie(this.dataArray);
+        this.controleModuleSalarie(this.dataArray);
+        //Gestion des contrôles du modules adresse
+        this.controleModuleAdresse(this.dataArray);
 
         this.currentStep++;
 
@@ -228,7 +242,7 @@ export class UploadComponent implements OnInit {
     this.conformFlagSensitive = this.isConformFlagSensitive(dataArray);
     this.codePaysFound = this.isCodeIsoValid(dataArray);
   }
-  controleSalarie(dataArray){
+  controleModuleSalarie(dataArray){
     this.employeStatusGiven = this.isEmployeStatusGiven(dataArray);
     this.employeStatusValid = this.isEmployeStatusValid(dataArray);
     this.hireDateValid = this.isHireDateValide(dataArray);
@@ -237,6 +251,11 @@ export class UploadComponent implements OnInit {
     this.employeDepartDate = this.isEmployeDepartDate(dataArray);
     this.lastHireDateValid = this.isLastHireDateValide(dataArray);
     this.lastDepartDateValid = this.isLastDepartDateValide(dataArray);
+  }
+  controleModuleAdresse(dataArray){
+    this.numberStreetIncomplet = this.isNumberStreetIncomplet(dataArray);
+    this.adressValid = this.isAdressValid(dataArray);
+    this.codeIsoCountryValid = this.isCodeIsoCountryValid(dataArray);
   }
 
   sendDataToServer(){
@@ -523,6 +542,29 @@ export class UploadComponent implements OnInit {
 
     return isFound;
   }
+  isCodeIsoCountryValid(dataArray){
+    let isFound = false;
+    for (let i = 0; i < this.COUNTRY.length; i++){
+
+      for (let j = 0; j < dataArray.length; j++){
+        if (this.COUNTRY[i].code.toUpperCase() === dataArray[j].country.toUpperCase()){
+          isFound = true;
+          this.listCodeCountry.push(this.COUNTRY[i].code);
+          this.listLibCountry.push(this.COUNTRY[i].name);
+        }
+      }
+
+    }
+
+    for (let i = 0; i < dataArray.length; i++) {
+      if(!this.listCodeCountry.includes(dataArray[i].country.toUpperCase())){
+        isFound = false;
+        this.codeIsoCountryValidLine+=i;
+        break;
+      }
+    }
+    return isFound;
+  }
   isBissextile(year){
     //vérifier que le l année est bien fournie et la convertir en string si il faut
     return (year % 400 === 0 || (year % 4 === 0 && year % 100 !== 0));
@@ -654,6 +696,25 @@ export class UploadComponent implements OnInit {
     for (let i = 0; i < dataArray.length; i++){
       if ((dataArray[i].employeeStatus.toUpperCase() === 'S' || dataArray[i].employeeStatus.toUpperCase() === 'R') && dataArray[i].departDate.length === 0){
         this.employeDepartDateLine += i;
+        return false;
+      }
+    }
+    return true;
+  }
+  isNumberStreetIncomplet(dataArray){
+    for (let i = 0; i < dataArray.length; i++){
+      if(dataArray[i].numberStreet.length !== 0 && dataArray[i].additionalAdress_1.length === 0 && dataArray[i].additionalAdress_2.length === 0 && dataArray[i].additionalAdress_3.length === 0){
+        this.numberStreetIncompletLine += i;
+        return false;
+      }
+    }
+    return true;
+  }
+  isAdressValid(dataArray){
+    for (let i = 0; i < dataArray.length; i++){
+      if((dataArray[i].street.length !== 0 || dataArray[i].additionalAdress_1.length !== 0 || dataArray[i].additionalAdress_2.length !== 0 || dataArray[i].additionalAdress_3.length !== 0)
+          &&(dataArray[i].city.length === 0 || dataArray[i].codePostal.length === 0 || dataArray[i].country.length ===0)){
+        this.adressValidLine += i;
         return false;
       }
     }
