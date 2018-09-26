@@ -1,7 +1,8 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {DataModel} from '../../data.model';
 import {CrudService} from '../../crud.service';
 import {COUNTRY} from '../../countries.code';
+import * as jsPDF from 'jspdf';
 
 @Component({
   selector: 'app-upload',
@@ -12,6 +13,11 @@ export class UploadComponent implements OnInit {
 
   @ViewChild("fileUploadInput")
   fileUploadInput: any;
+
+  @ViewChild('content')
+  content: ElementRef;
+
+  buttonVisible: number = 0;
 
   @Input()
   dataModelList: DataModel[];
@@ -127,6 +133,18 @@ export class UploadComponent implements OnInit {
   duplicateFirstName: string = '';
   duplicateLastName: string = '';
 
+  bicGiven: boolean = true;
+  bicGivenLine: number = 1;
+
+  ibanValid: boolean = true;
+  ibanValidLine: number = 1;
+
+  bicValid: boolean = true;
+  bicValidLine: number = 1;
+
+  bicIbanValid: boolean = true;
+  bicIbanValidLine: number = 1;
+
   dataModelListFiltred: any;
 
   fileName: string = '';
@@ -207,8 +225,10 @@ export class UploadComponent implements OnInit {
         this.controleModuleIndividu(this.dataArray);
         //Gestion des contrôles du module salarie
         this.controleModuleSalarie(this.dataArray);
-        //Gestion des contrôles du modules adresse
+        //Gestion des contrôles du module adresse
         this.controleModuleAdresse(this.dataArray);
+        //Gestion des contrôles du module IBAN
+        this.controleModuleIban(this.dataArray);
 
         this.currentStep++;
 
@@ -256,6 +276,12 @@ export class UploadComponent implements OnInit {
     this.numberStreetIncomplet = this.isNumberStreetIncomplet(dataArray);
     this.adressValid = this.isAdressValid(dataArray);
     this.codeIsoCountryValid = this.isCodeIsoCountryValid(dataArray);
+  }
+  controleModuleIban(dataArray){
+    this.bicGiven = this.isIbanGiven(dataArray);
+    this.ibanValid = this.isValidIban(dataArray);
+    this.bicValid = this.isValidBic(dataArray);
+    this.bicIbanValid = this.isBicIbanValid(dataArray);
   }
 
   sendDataToServer(){
@@ -531,7 +557,6 @@ export class UploadComponent implements OnInit {
     }
 
     for (let i = 0; i < dataArray.length; i++) {
-      console.log('fichier: ',i, dataArray[i].birthCountry);
       console.log('country: ',i, this.listCodePays[i]+' ', this.listLibPays[i]);
       if(!this.listCodePays.includes(dataArray[i].birthCountry.toUpperCase())){
         isFound = false;
@@ -720,4 +745,102 @@ export class UploadComponent implements OnInit {
     }
     return true;
   }
+  isIbanGiven(dataArray){
+    for (let i = 0; i < dataArray.length; i++){
+      if((dataArray[i].bic.length !== 0 && dataArray[i].iban.length === 0) || (dataArray[i].bic.length === 0 && dataArray[i].iban.length !== 0)){
+        this.bicGivenLine += i;
+        return false;
+      }
+    }
+    return true;
+  }
+
+  isValidIban(dataArray){
+    for (let i = 0; i < dataArray.length; i++){
+      if(dataArray[i].iban.length !== 0 && !this.isValidIBANNumber(dataArray[i].iban)){
+        this.ibanValidLine += i;
+        return false;
+      }
+    }
+    return true;
+  }
+
+  isValidIBANNumber(input) {
+    let CODE_LENGTHS = {
+      AD: 24, AE: 23, AT: 20, AZ: 28, BA: 20, BE: 16, BG: 22, BH: 22, BR: 29,
+      CH: 21, CR: 21, CY: 28, CZ: 24, DE: 22, DK: 18, DO: 28, EE: 20, ES: 24,
+      FI: 18, FO: 18, FR: 27, GB: 22, GI: 23, GL: 18, GR: 27, GT: 28, HR: 21,
+      HU: 28, IE: 22, IL: 23, IS: 26, IT: 27, JO: 30, KW: 30, KZ: 20, LB: 28,
+      LI: 21, LT: 20, LU: 20, LV: 21, MC: 27, MD: 24, ME: 22, MK: 19, MR: 27,
+      MT: 31, MU: 30, NL: 18, NO: 15, PK: 24, PL: 28, PS: 29, PT: 25, QA: 29,
+      RO: 24, RS: 22, SA: 24, SE: 24, SI: 19, SK: 24, SM: 27, TN: 24, TR: 26
+    };
+
+    let iban = input.toUpperCase().replace(/[^A-Z0-9]/g, ''),
+      code = iban.match(/^([A-Z]{2})(\d{2})([A-Z\d]+)$/),
+      digits;
+
+    if (!code || iban.length !== CODE_LENGTHS[code[1]]) {
+      return false;
+    }
+
+    digits = (code[3] + code[1] + code[2]).replace(/[A-Z]/g, function (letter) {
+      return letter.charCodeAt(0) - 55;
+    });
+
+    return this.mod97(digits) === 1;
+  }
+  mod97(string) {
+    let checksum = string.slice(0, 2), fragment;
+
+    for (let offset = 2; offset < string.length; offset += 7) {
+      fragment = checksum + string.substring(offset, offset + 7);
+      checksum = parseInt(fragment, 10) % 97;
+    }
+
+    return checksum;
+  }
+  isBic(value){
+    return /^([A-Z]{6}[A-Z2-9][A-NP-Z1-9])(X{3}|[A-WY-Z0-9][A-Z0-9]{2})?$/.test( value.toUpperCase() );
+  }
+  isValidBic(dataArray){
+    for (let i = 0; i < dataArray.length; i++){
+      if(dataArray[i].bic.length !== 0 && !this.isBic(dataArray[i].bic)){
+        this.bicValidLine += i;
+        return false;
+      }
+    }
+    return true;
+  }
+
+  isBicIbanValid(dataArray){
+    for (let i = 0; i < dataArray.length; i++){
+      console.log('Compare BIC '+ dataArray[i].bic.substr(4,2));
+      console.log('Compare IBAN '+ dataArray[i].iban.substr(0,2));
+      if(dataArray[i].bic.substr(4,2) !== dataArray[i].iban.substr(0, 2)){
+        this.bicIbanValidLine += i;
+        return false;
+      }
+    }
+    return true;
+  }
+
+  public downloadPDF(){
+    let doc = new jsPDF();
+    let  specialElementHandlers = {
+      '#editor': function (element, renderer) {
+        return true;
+      }
+    };
+    let content = this.content.nativeElement;
+
+    doc.fromHTML(content.innerHTML, 15, 15, {
+      'width': 190,
+      'elementHandlers': specialElementHandlers
+    });
+
+    doc.save('error.pdf');
+
+  }
+
 }
