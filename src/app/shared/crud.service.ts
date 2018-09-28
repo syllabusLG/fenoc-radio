@@ -9,4 +9,6 @@ export  interface CrudService {
   update(entity): Observable<any>;
 
   delete(id): Observable<any>;
+
+  addAll(list): Observable<any>;
 }

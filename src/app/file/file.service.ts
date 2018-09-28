@@ -24,7 +24,7 @@ export class FileService implements CrudService{
     return this.http.delete(API_URLS.PAYS_URL +`/${id}`);
   }
 
-  /*addAll(list): Observable<any>{
+  addAll(list): Observable<any>{
     return this.http.post(API_URLS.FILE_URL + '/all', list);
-  }*/
+  }
 }

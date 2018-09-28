@@ -24,6 +24,8 @@ import { CrudComponent } from './shared/crud/crud.component';
 import { SampleComponent } from './shared/crud/sample/sample.component';
 import { FileComponent } from './file/file.component';
 import {FileService} from './file/file.service';
+import { IndividusComponent } from './individus/individus.component';
+import {IndividusService} from './individus/individus.service';
 
 
 @NgModule({
@@ -39,7 +41,8 @@ import {FileService} from './file/file.service';
     UserComponent,
     CrudComponent,
     SampleComponent,
-    FileComponent
+    FileComponent,
+    IndividusComponent
   ],
   imports: [
     BrowserModule,
@@ -53,7 +56,8 @@ import {FileService} from './file/file.service';
     {provide: HTTP_INTERCEPTORS, useClass: XhrInterceptor, multi: true},
     CookieService,
     UserService,
-    FileService
+    FileService,
+    IndividusService
   ],
   bootstrap: [AppComponent]
 })

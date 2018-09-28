@@ -3,6 +3,8 @@ import {DataModel} from '../../data.model';
 import {CrudService} from '../../crud.service';
 import {COUNTRY} from '../../countries.code';
 import * as jsPDF from 'jspdf';
+import {Individus} from '../../individus.model';
+import {IndividusService} from '../../../individus/individus.service';
 
 @Component({
   selector: 'app-upload',
@@ -29,6 +31,7 @@ export class UploadComponent implements OnInit {
   updateData: EventEmitter<any> = new EventEmitter<any>();
 
   dataArray:  any = null;
+  individusDataArray: Individus[] = [];
 
   currentStep = 1;
 
@@ -151,7 +154,7 @@ export class UploadComponent implements OnInit {
 
   COUNTRY = COUNTRY;
 
-  constructor() { }
+  constructor(private individusService: IndividusService) { }
 
   ngOnInit() {
     this.dataModelListFiltred = this.dataModelList.filter(dataModel => !dataModel.readonly);
@@ -200,6 +203,21 @@ export class UploadComponent implements OnInit {
     return dataArray;
   }
 
+  builIndividusDataArray(dataArray){
+    let individusArray = [];
+    for (let i = 0; i < dataArray.length; i++) {
+      let individus: Individus = new Individus();
+      individus.nui = dataArray[i].nui;
+      individus.civility = dataArray[i].civility;
+      individus.lastName = dataArray[i].lastName;
+      this.individusDataArray.push(individus);
+      individusArray.push(individus);
+      individusArray.push(individus);
+    }
+
+    return individusArray;
+  }
+
   selectFile($event){
     let fileList = $event.srcElement.files;
     let file = fileList[0];
@@ -229,6 +247,12 @@ export class UploadComponent implements OnInit {
         this.controleModuleAdresse(this.dataArray);
         //Gestion des contrôles du module IBAN
         this.controleModuleIban(this.dataArray);
+        console.log("----------individusDataArray "+ this.individusDataArray.length);
+        for (let i = 0; i < this.individusDataArray.length; i++){
+          console.log("NUI ===== "+this.individusDataArray[i].nui);
+          console.log("Civility ===== "+this.individusDataArray[i].civility);
+          console.log("Lastname ===== "+this.individusDataArray[i].lastName);
+        }
 
         this.currentStep++;
 
@@ -261,6 +285,8 @@ export class UploadComponent implements OnInit {
     this.dateEndSensitiveValid = this.isDateEndSensitiveValid(dataArray);
     this.conformFlagSensitive = this.isConformFlagSensitive(dataArray);
     this.codePaysFound = this.isCodeIsoValid(dataArray);
+    this.builIndividusDataArray(dataArray);
+
   }
   controleModuleSalarie(dataArray){
     this.employeStatusGiven = this.isEmployeStatusGiven(dataArray);
@@ -285,12 +311,12 @@ export class UploadComponent implements OnInit {
   }
 
   sendDataToServer(){
-    //this.service.addAll(this.dataArray).subscribe((data)=>{
-      //this.dataFromServer = data;
+    this.individusService.addAll(this.individusDataArray).subscribe((data)=>{
+      this.dataFromServer = data;
       this.dataSentToServer=true;
-      //this.updateData.emit(data);
+      this.updateData.emit(data);
       this.currentStep = 3;
-    //});
+    });
   }
   isCompanyCdCorrect(dataArray){
     for (let i = 0; i < dataArray.length; i++){
