@@ -210,6 +210,13 @@ export class UploadComponent implements OnInit {
       individus.nui = dataArray[i].nui;
       individus.civility = dataArray[i].civility;
       individus.lastName = dataArray[i].lastName;
+      individus.useName = dataArray[i].useName;
+      individus.firstName = dataArray[i].firstName;
+      individus.birthDate = dataArray[i].birthDate;
+      individus.birthPlace = dataArray[i].birthPlace;
+      individus.birthCountry = dataArray[i].birthCountry;
+      individus.nationality = dataArray[i].nationality;
+      //individus.birthCountryLib = dataArray[i].lastName;*/
       this.individusDataArray.push(individus);
       individusArray.push(individus);
       individusArray.push(individus);
@@ -853,6 +860,7 @@ export class UploadComponent implements OnInit {
 
   public downloadPDF(){
     let doc = new jsPDF();
+    let file = "fileUploadError"+new Date()+".pdf"
     let  specialElementHandlers = {
       '#editor': function (element, renderer) {
         return true;
@@ -865,7 +873,7 @@ export class UploadComponent implements OnInit {
       'elementHandlers': specialElementHandlers
     });
 
-    doc.save('error.pdf');
+    doc.save(file);
 
   }
 

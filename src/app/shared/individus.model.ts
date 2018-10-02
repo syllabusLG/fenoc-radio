@@ -7,5 +7,6 @@ export  class Individus {
               public birthDate?: any,
               public birthPlace?: string,
               public birthCountry?: string,
+              public birthCountryLib?: string,
               public nationality?: string){}
 }
