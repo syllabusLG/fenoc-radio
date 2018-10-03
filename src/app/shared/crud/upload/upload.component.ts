@@ -11,6 +11,8 @@ import {ContactService} from '../../../contact/contact.service';
 import {Contact} from '../../contact.model';
 import {Iban} from '../../iban.model';
 import {IbanService} from '../../../iban/iban.service';
+import {Adresse} from '../../adresse.model';
+import {AdresseService} from '../../../adresse/adresse.service';
 
 @Component({
   selector: 'app-upload',
@@ -41,6 +43,7 @@ export class UploadComponent implements OnInit {
   salarieDataArray: Salarie[] = [];
   contactDataArray: Contact[] = [];
   ibanDataArray: Iban[] = [];
+  adresseDataArray: Adresse[] = [];
 
   currentStep = 1;
 
@@ -166,7 +169,8 @@ export class UploadComponent implements OnInit {
   constructor(private individusService: IndividusService,
               private salarieService: SalarieService,
               private contactService: ContactService,
-              private ibanService: IbanService) { }
+              private ibanService: IbanService,
+              private adresseService: AdresseService) { }
 
   ngOnInit() {
     this.dataModelListFiltred = this.dataModelList.filter(dataModel => !dataModel.readonly);
@@ -230,8 +234,6 @@ export class UploadComponent implements OnInit {
       //individus.birthCountryLib = dataArray[i].lastName;*/
       this.individusDataArray.push(individus);
     }
-
-    //return individusArray;
   }
 
   buildSalarieDataArray(dataArray){
@@ -292,6 +294,24 @@ export class UploadComponent implements OnInit {
     }
   }
 
+  buildAdresseDataArray(dataArray){
+    for (let i = 0; i < dataArray.length; i++){
+      let adresse: Adresse = new Adresse();
+      let individu: Individus = new Individus();
+      adresse.numberStreet = dataArray[i].numberStreet;
+      adresse.street = dataArray[i].street;
+      adresse.additionalAdress_1 = dataArray[i].additionalAdress_1;
+      adresse.additionalAdress_2 = dataArray[i].additionalAdress_2;
+      adresse.additionalAdress_3 = dataArray[i].additionalAdress_3;
+      adresse.codePostal = dataArray[i].codePostal;
+      adresse.city = dataArray[i].city;
+      adresse.country = dataArray[i].country;
+      individu.nui = dataArray[i].nui;
+      adresse.individu = individu;
+      this.adresseDataArray.push(adresse);
+    }
+  }
+
   selectFile($event){
     let fileList = $event.srcElement.files;
     let file = fileList[0];
@@ -327,6 +347,7 @@ export class UploadComponent implements OnInit {
         this.buildSalarieDataArray(this.dataArray);
         this.buildContactDataArray(this.dataArray);
         this.buildIbanDataArray(this.dataArray);
+        this.buildAdresseDataArray(this.dataArray);
 
         this.currentStep++;
 
@@ -394,6 +415,7 @@ export class UploadComponent implements OnInit {
       this.sendSalarieToServer();
       this.sendContactToServer();
       this.sendIbanToServer();
+      this.sendAdresseToServer();
     });
   }
 
@@ -407,6 +429,9 @@ export class UploadComponent implements OnInit {
   }
   sendIbanToServer(){
     this.ibanService.addAll(this.ibanDataArray).subscribe();
+  }
+  sendAdresseToServer(){
+    this.adresseService.addAll(this.adresseDataArray).subscribe();
   }
   sendDataToServer(){
     this.sendIndividusToServer();

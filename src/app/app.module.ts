@@ -32,6 +32,8 @@ import { ContactComponent } from './contact/contact.component';
 import {ContactService} from './contact/contact.service';
 import { IbanComponent } from './iban/iban.component';
 import {IbanService} from './iban/iban.service';
+import { AdresseComponent } from './adresse/adresse.component';
+import {AdresseService} from './adresse/adresse.service';
 
 
 @NgModule({
@@ -51,7 +53,8 @@ import {IbanService} from './iban/iban.service';
     IndividusComponent,
     SalarieComponent,
     ContactComponent,
-    IbanComponent
+    IbanComponent,
+    AdresseComponent
   ],
   imports: [
     BrowserModule,
@@ -69,7 +72,8 @@ import {IbanService} from './iban/iban.service';
     IndividusService,
     SalarieService,
     ContactService,
-    IbanService
+    IbanService,
+    AdresseService
   ],
   bootstrap: [AppComponent]
 })
