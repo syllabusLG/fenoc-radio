@@ -7,6 +7,8 @@ import {Individus} from '../../individus.model';
 import {IndividusService} from '../../../individus/individus.service';
 import {Salarie} from '../../salarie.model';
 import {SalarieService} from '../../../salarie/salarie.service';
+import {ContactService} from '../../../contact/contact.service';
+import {Contact} from '../../contact.model';
 
 @Component({
   selector: 'app-upload',
@@ -35,6 +37,7 @@ export class UploadComponent implements OnInit {
   dataArray:  any = null;
   individusDataArray: Individus[] = [];
   salarieDataArray: Salarie[] = [];
+  contactDataArray: Contact[] = [];
 
   currentStep = 1;
 
@@ -158,7 +161,8 @@ export class UploadComponent implements OnInit {
   COUNTRY = COUNTRY;
 
   constructor(private individusService: IndividusService,
-              private salarieService: SalarieService) { }
+              private salarieService: SalarieService,
+              private contactService: ContactService) { }
 
   ngOnInit() {
     this.dataModelListFiltred = this.dataModelList.filter(dataModel => !dataModel.readonly);
@@ -250,15 +254,22 @@ export class UploadComponent implements OnInit {
       salarie.dateEndSensitive = dataArray[i].dateEndSensitive;
       individu.nui = dataArray[i].nui;
       salarie.individu = individu;
-      console.log('pip individu du salarie '+ salarie.individu.nui)
       this.salarieDataArray.push(salarie);
+    }
+  }
 
-     /* this.individusService.getOne(dataArray[i].nui).subscribe((data)=>{
-        salarie.individu = data;
-       console.log('individu du salarie '+ salarie.individu.nui)
-
-      });*/
-
+  buildContactDataArray(dataArray){
+    for (let i = 0; i < dataArray.length; i++){
+      let contact: Contact = new Contact();
+      let individu: Individus = new Individus();
+      contact.homePhone = dataArray[i].homePhone;
+      contact.businessPhone = dataArray[i].businessPhone;
+      contact.cellPhone = dataArray[i].cellPhone;
+      contact.personalEmail = dataArray[i].personalEmail;
+      contact.businessEmail = dataArray[i].businessEmail;
+      individu.nui = dataArray[i].nui;
+      contact.individu = individu;
+      this.contactDataArray.push(contact);
     }
   }
 
@@ -295,6 +306,7 @@ export class UploadComponent implements OnInit {
         //integration des données
         this.buildIndividusDataArray(this.dataArray);
         this.buildSalarieDataArray(this.dataArray);
+        this.buildContactDataArray(this.dataArray);
 
         this.currentStep++;
 
@@ -360,6 +372,7 @@ export class UploadComponent implements OnInit {
       this.updateData.emit(data);
       this.currentStep = 3;
       this.sendSalarieToServer();
+      this.sendContactToServer();
     });
   }
 
@@ -367,6 +380,9 @@ export class UploadComponent implements OnInit {
     this.salarieService.addAll(this.salarieDataArray).subscribe((data)=>{
 
     });
+  }
+  sendContactToServer(){
+    this.contactService.addAll(this.contactDataArray).subscribe();
   }
   sendDataToServer(){
     this.sendIndividusToServer();

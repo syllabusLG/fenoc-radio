@@ -28,6 +28,8 @@ import { IndividusComponent } from './individus/individus.component';
 import {IndividusService} from './individus/individus.service';
 import { SalarieComponent } from './salarie/salarie.component';
 import {SalarieService} from './salarie/salarie.service';
+import { ContactComponent } from './contact/contact.component';
+import {ContactService} from './contact/contact.service';
 
 
 @NgModule({
@@ -45,7 +47,8 @@ import {SalarieService} from './salarie/salarie.service';
     SampleComponent,
     FileComponent,
     IndividusComponent,
-    SalarieComponent
+    SalarieComponent,
+    ContactComponent
   ],
   imports: [
     BrowserModule,
@@ -61,7 +64,8 @@ import {SalarieService} from './salarie/salarie.service';
     UserService,
     FileService,
     IndividusService,
-    SalarieService
+    SalarieService,
+    ContactService
   ],
   bootstrap: [AppComponent]
 })

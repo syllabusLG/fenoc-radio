@@ -7,6 +7,7 @@ export const API_URLS = {
   PAYS_URL: BASE + ':' + PORT + PATH + '/pays',
   INDIVIDUS_URL: BASE + ':' + PORT + PATH + '/individus',
   SALARIE_URL: BASE + ':' + PORT + PATH + '/salarie',
+  CONTACT_URL: BASE + ':' + PORT + PATH + '/contact',
   FILE_URL: BASE + ':' + PORT + PATH + '/file',
   CRUD_USER_URL: BASE + ':'+ PORT + '/crud_user'
 
