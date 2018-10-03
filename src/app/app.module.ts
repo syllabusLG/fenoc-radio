@@ -26,6 +26,8 @@ import { FileComponent } from './file/file.component';
 import {FileService} from './file/file.service';
 import { IndividusComponent } from './individus/individus.component';
 import {IndividusService} from './individus/individus.service';
+import { SalarieComponent } from './salarie/salarie.component';
+import {SalarieService} from './salarie/salarie.service';
 
 
 @NgModule({
@@ -42,7 +44,8 @@ import {IndividusService} from './individus/individus.service';
     CrudComponent,
     SampleComponent,
     FileComponent,
-    IndividusComponent
+    IndividusComponent,
+    SalarieComponent
   ],
   imports: [
     BrowserModule,
@@ -57,7 +60,8 @@ import {IndividusService} from './individus/individus.service';
     CookieService,
     UserService,
     FileService,
-    IndividusService
+    IndividusService,
+    SalarieService
   ],
   bootstrap: [AppComponent]
 })

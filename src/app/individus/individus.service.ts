@@ -28,4 +28,8 @@ export class IndividusService implements CrudService{
     return this.http.post(API_URLS.INDIVIDUS_URL + '/all', list);
   }
 
+  getOne(id): Observable<any>{
+    return this.http.get(API_URLS.INDIVIDUS_URL +`/${id}`);
+  }
+
 }

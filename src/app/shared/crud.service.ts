@@ -11,4 +11,6 @@ export  interface CrudService {
   delete(id): Observable<any>;
 
   addAll(list): Observable<any>;
+
+  getOne(id): Observable<any>;
 }

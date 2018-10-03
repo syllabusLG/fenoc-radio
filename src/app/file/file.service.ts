@@ -27,4 +27,9 @@ export class FileService implements CrudService{
   addAll(list): Observable<any>{
     return this.http.post(API_URLS.FILE_URL + '/all', list);
   }
+
+  getOne(id): Observable<any>{
+    return this.http.get(API_URLS.FILE_URL +`/${id}`);
+  }
+
 }

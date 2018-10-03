@@ -5,6 +5,8 @@ import {COUNTRY} from '../../countries.code';
 import * as jsPDF from 'jspdf';
 import {Individus} from '../../individus.model';
 import {IndividusService} from '../../../individus/individus.service';
+import {Salarie} from '../../salarie.model';
+import {SalarieService} from '../../../salarie/salarie.service';
 
 @Component({
   selector: 'app-upload',
@@ -32,6 +34,7 @@ export class UploadComponent implements OnInit {
 
   dataArray:  any = null;
   individusDataArray: Individus[] = [];
+  salarieDataArray: Salarie[] = [];
 
   currentStep = 1;
 
@@ -154,7 +157,8 @@ export class UploadComponent implements OnInit {
 
   COUNTRY = COUNTRY;
 
-  constructor(private individusService: IndividusService) { }
+  constructor(private individusService: IndividusService,
+              private salarieService: SalarieService) { }
 
   ngOnInit() {
     this.dataModelListFiltred = this.dataModelList.filter(dataModel => !dataModel.readonly);
@@ -203,8 +207,7 @@ export class UploadComponent implements OnInit {
     return dataArray;
   }
 
-  builIndividusDataArray(dataArray){
-    let individusArray = [];
+  buildIndividusDataArray(dataArray){
     for (let i = 0; i < dataArray.length; i++) {
       let individus: Individus = new Individus();
       individus.nui = dataArray[i].nui;
@@ -218,11 +221,45 @@ export class UploadComponent implements OnInit {
       individus.nationality = dataArray[i].nationality;
       //individus.birthCountryLib = dataArray[i].lastName;*/
       this.individusDataArray.push(individus);
-      individusArray.push(individus);
-      individusArray.push(individus);
     }
 
-    return individusArray;
+    //return individusArray;
+  }
+
+  buildSalarieDataArray(dataArray){
+    for (let i = 0; i < dataArray.length; i++){
+      let salarie: Salarie = new Salarie();
+      let individu: Individus = new Individus();
+      salarie.employeeId = dataArray[i].employeeId;
+      salarie.employeeStatus = dataArray[i].employeeStatus;
+      salarie.company_CD = dataArray[i].company_CD;
+      salarie.spc = dataArray[i].spc;
+      salarie.level_1 = dataArray[i].level_1;
+      salarie.level_2 = dataArray[i].level_2;
+      salarie.level_3 = dataArray[i].level_3;
+      salarie.level_4 = dataArray[i].level_4;
+      salarie.level_5 = dataArray[i].level_5;
+      salarie.hireDate = dataArray[i].hireDate;
+      salarie.departDate = dataArray[i].departDate;
+      salarie.lastHireDate = dataArray[i].lastHireDate;
+      salarie.lastDepartDate = dataArray[i].lastDepartDate;
+      salarie.branch_CD = dataArray[i].branch_CD;
+      salarie.statut = dataArray[i].statut;
+      salarie.vip = dataArray[i].vip;
+      salarie.mySensitive = dataArray[i].mySensitive;
+      salarie.dateEndSensitive = dataArray[i].dateEndSensitive;
+      individu.nui = dataArray[i].nui;
+      salarie.individu = individu;
+      console.log('pip individu du salarie '+ salarie.individu.nui)
+      this.salarieDataArray.push(salarie);
+
+     /* this.individusService.getOne(dataArray[i].nui).subscribe((data)=>{
+        salarie.individu = data;
+       console.log('individu du salarie '+ salarie.individu.nui)
+
+      });*/
+
+    }
   }
 
   selectFile($event){
@@ -254,14 +291,13 @@ export class UploadComponent implements OnInit {
         this.controleModuleAdresse(this.dataArray);
         //Gestion des contrôles du module IBAN
         this.controleModuleIban(this.dataArray);
-        console.log("----------individusDataArray "+ this.individusDataArray.length);
-        for (let i = 0; i < this.individusDataArray.length; i++){
-          console.log("NUI ===== "+this.individusDataArray[i].nui);
-          console.log("Civility ===== "+this.individusDataArray[i].civility);
-          console.log("Lastname ===== "+this.individusDataArray[i].lastName);
-        }
+
+        //integration des données
+        this.buildIndividusDataArray(this.dataArray);
+        this.buildSalarieDataArray(this.dataArray);
 
         this.currentStep++;
+
 
       };
     }
@@ -292,7 +328,6 @@ export class UploadComponent implements OnInit {
     this.dateEndSensitiveValid = this.isDateEndSensitiveValid(dataArray);
     this.conformFlagSensitive = this.isConformFlagSensitive(dataArray);
     this.codePaysFound = this.isCodeIsoValid(dataArray);
-    this.builIndividusDataArray(dataArray);
 
   }
   controleModuleSalarie(dataArray){
@@ -304,6 +339,7 @@ export class UploadComponent implements OnInit {
     this.employeDepartDate = this.isEmployeDepartDate(dataArray);
     this.lastHireDateValid = this.isLastHireDateValide(dataArray);
     this.lastDepartDateValid = this.isLastDepartDateValide(dataArray);
+
   }
   controleModuleAdresse(dataArray){
     this.numberStreetIncomplet = this.isNumberStreetIncomplet(dataArray);
@@ -317,13 +353,23 @@ export class UploadComponent implements OnInit {
     this.bicIbanValid = this.isBicIbanValid(dataArray);
   }
 
-  sendDataToServer(){
+  sendIndividusToServer(){
     this.individusService.addAll(this.individusDataArray).subscribe((data)=>{
       this.dataFromServer = data;
       this.dataSentToServer=true;
       this.updateData.emit(data);
       this.currentStep = 3;
+      this.sendSalarieToServer();
     });
+  }
+
+  sendSalarieToServer(){
+    this.salarieService.addAll(this.salarieDataArray).subscribe((data)=>{
+
+    });
+  }
+  sendDataToServer(){
+    this.sendIndividusToServer();
   }
   isCompanyCdCorrect(dataArray){
     for (let i = 0; i < dataArray.length; i++){

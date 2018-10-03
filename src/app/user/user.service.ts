@@ -29,4 +29,9 @@ export class UserService implements CrudService{
     return this.http.post(API_URLS.CRUD_USER_URL + '/all', list);
   }
 
+  getOne(id): Observable<any>{
+    return this.http.get(API_URLS.CRUD_USER_URL +`/${id}`);
+  }
+
+
 }
