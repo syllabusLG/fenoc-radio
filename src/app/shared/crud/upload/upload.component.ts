@@ -9,6 +9,8 @@ import {Salarie} from '../../salarie.model';
 import {SalarieService} from '../../../salarie/salarie.service';
 import {ContactService} from '../../../contact/contact.service';
 import {Contact} from '../../contact.model';
+import {Iban} from '../../iban.model';
+import {IbanService} from '../../../iban/iban.service';
 
 @Component({
   selector: 'app-upload',
@@ -38,6 +40,7 @@ export class UploadComponent implements OnInit {
   individusDataArray: Individus[] = [];
   salarieDataArray: Salarie[] = [];
   contactDataArray: Contact[] = [];
+  ibanDataArray: Iban[] = [];
 
   currentStep = 1;
 
@@ -162,7 +165,8 @@ export class UploadComponent implements OnInit {
 
   constructor(private individusService: IndividusService,
               private salarieService: SalarieService,
-              private contactService: ContactService) { }
+              private contactService: ContactService,
+              private ibanService: IbanService) { }
 
   ngOnInit() {
     this.dataModelListFiltred = this.dataModelList.filter(dataModel => !dataModel.readonly);
@@ -273,6 +277,21 @@ export class UploadComponent implements OnInit {
     }
   }
 
+  buildIbanDataArray(dataArray){
+    for (let i = 0; i < dataArray.length; i++){
+      let iban: Iban = new Iban();
+      let individu: Individus = new Individus();
+      if(dataArray[i].iban.length !== 0){
+        iban.iban = dataArray[i].iban;
+        iban.bic =  dataArray[i].bic;
+        individu.nui = dataArray[i].nui;
+        iban.individu = individu;
+        this.ibanDataArray.push(iban);
+      }
+
+    }
+  }
+
   selectFile($event){
     let fileList = $event.srcElement.files;
     let file = fileList[0];
@@ -307,6 +326,7 @@ export class UploadComponent implements OnInit {
         this.buildIndividusDataArray(this.dataArray);
         this.buildSalarieDataArray(this.dataArray);
         this.buildContactDataArray(this.dataArray);
+        this.buildIbanDataArray(this.dataArray);
 
         this.currentStep++;
 
@@ -373,6 +393,7 @@ export class UploadComponent implements OnInit {
       this.currentStep = 3;
       this.sendSalarieToServer();
       this.sendContactToServer();
+      this.sendIbanToServer();
     });
   }
 
@@ -383,6 +404,9 @@ export class UploadComponent implements OnInit {
   }
   sendContactToServer(){
     this.contactService.addAll(this.contactDataArray).subscribe();
+  }
+  sendIbanToServer(){
+    this.ibanService.addAll(this.ibanDataArray).subscribe();
   }
   sendDataToServer(){
     this.sendIndividusToServer();
