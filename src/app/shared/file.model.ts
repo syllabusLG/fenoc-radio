@@ -40,5 +40,14 @@ export class FileModel {
               public city?: string,
               public country?: string,
               public iban?: string,
-              public bic?: string){}
+              public bic?: string,
+              public numCompte?: number,
+              public libCompte?: string,
+              public type?: string,
+              public ouvert?: string,
+              public lettrage?: string,
+              public statutAff?: string,
+              public typage?: string,
+              public idCptPc?: number,
+              public nif?: string){}
 }

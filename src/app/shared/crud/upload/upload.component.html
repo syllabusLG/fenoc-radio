@@ -166,6 +166,25 @@
     </div>
   </div>
   <div *ngSwitchCase="3">
+    <div id="report" #report>
+      <h1 class="text-success">Ce fichier contient {{dataArray.length}} lignes</h1>
+      <h3 class="text-success">Phase de creation</h3>
+      <p>Module individus: Nombre de lignes crées: <span class="lead">{{individusCreatedDataArray.length}}</span></p>
+      <p>Module Salarié: Nombre de lignes crées: <span class="lead">{{salarieCreatedDataArray.length}}</span></p>
+      <p>Module Contact: Nombre de lignes crées: <span class="lead">{{contactCreatedDataArray.length}}</span></p>
+      <p>Module IBAN: Nombre de lignes crées: <span class="lead">{{ibanCreatedDataArray.length}}</span></p>
+      <p>Module Adresse: Nombre de lignes crées: <span class="lead">{{adresseCreatedDataArray.length}}</span></p>
+      <p>Module Compte: Nombre de lignes crées: <span class="lead">{{compteCreatedDataArray.length}}</span></p>
+
+      <h3 class="text-success">Phase de mise à jour</h3>
+      <p>Module individus: Nombre de lignes mises à jour: <span class="lead">{{individusUpdatedDataArray.length}}</span></p>
+      <p>Module Salarié: Nombre de lignes mises à jour: <span class="lead">{{salarieUpdatedDataArray.length}}</span></p>
+      <p>Module Contact: Nombre de lignes mises à jour: <span class="lead">{{contactUpdatedDataArray.length}}</span></p>
+      <p>Module IBAN: Nombre de lignes mises à jour: <span class="lead">{{ibanUpdatedDataArray.length}}</span></p>
+      <p>Module Adresse: Nombre de lignes mises à jour: <span class="lead">{{adresseUpdatedDataArray.length}}</span></p>
+      <p>Module Compte: Nombre de lignes mises à jour: <span class="lead">{{compteUpdatedDataArray.length}}</span></p>
+    </div>
+    <button class="btn btn-outline-success" (click)="downloadReportPDF()">Export Report to PDF</button>
     <div *ngIf="dataFromServer">
       <table class="table table-hover">
         <thead>

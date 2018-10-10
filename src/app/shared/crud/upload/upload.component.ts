@@ -13,6 +13,10 @@ import {Iban} from '../../iban.model';
 import {IbanService} from '../../../iban/iban.service';
 import {Adresse} from '../../adresse.model';
 import {AdresseService} from '../../../adresse/adresse.service';
+import {CompteService} from '../../../compte/compte.service';
+import {Compte} from '../../compte.model';
+import {FiscaliteService} from '../../../fiscalite/fiscalite.service';
+import {Fiscalite} from '../../fiscalite.model';
 
 @Component({
   selector: 'app-upload',
@@ -27,7 +31,10 @@ export class UploadComponent implements OnInit {
   @ViewChild('content')
   content: ElementRef;
 
-  buttonVisible: number = 0;
+  @ViewChild('report')
+  report: ElementRef;
+
+  //buttonVisible: number = 0;
 
   @Input()
   dataModelList: DataModel[];
@@ -40,10 +47,26 @@ export class UploadComponent implements OnInit {
 
   dataArray:  any = null;
   individusDataArray: Individus[] = [];
+  individusCreatedDataArray: Individus[] = [];
+  individusUpdatedDataArray: Individus[] = [];
   salarieDataArray: Salarie[] = [];
+  salarieCreatedDataArray: Salarie[] = [];
+  salarieUpdatedDataArray: Salarie[] = [];
   contactDataArray: Contact[] = [];
+  contactCreatedDataArray: Contact[] = [];
+  contactUpdatedDataArray: Contact[] = [];
   ibanDataArray: Iban[] = [];
+  ibanCreatedDataArray: Iban[] = [];
+  ibanUpdatedDataArray: Iban[] = [];
   adresseDataArray: Adresse[] = [];
+  adresseCreatedDataArray: Adresse[] = [];
+  adresseUpdatedDataArray: Adresse[] = [];
+  compteDataArray: Compte[] = [];
+  compteCreatedDataArray: Compte[] = [];
+  compteUpdatedDataArray: Compte[] = [];
+  fiscaliteDataArray: Fiscalite[] = [];
+  fiscaliteCreatedDataArray: Fiscalite[] = [];
+  fiscaliteUpdatedDataArray: Fiscalite[] = [];
 
   currentStep = 1;
 
@@ -170,7 +193,9 @@ export class UploadComponent implements OnInit {
               private salarieService: SalarieService,
               private contactService: ContactService,
               private ibanService: IbanService,
-              private adresseService: AdresseService) { }
+              private adresseService: AdresseService,
+              private compteService: CompteService,
+              private fiscaliteService: FiscaliteService) { }
 
   ngOnInit() {
     this.dataModelListFiltred = this.dataModelList.filter(dataModel => !dataModel.readonly);
@@ -222,6 +247,18 @@ export class UploadComponent implements OnInit {
   buildIndividusDataArray(dataArray){
     for (let i = 0; i < dataArray.length; i++) {
       let individus: Individus = new Individus();
+      if(dataArray[i].lastName.length !== 0 && dataArray[i].civility.length !== 0 &&
+        (+dataArray[i].civility === 1 || +dataArray[i].civility === 2 || +dataArray[i].civility === 3)){
+
+      this.individusService.getOne(dataArray[i].nui).subscribe((data)=>{
+        if(data !== null){
+          this.individusUpdatedDataArray.push(data);
+        }else{
+          this.individusCreatedDataArray.push(data);
+        }
+
+      }, error =>{
+      });
       individus.nui = dataArray[i].nui;
       individus.civility = dataArray[i].civility;
       individus.lastName = dataArray[i].lastName;
@@ -233,13 +270,23 @@ export class UploadComponent implements OnInit {
       individus.nationality = dataArray[i].nationality;
       //individus.birthCountryLib = dataArray[i].lastName;*/
       this.individusDataArray.push(individus);
-    }
+    }}
   }
 
   buildSalarieDataArray(dataArray){
     for (let i = 0; i < dataArray.length; i++){
       let salarie: Salarie = new Salarie();
       let individu: Individus = new Individus();
+      if(dataArray[i].lastName.length !== 0){
+
+
+      this.salarieService.getOne(dataArray[i].employeeId).subscribe((data)=>{
+        if(data !== null){
+          this.salarieUpdatedDataArray.push(data);
+        }else {
+          this.salarieCreatedDataArray.push(data);
+        }
+      });
       salarie.employeeId = dataArray[i].employeeId;
       salarie.employeeStatus = dataArray[i].employeeStatus;
       salarie.company_CD = dataArray[i].company_CD;
@@ -261,13 +308,22 @@ export class UploadComponent implements OnInit {
       individu.nui = dataArray[i].nui;
       salarie.individu = individu;
       this.salarieDataArray.push(salarie);
-    }
+    }}
   }
 
   buildContactDataArray(dataArray){
     for (let i = 0; i < dataArray.length; i++){
       let contact: Contact = new Contact();
       let individu: Individus = new Individus();
+      if(dataArray[i].lastName.length !== 0){
+      this.contactService.getOne(dataArray[i].employeeId.toUpperCase()+"_ID").subscribe((data) =>{
+        if(data !== null){
+          this.contactUpdatedDataArray.push(data);
+        }else{
+          this.contactCreatedDataArray.push(data);
+        }
+      });
+      contact.idContact = dataArray[i].employeeId.toUpperCase()+"_ID";
       contact.homePhone = dataArray[i].homePhone;
       contact.businessPhone = dataArray[i].businessPhone;
       contact.cellPhone = dataArray[i].cellPhone;
@@ -276,14 +332,22 @@ export class UploadComponent implements OnInit {
       individu.nui = dataArray[i].nui;
       contact.individu = individu;
       this.contactDataArray.push(contact);
-    }
+    }}
   }
 
   buildIbanDataArray(dataArray){
     for (let i = 0; i < dataArray.length; i++){
       let iban: Iban = new Iban();
       let individu: Individus = new Individus();
+      if(dataArray[i].lastName.length !== 0){
       if(dataArray[i].iban.length !== 0){
+        this.ibanService.getOne(dataArray[i].iban).subscribe((data)=>{
+          if (data !== null){
+            this.ibanUpdatedDataArray.push(data);
+          } else {
+            this.ibanCreatedDataArray.push(data);
+          }
+        });
         iban.iban = dataArray[i].iban;
         iban.bic =  dataArray[i].bic;
         individu.nui = dataArray[i].nui;
@@ -291,26 +355,119 @@ export class UploadComponent implements OnInit {
         this.ibanDataArray.push(iban);
       }
 
-    }
+    }}
   }
 
   buildAdresseDataArray(dataArray){
     for (let i = 0; i < dataArray.length; i++){
       let adresse: Adresse = new Adresse();
       let individu: Individus = new Individus();
-      adresse.numberStreet = dataArray[i].numberStreet;
-      adresse.street = dataArray[i].street;
-      adresse.additionalAdress_1 = dataArray[i].additionalAdress_1;
-      adresse.additionalAdress_2 = dataArray[i].additionalAdress_2;
-      adresse.additionalAdress_3 = dataArray[i].additionalAdress_3;
-      adresse.codePostal = dataArray[i].codePostal;
-      adresse.city = dataArray[i].city;
-      adresse.country = dataArray[i].country;
-      individu.nui = dataArray[i].nui;
-      adresse.individu = individu;
-      this.adresseDataArray.push(adresse);
-    }
+      if(dataArray[i].lastName.length !== 0){
+      this.adresseService.getOne(dataArray[i].nui.toUpperCase() + dataArray[i].numberStreet).subscribe((data)=>{
+        if(data !== null){
+          this.adresseUpdatedDataArray.push(data);
+        }else {
+          this.adresseCreatedDataArray.push(data);
+        }
+      });
+      if(dataArray[i].nif.length !== 0){
+        adresse.id = dataArray[i].nui.toUpperCase() + dataArray[i].numberStreet
+        adresse.numberStreet = dataArray[i].numberStreet;
+        adresse.street = dataArray[i].street;
+        adresse.additionalAdress_1 = dataArray[i].additionalAdress_1;
+        adresse.additionalAdress_2 = dataArray[i].additionalAdress_2;
+        adresse.additionalAdress_3 = dataArray[i].additionalAdress_3;
+        adresse.codePostal = dataArray[i].codePostal;
+        adresse.city = dataArray[i].city;
+        adresse.country = dataArray[i].country;
+        adresse.nif = dataArray[i].nif;
+        adresse.typeAdresse = 'FISCALITE';
+        individu.nui = dataArray[i].nui;
+        adresse.individu = individu;
+        this.adresseDataArray.push(adresse);
+      }else {
+        adresse.id = dataArray[i].nui.toUpperCase() + dataArray[i].numberStreet
+        adresse.numberStreet = dataArray[i].numberStreet;
+        adresse.street = dataArray[i].street;
+        adresse.additionalAdress_1 = dataArray[i].additionalAdress_1;
+        adresse.additionalAdress_2 = dataArray[i].additionalAdress_2;
+        adresse.additionalAdress_3 = dataArray[i].additionalAdress_3;
+        adresse.codePostal = dataArray[i].codePostal;
+        adresse.city = dataArray[i].city;
+        adresse.country = dataArray[i].country;
+        adresse.typeAdresse = 'NORMALE';
+        individu.nui = dataArray[i].nui;
+        adresse.individu = individu;
+        this.adresseDataArray.push(adresse);
+      }
+
+    }}
   }
+
+  buildCompteDataArray(dataArray){
+    for (let i = 0; i < dataArray.length; i++){
+      let compte: Compte = new Compte();
+      let individu: Individus = new Individus();
+      if(dataArray[i].lastName.length !== 0){
+      this.compteService.getOne(dataArray[i].numCompte).subscribe((data)=>{
+        if (data !== null){
+          this.compteUpdatedDataArray.push(data);
+        } else {
+          this.compteCreatedDataArray.push(data);
+        }
+      });
+      if ( dataArray[i].numCompte.length !== 0 && dataArray[i].idCptPc.length !== 0){
+        //compte de type Cash
+        compte.numCompte = dataArray[i].numCompte;
+        compte.type = dataArray[i].type;
+        compte.libCompte = dataArray[i].libCompte;
+        compte.ouvert = dataArray[i].ouvert;
+        compte.lettrage = dataArray[i].lettrage;
+        compte.idCptPc = dataArray[i].idCptPc;
+        compte.typeCompte = 'CASH';
+        individu.nui = dataArray[i].nui;
+        compte.individu = individu;
+        this.compteDataArray.push(compte);
+      }
+      if ( dataArray[i].numCompte.length !== 0 && dataArray[i].idCptPc.length == 0 && (dataArray[i].statutAff.length !== 0 || dataArray[i].typage.length !== 0)){
+        //compte de titSal
+        compte.numCompte = dataArray[i].numCompte;
+        compte.type = dataArray[i].type;
+        compte.libCompte = dataArray[i].libCompte;
+        compte.ouvert = dataArray[i].ouvert;
+        compte.lettrage = dataArray[i].lettrage;
+        compte.statutAff = dataArray[i].statutAff;
+        compte.typage = dataArray[i].typage;
+        compte.typeCompte = 'TIT';
+        individu.nui = dataArray[i].nui;
+        compte.individu = individu;
+        this.compteDataArray.push(compte);
+      }
+    }}
+  }
+  /*buildFiscaliteDataArray(dataArray){
+    for (let i = 0; i < dataArray.length; i++){
+      let fiscalite: Fiscalite = new Fiscalite();
+      let adresse: Adresse = new Adresse();
+      let individu: Individus = new Individus();
+      this.fiscaliteService.getOne(dataArray[i].nif).subscribe((data)=>{
+        if(data !== null){
+          this.fiscaliteUpdatedDataArray.push(data);
+        }else{
+          this.fiscaliteCreatedDataArray.push(data);
+        }
+      })
+      if (dataArray[i].nif.length !== 0){
+        fiscalite.nif = dataArray[i].nif;
+        individu.nui = dataArray[i].nui;
+       // adresse.individu = individu;
+        adresse.id = dataArray[i].nui.toUpperCase() + dataArray[i].numberStreet
+        console.log('=========== Adresse: '+ adresse.id );
+        fiscalite.adresse = adresse;
+        this.fiscaliteDataArray.push(fiscalite);
+      }
+    }
+  }*/
 
   selectFile($event){
     let fileList = $event.srcElement.files;
@@ -348,6 +505,8 @@ export class UploadComponent implements OnInit {
         this.buildContactDataArray(this.dataArray);
         this.buildIbanDataArray(this.dataArray);
         this.buildAdresseDataArray(this.dataArray);
+        this.buildCompteDataArray(this.dataArray);
+        //this.buildFiscaliteDataArray(this.dataArray);
 
         this.currentStep++;
 
@@ -416,6 +575,7 @@ export class UploadComponent implements OnInit {
       this.sendContactToServer();
       this.sendIbanToServer();
       this.sendAdresseToServer();
+      this.sendCompteToServer();
     });
   }
 
@@ -431,8 +591,16 @@ export class UploadComponent implements OnInit {
     this.ibanService.addAll(this.ibanDataArray).subscribe();
   }
   sendAdresseToServer(){
-    this.adresseService.addAll(this.adresseDataArray).subscribe();
+    this.adresseService.addAll(this.adresseDataArray).subscribe( (data) =>{
+      //this.sendFiscaliteToServer();
+    });
   }
+  sendCompteToServer(){
+    this.compteService.addAll(this.compteDataArray).subscribe();
+  }
+  /*sendFiscaliteToServer(){
+    this.fiscaliteService.addAll(this.fiscaliteDataArray).subscribe();
+  }*/
   sendDataToServer(){
     this.sendIndividusToServer();
   }
@@ -971,7 +1139,7 @@ export class UploadComponent implements OnInit {
 
   public downloadPDF(){
     let doc = new jsPDF();
-    let file = "fileUploadError"+new Date()+".pdf"
+    let file = "fileUploadError"+new Date()+".pdf";
     let  specialElementHandlers = {
       '#editor': function (element, renderer) {
         return true;
@@ -986,6 +1154,44 @@ export class UploadComponent implements OnInit {
 
     doc.save(file);
 
+  }
+
+  public downloadReportPDF(){
+    let doc = new jsPDF();
+    let file = "report"+new Date()+".pdf";
+    let  specialElementHandlers = {
+      '#editor': function (element, renderer) {
+        return true;
+      }
+    };
+    let report = this.report.nativeElement;
+
+    doc.fromHTML(report.innerHTML, 15, 15, {
+      'width': 190,
+      'elementHandlers': specialElementHandlers
+    });
+
+    doc.save(file);
+
+  }
+
+  private isNoIgnoredLine(dataArray){
+   /* if(this.civilityRequired && this.civilityFalseValue && this.lastNameGiven && this.firstNameGiven
+       && this.birthDateGiven && this.birthDateValid && this.codePaysFound && this.statusGiven && this.statusValid
+       && this.vipGiven && this.vipValid && this.sensitiveGiven && this.sensitiveValid && this.dateEndSensitiveValid
+       && this.conformFlagSensitive && this.employeStatusGiven && this.employeStatusValid && this.hireDateValid && this.departDateValid
+       && this.employeNoDepartDate && this.employeDepartDate && this.lastHireDateValid && this.lastDepartDateValid){
+      return true;
+    }else{
+      return false;
+    }*/
+    for (let i = 0; i < dataArray.length; i++){
+      if(dataArray[i].lastName.length !== 0){
+        this.lastNameGivenline += i;
+        return true;
+      }
+    }
+    return false;
   }
 
 }
