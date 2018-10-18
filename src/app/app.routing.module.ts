@@ -8,6 +8,8 @@ import {UploadComponent} from './shared/crud/upload/upload.component';
 import {UserComponent} from './user/user.component';
 import {UserResolver} from './user/user.resolver';
 import {FileComponent} from './file/file.component';
+import {AdresseComponent} from './adresse/adresse.component';
+import {AdresseResolver} from './adresse/adresse.resolver';
 
 
 export const appRoutes: Routes = [
@@ -16,6 +18,7 @@ export const appRoutes: Routes = [
     path: 'login',
     component: LoginComponent
   },
+
   {
     path: 'home',
     component: HomeComponent,
@@ -43,6 +46,14 @@ export const appRoutes: Routes = [
         },
         outlet: 'contentOutlet'
       },
+      {
+        path: 'adresse',
+        component: AdresseComponent,
+        resolve: {
+          adresses: AdresseResolver
+        },
+        outlet: 'contentOutlet'
+      },
     ]
   },
 
@@ -61,6 +72,6 @@ export const appRoutes: Routes = [
     )
   ],
   exports: [RouterModule],
-  providers: [UserResolver]
+  providers: [UserResolver, AdresseResolver]
 })
 export class AppRoutingModule { }

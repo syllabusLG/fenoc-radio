@@ -16,6 +16,11 @@
                           *ngIf="hasRoleAdmin()">Utilisateurs</a>
     </li>
     <li class="nav-item">
+      <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'adresse'}}]"
+         routerLinkActive="active"
+         *ngIf="hasRoleUser()">Adresse</a>
+    </li>
+    <li class="nav-item">
       <a class="nav-link" href="#">Export</a>
     </li>
   </ul>
