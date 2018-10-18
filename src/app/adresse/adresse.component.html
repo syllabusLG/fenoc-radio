@@ -1,5 +1,7 @@
 <div class="container">
-  <h3>Adresses</h3>
+  <br>
+  <h4 style="margin-left: 10px">Adresses</h4>
+  <hr>
   <div>
     <div *ngIf="operation == 'add' || operation == 'edit' || operation == 'remove'">
       <div class="card">
@@ -80,33 +82,41 @@
         </div>
       </div>
     </div>
-    <div class="form-group">
-      <label>Mot Clé</label>
-      <input type="text" [(ngModel)]="motCle"/>
-      <button class="btn btn-primary" (click)="searchAdresse()">Chercher</button>
-    </div>
-    <div id="reportAdresse" #reportAdresse>
-      <div class="d-inline-block">
-        <a href="" data-toggle="collapse">
-          <i class="fas fa-file-csv big-icon" (click)="downloadFile(adresses)"></i>
-          <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
-        </a>
+
+
+    <div class=" row">
+        <div class="form-group col-sm-10">
+        <label style="margin-left: 10px">Mot Clé</label>
+        <input style="height: 33px" type="text" [(ngModel)]="motCle"/>
+        <button class="btn btn-info" (click)="searchAdresse()">Chercher</button>
       </div>
+      <div class="col-sm-2" id="reportAdresse" #reportAdresse>
+        <div class="d-inline-block">
+          <a href="" data-toggle="collapse">
+            <button type="button" style="margin-bottom: 14px" class="btn btn-info" (click)="operation= 'add'; initAdresse()">Export to CSV</button>
+            <!--<i class="fa fa-file-excel-o -medium-icon" data-toggle="tooltip" title="Export File" (click)="downloadFile(adresses)"></i>-->
+            <!--<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">-->
+          </a>
+        </div>
+      </div>
+    </div>
+      <div class="col-sm-12">
      <!-- <div class="d-inline-block">
         <a href="" data-toggle="collapse">
           <i class="fas fa-file-pdf big-icon" (click)="downloadReportPDF()"></i>
           <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
         </a>
       </div>-->
-      <table class="table table-hover">
+
+      <table class="col-sm-12 table table-hover">
         <thead>
         <tr>
           <th>ID</th><th>Numero rue</th><th>Rue</th><th>Addresse_1</th><th>Addresse_2</th><th>Addresse_3</th>
           <th>ZC</th><th>City</th><th>Pays</th><th>NIF</th><th>Type</th><th>Individu</th>
           <th>
             <a href="" data-toggle="collapse">
-              <i class="fas fa-plus" (click)="operation= 'add'; initAdresse()"></i>
-              <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+              <i class="fa fa-plus" data-toggle="tooltip" title="Ajouter Individu"  (click)="operation= 'add'; initAdresse()"></i>
+              <!--<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">-->
             </a>
           </th>
         </tr>
@@ -127,12 +137,12 @@
           <td>{{adresse.individu.lastName+' '+adresse.individu.firstName}}</td>
           <td>
             <a href=""  data-toggle="collapse" >
-              <i class="fas fa-edit" (click)="operation = 'edit'; selectedAdresse = adresse;"></i>
-              <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+              <i class="fa fa-edit" (click)="operation = 'edit'; selectedAdresse = adresse;"></i>
+              <!--<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">-->
             </a>
             <a href="" data-toggle="collapse">
-              <i class="fas fa-trash-alt" (click)="operation = 'remove'; selectedAdresse = adresse;"></i>
-              <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+              <i class="fa fa-trash-alt" (click)="operation = 'remove'; selectedAdresse = adresse;"></i>
+              <!--<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">-->
             </a>
           </td>
         </tr>
@@ -149,4 +159,3 @@
 
   </div>
 </div>
-

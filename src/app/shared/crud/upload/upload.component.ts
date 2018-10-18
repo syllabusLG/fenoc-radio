@@ -16,12 +16,7 @@ import {AdresseService} from '../../../adresse/adresse.service';
 import {CompteService} from '../../../compte/compte.service';
 import {Compte} from '../../compte.model';
 import {FiscaliteService} from '../../../fiscalite/fiscalite.service';
-<<<<<<< HEAD
-import {Fiscalite} from '../../fiscalite.model';
 import {Filemanagement} from "../../../common/filemanagement";
-=======
-
->>>>>>> 971736f2d229eef8cfdaee70197c6b1df7b2e50b
 
 @Component({
   selector: 'app-upload',
@@ -1305,7 +1300,6 @@ export class UploadComponent implements OnInit {
 
   }
 
-<<<<<<< HEAD
   private isNoIgnoredLine(dataArray){
    /* if(this.civilityRequired && this.civilityFalseValue && this.lastNameGiven && this.firstNameGiven
        && this.birthDateGiven && this.birthDateValid && this.codePaysFound && this.statusGiven && this.statusValid
@@ -1332,7 +1326,5 @@ export class UploadComponent implements OnInit {
     Filemanagement.downloadPDFModules(this.report.nativeElement.innerHTML);
 
   }
-=======
->>>>>>> 971736f2d229eef8cfdaee70197c6b1df7b2e50b
 
 }
