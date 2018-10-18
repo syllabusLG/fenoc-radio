@@ -167,25 +167,42 @@
   </div>
   <div *ngSwitchCase="3">
     <div id="report" #report>
-      <h1 class="text-success">Ce fichier contient {{dataArray.length}} lignes</h1>
-      <h3 class="text-success">Phase de creation</h3>
-      <p>Module individus: Nombre de lignes crées: <span class="lead">{{individusCreatedDataArray.length}}</span></p>
-      <p>Module Salarié: Nombre de lignes crées: <span class="lead">{{salarieCreatedDataArray.length}}</span></p>
-      <p>Module Contact: Nombre de lignes crées: <span class="lead">{{contactCreatedDataArray.length}}</span></p>
-      <p>Module IBAN: Nombre de lignes crées: <span class="lead">{{ibanCreatedDataArray.length}}</span></p>
-      <p>Module Adresse: Nombre de lignes crées: <span class="lead">{{adresseCreatedDataArray.length}}</span></p>
-      <p>Module Compte: Nombre de lignes crées: <span class="lead">{{compteCreatedDataArray.length}}</span></p>
-
-      <h3 class="text-success">Phase de mise à jour</h3>
-      <p>Module individus: Nombre de lignes mises à jour: <span class="lead">{{individusUpdatedDataArray.length}}</span></p>
-      <p>Module Salarié: Nombre de lignes mises à jour: <span class="lead">{{salarieUpdatedDataArray.length}}</span></p>
-      <p>Module Contact: Nombre de lignes mises à jour: <span class="lead">{{contactUpdatedDataArray.length}}</span></p>
-      <p>Module IBAN: Nombre de lignes mises à jour: <span class="lead">{{ibanUpdatedDataArray.length}}</span></p>
-      <p>Module Adresse: Nombre de lignes mises à jour: <span class="lead">{{adresseUpdatedDataArray.length}}</span></p>
-      <p>Module Compte: Nombre de lignes mises à jour: <span class="lead">{{compteUpdatedDataArray.length}}</span></p>
+      <div class="text-center">
+        <p class="badge badge-info">Ce fichier contient {{dataArray.length}} lignes </p>
+      </div>
+      <div class="text-center">
+        <p class="badge badge-secondary">Nombre de lignes rejétés: {{nbreLigneRejete}}</p>
+      </div>
+      <div class="row container">
+        <div class="col-lg-7">
+          <p class="badge badge-info">Phase de creation</p><br/>
+          <p class="badge badge-light">Module individus: Nombre de lignes crées: <span class="badge badge-info">{{individusCreatedDataArray.length}}</span></p>
+          <p class="badge badge-light">Module Salarié: Nombre de lignes crées: <span class="badge badge-info">{{salarieCreatedDataArray.length}}</span></p>
+          <p class="badge badge-light">Module Contact: Nombre de lignes crées: <span class="badge badge-info">{{contactCreatedDataArray.length}}</span></p>
+          <p class="badge badge-light">Module IBAN: Nombre de lignes crées: <span class="badge badge-info">{{ibanCreatedDataArray.length}}</span></p>
+          <p class="badge badge-light">Module Adresse: Nombre de lignes crées: <span class="badge badge-info">{{adresseCreatedDataArray.length}}</span></p>
+          <p class="badge badge-light">Module Compte: Nombre de lignes crées: <span class="badge badge-info">{{compteCreatedDataArray.length}}</span></p>
+        </div>
+        <div class="col-lg-5">
+          <p class="badge badge-info">Phase de mise à jour</p><br/>
+          <p class="badge badge-light">Module individus: Nombre de lignes mises à jour: <span class="badge badge-info">{{individusUpdatedDataArray.length}}</span></p>
+          <p class="badge badge-light">Module Salarié: Nombre de lignes mises à jour: <span class="badge badge-info">{{salarieUpdatedDataArray.length}}</span></p>
+          <p class="badge badge-light">Module Contact: Nombre de lignes mises à jour: <span class="badge badge-info">{{contactUpdatedDataArray.length}}</span></p>
+          <p class="badge badge-light">Module IBAN: Nombre de lignes mises à jour: <span class="badge badge-info">{{ibanUpdatedDataArray.length}}</span></p>
+          <p class="badge badge-light">Module Adresse: Nombre de lignes mises à jour: <span class="badge badge-info">{{adresseUpdatedDataArray.length}}</span></p>
+          <p class="badge badge-light">Module Compte: Nombre de lignes mises à jour: <span class="badge badge-info">{{compteUpdatedDataArray.length}}</span></p>
+        </div>
+      </div>
     </div>
-    <button class="btn btn-outline-success" (click)="downloadReportPDF()">Export Report to PDF</button>
-    <div *ngIf="dataFromServer">
+    <div class="text-center">
+      <button type="button" class="btn btn-info btn-lg btn-block" (click)="downloadReportPDF()" >EXPORT REPORT TO PDF</button>
+    </div>
+    <!--<a href=""  data-toggle="collapse" >
+      <i class="fas fa-arrow-alt-circle-down" (click)="downloadReportPDF()"></i>
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    </a>-->
+
+  <!--  <div *ngIf="dataFromServer">
       <table class="table table-hover">
         <thead>
         <tr>
@@ -198,7 +215,7 @@
         </tr>
         </tbody>
       </table>
-    </div>
+    </div>-->
     <div *ngIf="!dataFromServer">
       <p>Aucune donnée récupérée.</p>
     </div>

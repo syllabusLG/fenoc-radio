@@ -1,1 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
+.activePagin, .li:hover{
+  background-color: #7ac8bc;
+  color: black;
+}
+

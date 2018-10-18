@@ -11,7 +11,7 @@ import { ContentComponent } from './content/content.component';
 import {AppRoutingModule} from './app.routing.module';
 import { HomeComponent } from './home/home.component';
 import {AppService} from './app.service';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { UploadComponent } from './shared/crud/upload/upload.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {XhrInterceptor} from './xhr.interceptor';
@@ -66,6 +66,7 @@ import {FiscaliteService} from './fiscalite/fiscalite.service';
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    FormsModule,
     HttpClientModule,
     StoreModule.forRoot({principal: principalReducer})
   ],

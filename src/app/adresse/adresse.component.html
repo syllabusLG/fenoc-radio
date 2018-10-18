@@ -1,3 +1,152 @@
-<p>
-  adresse works!
-</p>
+<div class="container">
+  <h3>Adresses</h3>
+  <div>
+    <div *ngIf="operation == 'add' || operation == 'edit' || operation == 'remove'">
+      <div class="card">
+        <div class="card-header bg-info text-white">
+          {{operation == 'add' ? 'Ajouter Adresse':
+          operation == 'edit' ? 'Modifier Adresse':
+          operation == 'remove' ? 'Supprimer Adresse': ''}}
+        </div>
+        <div class="card-body">
+          <div *ngIf="operation == 'add' || operation == 'edit'">
+            <form [formGroup]="adresseForm">
+              <div class="form-group">
+                <label class="control-label">ID:</label>
+                <input type="text" class="form-control" formControlName="id" [(ngModel)]="selectedAdresse.id"/>
+              </div>
+              <div class="alert alert-danger" *ngIf="adresseForm.controls['id'].invalid &&
+                              (adresseForm.controls['id'].touched || adresseForm.controls['id'].dirty)">
+                ID est obligatoire!
+              </div>
+              <div class="form-group">
+                <label>Numero rue:</label>
+                <input type="number" class="form-control" formControlName="numberStreet" [(ngModel)]="selectedAdresse.numberStreet"/>
+              </div>
+              <div class="form-group">
+                <label>Rue:</label>
+                <input type="text" class="form-control" formControlName="street" [(ngModel)]="selectedAdresse.street"/>
+              </div>
+              <div class="form-group">
+                <label>Additional adresse 1:</label>
+                <input type="text" class="form-control" formControlName="additionalAdress_1" [(ngModel)]="selectedAdresse.additionalAdress_1"/>
+              </div>
+              <div class="form-group">
+                <label>Additional adresse 2:</label>
+                <input type="text" class="form-control" formControlName="additionalAdress_2" [(ngModel)]="selectedAdresse.additionalAdress_2"/>
+              </div>
+              <div class="form-group">
+                <label>Additional adresse 3:</label>
+                <input type="text" class="form-control" formControlName="additionalAdress_3" [(ngModel)]="selectedAdresse.additionalAdress_3"/>
+              </div>
+              <div class="form-group">
+                <label>Code postal:</label>
+                <input type="text" class="form-control" formControlName="codePostal" [(ngModel)]="selectedAdresse.codePostal"/>
+              </div>
+              <div class="form-group">
+                <label>City:</label>
+                <input type="text" class="form-control" formControlName="city" [(ngModel)]="selectedAdresse.city"/>
+              </div>
+              <div class="form-group">
+                <label>Pays:</label>
+                <input type="text" class="form-control" formControlName="country" [(ngModel)]="selectedAdresse.country"/>
+              </div>
+              <div class="form-group">
+                <label>Type d'adresse:</label>
+                <input type="text" class="form-control" formControlName="typeAdresse" [(ngModel)]="selectedAdresse.typeAdresse"/>
+              </div>
+              <div class="form-group" *ngIf="operation == 'add'">
+                <label>Individu:</label>
+                <input [disabled]="operation == 'edit'" type="text" class="form-control" formControlName="individu" [(ngModel)]="selectedAdresse.individu"/>
+              </div>
+
+              <button class="btn btn-info" [disabled]="adresseForm.pristine || adresseForm.invalid"
+                      (click)="operation == 'add' ? addAdresse() : updateAdresse()">
+                {{operation == 'add' ? 'Ajouter': operation == 'edit' ? 'Modifier': ''}}
+              </button>
+            </form>
+          </div>
+          <div *ngIf="operation == 'remove'">
+            <p class="card-title">
+              ID: {{selectedAdresse.id}}
+            </p>
+            <p>
+              Voulez vous supprimer cette adresse?
+            </p>
+            <button class="btn btn-success" [disabled]="!selectedAdresse.id" (click)="deleteAdresse()">Confirmer</button>
+          </div>
+        </div>
+        <div class="card-footer">
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Mot Clé</label>
+      <input type="text" [(ngModel)]="motCle"/>
+      <button class="btn btn-primary" (click)="searchAdresse()">Chercher</button>
+    </div>
+    <div id="reportAdresse" #reportAdresse>
+      <div class="d-inline-block">
+        <a href="" data-toggle="collapse">
+          <i class="fas fa-file-csv big-icon" (click)="downloadFile(adresses)"></i>
+          <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+        </a>
+      </div>
+     <!-- <div class="d-inline-block">
+        <a href="" data-toggle="collapse">
+          <i class="fas fa-file-pdf big-icon" (click)="downloadReportPDF()"></i>
+          <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+        </a>
+      </div>-->
+      <table class="table table-hover">
+        <thead>
+        <tr>
+          <th>ID</th><th>Numero rue</th><th>Rue</th><th>Addresse_1</th><th>Addresse_2</th><th>Addresse_3</th>
+          <th>ZC</th><th>City</th><th>Pays</th><th>NIF</th><th>Type</th><th>Individu</th>
+          <th>
+            <a href="" data-toggle="collapse">
+              <i class="fas fa-plus" (click)="operation= 'add'; initAdresse()"></i>
+              <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+            </a>
+          </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let adresse of pageAdresses?.content">
+          <td>{{adresse.id}}</td>
+          <td>{{adresse.numberStreet}}</td>
+          <td>{{adresse.street}}</td>
+          <td>{{adresse.additionalAdress_1}}</td>
+          <td>{{adresse.additionalAdress_2}}</td>
+          <td>{{adresse.additionalAdress_3}}</td>
+          <td>{{adresse.codePostal}}</td>
+          <td>{{adresse.city}}</td>
+          <td>{{adresse.country}}</td>
+          <td>{{adresse.nif}}</td>
+          <td>{{adresse.typeAdresse}}</td>
+          <td>{{adresse.individu.lastName+' '+adresse.individu.firstName}}</td>
+          <td>
+            <a href=""  data-toggle="collapse" >
+              <i class="fas fa-edit" (click)="operation = 'edit'; selectedAdresse = adresse;"></i>
+              <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+            </a>
+            <a href="" data-toggle="collapse">
+              <i class="fas fa-trash-alt" (click)="operation = 'remove'; selectedAdresse = adresse;"></i>
+              <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+            </a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <div class="container">
+        <ul class="nav">
+          <li class="nav-item " [ngClass]="{'activePagin': i === currentPage}" *ngFor="let p of pages; let i=index">
+            <a class="nav-link clickable" routerLink="#" (click)="gotoPage(i)">{{i}}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
