@@ -16,12 +16,8 @@ import {AdresseService} from '../../../adresse/adresse.service';
 import {CompteService} from '../../../compte/compte.service';
 import {Compte} from '../../compte.model';
 import {FiscaliteService} from '../../../fiscalite/fiscalite.service';
-<<<<<<< HEAD
 import {Fiscalite} from '../../fiscalite.model';
 import {Filemanagement} from "../../../common/filemanagement";
-=======
-
->>>>>>> 971736f2d229eef8cfdaee70197c6b1df7b2e50b
 
 @Component({
   selector: 'app-upload',
@@ -72,8 +68,9 @@ export class UploadComponent implements OnInit {
   compteDataArray: Compte[] = [];
   compteCreatedDataArray: Compte[] = [];
   compteUpdatedDataArray: Compte[] = [];
-
-  nbreLigneRejete: number = 0;
+  fiscaliteDataArray: Fiscalite[] = [];
+  fiscaliteCreatedDataArray: Fiscalite[] = [];
+  fiscaliteUpdatedDataArray: Fiscalite[] = [];
 
   currentStep = 1;
 
@@ -256,249 +253,203 @@ export class UploadComponent implements OnInit {
   buildIndividusDataArray(dataArray){
     for (let i = 0; i < dataArray.length; i++) {
       let individus: Individus = new Individus();
-      if(dataArray[i].lastName.length !== 0 && dataArray[i].firstName.length !== 0 && dataArray[i].civility.length !== 0 &&
-        (+dataArray[i].civility === 1 || +dataArray[i].civility === 2 || +dataArray[i].civility === 3) &&
-         dataArray[i].birthDate.length !== 0 && this.isValidateDate(dataArray[i].birthDate) && this.isDateValide(dataArray[i].birthDate) && this.isAgeValide(dataArray[i].birthDate) &&
-         dataArray[i].statut.length !== 0 && (dataArray[i].statut.toUpperCase() === 'A' || dataArray[i].statut.toUpperCase() === 'D') &&
-         dataArray[i].employeeStatus.length !== 0 && (dataArray[i].employeeStatus.toUpperCase() === 'P' || dataArray[i].employeeStatus.toUpperCase() === 'S' || dataArray[i].employeeStatus.toUpperCase() === 'R') &&
-         dataArray[i].vip.length !== 0 && (dataArray[i].vip.toUpperCase() === 'Y' || dataArray[i].vip.toUpperCase() === 'N') &&
-         dataArray[i].mySensitive.length !== 0 && (dataArray[i].mySensitive.toUpperCase() === 'Y' || dataArray[i].mySensitive.toUpperCase() === 'N')) {
+      if(dataArray[i].lastName.length !== 0 && dataArray[i].civility.length !== 0 &&
+        (+dataArray[i].civility === 1 || +dataArray[i].civility === 2 || +dataArray[i].civility === 3)){
 
-        this.individusService.getOne(dataArray[i].nui).subscribe((data)=>{
-          if(data !== null){
-            this.individusUpdatedDataArray.push(data);
-          }else{
-            this.individusCreatedDataArray.push(data);
-          }
+      this.individusService.getOne(dataArray[i].nui).subscribe((data)=>{
+        if(data !== null){
+          this.individusUpdatedDataArray.push(data);
+        }else{
+          this.individusCreatedDataArray.push(data);
+        }
 
-        }, error =>{
-        });
-        individus.nui = dataArray[i].nui;
-        individus.civility = dataArray[i].civility;
-        individus.lastName = dataArray[i].lastName;
-        individus.useName = dataArray[i].useName;
-        individus.firstName = dataArray[i].firstName;
-        individus.birthDate = dataArray[i].birthDate;
-        individus.birthPlace = dataArray[i].birthPlace;
-        individus.birthCountry = dataArray[i].birthCountry;
-        individus.nationality = dataArray[i].nationality;
-        //individus.birthCountryLib = dataArray[i].lastName;*/
-        this.individusDataArray.push(individus);
-      }else{
-        this.nbreLigneRejete+=1;
-      }
-
-    }
+      }, error =>{
+      });
+      individus.nui = dataArray[i].nui;
+      individus.civility = dataArray[i].civility;
+      individus.lastName = dataArray[i].lastName;
+      individus.useName = dataArray[i].useName;
+      individus.firstName = dataArray[i].firstName;
+      individus.birthDate = dataArray[i].birthDate;
+      individus.birthPlace = dataArray[i].birthPlace;
+      individus.birthCountry = dataArray[i].birthCountry;
+      individus.nationality = dataArray[i].nationality;
+      //individus.birthCountryLib = dataArray[i].lastName;*/
+      this.individusDataArray.push(individus);
+    }}
   }
 
   buildSalarieDataArray(dataArray){
     for (let i = 0; i < dataArray.length; i++){
       let salarie: Salarie = new Salarie();
       let individu: Individus = new Individus();
-      if(dataArray[i].lastName.length !== 0 && dataArray[i].firstName.length !== 0 && dataArray[i].civility.length !== 0 &&
-        (+dataArray[i].civility === 1 || +dataArray[i].civility === 2 || +dataArray[i].civility === 3) &&
-        dataArray[i].birthDate.length !== 0 && this.isValidateDate(dataArray[i].birthDate) && this.isDateValide(dataArray[i].birthDate) && this.isAgeValide(dataArray[i].birthDate) &&
-        dataArray[i].statut.length !== 0 && (dataArray[i].statut.toUpperCase() === 'A' || dataArray[i].statut.toUpperCase() === 'D') &&
-        dataArray[i].employeeStatus.length !== 0 && (dataArray[i].employeeStatus.toUpperCase() === 'P' || dataArray[i].employeeStatus.toUpperCase() === 'S' || dataArray[i].employeeStatus.toUpperCase() === 'R') &&
-        dataArray[i].vip.length !== 0 && (dataArray[i].vip.toUpperCase() === 'Y' || dataArray[i].vip.toUpperCase() === 'N') &&
-        dataArray[i].mySensitive.length !== 0 && (dataArray[i].mySensitive.toUpperCase() === 'Y' || dataArray[i].mySensitive.toUpperCase() === 'N')){
+      if(dataArray[i].lastName.length !== 0){
 
-        this.salarieService.getOne(dataArray[i].employeeId).subscribe((data)=>{
-          if(data !== null){
-            this.salarieUpdatedDataArray.push(data);
-          }else {
-            this.salarieCreatedDataArray.push(data);
-          }
-        });
-        salarie.employeeId = dataArray[i].employeeId;
-        salarie.employeeStatus = dataArray[i].employeeStatus;
-        salarie.company_CD = dataArray[i].company_CD;
-        salarie.spc = dataArray[i].spc;
-        salarie.level_1 = dataArray[i].level_1;
-        salarie.level_2 = dataArray[i].level_2;
-        salarie.level_3 = dataArray[i].level_3;
-        salarie.level_4 = dataArray[i].level_4;
-        salarie.level_5 = dataArray[i].level_5;
-        salarie.hireDate = dataArray[i].hireDate;
-        salarie.departDate = dataArray[i].departDate;
-        salarie.lastHireDate = dataArray[i].lastHireDate;
-        salarie.lastDepartDate = dataArray[i].lastDepartDate;
-        salarie.branch_CD = dataArray[i].branch_CD;
-        salarie.statut = dataArray[i].statut;
-        salarie.vip = dataArray[i].vip;
-        salarie.mySensitive = dataArray[i].mySensitive;
-        salarie.dateEndSensitive = dataArray[i].dateEndSensitive;
-        individu.nui = dataArray[i].nui;
-        salarie.individu = individu;
-        this.salarieDataArray.push(salarie);
-      }
-    }
+
+      this.salarieService.getOne(dataArray[i].employeeId).subscribe((data)=>{
+        if(data !== null){
+          this.salarieUpdatedDataArray.push(data);
+        }else {
+          this.salarieCreatedDataArray.push(data);
+        }
+      });
+      salarie.employeeId = dataArray[i].employeeId;
+      salarie.employeeStatus = dataArray[i].employeeStatus;
+      salarie.company_CD = dataArray[i].company_CD;
+      salarie.spc = dataArray[i].spc;
+      salarie.level_1 = dataArray[i].level_1;
+      salarie.level_2 = dataArray[i].level_2;
+      salarie.level_3 = dataArray[i].level_3;
+      salarie.level_4 = dataArray[i].level_4;
+      salarie.level_5 = dataArray[i].level_5;
+      salarie.hireDate = dataArray[i].hireDate;
+      salarie.departDate = dataArray[i].departDate;
+      salarie.lastHireDate = dataArray[i].lastHireDate;
+      salarie.lastDepartDate = dataArray[i].lastDepartDate;
+      salarie.branch_CD = dataArray[i].branch_CD;
+      salarie.statut = dataArray[i].statut;
+      salarie.vip = dataArray[i].vip;
+      salarie.mySensitive = dataArray[i].mySensitive;
+      salarie.dateEndSensitive = dataArray[i].dateEndSensitive;
+      individu.nui = dataArray[i].nui;
+      salarie.individu = individu;
+      this.salarieDataArray.push(salarie);
+    }}
   }
 
   buildContactDataArray(dataArray){
     for (let i = 0; i < dataArray.length; i++){
       let contact: Contact = new Contact();
       let individu: Individus = new Individus();
-      if(dataArray[i].lastName.length !== 0 && dataArray[i].firstName.length !== 0 && dataArray[i].civility.length !== 0 &&
-        (+dataArray[i].civility === 1 || +dataArray[i].civility === 2 || +dataArray[i].civility === 3) &&
-        dataArray[i].birthDate.length !== 0 && this.isValidateDate(dataArray[i].birthDate) && this.isDateValide(dataArray[i].birthDate) && this.isAgeValide(dataArray[i].birthDate) &&
-        dataArray[i].statut.length !== 0 && (dataArray[i].statut.toUpperCase() === 'A' || dataArray[i].statut.toUpperCase() === 'D') &&
-        dataArray[i].employeeStatus.length !== 0 && (dataArray[i].employeeStatus.toUpperCase() === 'P' || dataArray[i].employeeStatus.toUpperCase() === 'S' || dataArray[i].employeeStatus.toUpperCase() === 'R') &&
-        dataArray[i].vip.length !== 0 && (dataArray[i].vip.toUpperCase() === 'Y' || dataArray[i].vip.toUpperCase() === 'N') &&
-        dataArray[i].mySensitive.length !== 0 && (dataArray[i].mySensitive.toUpperCase() === 'Y' || dataArray[i].mySensitive.toUpperCase() === 'N')){
-
-        this.contactService.getOne(dataArray[i].employeeId.toUpperCase()+"_ID").subscribe((data) =>{
-          if(data !== null){
-            this.contactUpdatedDataArray.push(data);
-          }else{
-            this.contactCreatedDataArray.push(data);
-          }
-        });
-        contact.idContact = dataArray[i].employeeId.toUpperCase()+"_ID";
-        contact.homePhone = dataArray[i].homePhone;
-        contact.businessPhone = dataArray[i].businessPhone;
-        contact.cellPhone = dataArray[i].cellPhone;
-        contact.personalEmail = dataArray[i].personalEmail;
-        contact.businessEmail = dataArray[i].businessEmail;
-        individu.nui = dataArray[i].nui;
-        contact.individu = individu;
-        this.contactDataArray.push(contact);
-      }
-    }
+      if(dataArray[i].lastName.length !== 0){
+      this.contactService.getOne(dataArray[i].employeeId.toUpperCase()+"_ID").subscribe((data) =>{
+        if(data !== null){
+          this.contactUpdatedDataArray.push(data);
+        }else{
+          this.contactCreatedDataArray.push(data);
+        }
+      });
+      contact.idContact = dataArray[i].employeeId.toUpperCase()+"_ID";
+      contact.homePhone = dataArray[i].homePhone;
+      contact.businessPhone = dataArray[i].businessPhone;
+      contact.cellPhone = dataArray[i].cellPhone;
+      contact.personalEmail = dataArray[i].personalEmail;
+      contact.businessEmail = dataArray[i].businessEmail;
+      individu.nui = dataArray[i].nui;
+      contact.individu = individu;
+      this.contactDataArray.push(contact);
+    }}
   }
 
   buildIbanDataArray(dataArray){
     for (let i = 0; i < dataArray.length; i++){
       let iban: Iban = new Iban();
       let individu: Individus = new Individus();
-      if(dataArray[i].lastName.length !== 0 && dataArray[i].firstName.length !== 0 && dataArray[i].civility.length !== 0 &&
-        (+dataArray[i].civility === 1 || +dataArray[i].civility === 2 || +dataArray[i].civility === 3) &&
-        dataArray[i].birthDate.length !== 0 && this.isValidateDate(dataArray[i].birthDate) && this.isDateValide(dataArray[i].birthDate) && this.isAgeValide(dataArray[i].birthDate) &&
-        dataArray[i].statut.length !== 0 && (dataArray[i].statut.toUpperCase() === 'A' || dataArray[i].statut.toUpperCase() === 'D') &&
-        dataArray[i].employeeStatus.length !== 0 && (dataArray[i].employeeStatus.toUpperCase() === 'P' || dataArray[i].employeeStatus.toUpperCase() === 'S' || dataArray[i].employeeStatus.toUpperCase() === 'R') &&
-        dataArray[i].vip.length !== 0 && (dataArray[i].vip.toUpperCase() === 'Y' || dataArray[i].vip.toUpperCase() === 'N') &&
-        dataArray[i].mySensitive.length !== 0 && (dataArray[i].mySensitive.toUpperCase() === 'Y' || dataArray[i].mySensitive.toUpperCase() === 'N')){
-
-        if(dataArray[i].iban.length !== 0){
-          this.ibanService.getOne(dataArray[i].iban).subscribe((data)=>{
-            if (data !== null){
-              this.ibanUpdatedDataArray.push(data);
-            } else {
-              this.ibanCreatedDataArray.push(data);
-            }
-          });
-          iban.iban = dataArray[i].iban;
-          iban.bic =  dataArray[i].bic;
-          individu.nui = dataArray[i].nui;
-          iban.individu = individu;
-          this.ibanDataArray.push(iban);
-        }
+      if(dataArray[i].lastName.length !== 0){
+      if(dataArray[i].iban.length !== 0){
+        this.ibanService.getOne(dataArray[i].iban).subscribe((data)=>{
+          if (data !== null){
+            this.ibanUpdatedDataArray.push(data);
+          } else {
+            this.ibanCreatedDataArray.push(data);
+          }
+        });
+        iban.iban = dataArray[i].iban;
+        iban.bic =  dataArray[i].bic;
+        individu.nui = dataArray[i].nui;
+        iban.individu = individu;
+        this.ibanDataArray.push(iban);
       }
-    }
+
+    }}
   }
 
   buildAdresseDataArray(dataArray){
     for (let i = 0; i < dataArray.length; i++){
       let adresse: Adresse = new Adresse();
       let individu: Individus = new Individus();
-      if(dataArray[i].lastName.length !== 0 && dataArray[i].firstName.length !== 0 && dataArray[i].civility.length !== 0 &&
-        (+dataArray[i].civility === 1 || +dataArray[i].civility === 2 || +dataArray[i].civility === 3) &&
-        dataArray[i].birthDate.length !== 0 && this.isValidateDate(dataArray[i].birthDate) && this.isDateValide(dataArray[i].birthDate) && this.isAgeValide(dataArray[i].birthDate) &&
-        dataArray[i].statut.length !== 0 && (dataArray[i].statut.toUpperCase() === 'A' || dataArray[i].statut.toUpperCase() === 'D') &&
-        dataArray[i].employeeStatus.length !== 0 && (dataArray[i].employeeStatus.toUpperCase() === 'P' || dataArray[i].employeeStatus.toUpperCase() === 'S' || dataArray[i].employeeStatus.toUpperCase() === 'R') &&
-        dataArray[i].vip.length !== 0 && (dataArray[i].vip.toUpperCase() === 'Y' || dataArray[i].vip.toUpperCase() === 'N') &&
-        dataArray[i].mySensitive.length !== 0 && (dataArray[i].mySensitive.toUpperCase() === 'Y' || dataArray[i].mySensitive.toUpperCase() === 'N')){
-
-        this.adresseService.getOne(dataArray[i].nui.toUpperCase() + dataArray[i].numberStreet).subscribe((data)=>{
-          if(data !== null){
-            this.adresseUpdatedDataArray.push(data);
-          }else {
-            this.adresseCreatedDataArray.push(data);
-          }
-        });
-        if(dataArray[i].nif.length !== 0){
-          adresse.id = dataArray[i].nui.toUpperCase() + dataArray[i].numberStreet
-          adresse.numberStreet = dataArray[i].numberStreet;
-          adresse.street = dataArray[i].street;
-          adresse.additionalAdress_1 = dataArray[i].additionalAdress_1;
-          adresse.additionalAdress_2 = dataArray[i].additionalAdress_2;
-          adresse.additionalAdress_3 = dataArray[i].additionalAdress_3;
-          adresse.codePostal = dataArray[i].codePostal;
-          adresse.city = dataArray[i].city;
-          adresse.country = dataArray[i].country;
-          adresse.nif = dataArray[i].nif;
-          adresse.typeAdresse = 'FISCALITE';
-          individu.nui = dataArray[i].nui;
-          adresse.individu = individu;
-          this.adresseDataArray.push(adresse);
+      if(dataArray[i].lastName.length !== 0){
+      this.adresseService.getOne(dataArray[i].nui.toUpperCase() + dataArray[i].numberStreet).subscribe((data)=>{
+        if(data !== null){
+          this.adresseUpdatedDataArray.push(data);
         }else {
-          adresse.id = dataArray[i].nui.toUpperCase() + dataArray[i].numberStreet
-          adresse.numberStreet = dataArray[i].numberStreet;
-          adresse.street = dataArray[i].street;
-          adresse.additionalAdress_1 = dataArray[i].additionalAdress_1;
-          adresse.additionalAdress_2 = dataArray[i].additionalAdress_2;
-          adresse.additionalAdress_3 = dataArray[i].additionalAdress_3;
-          adresse.codePostal = dataArray[i].codePostal;
-          adresse.city = dataArray[i].city;
-          adresse.country = dataArray[i].country;
-          adresse.typeAdresse = 'NORMALE';
-          individu.nui = dataArray[i].nui;
-          adresse.individu = individu;
-          this.adresseDataArray.push(adresse);
+          this.adresseCreatedDataArray.push(data);
         }
+      });
+      if(dataArray[i].nif.length !== 0){
+        adresse.id = dataArray[i].nui.toUpperCase() + dataArray[i].numberStreet
+        adresse.numberStreet = dataArray[i].numberStreet;
+        adresse.street = dataArray[i].street;
+        adresse.additionalAdress_1 = dataArray[i].additionalAdress_1;
+        adresse.additionalAdress_2 = dataArray[i].additionalAdress_2;
+        adresse.additionalAdress_3 = dataArray[i].additionalAdress_3;
+        adresse.codePostal = dataArray[i].codePostal;
+        adresse.city = dataArray[i].city;
+        adresse.country = dataArray[i].country;
+        adresse.nif = dataArray[i].nif;
+        adresse.typeAdresse = 'FISCALITE';
+        individu.nui = dataArray[i].nui;
+        adresse.individu = individu;
+        this.adresseDataArray.push(adresse);
+      }else {
+        adresse.id = dataArray[i].nui.toUpperCase() + dataArray[i].numberStreet
+        adresse.numberStreet = dataArray[i].numberStreet;
+        adresse.street = dataArray[i].street;
+        adresse.additionalAdress_1 = dataArray[i].additionalAdress_1;
+        adresse.additionalAdress_2 = dataArray[i].additionalAdress_2;
+        adresse.additionalAdress_3 = dataArray[i].additionalAdress_3;
+        adresse.codePostal = dataArray[i].codePostal;
+        adresse.city = dataArray[i].city;
+        adresse.country = dataArray[i].country;
+        adresse.typeAdresse = 'NORMALE';
+        individu.nui = dataArray[i].nui;
+        adresse.individu = individu;
+        this.adresseDataArray.push(adresse);
       }
-    }
+
+    }}
   }
 
   buildCompteDataArray(dataArray){
     for (let i = 0; i < dataArray.length; i++){
       let compte: Compte = new Compte();
       let individu: Individus = new Individus();
-      if(dataArray[i].lastName.length !== 0 && dataArray[i].firstName.length !== 0 && dataArray[i].civility.length !== 0 &&
-        (+dataArray[i].civility === 1 || +dataArray[i].civility === 2 || +dataArray[i].civility === 3) &&
-        dataArray[i].birthDate.length !== 0 && this.isValidateDate(dataArray[i].birthDate) && this.isDateValide(dataArray[i].birthDate) && this.isAgeValide(dataArray[i].birthDate) &&
-        dataArray[i].statut.length !== 0 && (dataArray[i].statut.toUpperCase() === 'A' || dataArray[i].statut.toUpperCase() === 'D') &&
-        dataArray[i].employeeStatus.length !== 0 && (dataArray[i].employeeStatus.toUpperCase() === 'P' || dataArray[i].employeeStatus.toUpperCase() === 'S' || dataArray[i].employeeStatus.toUpperCase() === 'R') &&
-        dataArray[i].vip.length !== 0 && (dataArray[i].vip.toUpperCase() === 'Y' || dataArray[i].vip.toUpperCase() === 'N') &&
-        dataArray[i].mySensitive.length !== 0 && (dataArray[i].mySensitive.toUpperCase() === 'Y' || dataArray[i].mySensitive.toUpperCase() === 'N')){
-
-        this.compteService.getOne(dataArray[i].numCompte).subscribe((data)=>{
-          if (data !== null){
-            this.compteUpdatedDataArray.push(data);
-          } else {
-            this.compteCreatedDataArray.push(data);
-          }
-        });
-        if ( dataArray[i].numCompte.length !== 0 && dataArray[i].idCptPc.length !== 0){
-          //compte de type Cash
-          compte.numCompte = dataArray[i].numCompte;
-          compte.type = dataArray[i].type;
-          compte.libCompte = dataArray[i].libCompte;
-          compte.ouvert = dataArray[i].ouvert;
-          compte.lettrage = dataArray[i].lettrage;
-          compte.idCptPc = dataArray[i].idCptPc;
-          compte.typeCompte = 'CASH';
-          individu.nui = dataArray[i].nui;
-          compte.individu = individu;
-          this.compteDataArray.push(compte);
+      if(dataArray[i].lastName.length !== 0){
+      this.compteService.getOne(dataArray[i].numCompte).subscribe((data)=>{
+        if (data !== null){
+          this.compteUpdatedDataArray.push(data);
+        } else {
+          this.compteCreatedDataArray.push(data);
         }
-        if ( dataArray[i].numCompte.length !== 0 && dataArray[i].idCptPc.length == 0 && (dataArray[i].statutAff.length !== 0 || dataArray[i].typage.length !== 0)){
-          //compte de titSal
-          compte.numCompte = dataArray[i].numCompte;
-          compte.type = dataArray[i].type;
-          compte.libCompte = dataArray[i].libCompte;
-          compte.ouvert = dataArray[i].ouvert;
-          compte.lettrage = dataArray[i].lettrage;
-          compte.statutAff = dataArray[i].statutAff;
-          compte.typage = dataArray[i].typage;
-          compte.typeCompte = 'TIT';
-          individu.nui = dataArray[i].nui;
-          compte.individu = individu;
-          this.compteDataArray.push(compte);
-        }
+      });
+      if ( dataArray[i].numCompte.length !== 0 && dataArray[i].idCptPc.length !== 0){
+        //compte de type Cash
+        compte.numCompte = dataArray[i].numCompte;
+        compte.type = dataArray[i].type;
+        compte.libCompte = dataArray[i].libCompte;
+        compte.ouvert = dataArray[i].ouvert;
+        compte.lettrage = dataArray[i].lettrage;
+        compte.idCptPc = dataArray[i].idCptPc;
+        compte.typeCompte = 'CASH';
+        individu.nui = dataArray[i].nui;
+        compte.individu = individu;
+        this.compteDataArray.push(compte);
       }
-
-    }
+      if ( dataArray[i].numCompte.length !== 0 && dataArray[i].idCptPc.length == 0 && (dataArray[i].statutAff.length !== 0 || dataArray[i].typage.length !== 0)){
+        //compte de titSal
+        compte.numCompte = dataArray[i].numCompte;
+        compte.type = dataArray[i].type;
+        compte.libCompte = dataArray[i].libCompte;
+        compte.ouvert = dataArray[i].ouvert;
+        compte.lettrage = dataArray[i].lettrage;
+        compte.statutAff = dataArray[i].statutAff;
+        compte.typage = dataArray[i].typage;
+        compte.typeCompte = 'TIT';
+        individu.nui = dataArray[i].nui;
+        compte.individu = individu;
+        this.compteDataArray.push(compte);
+      }
+    }}
   }
   /*buildFiscaliteDataArray(dataArray){
     for (let i = 0; i < dataArray.length; i++){
@@ -1305,7 +1256,6 @@ export class UploadComponent implements OnInit {
 
   }
 
-<<<<<<< HEAD
   private isNoIgnoredLine(dataArray){
    /* if(this.civilityRequired && this.civilityFalseValue && this.lastNameGiven && this.firstNameGiven
        && this.birthDateGiven && this.birthDateValid && this.codePaysFound && this.statusGiven && this.statusValid
@@ -1332,7 +1282,5 @@ export class UploadComponent implements OnInit {
     Filemanagement.downloadPDFModules(this.report.nativeElement.innerHTML);
 
   }
-=======
->>>>>>> 971736f2d229eef8cfdaee70197c6b1df7b2e50b
 
 }

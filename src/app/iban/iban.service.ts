@@ -32,7 +32,4 @@ export class IbanService implements CrudService{
   getOne(id): Observable<any>{
     return this.http.get(API_URLS.IBAN_URL +`/${id}`);
   }
-  search(motCle:string, page:number, size:number): Observable<any>{
-    return this.http.get(API_URLS.ADRESSE_URL_SEARCH+'?mc='+motCle+'&size='+size+'&page='+page);
-  }
 }

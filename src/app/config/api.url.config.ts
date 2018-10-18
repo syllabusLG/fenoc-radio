@@ -10,7 +10,6 @@ export const API_URLS = {
   CONTACT_URL: BASE + ':' + PORT + PATH + '/contact',
   IBAN_URL: BASE + ':' + PORT + PATH + '/iban',
   ADRESSE_URL: BASE + ':' + PORT + PATH + '/adresse',
-  ADRESSE_URL_SEARCH: BASE + ':' + PORT + PATH + '/adresse/search',
   COMPTE_URL: BASE + ':' + PORT + PATH + '/compte',
   FISCALITE_URL: BASE + ':' + PORT + PATH + '/fiscalite',
   FILE_URL: BASE + ':' + PORT + PATH + '/file',

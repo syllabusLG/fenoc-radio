@@ -13,6 +13,4 @@ export  interface CrudService {
   addAll(list): Observable<any>;
 
   getOne(id): Observable<any>;
-
-  search(motCle:string, page:number, size:number): Observable<any>;
 }

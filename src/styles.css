@@ -1,5 +1,4 @@
 /* You can add global styles to this file, and also import other style files */
-<<<<<<< HEAD
 html, body {
   height: 100%;
 }
@@ -14,10 +13,3 @@ html, body {
   vertical-align: middle;
   display: table-cell;
 }
-=======
-.activePagin, .li:hover{
-  background-color: #7ac8bc;
-  color: black;
-}
-
->>>>>>> 971736f2d229eef8cfdaee70197c6b1df7b2e50b

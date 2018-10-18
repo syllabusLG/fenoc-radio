@@ -28,10 +28,6 @@
         "../node_modules/jquery/dist/jquery.min.js",
         "../node_modules/popper.js/dist/umd/popper.min.js",
         "../node_modules/bootstrap/dist/js/bootstrap.min.js"
-<<<<<<< HEAD
-=======
-
->>>>>>> 971736f2d229eef8cfdaee70197c6b1df7b2e50b
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

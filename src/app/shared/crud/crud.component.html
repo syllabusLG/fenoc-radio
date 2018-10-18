@@ -137,16 +137,10 @@
   <h3>{{title}}</h3>
   <ul class="nav nav-tabs">
     <li class="nav-item">
-      <a class="nav-link" data-toggle="collapse" *ngIf="title== 'Utilisateurs' || title== 'Adresses'" [ngClass]="{'active': crudType == 'sample' }" href="" (click)="crudType = 'sample'">Simple Crud</a>
+      <a class="nav-link" data-toggle="collapse" *ngIf="title== 'Utilisateurs'" [ngClass]="{'active': crudType == 'sample' }" href="" (click)="crudType = 'sample'">Simple Crud</a>
     </li>
-<<<<<<< HEAD
     <li >
       <a data-toggle="collapse" [ngClass]="{'active': crudType == 'upload' }" href="" (click)="crudType = 'upload'"></a>
-=======
-
-    <li class="nav-item">
-      <a class="nav-link" data-toggle="collapse" [ngClass]="{'active': crudType == 'upload' }" href="" (click)="crudType = 'upload'">Importer un fichier</a>
->>>>>>> 971736f2d229eef8cfdaee70197c6b1df7b2e50b
     </li>
   </ul>
   <div class="container" [ngStyle]="{'margin-top': '20px'}">
