@@ -1,142 +1,17 @@
 <div class="custom-file">
-  <input type="file"  id="customFile" #fileUploadInput (change)="selectFile($event)" accept=".csv">
+  <input type="file" id="customFile" #fileUploadInput (change)="selectFile($event)"  accept=".csv" >
   <label class="custom-file-label" for="customFile">{{fileName ? fileName : 'Choisissez un fichier!'}}</label>
 </div>
 <div class="checkout-wrap">
   <ul class="checkout-bar">
-    <li [ngClass]="{active: currentStep == 1, visited: currentStep>1}" (click)="selectedStep=1;">Importer un fichier</li>
-    <li [ngClass]="{active: currentStep == 2, visited: currentStep>2}" (click)="selectedStep=2;">Envoyer</li>
-    <li [ngClass]="{active: currentStep == 3, visited: currentStep>3}" (click)="selectedStep=3;">Récupérer les données</li>
+    <li [ngClass]="{active: currentStep == 1, visited: currentStep>1}" (click)="selectedStep=1;" >Importer un fichier</li>
+    <li [ngClass]="{active: currentStep == 2, visited: currentStep>2}" (click)="selectedStep=2;" >Envoyer</li>
+    <li [ngClass]="{active: currentStep == 3, visited: currentStep>3}" (click)="selectedStep=3;" >Récupérer les données</li>
   </ul>
 </div>
 <div [ngSwitch]="selectedStep">
   <div *ngSwitchCase="1">
-    <div id="content" #content>
-      <div *ngIf="!company_cd_required">
-        <p class=" badge-dark ">Le code de l'entreprise de la ligne {{company_cd_required_line}} n'est pas renseigné !</p>
-      </div>
-      <div *ngIf="!company_cd_unique && company_cd_required">
-        <p class=" badge-dark ">Votre fichier doit être mono-entreprise. Il comporte plusieurs codes entreprises !</p>
-      </div>
-      <div *ngIf="!numIdentityUniqueRequired">
-        <p class=" badge-dark ">Le numéro unique d'identification de la ligne {{numIdentityUniqueRequiredLine}} n'est pas renseigné !</p>
-      </div>
-      <div *ngIf="!employee_id_required">
-        <p class=" badge-dark ">Le matricule du salarié de la ligne {{employee_id_required_line}} n'est pas renseigné !</p>
-      </div>
-      <div *ngIf="!employeeIdWellFormatted && employee_id_required && company_cd_required && numIdentityUniqueRequired && company_cd_unique">
-        <p class=" badge-dark ">Le matricule du salarié de la ligne {{employeeIdWellFormattedLine}} est mal renseigné il doit être composé du numéro d'identification et du code entreprise !</p>
-      </div>
-      <div *ngIf="!noEmployeeDuplicated">
-        <p class=" badge-dark ">L'employée {{duplicateFirstName}} {{duplicateLastName}} est dupliqué car son numéro d'identification et son matricule salarié apparaissent plusieurs fois dans le fichier!</p>
-      </div>
-      <div *ngIf="!civilityRequired">
-        <p class="badge-danger">La civilité de l'affilié de la ligne {{civilityRequiredLine}} n'est pas renseignée si vous continuez cette ligne sera ignorée !</p>
-      </div>
-      <div *ngIf="!civilityFalseValue && civilityRequired">
-        <p class="badge-danger">Le code de la civilité de la ligne {{civilityRequiredLine}} est invalide. il doit être égale à 1, 2, 3  si vous continuez cette ligne sera ignorée !</p>
-      </div>
-      <div *ngIf="!lastNameGiven">
-        <p class="badge-danger">Le nom de l'affilié de la ligne {{lastNameGivenline}} n'est pas renseigné si vous continuez cette ligne sera ignorée !</p>
-      </div>
-      <div *ngIf="!firstNameGiven">
-        <p class="badge-danger">Le prénom de l'affilié de la ligne {{firstNameGivenline}} n'est pas renseigné si vous continuez cette ligne sera ignorée !</p>
-      </div>
-      <div *ngIf="!personalEmailValid">
-        <p class="badge-warning">le format du mail personnel de la ligne {{personalEmailValidLine}} est invalide si vous continuez ce champ ne sera pas renseigné!</p>
-      </div>
-      <div *ngIf="!businessEmailValid">
-        <p class="badge-warning">le format du mail professionel de la ligne {{businessEmailValidLine}} est invalide si vous continuez ce champ ne sera pas renseigné !</p>
-      </div>
-      <div *ngIf="!birthDateGiven">
-        <p class="badge-danger">La date de naissance de l'affilié à la ligne {{birthDateValidLine}} n'est pas renseigné si vous continuez cette ligne sera ignorée !</p>
-      </div>
-      <div *ngIf="!birthDateValid">
-        <p class="badge-danger">La date de naissance de l'affilié à la ligne {{birthDateValidLine}} est invalide. Le format doit être DD/MM/YYYY et valide si vous continuez cette ligne sera ignorée !</p>
-      </div>
-      <div *ngIf="!codePaysFound">
-        <p class="badge-danger">Le code ISO du champ birthCountry de la ligne {{codePaysFoundLine}} est invalide. Si vous continuez cette ligne sera ignorée !</p>
-      </div>
-      <div *ngIf="!statusGiven">
-        <p class="badge-danger">Le statut de l'affilié de la ligne {{statusGivenLine}} n'est pas renseignée si vous continuez cette ligne sera ignorée !</p>
-      </div>
-      <div *ngIf="!statusValid">
-        <p class="badge-danger">Le statut de l'affilié de la ligne {{statusGivenLine}} du fichier est invalide. Il doit être égale à A ou D si vous continuez cette ligne sera ignorée !</p>
-      </div>
-      <div *ngIf="!vipGiven">
-        <p class="badge-danger">Le champ VIP de l'affilié de la ligne {{vipGivenLine}} n'est pas renseignée si vous continuez cette ligne sera ignorée !</p>
-      </div>
-      <div *ngIf="!vipValid">
-        <p class="badge-danger">Le champ VIP de l'affilié de la ligne {{vipGivenLine}} du fichier est invalide. Il doit être égale à Y ou N si vous continuez cette ligne sera ignorée !</p>
-      </div>
-      <div *ngIf="!sensitiveGiven">
-        <p class="badge-danger">Le champ SENSITIVE de l'affilié de la ligne {{sensitiveGivenLine}} n'est pas renseignée si vous continuez cette ligne sera ignorée !</p>
-      </div>
-      <div *ngIf="!sensitiveValid">
-        <p class="badge-danger">Le champ SENSITIVE de l'affilié de la ligne {{sensitiveGivenLine}} du fichier est invalide. Il doit être égale à Y ou N si vous continuez cette ligne sera ignorée !</p>
-      </div>
-      <div *ngIf="!dateEndSensitiveValid">
-        <p class="badge-danger">Le format de la date de fin de sensibilité de la ligne {{dateEndSensitiveValidLine}} est invalide. Le format doit être DD/MM/YYYY et valide si vous continuez cette ligne sera ignorée !</p>
-      </div>
-      <div *ngIf="!conformFlagSensitive">
-        <p class="badge-danger">La date de fin de sensibilité est renseignée à la ligne {{conformFlagSensitiveLine}} alors le flag sensitive doit être renseigneé à Y. Si vous continuez cette ligne sera ignorée !</p>
-      </div>
-      <div *ngIf="!employeStatusGiven">
-        <p class="badge-danger">Le statut de l'employé de la ligne {{employeStatusGivenLine}} du fichier n'est pas renseignée si vous continuez cette ligne sera ignorée !</p>
-      </div>
-      <div *ngIf="!employeStatusValid">
-        <p class="badge-danger">Le statut de l'employé de la ligne {{employeStatusGivenLine}} du fichier est invalide. Il doit être égale à P, S ou R si vous continuez cette ligne sera ignorée !</p>
-      </div>
-      <div *ngIf="!hireDateValid">
-        <p class="badge-danger">Le format de la date d'embauche de la ligne {{hireDateValidLine}} est invalide. Le format doit être DD/MM/YYYY et valide si vous continuez cette ligne sera ignorée !</p>
-      </div>
-      <div *ngIf="!departDateValid">
-        <p class="badge-danger">Le format de la date de depart de la ligne {{departDateValidLine}} est invalide. Le format doit être DD/MM/YYYY et valide si vous continuez cette ligne sera ignorée !</p>
-      </div>
-      <div *ngIf="!employeNoDepartDate">
-        <p class="badge-danger">Le champ employeeStatus de la ligne {{employeNoDepartDateLine}} est renseigné à P alors le champs departDate ne peut être renseigné. Si vous continuez cette ligne sera ignorée !</p>
-      </div>
-      <div *ngIf="!employeDepartDate">
-        <p class="badge-danger">Si le champ employeeStatus de la ligne {{employeDepartDateLine}} est renseigné à R ou S alors le champs departDate doit être renseigné. Si vous continuez cette ligne sera ignorée !</p>
-      </div>
-      <div *ngIf="!lastHireDateValid">
-        <p class="badge-danger">Le format de la dernière date d'embauche de la ligne {{lastHireDateValidLine}} est invalide. Le format doit être DD/MM/YYYY et valide si vous continuez cette ligne sera ignorée !</p>
-      </div>
-      <div *ngIf="!lastDepartDateValid">
-        <p class="badge-danger">Le format de la dernière date de depart de la ligne {{lastDepartDateValidLine}} est invalide. Le format doit être DD/MM/YYYY et valide si vous continuez cette ligne sera ignorée !</p>
-      </div>
-      <div *ngIf="!numberStreetIncomplet">
-        <p class="badge-warning">Au moins une informartion suplémentaire est necessaire pour completer l'adresse à la ligne {{numberStreetIncompletLine}}. Si vous continuez ce champ ne sera pas renseigné!</p>
-      </div>
-      <div *ngIf="!adressValid">
-        <p class="badge-warning">L'adresse de l'affilié à la ligne {{adressValidLine}} est invalide. Si vous continuez ce champ ne sera pas renseigné!</p>
-      </div>
-      <div *ngIf="!codeIsoCountryValid">
-        <p class="badge-warning">Le code ISO du champ country de l'adresse de la ligne {{codeIsoCountryValidLine}} est invalide. Si vous continuez ce champ ne sera pas renseigné!</p>
-      </div>
-      <div *ngIf="!bicGiven">
-        <p class="badge-warning">Les deux champs IBAN et BIC de la ligne {{bicGivenLine}} doivent être renseignés. Si vous continuez ces champs ne seront pas renseignés!</p>
-      </div>
-      <div *ngIf="!bicValid">
-        <p class="badge-warning">Le champ BIC de la ligne {{bicValidLine}} est invalide. Si vous continuez ce champ ne sera pas renseigné!</p>
-      </div>
-      <div *ngIf="!ibanValid">
-        <p class="badge-warning">Le champ IBAN de la ligne {{ibanValidLine}} est invalide. Si vous continuez ce champ ne sera pas renseigné!</p>
-      </div>
-      <div *ngIf="!bicIbanValid">
-        <p class="badge-warning">Les champs BIC et IBAN de la ligne {{bicIbanValidLine}} ne sont pas conformes. Si vous continuez ces champs ne seront pas renseignés!</p>
-      </div>
-    </div>
-    <div *ngIf="!company_cd_required || !company_cd_unique || !numIdentityUniqueRequired || !employee_id_required
-                || !employeeIdWellFormatted || !noEmployeeDuplicated || !civilityRequired || !civilityFalseValue
-                || !lastNameGiven || !firstNameGiven || !personalEmailValid || !businessEmailValid || !birthDateGiven
-                || !birthDateValid || !codePaysFound || !statusGiven || !statusValid || !vipGiven || !vipValid || !sensitiveGiven
-                || !sensitiveValid || !dateEndSensitiveValid || !conformFlagSensitive || !employeStatusGiven || !employeStatusValid
-                || !hireDateValid || !departDateValid || !employeNoDepartDate || !employeDepartDate || !lastHireDateValid
-                || !lastDepartDateValid || !numberStreetIncomplet || !adressValid || !codeIsoCountryValid || !bicGiven
-                || !bicValid || !ibanValid || !bicIbanValid">
-      <button class="btn btn-outline-dark" (click)="downloadPDF()">Export to PDF</button>
-    </div>
+
 
     <div *ngIf="dataArray; else emptyData">
       <table class="table table-hover">
@@ -152,6 +27,8 @@
         </tbody>
       </table>
     </div>
+
+
     <div *ngIf="!dataArray">
       <p>Aucune donnée importée.</p>
     </div>
@@ -184,7 +61,7 @@
       <p>Module Adresse: Nombre de lignes mises à jour: <span class="lead">{{adresseUpdatedDataArray.length}}</span></p>
       <p>Module Compte: Nombre de lignes mises à jour: <span class="lead">{{compteUpdatedDataArray.length}}</span></p>
     </div>
-    <button class="btn btn-outline-success" (click)="downloadReportPDF()">Export Report to PDF</button>
+    <button class="btn btn-outline-success" (click)="downloadPDFModules($event)">Export Report to PDF</button>
     <div *ngIf="dataFromServer">
       <table class="table table-hover">
         <thead>

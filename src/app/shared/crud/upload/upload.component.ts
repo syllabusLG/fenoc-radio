@@ -17,6 +17,7 @@ import {CompteService} from '../../../compte/compte.service';
 import {Compte} from '../../compte.model';
 import {FiscaliteService} from '../../../fiscalite/fiscalite.service';
 import {Fiscalite} from '../../fiscalite.model';
+import {Filemanagement} from "../../../common/filemanagement";
 
 @Component({
   selector: 'app-upload',
@@ -44,6 +45,9 @@ export class UploadComponent implements OnInit {
 
   @Output()
   updateData: EventEmitter<any> = new EventEmitter<any>();
+
+  @Output()
+  errorMessages: EventEmitter<any> = new EventEmitter<any>();
 
   dataArray:  any = null;
   individusDataArray: Individus[] = [];
@@ -188,18 +192,20 @@ export class UploadComponent implements OnInit {
   fileName: string = '';
 
   COUNTRY = COUNTRY;
-
+  @Output() messageEvent = new EventEmitter<any>();
   constructor(private individusService: IndividusService,
               private salarieService: SalarieService,
               private contactService: ContactService,
               private ibanService: IbanService,
               private adresseService: AdresseService,
               private compteService: CompteService,
-              private fiscaliteService: FiscaliteService) { }
+              private fiscaliteService: FiscaliteService,
+              private filemanagement: Filemanagement) { }
 
   ngOnInit() {
     this.dataModelListFiltred = this.dataModelList.filter(dataModel => !dataModel.readonly);
   }
+
 
   getBindHeadersDataModelListArray(headers){
     let bindArray = [];
@@ -470,6 +476,7 @@ export class UploadComponent implements OnInit {
   }*/
 
   selectFile($event){
+
     let fileList = $event.srcElement.files;
     let file = fileList[0];
     if(file && file.name.endsWith(".csv")){
@@ -510,9 +517,83 @@ export class UploadComponent implements OnInit {
 
         this.currentStep++;
 
+        this.emmitErrors();
 
       };
     }
+  }
+
+  public emmitErrors() {
+    this.errorMessages.emit({
+      company_cd_unique: this.company_cd_unique,
+      company_cd_required_line: this.company_cd_required_line,
+      numIdentityUniqueRequired: this.numIdentityUniqueRequired,
+      numIdentityUniqueRequiredLine: this.numIdentityUniqueRequiredLine,
+      company_cd_required: this.company_cd_required,
+      employee_id_required: this.employee_id_required,
+      employee_id_required_line: this.employee_id_required_line,
+      employeeIdWellFormatted: this.employeeIdWellFormatted,
+      employeeIdWellFormattedLine: this.employeeIdWellFormattedLine,
+      noEmployeeDuplicated: this.noEmployeeDuplicated,
+      duplicateFirstName: this.duplicateFirstName,
+      duplicateLastName: this.duplicateLastName,
+      civilityRequired: this.civilityRequired,
+      civilityRequiredLine: this.civilityRequiredLine,
+      civilityFalseValue: this.civilityFalseValue,
+      lastNameGiven: this.lastNameGiven,
+      lastNameGivenline: this.lastNameGivenline,
+      firstNameGiven: this.firstNameGiven,
+      firstNameGivenline: this.firstNameGivenline,
+      personalEmailValid: this.personalEmailValid,
+      personalEmailValidLine: this.personalEmailValidLine,
+      businessEmailValid: this.businessEmailValid,
+      businessEmailValidLine: this.businessEmailValidLine,
+      birthDateGiven: this.birthDateGiven,
+      birthDateValid: this.birthDateValid,
+      codePaysFound: this.codePaysFound,
+      codePaysFoundLine: this.codePaysFoundLine,
+      statusGiven: this.statusGiven,
+      statusGivenLine: this.statusGivenLine,
+      statusValid: this.statusValid,
+      vipGiven: this.vipGiven,
+      vipGivenLine: this.vipGivenLine,
+      vipValid: this.vipValid,
+      sensitiveGiven: this.sensitiveGiven,
+      sensitiveGivenLine: this.sensitiveGivenLine,
+      sensitiveValid: this.sensitiveValid,
+      dateEndSensitiveValid: this.dateEndSensitiveValid,
+      dateEndSensitiveValidLine: this.dateEndSensitiveValidLine,
+      conformFlagSensitive: this.conformFlagSensitive,
+      conformFlagSensitiveLine: this.conformFlagSensitiveLine,
+      employeStatusGiven: this.employeStatusGiven,
+      employeStatusGivenLine: this.employeStatusGivenLine,
+      employeStatusValid: this.employeStatusValid,
+      hireDateValid: this.hireDateValid,
+      hireDateValidLine: this.hireDateValidLine,
+      departDateValid: this.departDateValid,
+      departDateValidLine: this.departDateValidLine,
+      employeNoDepartDate: this.employeNoDepartDate,
+      employeNoDepartDateLine: this.employeNoDepartDateLine,
+      employeDepartDate: this.employeDepartDate,
+      employeDepartDateLine: this.employeDepartDateLine,
+      lastHireDateValid: this.lastHireDateValid,
+      lastHireDateValidLine: this.lastHireDateValidLine,
+      lastDepartDateValid: this.lastDepartDateValid,
+      lastDepartDateValidLine: this.lastDepartDateValidLine,
+      numberStreetIncomplet: this.numberStreetIncomplet,
+      numberStreetIncompletLine: this.numberStreetIncompletLine,
+      adressValidLine: this.adressValidLine,
+      codeIsoCountryValid: this.codeIsoCountryValid,
+      codeIsoCountryValidLine: this.codeIsoCountryValidLine,
+      bicGiven: this.bicGiven,
+      bicGivenLine: this.bicGivenLine,
+      bicValid: this.bicValid,
+      bicValidLine: this.bicValidLine,
+      ibanValid: this.ibanValid,
+      ibanValidLine: this.ibanValidLine,
+      bicIbanValid: this.bicIbanValid,
+      bicIbanValidLine: this.bicIbanValidLine
+    });
   }
   controlePrealable(dataArray){
     this.company_cd_required = this.isCompanyCdCorrect(dataArray);
@@ -1192,6 +1273,14 @@ export class UploadComponent implements OnInit {
       }
     }
     return false;
+
+  }
+
+  public downloadPDFModules($event:any){
+    $event.preventDefault();
+    $event.stopPropagation();
+    Filemanagement.downloadPDFModules(this.report.nativeElement.innerHTML);
+
   }
 
 }

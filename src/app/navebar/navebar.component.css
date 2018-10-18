@@ -1,0 +1,26 @@
+.navbarbg{
+  background-color: #12899e;
+  background-size: contain;
+}
+.fontAwesomeBar {
+  background-color: white;
+  size: auto;
+  color: #12899e;
+}
+
+.logBt {
+  background-color: #12899e;
+  border-radius: 5px;
+  box-shadow: 0 0 3px white;
+}
+
+.h3{
+  margin: 4px;
+  }
+
+.logosmallimg {
+  background-image: url('../shared/images/logosmall.jpg');
+  background-size: cover;
+  width:210px;
+  height:60px;
+}

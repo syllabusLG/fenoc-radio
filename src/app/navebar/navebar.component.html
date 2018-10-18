@@ -1,10 +1,21 @@
-<div>
-  <div class="pull-right">
-    <button class="btn btn-outline-danger btn-sm" (click)="logout()">Log Out</button>
-  </div>
-  <a href=""  data-toggle="collapse" (click)="afficherSideBar()"><i class="fa fa-bars" aria-hidden="true"></i></a>
-  <hr>
-  <nav class="navbar navbar-expand-sm bg-light">
+<nav class="navbar navbarbg navbar-toggleable-xl ">
+
+      <a href="" data-toggle="collapse" (click)="afficherSideBar()">
+        <i class="fa fa-bars" style="font-size:40px;color:white; margin: 15px;" ></i>
+      </a>
+
+      <a class="navbar-brand logosmallimg">
+       <img >
+      </a>
+
+      <div class="navbar-nav ml-auto">
+        <a class="nav-item">
+          <button class="btn btn-info logBt" (click)="logout()">LOG OUT</button>
+        </a>
+      </div>
+</nav>
+
+  <nav class="navbar navbar-expand-sm bg-light" style="height:40px ">
     <i class="glyphicon glyphicon-search"></i>
     <ul class="navbar-nav">
       <li class="nav-item">
@@ -17,5 +28,6 @@
         <a class="nav-link" href="#">Link 3</a>
       </li>
     </ul>
+
   </nav>
-</div>
+

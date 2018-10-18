@@ -13,10 +13,14 @@ export class NavebarComponent implements OnInit {
   showSideBar:boolean;
   @Output()
   showSideBarChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+
   constructor(private router: Router, private appService: AppService) { }
 
-  ngOnInit() {
+  ngOnInit()
+   {
   }
+
+
   afficherSideBar(){
     this.showSideBar = !this.showSideBar;
     this.showSideBarChange.emit(this.showSideBar);

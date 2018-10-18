@@ -1,1 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
+html, body {
+  height: 100%;
+}
+
+.align-content-vertical-parent {
+  display: table;
+  width: 100%;
+}
+
+
+.align-content-vertical-child {
+  vertical-align: middle;
+  display: table-cell;
+}

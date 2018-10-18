@@ -10,7 +10,9 @@ export class HomeComponent implements OnInit {
   showHideSideBar:boolean=false;
   onShowSideBarChange(showHideSideBar){
     this.showHideSideBar = showHideSideBar;
+
   }
+
   constructor() { }
 
   ngOnInit() {

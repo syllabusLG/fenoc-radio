@@ -38,6 +38,8 @@ import { CompteComponent } from './compte/compte.component';
 import {CompteService} from './compte/compte.service';
 import { FiscaliteComponent } from './fiscalite/fiscalite.component';
 import {FiscaliteService} from './fiscalite/fiscalite.service';
+import {TranslatePipe} from "./common/pipes/translate.pipe";
+import {Filemanagement} from "./common/filemanagement";
 
 
 @NgModule({
@@ -60,7 +62,8 @@ import {FiscaliteService} from './fiscalite/fiscalite.service';
     IbanComponent,
     AdresseComponent,
     CompteComponent,
-    FiscaliteComponent
+    FiscaliteComponent,
+    TranslatePipe
   ],
   imports: [
     BrowserModule,
@@ -81,7 +84,8 @@ import {FiscaliteService} from './fiscalite/fiscalite.service';
     IbanService,
     AdresseService,
     CompteService,
-    FiscaliteService
+    FiscaliteService,
+    Filemanagement
   ],
   bootstrap: [AppComponent]
 })
