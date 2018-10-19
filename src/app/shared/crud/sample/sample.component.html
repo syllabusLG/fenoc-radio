@@ -27,7 +27,7 @@
         <th *ngFor="let dataModel of dataModelList">{{dataModel.columnReference}}</th>
         <th>
           <a href="" data-toggle="collapse">
-            <i class="fas fa-plus" (click)="operation= 'add'; init()"></i>
+            <i class="fa fa-plus" (click)="operation= 'add'; init()"></i>
             <!--<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">-->
           </a>
           <!--<button class="btn btn-outline-primary btn-sm" (click)="operation = 'add'; init();">ADD</button>-->
@@ -39,11 +39,11 @@
         <td *ngFor="let dataModel of dataModelList">{{item[dataModel.columnName]}}</td>
         <td>
           <a href=""  data-toggle="collapse" >
-            <i class="fas fa-edit" (click)="operation = 'edit'; selectedItem = item;"></i>
+            <i class="fa fa-edit" (click)="operation = 'edit'; selectedItem = item;"></i>
             <!--<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">-->
           </a>
           <a href="" data-toggle="collapse">
-            <i class="fas fa-trash-alt" (click)="operation = 'remove'; selectedItem = item;"></i>
+            <i class="fa fa-trash" (click)="operation = 'remove'; selectedItem = item;"></i>
             <!--<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">-->
           </a>
           <!--<button class="btn btn-sm btn-outline-primary" (click)="operation = 'edit'; selectedItem = item;">Edit</button>
