@@ -72,10 +72,10 @@
       </div>
     </div>
     <div class="text-center">
-      <button type="button" class="btn btn-info btn-lg btn-block" (click)="downloadReportPDF()" >EXPORT REPORT TO PDF</button>
+      <button type="button" class="btn btn-info btn-lg btn-block" (click)="downloadPDFModules($event)" >EXPORT REPORT TO PDF</button>
     </div>
+    <!--<button class="btn btn-outline-success" (click)="downloadPDFModules($event)">Export Report to PDF</button>-->
 
-    <button class="btn btn-outline-success" (click)="downloadPDFModules($event)">Export Report to PDF</button>
     <div *ngIf="dataFromServer">
 
     <!--<a href=""  data-toggle="collapse" >
