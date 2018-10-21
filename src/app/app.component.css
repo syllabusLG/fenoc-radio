@@ -1,5 +1,24 @@
-.body{
+.body-wrapper {
   /*padding-top: 10px;
   padding-left: 10px;*/
   height: 100%;
+  display: table;
+  width: 100%;
+}
+
+.body-login-wrapper {
+  height: 100%;
+}
+
+.footer-amundi {
+  /*display: block;*/
+  text-align: center;
+  background-color: #12899e;
+  /*position: inherit;*/
+  /*margin-top: 20px;*/
+  /*bottom: 0px;*/
+}
+
+.footer-wrapper {
+  display: table-footer-group;
 }

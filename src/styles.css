@@ -9,12 +9,13 @@ html, body {
   width: 100%;
 }
 
-
 .align-content-vertical-child {
   vertical-align: middle;
   display: table-cell;
 }
-.activePagin, .li:hover{
+
+.activePagin, .li:hover {
   background-color: #7ac8bc;
   color: black;
 }
+

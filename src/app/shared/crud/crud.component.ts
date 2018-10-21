@@ -50,6 +50,7 @@ export class CrudComponent implements OnInit {
 
   handleErrors(allErrors: any = {}) {
     this.errors = allErrors;
+    console.log(this.errors)
   }
 
 

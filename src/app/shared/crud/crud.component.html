@@ -118,14 +118,17 @@
       </div>
         </div>
 
-        <div class="col-sm-1" style="align-self:center"
-             *ngIf="errors.company_cd_required==false || errors.company_cd_unique==false || errors.numIdentityUniqueRequired==false || errors.employee_id_required==false
-                || errors.employeeIdWellFormatted==false || errors.noEmployeeDuplicated ==false|| errors.civilityRequired==false || errors.civilityFalseValue==false
-                || errors.lastNameGiven==false || errors.firstNameGiven==false || errors.personalEmailValid==false ||errors.businessEmailValid==false || errors.birthDateGiven==false
-                || errors.birthDateValid==false || errors.codePaysFound ==false|| errors.statusGiven==false || !statusValid==false || errors.vipGiven==false || errors.vipValid ||errors.sensitiveGiven==false
-                || errors.sensitiveValid==false || errors.dateEndSensitiveValid==false || errors.conformFlagSensitive==false|| errors.employeStatusGiven==false || errors.employeStatusValid==false
-                || errors.hireDateValid ==false|| errors.departDateValid==false || errors.employeNoDepartDate==false || errors.employeDepartDate==false|| errors.lastHireDateValid==false
-                || errors.bicValid==false|| errors.ibanValid==false || errors.bicIbanValid==false">
+        <div class="col-sm-1" style="align-self:center" *ngIf="(errors.company_cd_required == false || errors.company_cd_unique== false ||
+                errors.numIdentityUniqueRequired== false || errors.employee_id_required== false || errors.employeeIdWellFormatted== false ||
+                errors.noEmployeeDuplicated== false || errors.civilityRequired== false || errors.civilityFalseValue== false || errors.lastNameGiven== false ||
+                errors.firstNameGiven== false || errors.personalEmailValid== false || errors.businessEmailValid== false || errors.birthDateGiven ||
+                errors.birthDateValid== false || errors.codePaysFound== false || errors.statusGiven== false || errors.statusValid== false ||
+                errors.vipGiven== false || errors.vipValid== false || errors.sensitiveGiven== false || errors.sensitiveValid== false ||
+                errors.dateEndSensitiveValid== false || errors.conformFlagSensitive== false || errors.employeStatusGiven== false ||
+                errors.employeStatusValid== false || errors.hireDateValid== false || errors.departDateValid== false || errors.employeNoDepartDate== false ||
+                errors.employeDepartDate== false || errors.lastHireDateValid== false || errors.lastDepartDateValid== false || errors.numberStreetIncomplet== false
+                || errors.adressValid== false || errors.codeIsoCountryValid== false || errors.bicGiven== false
+                || errors.bicValid== false || errors.ibanValid== false || errors.bicIbanValid== false)">
               <a href="" (click)="downloadPDF($event)">
                 <i class="fa fa-arrow-circle-o-down" style="font-size:40px;color:#12899e;" ></i>
               </a>

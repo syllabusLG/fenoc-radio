@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewEncapsulation,} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AppService} from '../app.service';
 import {Router} from '@angular/router';
@@ -6,7 +6,8 @@ import {Router} from '@angular/router';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class LoginComponent implements OnInit {
 
@@ -31,5 +32,4 @@ export class LoginComponent implements OnInit {
       this.router.navigateByUrl('home/(contentOutlet:file)');
     })
   }
-
 }

@@ -1,7 +1,7 @@
 <div class="container">
-  <br>
-  <h4 style="margin-left: 10px">Adresses</h4>
-  <hr>
+  <!--<h4 style="margin-left: 10px">Adresses</h4>-->
+  <h3 class="h3-class">Adresses</h3>
+<hr>
   <div>
     <div *ngIf="operation == 'add' || operation == 'edit' || operation == 'remove'">
       <div class="card">
@@ -87,8 +87,8 @@
     <div class=" row">
         <div class="form-group col-sm-10">
         <label style="margin-left: 10px">Mot Clé</label>
-        <input style="height: 33px" type="text" [(ngModel)]="motCle"/>
-        <button class="btn btn-info" (click)="searchAdresse()">Chercher</button>
+        <input style="height: 33px;width: fit-content" type="text" [(ngModel)]="motCle"/>
+        <button class="btn btn-info" style="width: fit-content" (click)="searchAdresse()">Chercher</button>
       </div>
       <div class="col-sm-2" id="reportAdresse" #reportAdresse>
         <div class="d-inline-block">
