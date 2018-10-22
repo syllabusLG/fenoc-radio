@@ -57,9 +57,9 @@
                 <label>Type d'adresse:</label>
                 <input type="text" class="form-control" formControlName="typeAdresse" [(ngModel)]="selectedAdresse.typeAdresse"/>
               </div>
-              <div class="form-group" *ngIf="operation == 'add'">
+              <div class="form-group" [hidden]="operation=='edit'">
                 <label>Individu:</label>
-                <input [disabled]="operation == 'edit'" type="text" class="form-control" formControlName="individu" [(ngModel)]="selectedAdresse.individu"/>
+                  <input type="text" class="form-control" formControlName="individu" [(ngModel)]="selectedAdresse.individu"/>
               </div>
 
               <button class="btn btn-info" [disabled]="adresseForm.pristine || adresseForm.invalid"
