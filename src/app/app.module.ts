@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { AngularDraggableModule  } from 'angular2-draggable';
 
 import { AppComponent } from './app.component';
 import { SidebareComponent } from './sidebare/sidebare.component';
@@ -42,6 +42,7 @@ import {TranslatePipe} from "./common/pipes/translate.pipe";
 import {Filemanagement} from "./common/filemanagement";
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -64,6 +65,7 @@ import {Filemanagement} from "./common/filemanagement";
     CompteComponent,
     FiscaliteComponent,
     TranslatePipe
+
   ],
   imports: [
     BrowserModule,
@@ -71,7 +73,8 @@ import {Filemanagement} from "./common/filemanagement";
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
-    StoreModule.forRoot({principal: principalReducer})
+    StoreModule.forRoot({principal: principalReducer}),
+    AngularDraggableModule
   ],
   providers: [
     AppService,

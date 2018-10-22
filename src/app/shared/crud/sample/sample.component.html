@@ -2,35 +2,30 @@
   <div class="col-lg-12" *ngIf="title== 'Adresses'">
     <a href=""  data-toggle="collapse" >
       <i class="fas fa-arrow-alt-circle-down big-icon"  (click)="downloadFile(data)"></i>
-      <!--<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">-->
     </a>
 
     <table class="table table-hover">
       <thead>
       <tr>
         <th *ngFor="let dataModel of dataModelList">{{dataModel.columnReference}}</th>
-
       </tr>
       </thead>
       <tbody>
       <tr *ngFor="let item of data">
         <td *ngFor="let dataModel of dataModelList">{{item[dataModel.columnName]}}</td>
-
       </tr>
       </tbody>
     </table>
   </div>
-  <div class="col-lg-7" *ngIf="title== 'Utilisateurs'">
+  <div class="col-lg-12" *ngIf="title== 'Utilisateurs'">
     <table class="table table-hover">
       <thead>
       <tr>
         <th *ngFor="let dataModel of dataModelList">{{dataModel.columnReference}}</th>
         <th>
           <a href="" data-toggle="collapse">
-            <i class="fa fa-plus" (click)="operation= 'add'; init()"></i>
-            <!--<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">-->
+            <i class="fa fa-plus" (click)="operation= 'add'; init()" data-toggle="modal" data-target="#Modal"></i>
           </a>
-          <!--<button class="btn btn-outline-primary btn-sm" (click)="operation = 'add'; init();">ADD</button>-->
         </th>
       </tr>
       </thead>
@@ -39,21 +34,18 @@
         <td *ngFor="let dataModel of dataModelList">{{item[dataModel.columnName]}}</td>
         <td>
           <a href=""  data-toggle="collapse" >
-            <i class="fa fa-edit" (click)="operation = 'edit'; selectedItem = item;"></i>
-            <!--<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">-->
+            <i class="fa fa-edit" data-toggle="modal" data-target="#Modal" (click)="operation = 'edit'; selectedItem = item; "></i>
           </a>
           <a href="" data-toggle="collapse">
-            <i class="fa fa-trash" (click)="operation = 'remove'; selectedItem = item;"></i>
-            <!--<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">-->
+            <i class="fa fa-trash"  data-toggle="modal" data-target="#Modal" (click)="operation = 'remove'; selectedItem = item;"></i>
           </a>
-          <!--<button class="btn btn-sm btn-outline-primary" (click)="operation = 'edit'; selectedItem = item;">Edit</button>
-          <button class="btn btn-sm btn-outline-danger" (click)="operation = 'remove'; selectedItem = item;">Remove</button>-->
         </td>
       </tr>
       </tbody>
     </table>
   </div>
-  <div class="col-lg-5" *ngIf="title== 'Utilisateurs'">
+    <!--
+    <div class="col-lg-5" *ngIf="title== 'Utilisateurs'">
     <div class="card">
       <div class="card-header bg-info text-white">
         {{operation == 'add' ? 'Ajouter' :
@@ -71,18 +63,11 @@
                 <input *ngSwitchCase="'number'" type="number" class="form-control" formControlName="{{dataModel.columnName}}"
                        [(ngModel)]="selectedItem[dataModel.columnName]"/>
               </div>
-              <!-- <div class="alert alert-danger" *ngIf="produitForm.controls['ref'].invalid &&
-                                          (produitForm.controls['ref'].touched || produitForm.controls['ref'].dirty)">
-                  Référence est obligatoire!
-              </div> -->
             </div>
-
-            <button class="btn btn-success" [disabled]="crudForm.pristine || crudForm.invalid"
-                    (click)="operation == 'add' ? add() : update()">
+           <button class="btn btn-success" [disabled]="crudForm.pristine || crudForm.invalid" (click)="operation == 'add' ? add() : update()">
               {{ operation == 'add' ? 'Ajouter' : operation == 'edit' ? 'Modifier' : ''}}
             </button>
           </form>
-
         </div>
         <div *ngIf="operation == 'remove'">
           <p class="card-title">
@@ -95,7 +80,66 @@
         </div>
       </div>
       <div class="card-footer">
+      </div>
+    </div>
+    </div>-->
 
+  <!-- Modal -->
+  <div class="col-lg-5" *ngIf="title== 'Utilisateurs'">
+    <div ngDraggable class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+      <div class="modal-dialog" class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header" style="background-color: #12899e" >
+            <h5 class="modal-title" id="AddModalLabel" style="color: white">{{ operation == 'add' ? 'Ajouter' :
+              operation == 'edit' ? 'Modifier' : operation == 'remove' ? 'Supprimer' :''}}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="text-align:right;width:auto">
+              <span aria-hidden="true">&times;</span></button>
+          </div>
+          <div class="modal-body">
+            <div class="card-body">
+              <div *ngIf="operation == 'add' || operation == 'edit'">
+                <form [formGroup]="crudForm" style="border-color: white">
+                    <div *ngFor="let dataModel of dataModelList" [ngSwitch]="dataModel.dataType">
+
+                      <div class="form-group" *ngIf="(!dataModel.readonly && operation=='add')">
+                      <label>{{dataModel.columnReference}}:</label>
+                      <input *ngSwitchCase="'string'"  type="text" class="form-control" formControlName="{{dataModel.columnName}}"
+                             [(ngModel)]="selectedItem[dataModel.columnName]"/>
+                      <input *ngSwitchCase="'number'" type="number" class="form-control" formControlName="{{dataModel.columnName}}"
+                             [(ngModel)]="selectedItem[dataModel.columnName]"/>
+                      </div>
+
+                      <div class="form-group" *ngIf="(!dataModel.readonly && operation=='edit')">
+                        <label>{{dataModel.columnReference}}:</label>
+                        <input *ngSwitchCase="'string'"  type="text" class="form-control" formControlName="{{dataModel.columnName}}"
+                               [(ngModel)]="selectedItem[dataModel.columnName]"/>
+                        <input *ngSwitchCase="'number'" type="number" class="form-control" formControlName="{{dataModel.columnName}}"
+                               [(ngModel)]="selectedItem[dataModel.columnName]"/>
+                      </div>
+                    </div>
+                </form>
+              </div>
+              <div *ngIf="operation == 'remove'">
+                <p class="card-title">
+                  Référence: {{selectedItem.id}}
+                </p>
+                <p>
+                  Voulez-vous supprimer cet élément?
+                </p>
+                <div class="modal-footer">
+                <button class="btn btn-success" data-dismiss="modal" [disabled]="!selectedItem.id" (click)="delete()">Confirmer</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer" *ngIf="operation!='remove'">
+            <button type="button" class="btn btn-success" data-dismiss="modal" [disabled]="crudForm.pristine || crudForm.invalid"
+                    (click)="operation == 'add' ? add() : operation == 'edit' ? update() :''"> {{ operation == 'add' ? 'Ajouter' :
+              operation == 'edit' ? 'Modifier' :''}}  </button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>

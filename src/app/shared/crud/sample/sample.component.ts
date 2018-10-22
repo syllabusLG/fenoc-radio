@@ -1,15 +1,19 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {CrudService} from '../../crud.service';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {DataModel} from '../../data.model';
 import { saveAs } from 'file-saver';
+
 
 @Component({
   selector: 'app-sample',
   templateUrl: './sample.component.html',
   styleUrls: ['./sample.component.css']
 })
+
+
 export class SampleComponent implements OnInit {
+
 
   @Input()
   title: string;
@@ -35,6 +39,7 @@ export class SampleComponent implements OnInit {
 
   selectedItem: any;
 
+
   constructor(private fb: FormBuilder){
     this.createForm();
   }
@@ -42,6 +47,7 @@ export class SampleComponent implements OnInit {
   ngOnInit(){
     this.init();
   }
+
 
   createForm(){
     this.initForm ? this.crudForm = this.initForm : this.crudForm = this.fb.group({});
@@ -99,5 +105,6 @@ export class SampleComponent implements OnInit {
     var blob = new Blob([csvArray], {type: 'text/csv' })
     saveAs(blob, this.title+".csv");
   }
+
 
 }
