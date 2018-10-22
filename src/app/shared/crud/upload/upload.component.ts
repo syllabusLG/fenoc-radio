@@ -353,10 +353,14 @@ export class UploadComponent implements OnInit {
         contact.homePhone = dataArray[i].homePhone;
         contact.businessPhone = dataArray[i].businessPhone;
         contact.cellPhone = dataArray[i].cellPhone;
-        contact.personalEmail = dataArray[i].personalEmail;
-        contact.businessEmail = dataArray[i].businessEmail;
         individu.nui = dataArray[i].nui;
         contact.individu = individu;
+        if(dataArray[i].personalEmail.length !== 0 && this.isValidateEmail(dataArray[i].personalEmail)){
+          contact.personalEmail = dataArray[i].personalEmail;
+        }
+        if(dataArray[i].businessEmail.length !== 0 && this.isValidateEmail(dataArray[i].businessEmail)){
+          contact.businessEmail = dataArray[i].businessEmail;
+        }
         this.contactDataArray.push(contact);
       }
     }
@@ -374,7 +378,10 @@ export class UploadComponent implements OnInit {
         dataArray[i].vip.length !== 0 && (dataArray[i].vip.toUpperCase() === 'Y' || dataArray[i].vip.toUpperCase() === 'N') &&
         dataArray[i].mySensitive.length !== 0 && (dataArray[i].mySensitive.toUpperCase() === 'Y' || dataArray[i].mySensitive.toUpperCase() === 'N')){
 
-        if(dataArray[i].iban.length !== 0){
+        if(dataArray[i].iban.length !== 0 && dataArray[i].bic.length !== 0
+          && this.isValidIBANNumber(dataArray[i].iban) && this.isBic(dataArray[i].bic)
+          && dataArray[i].bic.substr(4,2) === dataArray[i].iban.substr(0, 2)){
+
           this.ibanService.getOne(dataArray[i].iban).subscribe((data)=>{
             if (data !== null){
               this.ibanUpdatedDataArray.push(data);
@@ -413,7 +420,9 @@ export class UploadComponent implements OnInit {
         });
         if(dataArray[i].nif.length !== 0){
           adresse.id = dataArray[i].nui.toUpperCase() + dataArray[i].numberStreet
-          adresse.numberStreet = dataArray[i].numberStreet;
+          if(dataArray[i].numberStreet.length !== 0 && (dataArray[i].additionalAdress_1.length !== 0 || dataArray[i].additionalAdress_2.length !== 0 || dataArray[i].additionalAdress_3.length !== 0)){
+            adresse.numberStreet = dataArray[i].numberStreet;
+          }
           adresse.street = dataArray[i].street;
           adresse.additionalAdress_1 = dataArray[i].additionalAdress_1;
           adresse.additionalAdress_2 = dataArray[i].additionalAdress_2;
@@ -425,10 +434,13 @@ export class UploadComponent implements OnInit {
           adresse.typeAdresse = 'FISCALITE';
           individu.nui = dataArray[i].nui;
           adresse.individu = individu;
+
           this.adresseDataArray.push(adresse);
         }else {
           adresse.id = dataArray[i].nui.toUpperCase() + dataArray[i].numberStreet
-          adresse.numberStreet = dataArray[i].numberStreet;
+          if(dataArray[i].numberStreet.length !== 0 && (dataArray[i].additionalAdress_1.length !== 0 || dataArray[i].additionalAdress_2.length !== 0 || dataArray[i].additionalAdress_3.length !== 0)){
+            adresse.numberStreet = dataArray[i].numberStreet;
+          }
           adresse.street = dataArray[i].street;
           adresse.additionalAdress_1 = dataArray[i].additionalAdress_1;
           adresse.additionalAdress_2 = dataArray[i].additionalAdress_2;
@@ -695,7 +707,6 @@ export class UploadComponent implements OnInit {
       this.dataFromServer = data;
       this.dataSentToServer=true;
       this.updateData.emit(data);
-      this.currentStep = 3;
       this.sendSalarieToServer();
       this.sendContactToServer();
       this.sendIbanToServer();
@@ -728,6 +739,7 @@ export class UploadComponent implements OnInit {
   }*/
   sendDataToServer(){
     this.sendIndividusToServer();
+    this.currentStep = 3;
   }
   isCompanyCdCorrect(dataArray){
     for (let i = 0; i < dataArray.length; i++){
