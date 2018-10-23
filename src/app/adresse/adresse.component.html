@@ -1,9 +1,8 @@
 <div class="container">
-  <!--<h4 style="margin-left: 10px">Adresses</h4>-->
   <h3 class="h3-class">Adresses</h3>
 <hr>
   <div>
-    <div *ngIf="operation == 'add' || operation == 'edit' || operation == 'remove'">
+    <!--<div *ngIf="operation == 'add' || operation == 'edit' || operation == 'remove'">
       <div class="card">
         <div class="card-header bg-info text-white">
           {{operation == 'add' ? 'Ajouter Adresse':
@@ -81,7 +80,7 @@
         <div class="card-footer">
         </div>
       </div>
-    </div>
+    </div>-->
 
 
     <div class=" row">
@@ -143,6 +142,91 @@
             <a class="nav-link clickable" routerLink="#" (click)="gotoPage(i)">{{i}}</a>
           </li>
         </ul>
+      </div>
+    </div>
+
+    <div class="card-body">
+    <div ngDraggable class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+      <div class="modal-dialog" class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header" style="background-color: #12899e;cursor:move;" >
+            <h5 class="modal-title" id="AddModalLabel" style="color: white">
+              {{ operation == 'add' ? 'Ajouter Adress' : operation == 'edit' ? 'Modifier Adresse' : operation == 'remove' ? 'Supprimer Adresse' :''}}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="text-align:right;width:auto">
+              <span aria-hidden="true">&times;</span></button>
+          </div>
+          <div class="modal-body">
+            <div class="card-body">
+              <div *ngIf="operation == 'add' || operation == 'edit'">
+                <form [formGroup]="adresseForm" style="border-color: white; overflow-y: hidden">
+                  <div class="form-group">
+                    <label class="control-label">ID:</label>
+                    <input type="text" class="form-control" formControlName="id" [(ngModel)]="selectedAdresse.id"/>
+                  </div>
+                  <div class="alert alert-danger" *ngIf="adresseForm.controls['id'].invalid &&
+                              (adresseForm.controls['id'].touched || adresseForm.controls['id'].dirty)">
+                    ID est obligatoire!
+                  </div>
+                  <div class="form-group">
+                    <label>Numero rue:</label>
+                    <input type="number" class="form-control" formControlName="numberStreet" [(ngModel)]="selectedAdresse.numberStreet"/>
+                  </div>
+                  <div class="form-group">
+                    <label>Rue:</label>
+                    <input type="text" class="form-control" formControlName="street" [(ngModel)]="selectedAdresse.street"/>
+                  </div>
+                  <div class="form-group">
+                    <label>Additional adresse 1:</label>
+                    <input type="text" class="form-control" formControlName="additionalAdress_1" [(ngModel)]="selectedAdresse.additionalAdress_1"/>
+                  </div>
+                  <div class="form-group">
+                    <label>Additional adresse 2:</label>
+                    <input type="text" class="form-control" formControlName="additionalAdress_2" [(ngModel)]="selectedAdresse.additionalAdress_2"/>
+                  </div>
+                  <div class="form-group">
+                    <label>Additional adresse 3:</label>
+                    <input type="text" class="form-control" formControlName="additionalAdress_3" [(ngModel)]="selectedAdresse.additionalAdress_3"/>
+                  </div>
+                  <div class="form-group">
+                    <label>Code postal:</label>
+                    <input type="text" class="form-control" formControlName="codePostal" [(ngModel)]="selectedAdresse.codePostal"/>
+                  </div>
+                  <div class="form-group">
+                    <label>City:</label>
+                    <input type="text" class="form-control" formControlName="city" [(ngModel)]="selectedAdresse.city"/>
+                  </div>
+                  <div class="form-group">
+                    <label>Pays:</label>
+                    <input type="text" class="form-control" formControlName="country" [(ngModel)]="selectedAdresse.country"/>
+                  </div>
+                  <div class="form-group">
+                    <label>Type d'adresse:</label>
+                    <input type="text" class="form-control" formControlName="typeAdresse" [(ngModel)]="selectedAdresse.typeAdresse"/>
+                  </div>
+                  <div class="form-group" [hidden]="operation=='edit'">
+                    <label>Individu:</label>
+                    <input type="text" class="form-control" formControlName="individu" [(ngModel)]="selectedAdresse.individu"/>
+                  </div>
+
+                  <button class="btn btn-info" data-dismiss="modal" [disabled]="adresseForm.pristine || adresseForm.invalid"
+                          (click)="operation == 'add' ? addAdresse() : updateAdresse()">
+                    {{operation == 'add' ? 'Ajouter': operation == 'edit' ? 'Modifier': ''}}
+                  </button>
+                </form>
+              </div>
+              <div *ngIf="operation == 'remove'">
+              <p class="card-title">
+                ID: {{selectedAdresse.id}}
+              </p>
+              <p>
+                Voulez vous supprimer cette adresse?
+              </p>
+              <button class="btn btn-success" data-dismiss="modal" [disabled]="!selectedAdresse.id" (click)="deleteAdresse()">Confirmer</button>
+            </div>
+            </div>
+          </div>
+          </div>
+        </div>
       </div>
     </div>
 

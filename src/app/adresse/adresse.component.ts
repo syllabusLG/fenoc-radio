@@ -69,6 +69,9 @@ export class AdresseComponent implements OnInit {
   }
   searchAdresse(){
     this.loadAdresses();
+
+
+
   }
   gotoPage(i:number){
     this.currentPage = i;
