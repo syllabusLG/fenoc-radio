@@ -58,7 +58,6 @@ export class CrudComponent implements OnInit {
     $event.preventDefault();
     $event.stopPropagation();
     Filemanagement.downloadPDF(this.content.nativeElement.innerHTML);
-
   }
 
 

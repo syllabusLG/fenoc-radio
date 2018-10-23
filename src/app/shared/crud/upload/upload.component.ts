@@ -1336,7 +1336,7 @@ export class UploadComponent implements OnInit {
     $event.preventDefault();
     $event.stopPropagation();
     Filemanagement.downloadPDFModules(this.report.nativeElement.innerHTML);
-
+    this.currentStep = 4;
   }
 
 }
