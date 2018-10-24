@@ -40,6 +40,10 @@ import { FiscaliteComponent } from './fiscalite/fiscalite.component';
 import {FiscaliteService} from './fiscalite/fiscalite.service';
 import {TranslatePipe} from "./common/pipes/translate.pipe";
 import {Filemanagement} from "./common/filemanagement";
+import { ReportCreateFileComponent } from './report-create-file/report-create-file.component';
+import { ReportUpdateFileComponent } from './report-update-file/report-update-file.component';
+import {ReportCreateFileService} from './report-create-file/report.create.file.service';
+import {ReportUpdateFileService} from './report-update-file/report.update.file.service';
 
 
 
@@ -64,7 +68,9 @@ import {Filemanagement} from "./common/filemanagement";
     AdresseComponent,
     CompteComponent,
     FiscaliteComponent,
-    TranslatePipe
+    TranslatePipe,
+    ReportCreateFileComponent,
+    ReportUpdateFileComponent
 
   ],
   imports: [
@@ -89,7 +95,9 @@ import {Filemanagement} from "./common/filemanagement";
     AdresseService,
     CompteService,
     FiscaliteService,
-    Filemanagement
+    Filemanagement,
+    ReportCreateFileService,
+    ReportUpdateFileService
   ],
   bootstrap: [AppComponent]
 })
