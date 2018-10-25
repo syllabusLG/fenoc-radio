@@ -17,6 +17,10 @@ import {CompteService} from '../../../compte/compte.service';
 import {Compte} from '../../compte.model';
 import {FiscaliteService} from '../../../fiscalite/fiscalite.service';
 import {Filemanagement} from "../../../common/filemanagement";
+import {ReportCreateFileService} from '../../../report-create-file/report.create.file.service';
+import {ReportUpdateFileService} from '../../../report-update-file/report.update.file.service';
+import {ReportCreateFile} from '../../report.create.file.model';
+import {ReportUpdateFile} from '../../report.update.file.model';
 
 @Component({
   selector: 'app-upload',
@@ -189,6 +193,24 @@ export class UploadComponent implements OnInit {
 
   fileName: string = '';
 
+  individuReportCreateFile: ReportCreateFile = new ReportCreateFile();
+  individuReportUpdateFile: ReportUpdateFile = new ReportUpdateFile();
+
+  salaryReportCreateFile: ReportCreateFile = new ReportCreateFile();
+  salaryReportUpdateFile: ReportUpdateFile = new ReportUpdateFile();
+
+  contactReportCreateFile: ReportCreateFile = new ReportCreateFile();
+  contactReportUpdateFile: ReportUpdateFile = new ReportUpdateFile();
+
+  ibanReportCreateFile: ReportCreateFile = new ReportCreateFile();
+  ibanReportUpdateFile: ReportUpdateFile = new ReportUpdateFile();
+
+  adresseReportCreateFile: ReportCreateFile = new ReportCreateFile();
+  adresseReportUpdateFile: ReportUpdateFile = new ReportUpdateFile();
+
+  compteReportCreateFile: ReportCreateFile = new ReportCreateFile();
+  compteReportUpdateFile: ReportUpdateFile = new ReportUpdateFile();
+
   COUNTRY = COUNTRY;
   @Output() messageEvent = new EventEmitter<any>();
   constructor(private individusService: IndividusService,
@@ -198,7 +220,8 @@ export class UploadComponent implements OnInit {
               private adresseService: AdresseService,
               private compteService: CompteService,
               private fiscaliteService: FiscaliteService,
-              private filemanagement: Filemanagement) { }
+              private reportCreateFileService: ReportCreateFileService,
+              private reportUpdateFileService: ReportUpdateFileService) { }
 
   ngOnInit() {
     this.dataModelListFiltred = this.dataModelList.filter(dataModel => !dataModel.readonly);
@@ -249,6 +272,9 @@ export class UploadComponent implements OnInit {
   }
 
   buildIndividusDataArray(dataArray){
+
+    this.individuReportCreateFile.module = 'Individus';
+    this.individuReportUpdateFile.module = 'Individus';
     for (let i = 0; i < dataArray.length; i++) {
       let individus: Individus = new Individus();
       if(dataArray[i].lastName.length !== 0 && dataArray[i].firstName.length !== 0 && dataArray[i].civility.length !== 0 &&
@@ -281,12 +307,27 @@ export class UploadComponent implements OnInit {
         this.individusDataArray.push(individus);
       }else{
         this.nbreLigneRejete+=1;
+        this.individuReportCreateFile.nbreLinesRejected = this.nbreLigneRejete;
+        this.individuReportUpdateFile.nbreLinesRejected = this.nbreLigneRejete;
+        this.salaryReportUpdateFile.nbreLinesRejected = this.nbreLigneRejete;
+        this.salaryReportCreateFile.nbreLinesRejected = this.nbreLigneRejete;
+        this.contactReportCreateFile.nbreLinesRejected = this.nbreLigneRejete;
+        this.contactReportUpdateFile.nbreLinesRejected = this.nbreLigneRejete;
+        this.ibanReportCreateFile.nbreLinesRejected = this.nbreLigneRejete;
+        this.ibanReportUpdateFile.nbreLinesRejected = this.nbreLigneRejete;
+        this.adresseReportCreateFile.nbreLinesRejected = this.nbreLigneRejete;
+        this.adresseReportUpdateFile.nbreLinesRejected = this.nbreLigneRejete;
+        this.compteReportCreateFile.nbreLinesRejected = this.nbreLigneRejete;
+        this.compteReportUpdateFile.nbreLinesRejected = this.nbreLigneRejete;
       }
 
     }
+
   }
 
   buildSalarieDataArray(dataArray){
+    this.salaryReportCreateFile.module = 'Salarie';
+    this.salaryReportUpdateFile.module = 'Salarie';
     for (let i = 0; i < dataArray.length; i++){
       let salarie: Salarie = new Salarie();
       let individu: Individus = new Individus();
@@ -331,6 +372,8 @@ export class UploadComponent implements OnInit {
   }
 
   buildContactDataArray(dataArray){
+    this.contactReportCreateFile.module = 'Contact';
+    this.contactReportUpdateFile.module = 'Contact';
     for (let i = 0; i < dataArray.length; i++){
       let contact: Contact = new Contact();
       let individu: Individus = new Individus();
@@ -367,6 +410,8 @@ export class UploadComponent implements OnInit {
   }
 
   buildIbanDataArray(dataArray){
+    this.ibanReportCreateFile.module = 'IBAN';
+    this.ibanReportUpdateFile.module = 'IBAN';
     for (let i = 0; i < dataArray.length; i++){
       let iban: Iban = new Iban();
       let individu: Individus = new Individus();
@@ -400,6 +445,8 @@ export class UploadComponent implements OnInit {
   }
 
   buildAdresseDataArray(dataArray){
+    this.adresseReportCreateFile.module = 'Adresse';
+    this.adresseReportUpdateFile.module = 'Adresse';
     for (let i = 0; i < dataArray.length; i++){
       let adresse: Adresse = new Adresse();
       let individu: Individus = new Individus();
@@ -458,6 +505,8 @@ export class UploadComponent implements OnInit {
   }
 
   buildCompteDataArray(dataArray){
+    this.compteReportCreateFile.module = 'Compte';
+    this.compteReportUpdateFile.module = 'Compte';
     for (let i = 0; i < dataArray.length; i++){
       let compte: Compte = new Compte();
       let individu: Individus = new Individus();
@@ -712,27 +761,78 @@ export class UploadComponent implements OnInit {
       this.sendIbanToServer();
       this.sendAdresseToServer();
       this.sendCompteToServer();
+      this.individuReportUpdateFile.nbreLinesUpdated = this.individusUpdatedDataArray.length;
+      this.individuReportCreateFile.nbreLinesCreated = this.individusCreatedDataArray.length;
+      if(this.individusCreatedDataArray.length > 0){
+        this.reportCreateFileService.add(this.individuReportCreateFile).subscribe();
+      }
+      if(this.individusUpdatedDataArray.length > 0){
+        this.reportUpdateFileService.add(this.individuReportUpdateFile).subscribe();
+      }
+
     });
   }
 
   sendSalarieToServer(){
     this.salarieService.addAll(this.salarieDataArray).subscribe((data)=>{
-
+      this.salaryReportCreateFile.nbreLinesCreated = this.salarieCreatedDataArray.length;
+      this.salaryReportUpdateFile.nbreLinesUpdated = this.salarieUpdatedDataArray.length;
+      if(this.salarieCreatedDataArray.length > 0){
+        this.reportCreateFileService.add(this.salaryReportCreateFile).subscribe();
+      }
+      if(this.salarieUpdatedDataArray.length > 0){
+        this.reportUpdateFileService.add(this.salaryReportUpdateFile).subscribe();
+      }
     });
   }
   sendContactToServer(){
-    this.contactService.addAll(this.contactDataArray).subscribe();
+    this.contactService.addAll(this.contactDataArray).subscribe(data=>{
+      this.contactReportCreateFile.nbreLinesCreated = this.contactCreatedDataArray.length;
+      this.contactReportUpdateFile.nbreLinesUpdated = this.contactUpdatedDataArray.length;
+      if(this.contactCreatedDataArray.length > 0){
+        this.reportCreateFileService.add(this.contactReportCreateFile).subscribe();
+      }
+      if(this.contactUpdatedDataArray.length > 0){
+        this.reportUpdateFileService.add(this.contactReportUpdateFile).subscribe();
+      }
+    });
   }
   sendIbanToServer(){
-    this.ibanService.addAll(this.ibanDataArray).subscribe();
+    this.ibanService.addAll(this.ibanDataArray).subscribe( data=>{
+      this.ibanReportCreateFile.nbreLinesCreated = this.ibanCreatedDataArray.length;
+      this.ibanReportUpdateFile.nbreLinesUpdated = this.ibanUpdatedDataArray.length;
+      if(this.ibanCreatedDataArray.length > 0){
+        this.reportCreateFileService.add(this.ibanReportCreateFile).subscribe();
+      }
+      if(this.ibanUpdatedDataArray.length > 0){
+        this.reportUpdateFileService.add(this.ibanReportUpdateFile).subscribe();
+      }
+    });
   }
   sendAdresseToServer(){
     this.adresseService.addAll(this.adresseDataArray).subscribe( (data) =>{
       //this.sendFiscaliteToServer();
+      this.adresseReportCreateFile.nbreLinesCreated = this.adresseCreatedDataArray.length;
+      this.adresseReportUpdateFile.nbreLinesUpdated = this.adresseUpdatedDataArray.length;
+      if(this.adresseCreatedDataArray.length > 0){
+        this.reportCreateFileService.add(this.adresseReportCreateFile).subscribe();
+      }
+      if(this.adresseUpdatedDataArray.length > 0){
+        this.reportUpdateFileService.add(this.adresseReportUpdateFile).subscribe();
+      }
     });
   }
   sendCompteToServer(){
-    this.compteService.addAll(this.compteDataArray).subscribe();
+    this.compteService.addAll(this.compteDataArray).subscribe( data=>{
+      this.compteReportCreateFile.nbreLinesCreated = this.compteCreatedDataArray.length;
+      this.compteReportUpdateFile.nbreLinesUpdated = this.compteUpdatedDataArray.length;
+      if(this.compteCreatedDataArray.length > 0){
+        this.reportCreateFileService.add(this.compteReportCreateFile).subscribe();
+      }
+      if(this.compteUpdatedDataArray.length > 0){
+        this.reportUpdateFileService.add(this.compteReportUpdateFile).subscribe();
+      }
+    });
   }
   /*sendFiscaliteToServer(){
     this.fiscaliteService.addAll(this.fiscaliteDataArray).subscribe();

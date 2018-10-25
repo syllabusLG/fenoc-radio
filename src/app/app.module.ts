@@ -44,6 +44,8 @@ import { ReportCreateFileComponent } from './report-create-file/report-create-fi
 import { ReportUpdateFileComponent } from './report-update-file/report-update-file.component';
 import {ReportCreateFileService} from './report-create-file/report.create.file.service';
 import {ReportUpdateFileService} from './report-update-file/report.update.file.service';
+import { MyChartComponent } from './my-chart/my-chart.component';
+import {ChartModule} from 'angular2-chartjs';
 
 
 
@@ -70,7 +72,8 @@ import {ReportUpdateFileService} from './report-update-file/report.update.file.s
     FiscaliteComponent,
     TranslatePipe,
     ReportCreateFileComponent,
-    ReportUpdateFileComponent
+    ReportUpdateFileComponent,
+    MyChartComponent
 
   ],
   imports: [
@@ -80,7 +83,8 @@ import {ReportUpdateFileService} from './report-update-file/report.update.file.s
     FormsModule,
     HttpClientModule,
     StoreModule.forRoot({principal: principalReducer}),
-    AngularDraggableModule
+    AngularDraggableModule,
+    ChartModule
   ],
   providers: [
     AppService,
@@ -95,7 +99,6 @@ import {ReportUpdateFileService} from './report-update-file/report.update.file.s
     AdresseService,
     CompteService,
     FiscaliteService,
-    Filemanagement,
     ReportCreateFileService,
     ReportUpdateFileService
   ],
