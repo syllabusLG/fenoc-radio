@@ -39,7 +39,12 @@ import {CompteService} from './compte/compte.service';
 import { FiscaliteComponent } from './fiscalite/fiscalite.component';
 import {FiscaliteService} from './fiscalite/fiscalite.service';
 import {TranslatePipe} from "./common/pipes/translate.pipe";
-import {Filemanagement} from "./common/filemanagement";
+import { ReportCreateFileComponent } from './report-create-file/report-create-file.component';
+import { ReportUpdateFileComponent } from './report-update-file/report-update-file.component';
+import {ReportCreateFileService} from './report-create-file/report.create.file.service';
+import {ReportUpdateFileService} from './report-update-file/report.update.file.service';
+import { MyChartComponent } from './my-chart/my-chart.component';
+import {ChartModule} from 'angular2-chartjs';
 
 
 
@@ -65,7 +70,10 @@ import {Filemanagement} from "./common/filemanagement";
     AdresseComponent,
     CompteComponent,
     FiscaliteComponent,
-    TranslatePipe
+    TranslatePipe,
+    ReportCreateFileComponent,
+    ReportUpdateFileComponent,
+    MyChartComponent
 
   ],
   imports: [
@@ -76,6 +84,7 @@ import {Filemanagement} from "./common/filemanagement";
     HttpClientModule,
     StoreModule.forRoot({principal: principalReducer}),
     AngularDraggableModule,
+    ChartModule
   ],
   providers: [
     AppService,
@@ -90,7 +99,8 @@ import {Filemanagement} from "./common/filemanagement";
     AdresseService,
     CompteService,
     FiscaliteService,
-    Filemanagement
+    ReportCreateFileService,
+    ReportUpdateFileService
   ],
   bootstrap: [AppComponent]
 })
