@@ -20,4 +20,5 @@ export class Salarie {
               public mySensitive?: string,
               public dateEndSensitive?: any,
               public individu?: Individus){}
+
 }

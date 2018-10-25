@@ -19,3 +19,8 @@ html, body {
   color: black;
 }
 
+.h3-class {
+  color: #12899e;
+  text-align: center;
+  font-weight: bold;
+}

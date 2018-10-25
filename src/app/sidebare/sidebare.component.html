@@ -20,6 +20,37 @@
          routerLinkActive="active"
          *ngIf="hasRoleUser()">Adresse</a>
     </li>
+
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'salarie'}}]"
+         routerLinkActive="active"
+         *ngIf="hasRoleUser()">Salarie</a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'iban'}}]"
+         routerLinkActive="active"
+         *ngIf="hasRoleUser()">Iban</a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'compte'}}]"
+         routerLinkActive="active"
+         *ngIf="hasRoleUser()">Compte</a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'individu'}}]"
+         routerLinkActive="active"
+         *ngIf="hasRoleUser()">Individu</a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'contact'}}]"
+         routerLinkActive="active"
+         *ngIf="hasRoleUser()">Contact</a>
+    </li>
+
     <li class="nav-item">
       <a class="nav-link" href="#">Export</a>
     </li>

@@ -10,8 +10,19 @@ import {UserResolver} from './user/user.resolver';
 import {FileComponent} from './file/file.component';
 import {AdresseComponent} from './adresse/adresse.component';
 import {AdresseResolver} from './adresse/adresse.resolver';
+import {SalarieComponent} from './salarie/salarie.component';
+import {SalarieResolver} from './salarie/salarie.resolver';
+import {IbanComponent} from "./iban/iban.component";
+import {CompteComponent} from "./compte/compte.component";
+import {ContactComponent} from "./contact/contact.component";
+import {IndividusComponent} from "./individus/individus.component";
+import {IbanResolver} from "./iban/iban.resolver";
+import {CompteResolver} from "./compte/compte.resolver";
+import {ContactResolver} from "./contact/contact.resolver";
+import {IndividusResolver} from "./individus/individus.resolver";
 
 
+var IndividuComponent;
 export const appRoutes: Routes = [
 
   {
@@ -54,6 +65,47 @@ export const appRoutes: Routes = [
         },
         outlet: 'contentOutlet'
       },
+      {
+        path: 'salarie',
+        component: SalarieComponent,
+        resolve: {
+          salaries: SalarieResolver
+        },
+        outlet: 'contentOutlet'
+      },
+      {
+        path: 'iban',
+        component: IbanComponent,
+        resolve: {
+          ibans: IbanResolver
+        },
+        outlet: 'contentOutlet'
+      },
+      {
+        path: 'compte',
+        component: CompteComponent,
+        resolve: {
+          comptes: CompteResolver
+        },
+        outlet: 'contentOutlet'
+      },
+      {
+        path: 'individu',
+        component: IndividusComponent,
+        resolve: {
+          individus: IndividusResolver
+        },
+        outlet: 'contentOutlet'
+      },
+      {
+        path: 'contact',
+        component: ContactComponent,
+        resolve: {
+          contacts: ContactResolver
+        },
+        outlet: 'contentOutlet'
+      },
+
     ]
   },
 
@@ -72,6 +124,6 @@ export const appRoutes: Routes = [
     )
   ],
   exports: [RouterModule],
-  providers: [UserResolver, AdresseResolver]
+  providers: [UserResolver, AdresseResolver, SalarieResolver, IbanResolver, CompteResolver,ContactResolver,IndividusResolver]
 })
 export class AppRoutingModule { }

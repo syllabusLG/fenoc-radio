@@ -31,6 +31,6 @@ export class CompteService implements CrudService{
     return this.http.get(API_URLS.COMPTE_URL +`/${id}`);
   }
   search(motCle:string, page:number, size:number): Observable<any>{
-    return this.http.get(API_URLS.ADRESSE_URL_SEARCH+'?mc='+motCle+'&size='+size+'&page='+page);
+    return this.http.get(API_URLS.COMPTE_URL_SEARCH+'?mc='+motCle+'&size='+size+'&page='+page);
   }
 }

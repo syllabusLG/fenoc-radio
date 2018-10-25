@@ -13,4 +13,8 @@ export class Adresse {
               public nif?: string,
               public typeAdresse?: string,
               public individu?: Individus){}
+
+
+
+
 }

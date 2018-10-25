@@ -43,6 +43,7 @@ import {Filemanagement} from "./common/filemanagement";
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -74,7 +75,7 @@ import {Filemanagement} from "./common/filemanagement";
     FormsModule,
     HttpClientModule,
     StoreModule.forRoot({principal: principalReducer}),
-    AngularDraggableModule
+    AngularDraggableModule,
   ],
   providers: [
     AppService,

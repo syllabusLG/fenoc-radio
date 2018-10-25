@@ -1,3 +1,147 @@
-<p>
-  individus works!
-</p>
+<div class="container">
+  <h3 class="h3-class">Individu</h3>
+  <hr>
+  <div>
+    <div class=" row">
+      <div class="form-group col-sm-10">
+        <label style="margin-left: 10px">Mot Clé</label>
+        <input style="height: 33px;width: fit-content" type="text" [(ngModel)]="motCle"/>
+        <button class="btn btn-info" style="width: fit-content" (click)="searchIndividus()">Chercher</button>
+      </div>
+      <div class="col-sm-2" id="reportSalarie" #reportSalarie>
+        <div class="d-inline-block">
+          <a href="" data-toggle="collapse">
+            <button type="button" style="margin-bottom: 14px" class="btn btn-info" (click)="downloadFile(individus)">Export to CSV</button>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-12">
+      <table class="col-sm-12 table table-hover">
+        <thead>
+        <tr>
+          <th>Nui</th>
+          <th>Civilité</th>
+          <th>Nom de famille</th>
+          <th>Nom d'usage</th>
+          <th>Prénom</th>
+          <th>Date de naissance</th>
+          <th>Lieu de naissance</th>
+          <th>Code pays de naissance</th>
+          <th>Nationalité</th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let individu of pageIndividus?.content">
+          <td> {{individu.nui}}</td>
+          <td>{{individu.civility}}</td>
+          <td>{{individu.lastName}}</td>
+          <td>{{individu.useName}}</td>
+          <td>{{individu.firstName}}</td>
+          <td>{{individu.birthDate}}</td>
+          <td>{{individu.birthPlace}}</td>
+          <td>{{individu.birthCountry}}</td>
+          <td>{{individu.nationality}}</td>
+          <td>
+            <a href=""  data-toggle="collapse" >
+              <i class="fa fa-edit" data-toggle="modal" data-target="#Modal" (click)="operation = 'edit'; selectedIndividu = individu;"></i>
+            </a>
+            <a href="" data-toggle="collapse">
+              <i class="fa fa-trash" data-toggle="modal" data-target="#Modal" (click)="operation = 'remove'; selectedIndividu = individu;"></i>
+            </a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <div class="container">
+        <ul class="nav">
+          <li class="nav-item " [ngClass]="{'activePagin': i === currentPage}" *ngFor="let p of pages; let i=index">
+            <a class="nav-link clickable" routerLink="#" (click)="gotoPage(i)">{{i}}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <div ngDraggable class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+        <div class="modal-dialog" class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header" style="background-color: #12899e;cursor:move;" >
+              <h5 class="modal-title" id="AddModalLabel" style="color: white">
+                {{ operation == 'edit' ? 'Modifier Individu' : operation == 'remove' ? 'Supprimer Individu' :''}}</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="text-align:right;width:auto">
+                <span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+              <div class="card-body">
+                <div *ngIf="operation == 'edit'">
+                  <form [formGroup]="individusForm" style="border-color: white; overflow-y: auto">
+                    <div class="form-group">
+                      <label class="control-label">Nui:</label>
+                      <input type="text" class="form-control" formControlName="nui" [(ngModel)]="selectedIndividu.nui"/>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label">Civilité:</label>
+                      <select class="form-control" formControlName="civility" [(ngModel)]="selectedIndividu.civility" (select)="selectedIndividu.civility">
+                      <option value="0">-- Choisir Civilité --</option>
+                      <option value="1">1: Monsieur</option>
+                      <option value="2">2: Madame</option>
+                      <option value="3">3: Madamoiselle</option>
+                    </select>
+                    </div>
+
+                    <div class="form-group">
+                      <label>Mon de famille:</label>
+                      <input type="text" class="form-control" formControlName="lastName" [(ngModel)]="selectedIndividu.lastName"/>
+                    </div>
+                    <div class="form-group">
+                      <label>Nom d'usage:</label>
+                      <input type="text" class="form-control" formControlName="useName" [(ngModel)]="selectedIndividu.useName"/>
+                    </div>
+                    <div class="form-group">
+                      <label>Prénom:</label>
+                      <input type="text" class="form-control" formControlName="firstName" [(ngModel)]="selectedIndividu.firstName"/>
+                    </div>
+                    <div class="form-group">
+                      <label>Date de naissance:</label>
+                      <input type="date" class="form-control" formControlName="birthDate" [(ngModel)]="selectedIndividu.birthDate"/>
+                    </div>
+                    <div class="form-group">
+                      <label>Lieu de naissance:</label>
+                      <input type="string" class="form-control" formControlName="birthPlace" [(ngModel)]="selectedIndividu.birthPlace"/>
+                    </div>
+                    <div class="form-group">
+                      <label>Code de pays de naissance:</label>
+                      <input type="text" class="form-control" formControlName="birthCountry" [(ngModel)]="selectedIndividu.birthCountry"/>
+                    </div>
+                    <div class="form-group">
+                      <label>Nationalité:</label>
+                      <input type="text" class="form-control" formControlName="nationality" [(ngModel)]="selectedIndividu.nationality"/>
+                    </div>
+                    <button class="btn btn-info" data-dismiss="modal"
+                            (click)="updateIndividu()">
+                      {{'edit' ? 'Modifier': ''}}
+                    </button>
+                  </form>
+                </div>
+                <div *ngIf="operation == 'remove'">
+                  <p class="card-title">
+                    ID: {{selectedIndividu.nui}}
+                  </p>
+                  <p>
+                    Voulez vous supprimer cette Id Contact?
+                  </p>
+                  <button class="btn btn-success" data-dismiss="modal" [disabled]="!selectedIndividu.nui" (click)="deleteIndividu()">Confirmer</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
