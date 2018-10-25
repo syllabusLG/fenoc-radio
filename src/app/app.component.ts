@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AppService} from './app.service';
 import {NavigationEnd, Router} from '@angular/router';
-import * as moment from 'moment';
 
 
 @Component({

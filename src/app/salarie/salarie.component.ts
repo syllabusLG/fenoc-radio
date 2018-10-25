@@ -4,7 +4,6 @@ import {SalarieService} from "./salarie.service";
 import {Salarie} from "../shared/salarie.model";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {saveAs} from 'file-saver';
-import * as moment from 'moment';
 
 
 @Component({
@@ -28,26 +27,7 @@ export class SalarieComponent implements OnInit {
   operation: string = '';
   selectedSalarie: Salarie;
 
-  activityStartDate: Date;
-
-  /**now: Date = new Date();
-
-  private _selectedSalarie: Salarie;
-
-
-  set selectedSalarie(value: Salarie) {
-    this._selectedSalarie = value;
-    this._selectedSalarie.hireDate = (value.hireDate)? this.convertDate(value.hireDate) : value.hireDate;
-    this._selectedSalarie.departDate = (value.departDate)? this.convertDate(value.departDate) : value.departDate;
-    this._selectedSalarie.lastHireDate = (value.lastHireDate)? this.convertDate(value.lastHireDate) : value.lastHireDate;
-    this._selectedSalarie.lastDepartDate = (value.lastDepartDate)? this.convertDate(value.lastDepartDate) : value.lastDepartDate;
-  }
-
-  get selectedSalarie(): Salarie {
-    return this._selectedSalarie;
-  }**/
-
-  constructor(private salarieService: SalarieService, private fb: FormBuilder, private route: ActivatedRoute) {
+    constructor(private salarieService: SalarieService, private fb: FormBuilder, private route: ActivatedRoute) {
     this.createForm();
   }
 
@@ -116,7 +96,6 @@ export class SalarieComponent implements OnInit {
     this.createForm();
   }
 
-
   downloadFile(data: any) {
 
     let file = 'salarie_report_' + new Date() + '.csv';
@@ -130,17 +109,4 @@ export class SalarieComponent implements OnInit {
     saveAs(blob, file);
   }
 
-  private convertDate(_date: string, _format: string = 'dd/MM/yyyy', _delimiter: string = '/') {
-    let formatLowerCase = _format.toLowerCase();
-    let formatItems = formatLowerCase.split(_delimiter);
-    let dateItems: string[] = _date.split(_delimiter);
-    let monthIndex = formatItems.indexOf("mm");
-    let dayIndex = formatItems.indexOf("dd");
-    let yearIndex = formatItems.indexOf("yyyy");
-    // let month = dateItems[monthIndex];
-    // month -= 1;
-    // let formatedDate = new Date(dateItems[yearIndex], month, dateItems[dayIndex]);
-    // return new Date(formatedDate).toISOString().slice(0, 10);
-    return dateItems[yearIndex]+'-'+dateItems[monthIndex]+'-'+dateItems[dayIndex];
-  }
 }
