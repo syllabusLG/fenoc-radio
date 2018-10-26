@@ -35,6 +35,7 @@ export class SalarieComponent implements OnInit {
     this.initSalarie();
     this.salaries = this.route.snapshot.data.salaries;
     console.log(this.salaries);
+
     this.loadSalaries();
   }
 
