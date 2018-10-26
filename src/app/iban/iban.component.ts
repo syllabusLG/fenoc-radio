@@ -19,7 +19,7 @@ export class IbanComponent implements OnInit {
   pageIbans:any;
   motCle:string='';
   currentPage:number=0;
-  size:number=2;
+  size:number=5;
   pages:Array<number>;
 
   ibans: Salarie[];

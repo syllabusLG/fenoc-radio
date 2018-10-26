@@ -18,7 +18,7 @@ export class IndividusComponent implements OnInit {
   pageIndividus: any;
   motCle: string = '';
   currentPage: number = 0;
-  size: number = 2;
+  size: number = 5;
   pages: Array<number>;
 
   individus: Individus[];
@@ -73,6 +73,12 @@ export class IndividusComponent implements OnInit {
   }
 
   updateIndividu() {
+    let date = this.selectedIndividu.birthDate;
+    let year =  new Date(Date.parse(date)).getFullYear();
+    let month = new Date(Date.parse(date)).getMonth()+1;
+    let day = new Date(Date.parse(date)).getDate();
+    let dateFormat = day+'/'+month+'/'+year;
+    this.selectedIndividu.birthDate = dateFormat;
     this.individusService.update(this.selectedIndividu).subscribe(
       res => {
         this.initIndividu();
