@@ -19,7 +19,7 @@ export class ContactComponent implements OnInit {
   pageContacts: any;
   motCle: string = '';
   currentPage: number = 0;
-  size: number = 2;
+  size: number = 5;
   pages: Array<number>;
 
   contacts: Contact[];
