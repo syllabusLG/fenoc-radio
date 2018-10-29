@@ -75,6 +75,27 @@ export class SalarieComponent implements OnInit {
   }
 
   updateSalarie() {
+    let dateHire = this.selectedSalarie.hireDate;
+    let dateDepart = this.selectedSalarie.departDate;
+    let dateLastHire = this.selectedSalarie.lastHireDate;
+    let dateLastDepart = this.selectedSalarie.lastDepartDate;
+
+    if(dateHire || dateDepart || dateLastHire || dateLastDepart )
+    {
+      if(dateHire && (dateHire.indexOf('-') > -1)){
+        this.selectedSalarie.hireDate = this.fillDate(dateHire);
+      }
+      if(dateDepart && (dateDepart.indexOf('-') > -1)){
+        this.selectedSalarie.departDate = this.fillDate(dateDepart);
+      }
+      if(dateLastDepart && (dateLastDepart.indexOf('-') > -1)){
+        this.selectedSalarie.lastDepartDate = this.fillDate(dateLastDepart);
+      }
+      if(dateLastHire && (dateLastHire.indexOf('-') > -1))
+      {
+        this.selectedSalarie.lastHireDate= this.fillDate(dateLastHire);
+      }
+    }
     this.salarieService.update(this.selectedSalarie).subscribe(
       res => {
         this.initSalarie();
@@ -110,4 +131,35 @@ export class SalarieComponent implements OnInit {
     saveAs(blob, file);
   }
 
+
+
+  parse(value: any): Date | null {
+    if ((typeof value === 'string') && (value.indexOf('/') > -1)) {
+      const str = value.split('/');
+
+      const year = Number(str[2]);
+      const month = Number(str[1]) - 1;
+      const date = Number(str[0]);
+
+      return new Date(year, month, date);
+    } else if((typeof value === 'string') && value === '') {
+      return new Date();
+    }
+    const timestamp = typeof value === 'number' ? value : Date.parse(value);
+    return isNaN(timestamp) ? null : new Date(timestamp);
+  }
+
+  fillDate(date:any){
+    if(date && (date.indexOf('-') > -1)) {
+      let year = new Date(Date.parse(date)).getFullYear();
+      let month = new Date(Date.parse(date)).getMonth() + 1;
+      let day = new Date(Date.parse(date)).getDate();
+      let dateFormat = day + '/' + month + '/' + year;
+      if(day>=1&&day<=9)
+      {
+        dateFormat = '0'+day + '/' + month + '/' + year;
+      }
+      return dateFormat;
+      }
+    }
 }

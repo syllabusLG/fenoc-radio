@@ -104,20 +104,23 @@
                     </div>
                     <div class="form-group">
                       <label>Date d'Embauche:</label>
-                      <input type="date" class="form-control" formControlName="hireDate"  [(ngModel)]="selectedSalarie.hireDate" />
+                      <input type="date" class="form-control" formControlName="hireDate"  [(ngModel)]="selectedSalarie.hireDate"
+                             value="{{parse(selectedSalarie.hireDate) | date:'yyyy-MM-dd' }}"/>
                     </div>
                     <div class="form-group">
                       <label>Date de Départ Salarié ou Retraite:</label>
-                      <input type="date" class="form-control" formControlName="departDate" [(ngModel)]="selectedSalarie.departDate" />
+                      <input type="date" class="form-control" formControlName="departDate" [(ngModel)]="selectedSalarie.departDate"
+                      value="{{parse(selectedSalarie.departDate) | date:'yyyy-MM-dd' }}" />
                     </div>
                     <div class="form-group">
                       <label>Date de la Dernière Embauche:</label>
-                      <input type="date" class="form-control" formControlName="lastHireDate" [(ngModel)]="selectedSalarie.lastHireDate"/>
+                      <input type="date" class="form-control" formControlName="lastHireDate" [(ngModel)]="selectedSalarie.lastHireDate"
+                      value="{{parse(selectedSalarie.lastHireDate) | date:'yyyy-MM-dd' }}"/>
                     </div>
                     <div class="form-group">
                       <label>Date de la Dernière Date de Départe du Salarié:</label>
-                      <input type="date" class="form-control" formControlName="lastDepartDate"
-                             [(ngModel)]="selectedSalarie.lastDepartDate"/>
+                      <input type="date" class="form-control" formControlName="lastDepartDate" [(ngModel)]="selectedSalarie.lastDepartDate"
+                             value="{{parse(selectedSalarie.lastDepartDate) | date:'yyyy-MM-dd' }}"/>
                     </div>
                     <div class="form-group">
                       <label>Statut:</label>

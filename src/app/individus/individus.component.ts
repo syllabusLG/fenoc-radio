@@ -4,6 +4,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import { saveAs } from 'file-saver';
 import {IndividusService} from "./individus.service";
 import {Individus} from "../shared/individus.model";
+import {DateFormatter} from "@angular/common/src/pipes/deprecated/intl";
 
 
 @Component({
@@ -54,6 +55,7 @@ export class IndividusComponent implements OnInit {
   }
 
   loadIndividus() {
+
     this.individusService.search(this.motCle, this.currentPage, this.size)
       .subscribe(data => {
         this.pageIndividus = data;
@@ -74,11 +76,10 @@ export class IndividusComponent implements OnInit {
 
   updateIndividu() {
     let date = this.selectedIndividu.birthDate;
-    let year =  new Date(Date.parse(date)).getFullYear();
-    let month = new Date(Date.parse(date)).getMonth()+1;
-    let day = new Date(Date.parse(date)).getDate();
-    let dateFormat = day+'/'+month+'/'+year;
-    this.selectedIndividu.birthDate = dateFormat;
+    if(date && (date.indexOf('-') > -1))
+    {
+      this.selectedIndividu.birthDate= this.fillDate(date);
+    }
     this.individusService.update(this.selectedIndividu).subscribe(
       res => {
         this.initIndividu();
@@ -112,6 +113,37 @@ export class IndividusComponent implements OnInit {
     let csvArray = csv.join('\r\n');
     var blob = new Blob([csvArray], {type: 'text/csv'})
     saveAs(blob, file);
+  }
+
+
+  parse(value: any): Date | null {
+    if ((typeof value === 'string') && (value.indexOf('/') > -1)) {
+      const str = value.split('/');
+
+      const year = Number(str[2]);
+      const month = Number(str[1]) - 1;
+      const date = Number(str[0]);
+
+      return new Date(year, month, date);
+    } else if((typeof value === 'string') && value === '') {
+      return new Date();
+    }
+    const timestamp = typeof value === 'number' ? value : Date.parse(value);
+    return isNaN(timestamp) ? null : new Date(timestamp);
+  }
+
+  fillDate(date:any){
+    if(date && (date.indexOf('-') > -1)) {
+      let year = new Date(Date.parse(date)).getFullYear();
+      let month = new Date(Date.parse(date)).getMonth() + 1;
+      let day = new Date(Date.parse(date)).getDate();
+      let dateFormat = day + '/' + month + '/' + year;
+      if(day>=1&&day<=9)
+      {
+        dateFormat = '0'+day + '/' + month + '/' + year;
+      }
+      return dateFormat;
+    }
   }
 }
 
