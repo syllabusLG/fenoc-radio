@@ -12,11 +12,11 @@ import {AdresseComponent} from './adresse/adresse.component';
 import {AdresseResolver} from './adresse/adresse.resolver';
 import {SalarieComponent} from './salarie/salarie.component';
 import {SalarieResolver} from './salarie/salarie.resolver';
-import {IbanComponent} from "./iban/iban.component";
+import {PaymentComponent} from "./payment/payment.component";
 import {CompteComponent} from "./compte/compte.component";
 import {ContactComponent} from "./contact/contact.component";
 import {IndividusComponent} from "./individus/individus.component";
-import {IbanResolver} from "./iban/iban.resolver";
+import {PaymentResolver} from "./payment/payment.resolver";
 import {CompteResolver} from "./compte/compte.resolver";
 import {ContactResolver} from "./contact/contact.resolver";
 import {IndividusResolver} from "./individus/individus.resolver";
@@ -74,10 +74,10 @@ export const appRoutes: Routes = [
         outlet: 'contentOutlet'
       },
       {
-        path: 'iban',
-        component: IbanComponent,
+        path: 'payment',
+        component: PaymentComponent,
         resolve: {
-          ibans: IbanResolver
+          payments: PaymentResolver
         },
         outlet: 'contentOutlet'
       },
@@ -124,6 +124,6 @@ export const appRoutes: Routes = [
     )
   ],
   exports: [RouterModule],
-  providers: [UserResolver, AdresseResolver, SalarieResolver, IbanResolver, CompteResolver,ContactResolver,IndividusResolver]
+  providers: [UserResolver, AdresseResolver, SalarieResolver, PaymentResolver, CompteResolver,ContactResolver,IndividusResolver]
 })
 export class AppRoutingModule { }

@@ -9,8 +9,8 @@ import {Salarie} from '../../salarie.model';
 import {SalarieService} from '../../../salarie/salarie.service';
 import {ContactService} from '../../../contact/contact.service';
 import {Contact} from '../../contact.model';
-import {Iban} from '../../iban.model';
-import {IbanService} from '../../../iban/iban.service';
+import {Payment} from '../../payment.model';
+import {PaymentService} from '../../../payment/payment.service';
 import {Adresse} from '../../adresse.model';
 import {AdresseService} from '../../../adresse/adresse.service';
 import {CompteService} from '../../../compte/compte.service';
@@ -62,9 +62,9 @@ export class UploadComponent implements OnInit {
   contactDataArray: Contact[] = [];
   contactCreatedDataArray: Contact[] = [];
   contactUpdatedDataArray: Contact[] = [];
-  ibanDataArray: Iban[] = [];
-  ibanCreatedDataArray: Iban[] = [];
-  ibanUpdatedDataArray: Iban[] = [];
+  paymentDataArray: Payment[] = [];
+  paymentCreatedDataArray: Payment[] = [];
+  paymentUpdatedDataArray: Payment[] = [];
   adresseDataArray: Adresse[] = [];
   adresseCreatedDataArray: Adresse[] = [];
   adresseUpdatedDataArray: Adresse[] = [];
@@ -202,8 +202,8 @@ export class UploadComponent implements OnInit {
   contactReportCreateFile: ReportCreateFile = new ReportCreateFile();
   contactReportUpdateFile: ReportUpdateFile = new ReportUpdateFile();
 
-  ibanReportCreateFile: ReportCreateFile = new ReportCreateFile();
-  ibanReportUpdateFile: ReportUpdateFile = new ReportUpdateFile();
+  paymentReportCreateFile: ReportCreateFile = new ReportCreateFile();
+  paymentReportUpdateFile: ReportUpdateFile = new ReportUpdateFile();
 
   adresseReportCreateFile: ReportCreateFile = new ReportCreateFile();
   adresseReportUpdateFile: ReportUpdateFile = new ReportUpdateFile();
@@ -216,7 +216,7 @@ export class UploadComponent implements OnInit {
   constructor(private individusService: IndividusService,
               private salarieService: SalarieService,
               private contactService: ContactService,
-              private ibanService: IbanService,
+              private paymentService: PaymentService,
               private adresseService: AdresseService,
               private compteService: CompteService,
               private fiscaliteService: FiscaliteService,
@@ -313,8 +313,8 @@ export class UploadComponent implements OnInit {
         this.salaryReportCreateFile.nbreLinesRejected = this.nbreLigneRejete;
         this.contactReportCreateFile.nbreLinesRejected = this.nbreLigneRejete;
         this.contactReportUpdateFile.nbreLinesRejected = this.nbreLigneRejete;
-        this.ibanReportCreateFile.nbreLinesRejected = this.nbreLigneRejete;
-        this.ibanReportUpdateFile.nbreLinesRejected = this.nbreLigneRejete;
+        this.paymentReportCreateFile.nbreLinesRejected = this.nbreLigneRejete;
+        this.paymentReportUpdateFile.nbreLinesRejected = this.nbreLigneRejete;
         this.adresseReportCreateFile.nbreLinesRejected = this.nbreLigneRejete;
         this.adresseReportUpdateFile.nbreLinesRejected = this.nbreLigneRejete;
         this.compteReportCreateFile.nbreLinesRejected = this.nbreLigneRejete;
@@ -410,10 +410,10 @@ export class UploadComponent implements OnInit {
   }
 
   buildIbanDataArray(dataArray){
-    this.ibanReportCreateFile.module = 'IBAN';
-    this.ibanReportUpdateFile.module = 'IBAN';
+    this.paymentReportCreateFile.module = 'PAYMENT';
+    this.paymentReportUpdateFile.module = 'PAYMENT';
     for (let i = 0; i < dataArray.length; i++){
-      let iban: Iban = new Iban();
+      let payment: Payment = new Payment();
       let individu: Individus = new Individus();
       if(dataArray[i].lastName.length !== 0 && dataArray[i].firstName.length !== 0 && dataArray[i].civility.length !== 0 &&
         (+dataArray[i].civility === 1 || +dataArray[i].civility === 2 || +dataArray[i].civility === 3) &&
@@ -427,18 +427,18 @@ export class UploadComponent implements OnInit {
           && this.isValidIBANNumber(dataArray[i].iban) && this.isBic(dataArray[i].bic)
           && dataArray[i].bic.substr(4,2) === dataArray[i].iban.substr(0, 2)){
 
-          this.ibanService.getOne(dataArray[i].iban).subscribe((data)=>{
+          this.paymentService.getOne(dataArray[i].iban).subscribe((data)=>{
             if (data !== null){
-              this.ibanUpdatedDataArray.push(data);
+              this.paymentUpdatedDataArray.push(data);
             } else {
-              this.ibanCreatedDataArray.push(data);
+              this.paymentCreatedDataArray.push(data);
             }
           });
-          iban.iban = dataArray[i].iban;
-          iban.bic =  dataArray[i].bic;
+          payment.iban = dataArray[i].iban;
+          payment.bic =  dataArray[i].bic;
           individu.nui = dataArray[i].nui;
-          iban.individu = individu;
-          this.ibanDataArray.push(iban);
+          payment.individu = individu;
+          this.paymentDataArray.push(payment);
         }
       }
     }
@@ -588,10 +588,12 @@ export class UploadComponent implements OnInit {
       this.fileName = file.name;
       let input = $event.target;
       let reader = new FileReader();
-      reader.readAsText(input.files[0]);
+      reader.readAsText(input.files[0], 'ISO-8859-1');
 
       reader.onload = (data) => {
+
         let csvData = reader.result;
+        //csvData = "data:text/csv;charset=utf-8,";
         let csvRecordsArray = csvData.split(/\r\n|\n/);
         let headers = csvRecordsArray && csvRecordsArray.length>0 ? csvRecordsArray[0].split(";") : [];
         // bind headers with dataModelist
@@ -752,7 +754,7 @@ export class UploadComponent implements OnInit {
   }
 
   sendIndividusToServer(){
-    this.individusService.addAll(this.individusDataArray).subscribe((data)=>{
+      this.individusService.addAll(this.individusDataArray).subscribe((data)=>{
       this.dataFromServer = data;
       this.dataSentToServer=true;
       this.updateData.emit(data);
@@ -798,14 +800,14 @@ export class UploadComponent implements OnInit {
     });
   }
   sendIbanToServer(){
-    this.ibanService.addAll(this.ibanDataArray).subscribe( data=>{
-      this.ibanReportCreateFile.nbreLinesCreated = this.ibanCreatedDataArray.length;
-      this.ibanReportUpdateFile.nbreLinesUpdated = this.ibanUpdatedDataArray.length;
-      if(this.ibanCreatedDataArray.length > 0){
-        this.reportCreateFileService.add(this.ibanReportCreateFile).subscribe();
+    this.paymentService.addAll(this.paymentDataArray).subscribe( data=>{
+      this.paymentReportCreateFile.nbreLinesCreated = this.paymentCreatedDataArray.length;
+      this.paymentReportUpdateFile.nbreLinesUpdated = this.paymentUpdatedDataArray.length;
+      if(this.paymentCreatedDataArray.length > 0){
+        this.reportCreateFileService.add(this.paymentReportCreateFile).subscribe();
       }
-      if(this.ibanUpdatedDataArray.length > 0){
-        this.reportUpdateFileService.add(this.ibanReportUpdateFile).subscribe();
+      if(this.paymentUpdatedDataArray.length > 0){
+        this.reportUpdateFileService.add(this.paymentReportUpdateFile).subscribe();
       }
     });
   }

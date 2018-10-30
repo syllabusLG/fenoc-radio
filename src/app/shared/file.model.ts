@@ -41,6 +41,7 @@ export class FileModel {
               public country?: string,
               public iban?: string,
               public bic?: string,
+              public otherPayment?: string,
               public numCompte?: number,
               public libCompte?: string,
               public type?: string,

@@ -1,0 +1,124 @@
+<div class="container">
+  <h3 class="h3-class">Payments</h3>
+  <hr>
+
+  <div>
+    <div class=" row">
+      <div class="form-group col-sm-10">
+        <label style="margin-left: 10px">Mot Clé</label>
+        <input style="height: 33px;width: fit-content" type="text" [(ngModel)]="motCle"/>
+        <button class="btn btn-info" style="width: fit-content" (click)="searchPayment()">Chercher</button>
+      </div>
+      <div class="col-sm-2" id="reportIban" #reportIban>
+        <div class="d-inline-block">
+          <a href="" data-toggle="collapse">
+            <button type="button" style="margin-bottom: 14px" class="btn btn-info" (click)="downloadFile(payments)">Export to CSV</button>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-12">
+      <table class="col-sm-12 table table-hover">
+        <thead>
+        <tr>
+          <th>IBAN</th>
+          <th>BIC</th>
+          <th>Other Payment</th>
+          <th>Individu</th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let payment  of pagePayments?.content">
+          <td> {{payment.iban}}</td>
+          <td>{{payment.bic}}</td>
+          <td>{{payment.otherPayment}}</td>
+          <td>{{payment.individu.lastName+' '+payment.individu.firstName}}</td>
+          <td>
+            <a href=""  data-toggle="collapse" >
+              <i class="fa fa-edit" data-toggle="modal" data-target="#Modal" (click)="operation = 'edit'; selectedPayment = payment;"></i>
+            </a>
+            <a href="" data-toggle="collapse">
+              <i class="fa fa-trash" data-toggle="modal" data-target="#Modal" (click)="operation = 'remove'; selectedPayment = payment;"></i>
+            </a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
+
+
+    <div class="card-body">
+      <div ngDraggable class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+        <div class="modal-dialog" class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header" style="background-color: #12899e;cursor:move;" >
+              <h5 class="modal-title" id="AddModalLabel" style="color: white">
+                {{ operation == 'edit' ? 'Modifier Payment' : operation == 'remove' ? 'Supprimer Payment' :''}}</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="text-align:right;width:auto">
+                <span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+              <div class="card-body">
+                <div *ngIf="operation == 'edit'">
+                  <form [formGroup]="paymentForm" style="border-color: white; overflow-y: auto">
+                    <div class="form-group">
+                      <div class="col-xs-1">
+                      <label class="control-label">IBAN:</label>
+                        <br>
+                        <div (mouseenter)="showClear=true" (mouseleave)="showClear=false">
+                          <input type="text" [readonly]="selectedPayment.otherPayment" style="width: 400px" class="form-control" formControlName="iban"
+                                 [(ngModel)]="selectedPayment.iban"/>
+                          <i class="clear-icon" *ngIf="showClear" (click)="changedIban($event)">&times;</i>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="control-label">BIC:</label>
+                      <br>
+                      <input type="text" style="width: 400px" class="form-control" formControlName="bic" [(ngModel)]="selectedPayment.bic"/>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="control-label">Other Payment:</label>
+                      <br>
+                      <div (mouseenter)="showClear=true" (mouseleave)="showClear=false">
+                        <input type="text" [readonly]="selectedPayment.iban" style="width: 400px" class="form-control" formControlName="otherPayment" [(ngModel)]="selectedPayment.otherPayment"/>
+                        <i class="clear-icon" *ngIf="showClear" (click)="changedOtherPayment($event)">&times;</i>
+                      </div>
+                    </div>
+
+
+                    <div class="form-group" [hidden]="operation=='edit'">
+                      <label>Individu:</label>
+                      <input type="text" class="form-control" formControlName="individu" [(ngModel)]="selectedPayment.individu"/>
+                    </div>
+
+                    <button class="btn btn-info" data-dismiss="modal"
+                            (click)="updatePayment()">
+                      {{'edit' ? 'Modifier': ''}}
+                    </button>
+                  </form>
+                </div>
+                <div *ngIf="operation == 'remove'">
+                  <p class="card-title">
+                    ID: {{selectedPayment.bic}}
+                  </p>
+                  <p>
+                    Voulez vous supprimer cette BIC?
+                  </p>
+                  <button class="btn btn-success" data-dismiss="modal" [disabled]="!selectedIban.bic" (click)="deletePayment()">Confirmer</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+</div>

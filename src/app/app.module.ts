@@ -30,8 +30,8 @@ import { SalarieComponent } from './salarie/salarie.component';
 import {SalarieService} from './salarie/salarie.service';
 import { ContactComponent } from './contact/contact.component';
 import {ContactService} from './contact/contact.service';
-import { IbanComponent } from './iban/iban.component';
-import {IbanService} from './iban/iban.service';
+import { PaymentComponent } from './payment/payment.component';
+import {PaymentService} from './payment/payment.service';
 import { AdresseComponent } from './adresse/adresse.component';
 import {AdresseService} from './adresse/adresse.service';
 import { CompteComponent } from './compte/compte.component';
@@ -45,8 +45,6 @@ import {ReportCreateFileService} from './report-create-file/report.create.file.s
 import {ReportUpdateFileService} from './report-update-file/report.update.file.service';
 import { MyChartComponent } from './my-chart/my-chart.component';
 import {ChartModule} from 'angular2-chartjs';
-
-
 
 
 @NgModule({
@@ -66,7 +64,7 @@ import {ChartModule} from 'angular2-chartjs';
     IndividusComponent,
     SalarieComponent,
     ContactComponent,
-    IbanComponent,
+    PaymentComponent,
     AdresseComponent,
     CompteComponent,
     FiscaliteComponent,
@@ -95,7 +93,7 @@ import {ChartModule} from 'angular2-chartjs';
     IndividusService,
     SalarieService,
     ContactService,
-    IbanService,
+    PaymentService,
     AdresseService,
     CompteService,
     FiscaliteService,
