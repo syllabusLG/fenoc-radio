@@ -1,12 +1,12 @@
 import {Resolve} from '@angular/router';
 import {Injectable} from '@angular/core';
-import {IbanService} from './iban.service';
+import {PaymentService} from './payment.service';
 
 
 @Injectable()
-export class IbanResolver implements Resolve<any>{
+export class PaymentResolver implements Resolve<any>{
 
-  constructor(private ibanService: IbanService){}
+  constructor(private ibanService: PaymentService){}
 
   resolve(){
     return this.ibanService.getAll();
