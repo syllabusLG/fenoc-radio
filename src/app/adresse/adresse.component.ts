@@ -5,7 +5,8 @@ import { saveAs } from 'file-saver';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AdresseService} from './adresse.service';
 import * as jsPDF from 'jspdf';
-
+import {Individus} from '../shared/individus.model';
+declare const $;
 @Component({
   selector: 'app-adresse',
   templateUrl: './adresse.component.html',
@@ -33,8 +34,18 @@ export class AdresseComponent implements OnInit {
 
   ngOnInit() {
     this.initAdresse();
-    this.adresses = this.route.snapshot.data.adresses;
+    this.adresses = this.changeIndividu(this.route.snapshot.data.adresses);
     this.loadAdresses();
+
+  }
+  changeIndividu(adresses: Adresse[]){
+    for(let i = 0; i < adresses.length; i++){
+      let individu: Individus = new Individus();
+      individu.firstName = adresses[i].individu.firstName;
+      individu.lastName = adresses[i].individu.lastName;
+      adresses[i].individu = individu;
+    }
+    return adresses;
   }
   createForm(){
     this.adresseForm = this.fb.group({
@@ -109,7 +120,6 @@ export class AdresseComponent implements OnInit {
 
   downloadFile(data: any) {
     let file = 'adresses_report_'+ new Date()+'.csv';
-    console.log('------', file);
     const replacer = (key, value) => value === null ? '' : value; // specify how you want to handle null values here
     const header = Object.keys(data[0]);
     let csv = data.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(';'));

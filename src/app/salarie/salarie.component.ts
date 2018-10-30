@@ -4,6 +4,7 @@ import {SalarieService} from "./salarie.service";
 import {Salarie} from "../shared/salarie.model";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {saveAs} from 'file-saver';
+import {Individus} from '../shared/individus.model';
 
 
 @Component({
@@ -33,7 +34,7 @@ export class SalarieComponent implements OnInit {
 
   ngOnInit() {
     this.initSalarie();
-    this.salaries = this.route.snapshot.data.salaries;
+    this.salaries = this.changeIndividu(this.route.snapshot.data.salaries);
     console.log(this.salaries);
 
     this.loadSalaries();
@@ -160,6 +161,15 @@ export class SalarieComponent implements OnInit {
         dateFormat = '0'+day + '/' + month + '/' + year;
       }
       return dateFormat;
-      }
     }
+  }
+  changeIndividu(salaries: Salarie[]){
+    for(let i = 0; i < salaries.length; i++){
+      let individu: Individus = new Individus();
+      individu.firstName = salaries[i].individu.firstName;
+      individu.lastName = salaries[i].individu.lastName;
+      salaries[i].individu = individu;
+    }
+    return salaries;
+  }
 }

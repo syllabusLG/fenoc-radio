@@ -4,6 +4,8 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {CompteService} from "./compte.service";
 import {Compte} from "../shared/compte.model";
 import { saveAs } from 'file-saver';
+import {Individus} from '../shared/individus.model';
+import {Adresse} from '../shared/adresse.model';
 
 
 @Component({
@@ -34,7 +36,7 @@ export class CompteComponent implements OnInit {
 
   ngOnInit() {
     this.initCompte();
-    this.comptes = this.route.snapshot.data.comptes;
+    this.comptes = this.changeIndividu(this.route.snapshot.data.comptes);
     this.loadComptes();
   }
 
@@ -106,5 +108,14 @@ export class CompteComponent implements OnInit {
     let csvArray = csv.join('\r\n');
     var blob = new Blob([csvArray], {type: 'text/csv'})
     saveAs(blob, file);
+  }
+  changeIndividu(comptes: Compte[]){
+    for(let i = 0; i < comptes.length; i++){
+      let individu: Individus = new Individus();
+      individu.firstName = comptes[i].individu.firstName;
+      individu.lastName = comptes[i].individu.lastName;
+      comptes[i].individu = individu;
+    }
+    return comptes;
   }
 }

@@ -5,6 +5,8 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Iban} from "../shared/iban.model";
 import { saveAs } from 'file-saver';
 import {IbanService} from "./iban.service";
+import {Individus} from '../shared/individus.model';
+import {Contact} from '../shared/contact.model';
 
 @Component({
   selector: 'app-iban',
@@ -22,7 +24,7 @@ export class IbanComponent implements OnInit {
   size:number=5;
   pages:Array<number>;
 
-  ibans: Salarie[];
+  ibans: Iban[];
   ibanForm: FormGroup;
   operation: string='';
   selectedIban: Iban;
@@ -75,7 +77,7 @@ export class IbanComponent implements OnInit {
   }
 
   deleteIban(){
-    this.ibanService.delete(this.selectedIban).subscribe(
+    this.ibanService.delete(this.selectedIban.iban).subscribe(
       res=>{
         this.selectedIban = new Iban();
         this.loadIbans();
@@ -100,5 +102,6 @@ export class IbanComponent implements OnInit {
     var blob = new Blob([csvArray], {type: 'text/csv' })
     saveAs(blob, file);
   }
+
 
 }
