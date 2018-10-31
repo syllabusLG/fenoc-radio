@@ -35,4 +35,8 @@ export class UserService implements CrudService{
   search(motCle:string, page:number, size:number): Observable<any>{
     return this.http.get(API_URLS.ADRESSE_URL_SEARCH+'?mc='+motCle+'&size='+size+'&page='+page);
   }
+
+  habilitation(user, roles): Observable<any>{
+    return this.http.put(API_URLS.HABILITATION_URL, user, roles);
+  }
 }

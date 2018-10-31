@@ -8,7 +8,7 @@
     <li class="nav-item">
       <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'dashboard'}}]"
                           routerLinkActive="active"
-                          *ngIf="hasRoleUser()">Dashboard</a>
+                          *ngIf="hasRoleDashboard()">Dashboard</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'user'}}]"
@@ -18,42 +18,42 @@
     <li class="nav-item">
       <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'adresse'}}]"
          routerLinkActive="active"
-         *ngIf="hasRoleUser()">Adresse</a>
+         *ngIf="hasRoleAdresse()">Adresse</a>
     </li>
 
     <li class="nav-item">
       <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'salarie'}}]"
          routerLinkActive="active"
-         *ngIf="hasRoleUser()">Salarie</a>
+         *ngIf="hasRoleSalarie()">Salarie</a>
     </li>
 
     <li class="nav-item">
       <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'payment'}}]"
          routerLinkActive="active"
-         *ngIf="hasRoleUser()">Payment</a>
+         *ngIf="hasRolePayment()">Payment</a>
     </li>
 
     <li class="nav-item">
       <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'compte'}}]"
          routerLinkActive="active"
-         *ngIf="hasRoleUser()">Compte</a>
+         *ngIf="hasRoleCompte()">Compte</a>
     </li>
 
     <li class="nav-item">
       <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'individu'}}]"
          routerLinkActive="active"
-         *ngIf="hasRoleUser()">Individu</a>
+         *ngIf="hasRoleIndividus()">Individu</a>
     </li>
 
     <li class="nav-item">
       <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'contact'}}]"
          routerLinkActive="active"
-         *ngIf="hasRoleUser()">Contact</a>
+         *ngIf="hasRoleContact()">Contact</a>
     </li>
 
     <li class="nav-item">
       <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'habilitation'}}]"
          routerLinkActive="active"
-         *ngIf="hasRoleUser()">Habilitation</a>    </li>
+         *ngIf="hasRoleAdmin()">Habilitation</a>    </li>
   </ul>
 </nav>

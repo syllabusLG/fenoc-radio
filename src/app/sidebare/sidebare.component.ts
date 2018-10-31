@@ -10,7 +10,7 @@ import {Principal} from '../shared/principal.model';
 })
 export class SidebareComponent implements OnInit {
 
-  private principal: Principal
+  private principal: Principal;
   constructor(private store: Store<PrincipalState>) { }
 
   ngOnInit() {
@@ -34,6 +34,69 @@ export class SidebareComponent implements OnInit {
     let hasRole: boolean = false;
     this.principal.authorities.forEach(item =>{
       if(item.authority === 'ROLE_ADMIN'){
+        hasRole = true;
+      }
+    });
+    return hasRole;
+  }
+  hasRoleIndividus(){
+    let hasRole: boolean = false;
+    this.principal.authorities.forEach(item =>{
+      if(item.authority === 'ROLE_INDIVIDUS'){
+        hasRole = true;
+      }
+    });
+    return hasRole;
+  }
+  hasRoleSalarie(){
+    let hasRole: boolean = false;
+    this.principal.authorities.forEach(item =>{
+      if(item.authority === 'ROLE_SALARIE'){
+        hasRole = true;
+      }
+    });
+    return hasRole;
+  }
+  hasRoleAdresse(){
+    let hasRole: boolean = false;
+    this.principal.authorities.forEach(item =>{
+      if(item.authority === 'ROLE_ADRESSE'){
+        hasRole = true;
+      }
+    });
+    return hasRole;
+  }
+  hasRolePayment(){
+    let hasRole: boolean = false;
+    this.principal.authorities.forEach(item =>{
+      if(item.authority === 'ROLE_PAYMENT'){
+        hasRole = true;
+      }
+    });
+    return hasRole;
+  }
+  hasRoleCompte(){
+    let hasRole: boolean = false;
+    this.principal.authorities.forEach(item =>{
+      if(item.authority === 'ROLE_COMPTE'){
+        hasRole = true;
+      }
+    });
+    return hasRole;
+  }
+  hasRoleContact(){
+    let hasRole: boolean = false;
+    this.principal.authorities.forEach(item =>{
+      if(item.authority === 'ROLE_CONTACT'){
+        hasRole = true;
+      }
+    });
+    return hasRole;
+  }
+  hasRoleDashboard(){
+    let hasRole: boolean = false;
+    this.principal.authorities.forEach(item =>{
+      if(item.authority === 'ROLE_DASHBOARD'){
         hasRole = true;
       }
     });
