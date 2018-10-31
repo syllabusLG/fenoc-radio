@@ -409,7 +409,7 @@ export class UploadComponent implements OnInit {
     }
   }
 
-  buildIbanDataArray(dataArray){
+  buildPaymentDataArray(dataArray){
     this.paymentReportCreateFile.module = 'PAYMENT';
     this.paymentReportUpdateFile.module = 'PAYMENT';
     for (let i = 0; i < dataArray.length; i++){
@@ -427,15 +427,15 @@ export class UploadComponent implements OnInit {
           && this.isValidIBANNumber(dataArray[i].iban) && this.isBic(dataArray[i].bic)
           && dataArray[i].bic.substr(4,2) === dataArray[i].iban.substr(0, 2)){
 
-          this.paymentService.getOne(dataArray[i].iban).subscribe((data)=>{
+          this.paymentService.getOne(dataArray[i].bic).subscribe((data)=>{
             if (data !== null){
               this.paymentUpdatedDataArray.push(data);
             } else {
               this.paymentCreatedDataArray.push(data);
             }
           });
-          payment.iban = dataArray[i].iban;
           payment.bic =  dataArray[i].bic;
+          payment.iban = dataArray[i].iban;
           individu.nui = dataArray[i].nui;
           payment.individu = individu;
           this.paymentDataArray.push(payment);
@@ -617,7 +617,7 @@ export class UploadComponent implements OnInit {
         this.buildIndividusDataArray(this.dataArray);
         this.buildSalarieDataArray(this.dataArray);
         this.buildContactDataArray(this.dataArray);
-        this.buildIbanDataArray(this.dataArray);
+        this.buildPaymentDataArray(this.dataArray);
         this.buildAdresseDataArray(this.dataArray);
         this.buildCompteDataArray(this.dataArray);
         //this.buildFiscaliteDataArray(this.dataArray);
