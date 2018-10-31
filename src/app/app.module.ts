@@ -45,6 +45,7 @@ import {ReportCreateFileService} from './report-create-file/report.create.file.s
 import {ReportUpdateFileService} from './report-update-file/report.update.file.service';
 import { MyChartComponent } from './my-chart/my-chart.component';
 import {ChartModule} from 'angular2-chartjs';
+import {HabilitationComponent} from "./habilitation/habilitation.component";
 
 
 @NgModule({
@@ -71,7 +72,8 @@ import {ChartModule} from 'angular2-chartjs';
     TranslatePipe,
     ReportCreateFileComponent,
     ReportUpdateFileComponent,
-    MyChartComponent
+    MyChartComponent,
+    HabilitationComponent
 
   ],
   imports: [

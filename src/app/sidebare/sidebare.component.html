@@ -52,7 +52,8 @@
     </li>
 
     <li class="nav-item">
-      <a class="nav-link" href="#">Export</a>
-    </li>
+      <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'habilitation'}}]"
+         routerLinkActive="active"
+         *ngIf="hasRoleUser()">Habilitation</a>    </li>
   </ul>
 </nav>

@@ -20,9 +20,10 @@ import {PaymentResolver} from "./payment/payment.resolver";
 import {CompteResolver} from "./compte/compte.resolver";
 import {ContactResolver} from "./contact/contact.resolver";
 import {IndividusResolver} from "./individus/individus.resolver";
+import {HabilitationComponent} from "./habilitation/habilitation.component";
 
 
-var IndividuComponent;
+
 export const appRoutes: Routes = [
 
   {
@@ -103,6 +104,11 @@ export const appRoutes: Routes = [
         resolve: {
           contacts: ContactResolver
         },
+        outlet: 'contentOutlet'
+      },
+      {
+        path: 'habilitation',
+        component: HabilitationComponent,
         outlet: 'contentOutlet'
       },
 
