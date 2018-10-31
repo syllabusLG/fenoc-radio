@@ -18,10 +18,10 @@ export const API_URLS = {
   COMPTE_URL: BASE + ':' + PORT + PATH + '/compte',
   COMPTE_URL_SEARCH: BASE + ':' + PORT + PATH + '/compte/search',
   FISCALITE_URL: BASE + ':' + PORT + PATH + '/fiscalite',
-  HABILITATION_URL: BASE + ':' + PORT + PATH + '/habilitation',
+  HABILITATION_URL: BASE + ':' + PORT + '/crud_user/habilitation',
   FILE_URL: BASE + ':' + PORT + PATH + '/file',
   REPORT_CREATE_URL: BASE + ':' + PORT + PATH + '/createFile',
   REPORT_UPDATE_URL: BASE + ':' + PORT + PATH + '/updateFile',
-  CRUD_USER_URL: BASE + ':'+ PORT + '/crud_user'
-
+  CRUD_USER_URL: BASE + ':'+ PORT + '/crud_user',
+  ROLES_USER_URL: BASE + ':'+ PORT + '/crud_user/rolesByUser'
 };

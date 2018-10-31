@@ -39,4 +39,7 @@ export class UserService implements CrudService{
   habilitation(user, roles): Observable<any>{
     return this.http.put(API_URLS.HABILITATION_URL, user, roles);
   }
+  getAllRolesByUser(id): Observable<any>{
+    return this.http.get(API_URLS.ROLES_USER_URL + `/${id}`);
+  }
 }
