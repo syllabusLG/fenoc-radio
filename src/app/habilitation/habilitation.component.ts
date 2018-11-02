@@ -25,6 +25,8 @@ export class HabilitationComponent implements OnInit {
     maxHeight: 400
   });
 
+  user:User = new User();
+
   constructor(private habilitationservice: HabilitationService, private userService: UserService, private route: ActivatedRoute) {
   }
 
@@ -46,18 +48,17 @@ export class HabilitationComponent implements OnInit {
     for (let tree of this.items) {
       let userRoles: Role[] = [];
       let userId = tree.value;
-
-      for (let roleNode of tree.children){
-        if (roleNode.checked) {
-          userRoles.push(new Role(roleNode.value, roleNode.text));
+      this.userService.getOne(userId).subscribe(data => {
+        this.user = data;
+        for (let roleNode of tree.children) {
+          if (roleNode.checked) {
+            //userRoles.push(new Role(roleNode.value, roleNode.text));
+            this.user.roles.push(new Role(roleNode.value, roleNode.text))
+          }
         }
-      }
-      this.userService.getOne(userId).subscribe((user: User) => {
-        console.log("user: "+user.username);
-        this.userService.habilitation(user, userRoles).subscribe(error => {
-          console.log(error);
-        })
+        this.userService.update(this.user).subscribe();
       });
+
 
     }
   }
