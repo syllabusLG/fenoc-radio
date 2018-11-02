@@ -59,15 +59,18 @@ export class HabilitationComponent implements OnInit {
   }
 
   UpdateRoles() {
+
     for (let tree of this.items) {
+      let userRoles:Role[] = [];
       let userId = tree.value;
       this.userService.getOne(userId).subscribe(data => {
         this.user = data;
         for (let roleNode of tree.children) {
           if (roleNode.checked) {
-            this.user.roles.push(new Role(roleNode.value, roleNode.text))
+            userRoles.push(new Role(roleNode.value, roleNode.text))
           }
         }
+        this.user.roles = userRoles;
         this.userService.update(this.user).subscribe();
       });
     }

@@ -8,7 +8,7 @@
     <li class="nav-item">
       <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'dashboard'}}]"
                           routerLinkActive="active"
-                          *ngIf="hasRoleDashboard()">Dashboard</a>
+                          *ngIf="hasRoleDashboard()|| hasRoleAdmin()">Dashboard</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'user'}}]"
@@ -18,37 +18,37 @@
     <li class="nav-item">
       <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'adresse'}}]"
          routerLinkActive="active"
-         *ngIf="hasRoleAdresse()">Adresse</a>
+         *ngIf="hasRoleAdresse() || hasRoleAdmin()">Adresse</a>
     </li>
 
     <li class="nav-item">
       <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'salarie'}}]"
          routerLinkActive="active"
-         *ngIf="hasRoleSalarie()">Salarie</a>
+         *ngIf="hasRoleSalarie()|| hasRoleAdmin()">Salarie</a>
     </li>
 
     <li class="nav-item">
       <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'payment'}}]"
          routerLinkActive="active"
-         *ngIf="hasRolePayment()">Payment</a>
+         *ngIf="hasRolePayment()|| hasRoleAdmin()">Payment</a>
     </li>
 
     <li class="nav-item">
       <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'compte'}}]"
          routerLinkActive="active"
-         *ngIf="hasRoleCompte()">Compte</a>
+         *ngIf="hasRoleCompte()|| hasRoleAdmin()">Compte</a>
     </li>
 
     <li class="nav-item">
       <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'individu'}}]"
          routerLinkActive="active"
-         *ngIf="hasRoleIndividus()">Individu</a>
+         *ngIf="hasRoleIndividus()|| hasRoleAdmin()">Individu</a>
     </li>
 
     <li class="nav-item">
       <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'contact'}}]"
          routerLinkActive="active"
-         *ngIf="hasRoleContact()">Contact</a>
+         *ngIf="hasRoleContact()|| hasRoleAdmin()">Contact</a>
     </li>
 
     <li class="nav-item">
