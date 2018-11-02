@@ -46,6 +46,8 @@ import {ReportUpdateFileService} from './report-update-file/report.update.file.s
 import { MyChartComponent } from './my-chart/my-chart.component';
 import {ChartModule} from 'angular2-chartjs';
 import {HabilitationComponent} from "./habilitation/habilitation.component";
+import { TreeviewModule } from 'ngx-treeview';
+import {HabilitationService} from "./habilitation/habilitation.service";
 
 
 @NgModule({
@@ -84,7 +86,8 @@ import {HabilitationComponent} from "./habilitation/habilitation.component";
     HttpClientModule,
     StoreModule.forRoot({principal: principalReducer}),
     AngularDraggableModule,
-    ChartModule
+    ChartModule,
+    TreeviewModule.forRoot()
   ],
   providers: [
     AppService,
@@ -100,7 +103,8 @@ import {HabilitationComponent} from "./habilitation/habilitation.component";
     CompteService,
     FiscaliteService,
     ReportCreateFileService,
-    ReportUpdateFileService
+    ReportUpdateFileService,
+    HabilitationService
   ],
   bootstrap: [AppComponent]
 })

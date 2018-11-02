@@ -1,16 +1,64 @@
-import { Component, OnInit } from '@angular/core';
-
+import {Component, OnInit, Output} from '@angular/core';
+import {TreeviewConfig, TreeviewItem} from "ngx-treeview";
+import {HabilitationService} from "./habilitation.service";
+import {UserService} from "../user/user.service";
+import {User} from "../shared/user.model";
+import {Role} from "../shared/role.model";
+import {ActivatedRoute} from "@angular/router";
+import {forEach} from "@angular/router/src/utils/collection";
 
 @Component({
   selector: 'app-habilitation',
   templateUrl: './habilitation.component.html',
   styleUrls: ['./habilitation.component.css']
 })
+
 export class HabilitationComponent implements OnInit {
 
-  constructor() { }
+  items: TreeviewItem[];
+  values: number[];
+  config = TreeviewConfig.create({
+    hasAllCheckBox: true,
+    hasFilter: true,
+    hasCollapseExpand: true,
+    decoupleChildFromParent: false,
+    maxHeight: 400
+  });
 
-  ngOnInit() {
+  constructor(private habilitationservice: HabilitationService, private userService: UserService, private route: ActivatedRoute) {
   }
 
+  ngOnInit() {
+    this.loadData();
+  }
+
+  loadData() {
+    this.userService.getAll().subscribe(listUsers => {
+      this.items = this.habilitationservice.getUsers(listUsers);
+    });
+  }
+
+  onFilterChange(value: string) {
+    console.log('filter:', value);
+  }
+
+  UpdateRoles() {
+    for (let tree of this.items) {
+      let userRoles: Role[] = [];
+      let userId = tree.value;
+
+      for (let roleNode of tree.children){
+        if (roleNode.checked) {
+          userRoles.push(new Role(roleNode.value, roleNode.text));
+        }
+      }
+      this.userService.getOne(userId).subscribe((user: User) => {
+        console.log("user: "+user.username);
+        this.userService.habilitation(user, userRoles).subscribe(error => {
+          console.log(error);
+        })
+      });
+
+    }
+  }
 }

@@ -4,7 +4,6 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import { saveAs } from 'file-saver';
 import {IndividusService} from "./individus.service";
 import {Individus} from "../shared/individus.model";
-import {DateFormatter} from "@angular/common/src/pipes/deprecated/intl";
 
 
 @Component({
@@ -35,7 +34,6 @@ export class IndividusComponent implements OnInit {
   ngOnInit() {
     this.initIndividu();
     this.individus = this.route.snapshot.data.individus;
-    console.log(this.individus);
     this.loadIndividus();
   }
 

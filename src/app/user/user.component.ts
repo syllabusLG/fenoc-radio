@@ -20,8 +20,8 @@ export class UserComponent implements OnInit {
 
   userForm: FormGroup;
 
-
-  constructor(private userService: UserService, private route: ActivatedRoute, private fb: FormBuilder) { }
+  constructor(private userService: UserService, private route: ActivatedRoute, private fb: FormBuilder) {
+  }
 
   ngOnInit() {
     this.users = this.route.snapshot.data.users;
@@ -37,6 +37,7 @@ export class UserComponent implements OnInit {
       //new DataModel('username','Nom','string',false,[]),
       new DataModel('enable','Actif','number',true,[])
     ]
+
   }
 
 }
