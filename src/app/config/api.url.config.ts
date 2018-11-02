@@ -18,7 +18,6 @@ export const API_URLS = {
   COMPTE_URL: BASE + ':' + PORT + PATH + '/compte',
   COMPTE_URL_SEARCH: BASE + ':' + PORT + PATH + '/compte/search',
   FISCALITE_URL: BASE + ':' + PORT + PATH + '/fiscalite',
-  HABILITATION_URL: BASE + ':' + PORT + '/crud_user/habilitation',
   FILE_URL: BASE + ':' + PORT + PATH + '/file',
   REPORT_CREATE_URL: BASE + ':' + PORT + PATH + '/createFile',
   REPORT_UPDATE_URL: BASE + ':' + PORT + PATH + '/updateFile',
