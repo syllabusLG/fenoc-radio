@@ -23,5 +23,5 @@ export const API_URLS = {
   REPORT_CREATE_URL: BASE + ':' + PORT + PATH + '/createFile',
   REPORT_UPDATE_URL: BASE + ':' + PORT + PATH + '/updateFile',
   CRUD_USER_URL: BASE + ':'+ PORT + '/crud_user',
-  ROLES_USER_URL: BASE + ':'+ PORT + '/crud_user/rolesByUser'
+  ROLES_USER_URL: BASE + ':'+ PORT + '/crud_user/roles'
 };
