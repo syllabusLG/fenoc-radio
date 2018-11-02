@@ -47,7 +47,6 @@ import { MyChartComponent } from './my-chart/my-chart.component';
 import {ChartModule} from 'angular2-chartjs';
 import {HabilitationComponent} from "./habilitation/habilitation.component";
 import { TreeviewModule } from 'ngx-treeview';
-import {HabilitationService} from "./habilitation/habilitation.service";
 
 
 @NgModule({
@@ -103,8 +102,7 @@ import {HabilitationService} from "./habilitation/habilitation.service";
     CompteService,
     FiscaliteService,
     ReportCreateFileService,
-    ReportUpdateFileService,
-    HabilitationService
+    ReportUpdateFileService
   ],
   bootstrap: [AppComponent]
 })
