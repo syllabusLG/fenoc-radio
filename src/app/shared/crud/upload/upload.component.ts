@@ -21,6 +21,7 @@ import {ReportCreateFileService} from '../../../report-create-file/report.create
 import {ReportUpdateFileService} from '../../../report-update-file/report.update.file.service';
 import {ReportCreateFile} from '../../report.create.file.model';
 import {ReportUpdateFile} from '../../report.update.file.model';
+import {CookieService} from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-upload',
@@ -214,6 +215,7 @@ export class UploadComponent implements OnInit {
   COUNTRY = COUNTRY;
   @Output() messageEvent = new EventEmitter<any>();
   constructor(private individusService: IndividusService,
+              private cookieService: CookieService,
               private salarieService: SalarieService,
               private contactService: ContactService,
               private paymentService: PaymentService,
@@ -586,6 +588,7 @@ export class UploadComponent implements OnInit {
     let file = fileList[0];
     if(file && file.name.endsWith(".csv")){
       this.fileName = file.name;
+      this.cookieService.set('uploadFileName', file.name);
       let input = $event.target;
       let reader = new FileReader();
       reader.readAsText(input.files[0], 'ISO-8859-1');
@@ -1439,6 +1442,7 @@ export class UploadComponent implements OnInit {
     $event.stopPropagation();
     Filemanagement.downloadPDFModules(this.report.nativeElement.innerHTML);
     this.currentStep = 4;
+    this.cookieService.set('reportFileName', 'reportFile'+new Date()+'.pdf');
   }
 
 }

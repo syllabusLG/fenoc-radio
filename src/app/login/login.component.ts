@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit, ViewEncapsulation,} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AppService} from '../app.service';
 import {Router} from '@angular/router';
+import {CookieService} from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-login',
@@ -18,6 +19,7 @@ export class LoginComponent implements OnInit {
     password: ''
   };
   constructor( private fb: FormBuilder,
+               private cookieService: CookieService,
                private appservice: AppService,
                private router: Router) { }
 
@@ -30,6 +32,14 @@ export class LoginComponent implements OnInit {
   login(){
     this.appservice.authenticate(this.credentials, ()=>{
       this.router.navigateByUrl('home/(contentOutlet:file)');
+      this.cookieService.set('dateConnexion' , this.loginDate());
+      console.log('----username--- '+ this.cookieService.get('username')+ ' date connexion '+ this.cookieService.get('dateConnexion'));
     })
+  }
+  loginDate(){
+    let year =  new Date().getFullYear();
+    let month = new Date().getMonth()+1;
+    let day = new Date().getDate();
+    return day+'/'+month+'/'+year;
   }
 }

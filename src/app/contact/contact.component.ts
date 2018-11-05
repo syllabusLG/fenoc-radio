@@ -6,6 +6,7 @@ import {Contact} from "../shared/contact.model";
 import { saveAs } from 'file-saver';
 import {Individus} from '../shared/individus.model';
 import {Compte} from '../shared/compte.model';
+import {CookieService} from 'ngx-cookie-service';
 
 
 @Component({
@@ -30,7 +31,10 @@ export class ContactComponent implements OnInit {
   selectedContact: Contact;
 
 
-  constructor(private contactService: ContactService, private fb: FormBuilder, private route: ActivatedRoute) {
+  constructor(private contactService: ContactService,
+              private cookieService: CookieService,
+              private fb: FormBuilder,
+              private route: ActivatedRoute) {
     this.createForm();
   }
 
@@ -75,6 +79,7 @@ export class ContactComponent implements OnInit {
   updateContact() {
     this.contactService.update(this.selectedContact).subscribe(
       res => {
+        this.cookieService.set('updateContact', this.selectedContact.businessPhone);
         this.initCompte();
         this.loadContacts();
       }
@@ -84,6 +89,7 @@ export class ContactComponent implements OnInit {
   deleteContact() {
     this.contactService.delete(this.selectedContact.idContact).subscribe(
       res => {
+        this.cookieService.set('deleteContact', this.selectedContact.businessPhone);
         this.selectedContact = new Contact();
         this.loadContacts();
       }
@@ -97,8 +103,8 @@ export class ContactComponent implements OnInit {
 
 
   downloadFile(data: any) {
-    let file = 'contact' + new Date() + '.csv';
-    console.log('------', file);
+    let file = 'contacts_' + new Date() + '.csv';
+    this.cookieService.set('contactReportCSV', file);
     const replacer = (key, value) => value === null ? '' : value; // specify how you want to handle null values here
     const header = Object.keys(data[0]);
     let csv = data.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(';'));

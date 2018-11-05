@@ -4,6 +4,7 @@ import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import { saveAs } from 'file-saver';
 import {PaymentService} from "./payment.service";
 import {Payment} from "../shared/payment.model";
+import {CookieService} from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-payment',
@@ -27,7 +28,10 @@ export class PaymentComponent implements OnInit {
   selectedPayment: Payment;
   showClear: boolean = false;
 
-  constructor(private paymentService: PaymentService, private fb: FormBuilder, private route: ActivatedRoute) {
+  constructor(private paymentService: PaymentService,
+              private cookieService: CookieService,
+              private fb: FormBuilder,
+              private route: ActivatedRoute) {
     this.createForm();
   }
 
@@ -70,6 +74,7 @@ export class PaymentComponent implements OnInit {
     console.log(this.selectedPayment);
     this.paymentService.update(this.selectedPayment).subscribe(
       res=>{
+        this.cookieService.set('updatePayment', this.selectedPayment.bic);
         this.initPayment();
         this.loadPayments();
       }
@@ -79,6 +84,7 @@ export class PaymentComponent implements OnInit {
   deletePayment(){
     this.paymentService.delete(this.selectedPayment.bic).subscribe(
       res=>{
+        this.cookieService.set('deletePayment', this.selectedPayment.bic);
         this.selectedPayment = new Payment();
         this.loadPayments();
       }
@@ -92,8 +98,8 @@ export class PaymentComponent implements OnInit {
 
 
   downloadFile(data: any) {
-    let file = 'Payment_report_'+ new Date()+'.csv';
-    console.log('------', file);
+    let file = 'payments_'+ new Date()+'.csv';
+    this.cookieService.set('paymentReportCSV', file);
     const replacer = (key, value) => value === null ? '' : value; // specify how you want to handle null values here
     const header = Object.keys(data[0]);
     let csv = data.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(';'));

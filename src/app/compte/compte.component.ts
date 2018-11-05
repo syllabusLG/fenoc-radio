@@ -6,6 +6,7 @@ import {Compte} from "../shared/compte.model";
 import { saveAs } from 'file-saver';
 import {Individus} from '../shared/individus.model';
 import {Adresse} from '../shared/adresse.model';
+import {CookieService} from 'ngx-cookie-service';
 
 
 @Component({
@@ -30,7 +31,10 @@ export class CompteComponent implements OnInit {
   selectedCompte: Compte;
 
 
-  constructor(private compteService: CompteService, private fb: FormBuilder, private route: ActivatedRoute) {
+  constructor(private compteService: CompteService,
+              private cookieService: CookieService,
+              private fb: FormBuilder,
+              private route: ActivatedRoute) {
     this.createForm();
   }
 
@@ -77,6 +81,7 @@ export class CompteComponent implements OnInit {
   updateCompte() {
     this.compteService.update(this.selectedCompte).subscribe(
       res => {
+        this.cookieService.set('updateCompte', String(this.selectedCompte.numCompte));
         this.initCompte();
         this.loadComptes();
       }
@@ -86,6 +91,7 @@ export class CompteComponent implements OnInit {
   deleteCompte() {
     this.compteService.delete(this.selectedCompte.numCompte).subscribe(
       res => {
+        this.cookieService.set('deleteCompte', String(this.selectedCompte.numCompte));
         this.selectedCompte = new Compte();
         this.loadComptes();
       }
@@ -99,8 +105,8 @@ export class CompteComponent implements OnInit {
 
 
   downloadFile(data: any) {
-    let file = 'compte_report_' + new Date() + '.csv';
-    console.log('------', file);
+    let file = 'comptes' + new Date() + '.csv';
+    this.cookieService.set('compteReportCSV', file);
     const replacer = (key, value) => value === null ? '' : value; // specify how you want to handle null values here
     const header = Object.keys(data[0]);
     let csv = data.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(';'));

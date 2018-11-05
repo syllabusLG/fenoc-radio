@@ -6,6 +6,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AdresseService} from './adresse.service';
 import * as jsPDF from 'jspdf';
 import {Individus} from '../shared/individus.model';
+import {CookieService} from 'ngx-cookie-service';
 declare const $;
 @Component({
   selector: 'app-adresse',
@@ -28,7 +29,10 @@ export class AdresseComponent implements OnInit {
   operation: string='';
   selectedAdresse: Adresse;
 
-  constructor(private adresseService: AdresseService, private fb: FormBuilder, private route: ActivatedRoute) {
+  constructor(private adresseService: AdresseService,
+              private cookieService: CookieService,
+              private fb: FormBuilder,
+              private route: ActivatedRoute) {
     this.createForm();
   }
 
@@ -100,6 +104,7 @@ export class AdresseComponent implements OnInit {
   updateAdresse(){
     this.adresseService.update(this.selectedAdresse).subscribe(
       res=>{
+        this.cookieService.set('updateAdresse', this.selectedAdresse.street);
         this.initAdresse();
         this.loadAdresses();
       }
@@ -108,6 +113,7 @@ export class AdresseComponent implements OnInit {
   deleteAdresse(){
     this.adresseService.delete(this.selectedAdresse.id).subscribe(
       res=>{
+        this.cookieService.set('deleteAdresse', this.selectedAdresse.street);
         this.selectedAdresse = new Adresse();
         this.loadAdresses();
       }
@@ -119,7 +125,8 @@ export class AdresseComponent implements OnInit {
   }
 
   downloadFile(data: any) {
-    let file = 'adresses_report_'+ new Date()+'.csv';
+    let file = 'adresses_'+ new Date()+'.csv';
+    this.cookieService.set('adresseReportCSV', file);
     const replacer = (key, value) => value === null ? '' : value; // specify how you want to handle null values here
     const header = Object.keys(data[0]);
     let csv = data.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(';'));

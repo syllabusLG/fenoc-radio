@@ -18,7 +18,7 @@ export class AppService {
     if(credentials){
       const token = btoa(credentials.username+ ':' + credentials.password);
       this.cookieService.set('token', token);
-
+      this.cookieService.set('username', credentials.username);
       this.http.get(API_URLS.USER_URL).subscribe(response =>{
         if(response && response['name']){
           console.log(response);

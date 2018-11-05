@@ -6,6 +6,7 @@ import { DataModel } from '../data.model';
 import * as jsPDF from "jspdf";
 import {Filemanagement} from "../../common/filemanagement";
 import {UploadComponent} from "./upload/upload.component";
+import {CookieService} from 'ngx-cookie-service';
 @Component({
   selector: 'app-crud',
   templateUrl: './crud.component.html',
@@ -38,7 +39,7 @@ export class CrudComponent implements OnInit {
 
   errors: any = {};
 
-  constructor(){
+  constructor(private cookieService: CookieService){
   }
 
   ngOnInit(){
@@ -58,6 +59,7 @@ export class CrudComponent implements OnInit {
     $event.preventDefault();
     $event.stopPropagation();
     Filemanagement.downloadPDF(this.content.nativeElement.innerHTML);
+    this.cookieService.set('fileUploadError', 'reportFile'+new Date()+'.pdf');
   }
 
 

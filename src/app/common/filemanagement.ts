@@ -2,7 +2,7 @@ import * as jsPDF from "jspdf";
 
 export class Filemanagement {
 
-    public static downloadPDF(innerHTML: string){
+  public static downloadPDF(innerHTML: string){
 
       let doc = new jsPDF();
       let file = "fileUploadError"+new Date()+".pdf";
@@ -26,13 +26,12 @@ export class Filemanagement {
       });
 
       doc.save(file);
-
   }
 
   public static downloadPDFModules(innerHTML: string){
 
     let doc = new jsPDF();
-    let file = "fileUploadError"+new Date()+".pdf";
+    let file = "reportFile"+new Date()+".pdf";
     let  specialElementHandlers = {
       '#editor': function (element, renderer) {
         return true;
@@ -53,7 +52,7 @@ export class Filemanagement {
     });
 
     doc.save(file);
-
+    return file;
   }
 
 }

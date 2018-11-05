@@ -5,6 +5,7 @@ import {Salarie} from "../shared/salarie.model";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {saveAs} from 'file-saver';
 import {Individus} from '../shared/individus.model';
+import {CookieService} from 'ngx-cookie-service';
 
 
 @Component({
@@ -28,7 +29,10 @@ export class SalarieComponent implements OnInit {
   operation: string = '';
   selectedSalarie: Salarie;
 
-    constructor(private salarieService: SalarieService, private fb: FormBuilder, private route: ActivatedRoute) {
+    constructor(private salarieService: SalarieService,
+                private cookieService: CookieService,
+                private fb: FormBuilder,
+                private route: ActivatedRoute) {
     this.createForm();
   }
 
@@ -99,6 +103,7 @@ export class SalarieComponent implements OnInit {
     }
     this.salarieService.update(this.selectedSalarie).subscribe(
       res => {
+        this.cookieService.set('updateSalarie', this.selectedSalarie.employeeId);
         this.initSalarie();
         this.loadSalaries();
       }
@@ -108,6 +113,7 @@ export class SalarieComponent implements OnInit {
   deleteSalarie() {
     this.salarieService.delete(this.selectedSalarie.employeeId).subscribe(
       res => {
+        this.cookieService.set('deleteSalarie', this.selectedSalarie.employeeId);
         this.selectedSalarie = new Salarie();
         this.loadSalaries();
       }
@@ -120,9 +126,8 @@ export class SalarieComponent implements OnInit {
   }
 
   downloadFile(data: any) {
-
-    let file = 'salarie_report_' + new Date() + '.csv';
-    console.log('------', file);
+    let file = 'salaries_' + new Date() + '.csv';
+    this.cookieService.set('salarieReportCSV', file);
     const replacer = (key, value) => value === null ? '' : value; // specify how you want to handle null values here
     const header = Object.keys(data[0]);
     let csv = data.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(';'));

@@ -4,6 +4,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import { saveAs } from 'file-saver';
 import {IndividusService} from "./individus.service";
 import {Individus} from "../shared/individus.model";
+import {CookieService} from 'ngx-cookie-service';
 
 
 @Component({
@@ -27,7 +28,10 @@ export class IndividusComponent implements OnInit {
   selectedIndividu: Individus;
 
 
-  constructor(private individusService: IndividusService, private fb: FormBuilder, private route: ActivatedRoute) {
+  constructor(private individusService: IndividusService,
+              private cookieService: CookieService,
+              private fb: FormBuilder,
+              private route: ActivatedRoute) {
     this.createForm();
   }
 
@@ -80,6 +84,7 @@ export class IndividusComponent implements OnInit {
     }
     this.individusService.update(this.selectedIndividu).subscribe(
       res => {
+        this.cookieService.set('updateIndividu', this.selectedIndividu.nui);
         this.initIndividu();
         this.loadIndividus();
       }
@@ -89,6 +94,7 @@ export class IndividusComponent implements OnInit {
   deleteIndividu() {
     this.individusService.delete(this.selectedIndividu.nui).subscribe(
       res => {
+        this.cookieService.set('deleteIndividu', this.selectedIndividu.nui);
         this.selectedIndividu = new Individus();
         this.loadIndividus();
       }
@@ -102,8 +108,8 @@ export class IndividusComponent implements OnInit {
 
 
   downloadFile(data: any) {
-    let file = 'Individus' + new Date() + '.csv';
-    console.log('------', file);
+    let file = 'individus_' + new Date() + '.csv';
+    this.cookieService.set('individuReportCSV', file);
     const replacer = (key, value) => value === null ? '' : value; // specify how you want to handle null values here
     const header = Object.keys(data[0]);
     let csv = data.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(';'));
