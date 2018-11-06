@@ -28,13 +28,15 @@ export class UserComponent implements OnInit {
 
     this.userForm = this.fb.group({
       username: ['', Validators.required],
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required]
     });
 
     this.usersModel = [
       new DataModel('id','ID','number',true,[]),
       new DataModel('username','Nom d\'utilisateur','string',false,[]),
-     // new DataModel('firstName','Prenom','string',false,[]),
-      //new DataModel('username','Nom','string',false,[]),
+      new DataModel('firstName','Prenom','string',false,[]),
+      new DataModel('lastName','Nom','string',false,[]),
       new DataModel('enable','Actif','number',true,[])
     ]
 

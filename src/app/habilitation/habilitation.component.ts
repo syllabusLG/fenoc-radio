@@ -37,7 +37,8 @@ export class HabilitationComponent implements OnInit {
     new Role(6, "ROLE_PAYMENT"),
     new Role(8, "ROLE_COMPTE"),
     new Role(9, "ROLE_CONTACT"),
-    new Role(7, "ROLE_DASHBOARD")
+    new Role(7, "ROLE_DASHBOARD"),
+    new Role (10,"ROLE_AUDIT")
   ];
   private principal: Principal;
   constructor(private userService: UserService,private store: Store<PrincipalState>) {

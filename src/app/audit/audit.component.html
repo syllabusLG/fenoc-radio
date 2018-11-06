@@ -1,0 +1,57 @@
+<div class="container">
+  <h3 class="h3-class">Audit</h3>
+  <hr>
+
+  <div class=" row">
+    <div class="form-group col-sm-10">
+      <label style="margin-left: 10px">Mot Clé</label>
+      <input style="height: 33px;width: fit-content" type="text" [(ngModel)]="motCle"/>
+      <button class="btn btn-info" style="width: fit-content" (click)="searchAudit()">Chercher</button>
+    </div>
+    <div class="col-sm-2" id="reportAdresse" #reportAdresse>
+      <div class="d-inline-block">
+        <a href="" data-toggle="collapse">
+          <button type="button" style="margin-bottom: 14px" class="btn btn-info" (click)="downloadFile(audits)">Export to CSV</button>
+        </a>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-sm-12">
+    <table class="col-sm-12 table table-hover">
+      <thead>
+      <tr>
+        <th>User Name</th>
+        <th>Login Date</th>
+        <th>Upload File Name</th>
+        <th>Error File Name</th>
+        <th>Report File Name</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let audit of pageAudits?.content">
+        <td> {{audit.username}}</td>
+        <td>{{audit.loginDate}}</td>
+        <td>{{audit.uploadFileName}}</td>
+        <td>{{audit.errorFileName }}</td>
+        <td>{{audit.reportFileName}}</td>
+        <td>
+          <a href="" data-toggle="collapse">
+            <i class="fa fa-info-circle" data-toggle="tooltip" data-toggle="modal" data-target="#Modal" title="User Audit Details" (click)="editDetails(); selectedAudit;"> </i>
+          </a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <div class="container">
+      <ul class="nav">
+        <li class="nav-item " [ngClass]="{'activePagin': i === currentPage}" *ngFor="let p of pages; let i=index">
+          <a class="nav-link clickable" routerLink="#" (click)="gotoPage(i)">{{i}}</a>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</div>

@@ -21,6 +21,8 @@ import {CompteResolver} from "./compte/compte.resolver";
 import {ContactResolver} from "./contact/contact.resolver";
 import {IndividusResolver} from "./individus/individus.resolver";
 import {HabilitationComponent} from "./habilitation/habilitation.component";
+import {AuditComponent} from "./audit/audit.component";
+import {AuditResolver} from "./audit/audit.resolver";
 
 
 
@@ -111,6 +113,14 @@ export const appRoutes: Routes = [
         component: HabilitationComponent,
         outlet: 'contentOutlet'
       },
+      {
+        path: 'audit',
+        component: AuditComponent,
+        resolve: {
+          resolvers: AuditResolver
+        },
+        outlet: 'contentOutlet'
+      },
 
     ]
   },
@@ -130,6 +140,6 @@ export const appRoutes: Routes = [
     )
   ],
   exports: [RouterModule],
-  providers: [UserResolver, AdresseResolver, SalarieResolver, PaymentResolver, CompteResolver,ContactResolver,IndividusResolver]
+  providers: [UserResolver, AdresseResolver, SalarieResolver, PaymentResolver, CompteResolver,ContactResolver,IndividusResolver, AuditResolver]
 })
 export class AppRoutingModule { }
