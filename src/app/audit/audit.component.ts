@@ -24,8 +24,10 @@ export class AuditComponent implements OnInit {
   audits: Audit[];
   auditForm: FormGroup;
   operation: string='';
-  selectedAudit: Adresse;
-  constructor(private fb: FormBuilder, private route: ActivatedRoute, private auditService: AuditService){}
+  selectedAudit: Audit;
+  constructor(private fb: FormBuilder, private route: ActivatedRoute, private auditService: AuditService){
+    this.createForm();
+  }
 
   ngOnInit() {
     this.initAudit();
@@ -40,6 +42,24 @@ export class AuditComponent implements OnInit {
       uploadFileName: '',
       errorFileName: '',
       reportFileName: '',
+      individuReportCSV: '',
+      salarieReportCSV: '',
+      contactReportCSV: '',
+      paymentReportCSV: '',
+      adresseReportCSV: '',
+      compteReportCSV: '',
+      updateIndividu: '',
+      updateSalarie: '',
+      updateContact: '',
+      updatePayment: '',
+      updateAdresse: '',
+      updateCompte: '',
+      deleteIndividu: '',
+      deleteSalarie: '',
+      deleteContact: '',
+      deletePayment: '',
+      deleteAdresse: '',
+      deleteCompte: ''
     });
   }
   initAudit(){
@@ -50,9 +70,7 @@ export class AuditComponent implements OnInit {
     this.currentPage = i;
     this.loadAudits();
   }
-  editDetails(){
 
-  }
   loadAudits() {
     this.auditService.search(this.motCle, this.currentPage, this.size)
       .subscribe(data => {

@@ -39,8 +39,6 @@ export class SalarieComponent implements OnInit {
   ngOnInit() {
     this.initSalarie();
     this.salaries = this.changeIndividu(this.route.snapshot.data.salaries);
-    console.log(this.salaries);
-
     this.loadSalaries();
   }
 
