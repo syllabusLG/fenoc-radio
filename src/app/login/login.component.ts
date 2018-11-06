@@ -38,8 +38,14 @@ export class LoginComponent implements OnInit {
   }
   loginDate(){
     let year =  new Date().getFullYear();
-    let month = new Date().getMonth()+1;
-    let day = new Date().getDate();
+    let month = String(new Date().getMonth()+1);
+    if (Number(month) >=1 && Number(month) <=9){
+      month = '0'+month;
+    }
+    let day = String(new Date().getDate());
+    if (Number(day) >=1 && Number(day) <= 9){
+      day = '0'+day;
+    }
     return day+'/'+month+'/'+year;
   }
 }

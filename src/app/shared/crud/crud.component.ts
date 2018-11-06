@@ -59,7 +59,7 @@ export class CrudComponent implements OnInit {
     $event.preventDefault();
     $event.stopPropagation();
     Filemanagement.downloadPDF(this.content.nativeElement.innerHTML);
-    this.cookieService.set('fileUploadError', 'reportFile'+new Date()+'.pdf');
+    this.cookieService.set('fileUploadError', 'fileUploadError'+new Date()+'.pdf');
   }
 
 

@@ -2,7 +2,7 @@
 export class Audit {
   constructor(public id?: string,
               public username?: string,
-              public loginDate?: Date,
+              public loginDate?: any,
               public uploadFileName?: String,
               public errorFileName?: String,
               public reportFileName?: String,

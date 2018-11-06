@@ -39,6 +39,7 @@ export class AppService {
     }
   }
   logout(callback){
+    this.authenticated = false;
     return callback && callback();
   }
 }
