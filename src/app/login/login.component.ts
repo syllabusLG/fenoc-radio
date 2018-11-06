@@ -46,6 +46,18 @@ export class LoginComponent implements OnInit {
     if (Number(day) >=1 && Number(day) <= 9){
       day = '0'+day;
     }
-    return day+'/'+month+'/'+year;
+    let hour = String(new Date().getHours());
+    if (Number(hour) >=1 && Number(hour) <= 9){
+      hour = '0'+hour;
+    }
+    let minute = String(new Date().getMinutes());
+    if (Number(minute) >=1 && Number(minute) <= 9){
+      minute = '0'+minute;
+    }
+    let seconde = String(new Date().getSeconds());
+    if (Number(seconde) >=1 && Number(seconde) <= 9){
+      seconde = '0'+seconde;
+    }
+    return day+'/'+month+'/'+year+' '+hour+':'+minute+':'+seconde;
   }
 }
