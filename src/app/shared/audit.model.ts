@@ -24,6 +24,7 @@ export class Audit {
               public deletePayment?: String,
               public deleteAdresse?: String,
               public deleteCompte?: String,
+              public habilitation?:String,
 ){}
 
 

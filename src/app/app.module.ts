@@ -49,6 +49,8 @@ import {HabilitationComponent} from "./habilitation/habilitation.component";
 import { TreeviewModule } from 'ngx-treeview';
 import {AuditComponent} from "./audit/audit.component";
 import {AuditService} from "./audit/audit.service";
+import {MomentModule} from "angular2-moment";
+import {NgIdleKeepaliveModule} from "@ng-idle/keepalive";
 
 
 @NgModule({
@@ -89,7 +91,9 @@ import {AuditService} from "./audit/audit.service";
     StoreModule.forRoot({principal: principalReducer}),
     AngularDraggableModule,
     ChartModule,
-    TreeviewModule.forRoot()
+    TreeviewModule.forRoot(),
+    MomentModule,
+    NgIdleKeepaliveModule.forRoot()
   ],
   providers: [
     AppService,
