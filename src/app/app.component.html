@@ -1,14 +1,11 @@
 <div [ngClass]="{'body-wrapper': !isLogin, 'body-login-wrapper': isLogin}">
   <router-outlet></router-outlet>
 
-  <!--<div class="-align-center">-->
   <div class="footer-wrapper" *ngIf="!isLogin">
     <footer class="footer-amundi">
-      <!-- Copyright -->
       <div style="color:white">  Copyright © 2018
         <a href="https://www.amundi.pt/?nr=1/" style="color:white"> Amundi</a>
       </div>
-      <!-- Copyright -->
     </footer>
   </div>
 </div>
