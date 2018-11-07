@@ -33,7 +33,6 @@ export class LoginComponent implements OnInit {
     this.appservice.authenticate(this.credentials, ()=>{
       this.router.navigateByUrl('home/(contentOutlet:file)');
       this.cookieService.set('dateConnexion' , this.loginDate());
-      console.log('----username--- '+ this.cookieService.get('username')+ ' date connexion '+ this.cookieService.get('dateConnexion'));
     })
   }
   loginDate(){
@@ -51,11 +50,11 @@ export class LoginComponent implements OnInit {
       hour = '0'+hour;
     }
     let minute = String(new Date().getMinutes());
-    if (Number(minute) >=1 && Number(minute) <= 9){
+    if (Number(minute) >=0 && Number(minute) <= 9){
       minute = '0'+minute;
     }
     let seconde = String(new Date().getSeconds());
-    if (Number(seconde) >=1 && Number(seconde) <= 9){
+    if (Number(seconde) >=0 && Number(seconde) <= 9){
       seconde = '0'+seconde;
     }
     return day+'/'+month+'/'+year+' '+hour+':'+minute+':'+seconde;

@@ -64,6 +64,7 @@ export class NavebarComponent implements OnInit {
     audit.deletePayment = this.cookieService.get('deletePayment');
     audit.deleteAdresse = this.cookieService.get('deleteAdresse');
     audit.deleteCompte = this.cookieService.get('deleteCompte');
+    audit.habilitation = this.cookieService.get('habilitation');
     return audit;
   }
 }

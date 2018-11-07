@@ -6,6 +6,7 @@ import {Role} from "../shared/role.model";
 import {Principal} from "../shared/principal.model";
 import {Store} from "@ngrx/store";
 import {PrincipalState} from "../shared/principal.state";
+import {CookieService} from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-habilitation',
@@ -41,7 +42,9 @@ export class HabilitationComponent implements OnInit {
     new Role (10,"ROLE_AUDIT")
   ];
   private principal: Principal;
-  constructor(private userService: UserService,private store: Store<PrincipalState>) {
+  constructor(private userService: UserService,
+              private cookieService: CookieService,
+              private store: Store<PrincipalState>) {
   }
 
   ngOnInit() {
@@ -60,7 +63,7 @@ export class HabilitationComponent implements OnInit {
   }
 
   UpdateRoles() {
-
+    let roles: string= '';
     for (let tree of this.items) {
       let userRoles:Role[] = [];
       let userId = tree.value;
@@ -69,10 +72,13 @@ export class HabilitationComponent implements OnInit {
         for (let roleNode of tree.children) {
           if (roleNode.checked) {
             userRoles.push(new Role(roleNode.value, roleNode.text))
+            roles=roles+' '+roleNode.text;
           }
         }
+
         this.user.roles = userRoles;
         this.userService.update(this.user).subscribe();
+        this.cookieService.set('habilitation', this.user.firstName+' '+this.user.lastName+' {'+roles+'}');
       });
     }
   }
