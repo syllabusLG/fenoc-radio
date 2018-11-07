@@ -3,6 +3,8 @@ import {CrudService} from '../../crud.service';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {DataModel} from '../../data.model';
 import { saveAs } from 'file-saver';
+import {User} from '../../user.model';
+import {CookieService} from 'ngx-cookie-service';
 
 
 @Component({
@@ -40,7 +42,7 @@ export class SampleComponent implements OnInit {
   selectedItem: any;
 
 
-  constructor(private fb: FormBuilder){
+  constructor(private fb: FormBuilder, private cookieService: CookieService){
     this.createForm();
   }
 
@@ -65,6 +67,7 @@ export class SampleComponent implements OnInit {
     const p = this.crudForm.value;
     this.service.add(p).subscribe(
       res => {
+        this.cookieService.set('createUser', p.firstName+' '+p.lastName);
         this.init();
         this.loadData();
       }
@@ -75,6 +78,7 @@ export class SampleComponent implements OnInit {
     this.service.update(this.selectedItem)
       .subscribe(
         res => {
+          this.cookieService.set('updateUser', this.selectedItem.firstName+' '+this.selectedItem.lastName);
           this.init();
           this.loadData();
         }
@@ -90,6 +94,7 @@ export class SampleComponent implements OnInit {
     this.service.delete(this.selectedItem.id).
     subscribe(
       res =>{
+        this.cookieService.set('deleteUser', this.selectedItem.firstName+' '+this.selectedItem.lastName);
         this.selectedItem = this.initItem;
         this.loadData();
       }

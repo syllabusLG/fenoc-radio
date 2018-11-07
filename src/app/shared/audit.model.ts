@@ -24,7 +24,10 @@ export class Audit {
               public deletePayment?: string,
               public deleteAdresse?: string,
               public deleteCompte?: string,
-              public habilitation?: string
+              public habilitation?: string,
+              public createUser?: string,
+              public updateUser?: string,
+              public deleteUser?: string
 ){}
 
 
