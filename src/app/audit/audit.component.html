@@ -102,6 +102,11 @@
                       </textarea>
                     </div>
                     <div class="form-group">
+                      <label class="control-label">Create Module User:</label>
+                      <textarea type="text" readonly class="form-control" formControlName="createUser" [(ngModel)]="selectedAudit.createUser">
+                      </textarea>
+                    </div>
+                    <div class="form-group">
                       <label class="control-label">Update Module Individu:</label>
                       <textarea type="text" readonly class="form-control" formControlName="updateIndividu" [(ngModel)]="selectedAudit.updateIndividu">
                       </textarea>
@@ -132,6 +137,11 @@
                       </textarea>
                     </div>
                     <div class="form-group">
+                      <label class="control-label">Update Module User:</label>
+                      <textarea type="text" readonly class="form-control" formControlName="updateUser" [(ngModel)]="selectedAudit.updateUser">
+                      </textarea>
+                    </div>
+                    <div class="form-group">
                     <label class="control-label">Delete Module Individu:</label>
                     <textarea type="text" readonly class="form-control" formControlName="deleteIndividu" [(ngModel)]="selectedAudit.deleteIndividu">
                     </textarea>
@@ -159,6 +169,12 @@
                     <div class="form-group">
                       <label class="control-label">Delete Module Compte:</label>
                       <textarea type="text" readonly class="form-control" formControlName="deleteCompte" [(ngModel)]="selectedAudit.deleteCompte">
+                      </textarea>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="control-label">Delete Module User:</label>
+                      <textarea type="text" readonly class="form-control" formControlName="deleteUser" [(ngModel)]="selectedAudit.deleteUser">
                       </textarea>
                     </div>
                   </form>

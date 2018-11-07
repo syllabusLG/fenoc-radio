@@ -59,7 +59,11 @@ export class AuditComponent implements OnInit {
       deleteContact: '',
       deletePayment: '',
       deleteAdresse: '',
-      deleteCompte: ''
+      deleteCompte: '',
+      habilitation: '',
+      createUser:'',
+      deleteUser:'',
+      updateUser:'',
     });
   }
   initAudit(){

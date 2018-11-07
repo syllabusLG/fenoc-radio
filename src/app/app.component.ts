@@ -1,21 +1,19 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AppService} from './app.service';
 import {NavigationEnd, Router} from '@angular/router';
 import {DEFAULT_INTERRUPTSOURCES, Idle} from "@ng-idle/core";
 import {Keepalive} from "@ng-idle/keepalive";
-import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit, OnDestroy{
   private isLogin = false;
   idleState = 'Not started.';
   timedOut = false;
   lastPing?: Date = null;
-
 
   constructor(private appService: AppService,
               private router: Router,private idle: Idle, private keepalive: Keepalive){
@@ -30,7 +28,7 @@ export class AppComponent implements OnInit{
     // sets an idle timeout of 5 seconds, for testing purposes.
     idle.setIdle(5);
     // sets a timeout period of 5 seconds. after 10 seconds of inactivity, the user will be considered timed out.
-    idle.setTimeout(5);
+    idle.setTimeout(50);
     // sets the default interrupts, in this case, things like clicks, scrolls, touches to the document
     idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
 
@@ -60,6 +58,7 @@ export class AppComponent implements OnInit{
     return this.router.navigateByUrl('/login');
   }
 
+
   ngOnInit(){
     if(!this.appService.authenticated){
       this.router.navigateByUrl('/login');
@@ -67,5 +66,8 @@ export class AppComponent implements OnInit{
     }else{
       this.router.navigateByUrl('home/(contentOutlet:file)');
     }
+  }
+  ngOnDestroy() {
+    alert(`I'm leaving the app!`);
   }
 }
