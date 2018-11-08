@@ -41,4 +41,7 @@ export class UserService implements CrudService{
   getAllRoles(): Observable<any>{
     return this.http.get(API_URLS.ROLES_USER_URL);
   }
+  getUserByUsername(username): Observable<any>{
+    return this.http.get(API_URLS.USERNAME_URL);
+  }
 }
