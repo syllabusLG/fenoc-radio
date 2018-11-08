@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import {AppService} from './app.service';
 import {NavigationEnd, Router} from '@angular/router';
 import {DEFAULT_INTERRUPTSOURCES, Idle} from "@ng-idle/core";
@@ -19,6 +19,15 @@ export class AppComponent implements OnInit{
   lastPing?: Date = null;
   audit: Audit = new Audit();
 
+  @HostListener('window:unload', ['$event'])
+  unloadHandler(event) {
+    this.audit = this.setAudit(this.audit);
+    this.auditService.add(this.audit).subscribe();
+    this.cookieService.deleteAll('http://localhost:4200');
+
+  }
+
+
   constructor(private appService: AppService,
               private cookieService: CookieService,
               private auditService: AuditService,
@@ -34,9 +43,9 @@ export class AppComponent implements OnInit{
       }
     );
     // sets an idle timeout of 5 seconds, for testing purposes.
-    idle.setIdle(5);
+    idle.setIdle(500);
     // sets a timeout period of 5 seconds. after 10 seconds of inactivity, the user will be considered timed out.
-    idle.setTimeout(5);
+    idle.setTimeout(500);
     // sets the default interrupts, in this case, things like clicks, scrolls, touches to the document
     idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
 
@@ -108,5 +117,6 @@ export class AppComponent implements OnInit{
     }else{
       this.router.navigateByUrl('home/(contentOutlet:file)');
     }
+
   }
 }
