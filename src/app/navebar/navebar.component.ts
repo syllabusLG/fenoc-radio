@@ -7,6 +7,7 @@ import {CookieService} from 'ngx-cookie-service';
 import {Salarie} from "../shared/salarie.model";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {User} from "../shared/user.model";
+import {UserService} from "../user/user.service";
 
 @Component({
   selector: 'app-navebar',
@@ -32,17 +33,14 @@ export class NavebarComponent implements OnInit {
               private auditService: AuditService,
               private appService: AppService,
               private fb: FormBuilder,
+              private userservice: UserService
               ) {
     this.createForm();
   }
 
   ngOnInit() {
     this.username = this.cookieService.get('username');
-
-  }
-
-  initUser(){
-
+    //console.log(this.cookieService.)
   }
 
   createForm() {
@@ -51,7 +49,6 @@ export class NavebarComponent implements OnInit {
       password: ''
     });
   }
-
 
   afficherSideBar(){
     this.showSideBar = !this.showSideBar;
