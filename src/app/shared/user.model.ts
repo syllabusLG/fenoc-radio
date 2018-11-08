@@ -5,6 +5,7 @@ export class User {
               public username?: string,
               public firstName?: string,
               public lastName?: string,
+              public newPassword?: string,
               public enable?: boolean,
               public roles?: Role[],
               public password?: string){}
