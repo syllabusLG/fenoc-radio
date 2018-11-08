@@ -4,6 +4,9 @@ import {AppService} from '../app.service';
 import {AuditService} from '../audit/audit.service';
 import {Audit} from '../shared/audit.model';
 import {CookieService} from 'ngx-cookie-service';
+import {Salarie} from "../shared/salarie.model";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {User} from "../shared/user.model";
 
 @Component({
   selector: 'app-navebar',
@@ -17,14 +20,36 @@ export class NavebarComponent implements OnInit {
   @Output()
   showSideBarChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+  @Input()
+   username: string;
   audit: Audit = new Audit();
+
+  userForm: FormGroup;
+  user: User;
+
   constructor(private router: Router,
               private cookieService: CookieService,
               private auditService: AuditService,
-              private appService: AppService) { }
+              private appService: AppService,
+              private fb: FormBuilder,
+              ) {
+    this.createForm();
+  }
 
-  ngOnInit()
-   {
+  ngOnInit() {
+    this.username = this.cookieService.get('username');
+
+  }
+
+  initUser(){
+
+  }
+
+  createForm() {
+    this.userForm = this.fb.group({
+      user_id: '',
+      password: ''
+    });
   }
 
 
