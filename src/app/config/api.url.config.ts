@@ -23,7 +23,7 @@ export const API_URLS = {
   REPORT_UPDATE_URL: BASE + ':' + PORT + PATH + '/updateFile',
   CRUD_USER_URL: BASE + ':'+ PORT + '/crud_user',
   ROLES_USER_URL: BASE + ':'+ PORT + '/crud_user/roles',
-  USERNAME_URL: BASE + ':'+ PORT + '/crud_user/user',
+  USERNAME_URL: BASE + ':'+ PORT + PATH + '/username',
   AUDIT_URL: BASE + ':' + PORT + PATH + '/audit',
   AUDIT_URL_SEARCH: BASE + ':' + PORT + PATH + '/audit/search',
 };
