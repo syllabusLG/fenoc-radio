@@ -76,6 +76,7 @@ export class NavebarComponent implements OnInit {
   }
   updateUserPassword(){
     this.user.password=this.currentpassword;
+    this.user.isPasswordChange=true;
     this.userservice.update(this.user).subscribe();
     this.cookieService.set('password',this.user.password);
   }

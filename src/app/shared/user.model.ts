@@ -8,6 +8,7 @@ export class User {
               public oldPassword?: string,
               public enable?: boolean,
               public roles?: Role[],
-              public password?: string
+              public password?: string,
+              public isPasswordChange?: boolean
               ){}
 }
