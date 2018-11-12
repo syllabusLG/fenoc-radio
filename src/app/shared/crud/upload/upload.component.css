@@ -51,7 +51,7 @@ ul.checkout-bar li:before {
   text-shadow: 1px 1px rgba(0, 0, 0, 0.2);
   top: 4px;
   width: 35px;
-  z-index: 999;
+  /*z-index: 999;*/
 }
 ul.checkout-bar li.active {
   color: #8bc53f;
@@ -59,7 +59,7 @@ ul.checkout-bar li.active {
 }
 ul.checkout-bar li.active:before {
   background: #8bc53f;
-  z-index: 99999;
+  /*z-index: 99999;*/
 }
 ul.checkout-bar li.error {
   color: #c50d1a;
@@ -67,17 +67,17 @@ ul.checkout-bar li.error {
 }
 ul.checkout-bar li.error:before {
   background: #c50d1a;
-  z-index: 99999;
+  /*z-index: 99999;*/
 }
 
 ul.checkout-bar li.visited {
   background: #ECECEC;
   color: #57aed1;
-  z-index: 99999;
+  /*z-index: 99999;*/
 }
 ul.checkout-bar li.visited:before {
   background: #57aed1;
-  z-index: 99999;
+  /*z-index: 99999;*/
 }
 ul.checkout-bar li:nth-child(1):before {
   content: "1";

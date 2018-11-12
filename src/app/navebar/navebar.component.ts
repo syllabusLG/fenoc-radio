@@ -4,10 +4,10 @@ import {AppService} from '../app.service';
 import {AuditService} from '../audit/audit.service';
 import {Audit} from '../shared/audit.model';
 import {CookieService} from 'ngx-cookie-service';
-import {Salarie} from "../shared/salarie.model";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {User} from "../shared/user.model";
 import {UserService} from "../user/user.service";
+import {matchOtherValidator} from "./password.validator";
 
 @Component({
   selector: 'app-navebar',
@@ -26,7 +26,10 @@ export class NavebarComponent implements OnInit {
   audit: Audit = new Audit();
 
   userForm: FormGroup;
-  user: User;
+  user: User = new User();
+  oldpassword: string;
+  currentpassword: string;
+  confirmationnewpassword: string;
 
   constructor(private router: Router,
               private cookieService: CookieService,
@@ -40,14 +43,22 @@ export class NavebarComponent implements OnInit {
 
   ngOnInit() {
     this.username = this.cookieService.get('username');
-    //console.log(this.cookieService.)
+    this.userservice.getUserByUsername(this.username).subscribe(
+      data=>{
+        this.user=data;
+        this.user.oldPassword = this.user.password;
+      }, error => {
+        console.log(error);
+      });
   }
 
   createForm() {
     this.userForm = this.fb.group({
-      user_id: '',
-      password: ''
-    });
+      oldPassword: ['', Validators.min(4)],
+      currentPassword:['', Validators.required],
+      confirmationnewpassword: ['', [Validators.required, matchOtherValidator('currentPassword')]],
+      });
+
   }
 
   afficherSideBar(){
@@ -62,5 +73,11 @@ export class NavebarComponent implements OnInit {
       this.cookieService.deleteAll('http://localhost:4200');
     });
   }
+  updateUserPassword(){
+    this.user.password=this.currentpassword;
+    console.log(this.user);
 
+    this.userservice.update(this.user).subscribe();
+    this.cookieService.set('password',this.user.password);
+  }
 }
