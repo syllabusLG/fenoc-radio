@@ -31,6 +31,7 @@ export class NavebarComponent implements OnInit {
   currentpassword: string;
   confirmationnewpassword: string;
 
+
   constructor(private router: Router,
               private cookieService: CookieService,
               private auditService: AuditService,
@@ -54,7 +55,7 @@ export class NavebarComponent implements OnInit {
 
   createForm() {
     this.userForm = this.fb.group({
-      oldPassword: ['', Validators.min(4)],
+      oldPassword: ['', Validators.min(5)],
       currentPassword:['', Validators.required],
       confirmationnewpassword: ['', [Validators.required, matchOtherValidator('currentPassword')]],
       });
@@ -75,9 +76,9 @@ export class NavebarComponent implements OnInit {
   }
   updateUserPassword(){
     this.user.password=this.currentpassword;
-    console.log(this.user);
-
     this.userservice.update(this.user).subscribe();
     this.cookieService.set('password',this.user.password);
   }
+
+
 }
