@@ -70,7 +70,7 @@ export class AppService {
     audit.createUser = this.cookieService.get('createUser');
     audit.updateUser = this.cookieService.get('updateUser');
     audit.deleteUser = this.cookieService.get('deleteUser');
-    audit.password = this.cookieService.get('username');
+    audit.changePassword = this.cookieService.get('changePassword');
     return audit;
   }
 }

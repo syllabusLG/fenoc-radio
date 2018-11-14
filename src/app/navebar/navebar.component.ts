@@ -78,7 +78,7 @@ export class NavebarComponent implements OnInit {
     this.user.password=this.currentpassword;
     this.user.changePassword='TRUE';
     this.userservice.update(this.user).subscribe();
-    this.cookieService.set('password',this.user.password);
+    this.router.navigateByUrl('/login');
   }
 
 
