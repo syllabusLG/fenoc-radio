@@ -93,11 +93,19 @@
                     </div>
                     <div class="form-group">
                       <label>Ouvert:</label>
-                      <input type="text" class="form-control" formControlName="ouvert" [(ngModel)]="selectedCompte.ouvert"/>
+                      <select class="form-control" formControlName="ouvert" [(ngModel)]="selectedCompte.ouvert">
+                      <option value=""> -- Ouvert --</option>
+                      <option value="OUI">OUI</option>
+                      <option value="NON">NON</option>
+                      </select>
                     </div>
                     <div class="form-group">
                       <label>Lettrage:</label>
-                      <input type="text" class="form-control" formControlName="lettrage" [(ngModel)]="selectedCompte.lettrage"/>
+                      <select class="form-control" formControlName="lettrage" [(ngModel)]="selectedCompte.lettrage" (select)="selectedCompte.lettrage">
+                        <option value=""> -- Lettrage --</option>
+                      <option value="OUI">OUI</option>
+                      <option value="NON">NON</option>
+                      </select>
                     </div>
                     <div class="form-group">
                       <label>Statut Aff:</label>
@@ -113,7 +121,11 @@
                     </div>
                     <div class="form-group">
                       <label>Type Compte:</label>
-                      <input type="text" class="form-control" formControlName="typeCompte" [(ngModel)]="selectedCompte.typeCompte"/>
+                      <select class="form-control" formControlName="typeCompte" [(ngModel)]="selectedCompte.typeCompte" (select)="selectedCompte.typeCompte">
+                        <option value="">-- Choisir Type Compte --</option>
+                        <option value="CASH">CASH</option>
+                        <option value="TIT">TIT</option>
+                      </select>
                     </div>
                     <div class="form-group" *ngIf="operation!='edit'">
                       <label>Individu:</label>

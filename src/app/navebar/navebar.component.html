@@ -7,14 +7,16 @@
       <a class="navbar-brand logosmallimg">
        <img >
       </a>
+  <p *ngIf="pleaseChangePass" class="thicker" style="margin-left: 200px;margin-bottom:0">Please change your password!</p>
 
       <div class="navbar-nav ml-auto">
         <!--<a class="nav-item">
           <button class="btn btn-info logBt" (click)="logout()">LOG OUT</button>
         </a>-->
       </div>
-      <div class="btn-group dropleft">
-        <button class="btn btn-info logBt dropdown-toggle" style="color:white" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  <div class="btn-group dropleft">
+
+    <button class="btn btn-info logBt dropdown-toggle" style="color:white" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           {{username}}
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">

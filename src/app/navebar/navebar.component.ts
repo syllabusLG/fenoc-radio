@@ -31,6 +31,9 @@ export class NavebarComponent implements OnInit {
   currentpassword: string;
   confirmationnewpassword: string;
 
+  @Input()
+  pleaseChangePass: boolean = false;
+
 
   constructor(private router: Router,
               private cookieService: CookieService,
@@ -46,7 +49,9 @@ export class NavebarComponent implements OnInit {
     this.username = this.cookieService.get('username');
     this.userservice.getUserByUsername(this.username).subscribe(
       data=>{
+        console.log("user data: "+data);
         this.user=data;
+        this.pleaseChangePass = this.user.changePassword=="FALSE" ? true : false;
         this.user.oldPassword = this.user.password;
       }, error => {
         console.log(error);
@@ -77,6 +82,7 @@ export class NavebarComponent implements OnInit {
   updateUserPassword(){
     this.user.password=this.currentpassword;
     this.user.changePassword='TRUE';
+    this.pleaseChangePass = false;
     this.userservice.update(this.user).subscribe();
     this.cookieService.set('password',this.user.password);
   }
