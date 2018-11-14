@@ -18,7 +18,7 @@ export class UserService implements CrudService{
   }
 
   update(user): Observable<any> {
-    return this.http.put(API_URLS.CRUD_USER_URL, user);
+    return this.http.put(API_URLS.USER_URL, user);
   }
 
   delete(id): Observable<any> {
