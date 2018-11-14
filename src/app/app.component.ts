@@ -13,7 +13,7 @@ import {AuditService} from './audit/audit.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit{
- // private isLogin = false;
+  private isLogin = false;
   idleState = 'Not started.';
   timedOut = false;
   lastPing?: Date = null;
@@ -35,13 +35,13 @@ export class AppComponent implements OnInit{
               private idle: Idle,
               private keepalive: Keepalive){
 
-    /*this.router.events.subscribe(
+    this.router.events.subscribe(
       ( event) : void => {
         if ( event instanceof NavigationEnd ) {
           this.isLogin = this.router.isActive( "/login", true );
         }
       }
-    );*/
+    );
     // sets an idle timeout of 5 seconds, for testing purposes.
     idle.setIdle(500);
     // sets a timeout period of 5 seconds. after 10 seconds of inactivity, the user will be considered timed out.
@@ -83,7 +83,7 @@ export class AppComponent implements OnInit{
     if(!this.appService.authenticated){
       this.router.navigateByUrl('/login');
       console.log("ERROR");
-      // this.isLogin = true;
+      this.isLogin = true;
     }else{
       this.router.navigateByUrl('home/(contentOutlet:file)');
       console.log("GOOOD");
