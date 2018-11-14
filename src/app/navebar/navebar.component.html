@@ -10,9 +10,6 @@
   <p *ngIf="pleaseChangePass" class="thicker" style="margin-left: auto; margin-right: auto ;margin-bottom:0">Please change your password!</p>
 
       <div class="navbar-nav ml-auto">
-        <!--<a class="nav-item">
-          <button class="btn btn-info logBt" (click)="logout()">LOG OUT</button>
-        </a>-->
       </div>
   <div class="btn-group dropleft">
 
@@ -44,7 +41,7 @@
 <div class="card-body">
   <div class="modal fade" id="ModalUser" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true" ngDraggable>
     <div class="modal-dialog" class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
+      <div class="modal-content" style="width: 400px; margin-right: auto; margin-left: auto " >
         <div class="modal-header" style="background-color: #12899e;cursor:move;" >
           <h5 class="modal-title" id="AddModalLabel" style="color: white">
             {{ 'Change Password' }}</h5>
@@ -58,10 +55,6 @@
             <div class="form-group">
               <label>Password: </label>
               <input type="password" class="form-control" formControlName="oldPassword" [ngModel]="oldpassword" placeholder="type your password..." />
-             <!--<div class="alert alert-danger" *ngIf="userForm.controls['oldPassword'].value!=user.oldPassword && (userForm.controls['oldPassword'].touched
-              || userForm.controls['oldPassword'].dirty)">
-                Password is not correct!
-              </div>-->
               <div class="alert alert-danger" *ngIf="userForm.controls['oldPassword'].invalid">
                 Password is not correct!
               </div>
@@ -96,3 +89,4 @@
     </div>
   </div>
 </div>
+
