@@ -27,7 +27,6 @@ export class Audit {
               public habilitation?: string,
               public createUser?: string,
               public updateUser?: string,
-              public deleteUser?: string
-){}
+              public deleteUser?: string){}
 
 }
