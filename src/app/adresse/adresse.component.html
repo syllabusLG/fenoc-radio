@@ -130,7 +130,11 @@
                   </div>
                   <div class="form-group">
                     <label>Type d'adresse:</label>
-                    <input type="text" class="form-control" formControlName="typeAdresse" [(ngModel)]="selectedAdresse.typeAdresse"/>
+                    <select class="form-control" formControlName="typeAdresse" [(ngModel)]="selectedAdresse.typeAdresse" (select)="selectedAdresse.typeAdresse">
+                     <option value="">-- Choisir type d'adresse --</option>
+                      <option value="FISCALITE">FISCALITE</option>
+                      <option value="NORMALE">NORMALE</option>
+                    </select>
                   </div>
                   <div class="form-group" [hidden]="operation=='edit'">
                     <label>Individu:</label>
