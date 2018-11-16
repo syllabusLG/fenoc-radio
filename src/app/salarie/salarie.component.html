@@ -53,7 +53,7 @@
               <i class="fa fa-edit" data-toggle="modal" data-target="#Modal" (click)="operation = 'edit'; selectedSalarie = salarie;"></i>
             </a>
             <a href="" data-toggle="collapse">
-              <i class="fa fa-trash" data-toggle="modal" data-target="#Modal" (click)="operation = 'remove'; selectedSalarie = salarie;"></i>
+              <i class="fa fa-trash" data-toggle="modal" data-target="#RemoveModalSalarie" (click)="operation = 'remove'; selectedSalarie = salarie;"></i>
             </a>
           </td>
         </tr>
@@ -74,7 +74,7 @@
           <div class="modal-content">
             <div class="modal-header" style="background-color: #12899e;cursor:move;" >
               <h5 class="modal-title" id="AddModalLabel" style="color: white">
-                {{ operation == 'edit' ? 'Modifier Salarie' : operation == 'remove' ? 'Supprimer Salarie' :''}}</h5>
+                {{ operation == 'edit' ? 'Modifier Salarie' :''}}</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="text-align:right;width:auto">
                 <span aria-hidden="true">&times;</span></button>
             </div>
@@ -151,15 +151,6 @@
                     </button>
                   </form>
                 </div>
-                <div *ngIf="operation == 'remove'">
-                  <p class="card-title">
-                    ID: {{selectedSalarie.employeeId}}
-                  </p>
-                  <p>
-                    Voulez vous supprimer cette Matricule salariè?
-                  </p>
-                  <button class="btn btn-success" data-dismiss="modal" [disabled]="!selectedSalarie.employeeId" (click)="deleteSalarie()">Confirmer</button>
-                </div>
               </div>
             </div>
           </div>
@@ -167,6 +158,32 @@
       </div>
     </div>
 
-  </div>
+    <div ngDraggable class="modal fade" id="RemoveModalSalarie" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+      <div class="modal-dialog" class="modal-dialog modal-dialog-centered"  role="document">
+        <div class="modal-content" style="height: auto">
+          <div class="modal-header" style="background-color: #12899e;cursor:move;" >
+            <h5 class="modal-title" id="RemoveLabel" style="color: white">
+              {{ 'Supprimer Salarie'}}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="text-align:right;width:auto">
+              <span aria-hidden="true">&times;</span></button>
+          </div>
+          <div class="modal-body">
+            <div class="card-body">
+              <div>
+                <p class="card-title">
+                  ID: {{selectedSalarie.employeeId}}
+                </p>
+                <p>
+                  Voulez vous supprimer cette Matricule salariè?
+                </p>
+                <button class="btn btn-success" data-dismiss="modal" [disabled]="!selectedSalarie.employeeId" (click)="deleteSalarie()">Confirmer</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
+
+  </div>
 </div>

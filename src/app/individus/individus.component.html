@@ -49,7 +49,7 @@
               <i class="fa fa-edit" data-toggle="modal" data-target="#Modal" (click)="operation = 'edit'; selectedIndividu = individu;"></i>
             </a>
             <a href="" data-toggle="collapse">
-              <i class="fa fa-trash" data-toggle="modal" data-target="#Modal" (click)="operation = 'remove'; selectedIndividu = individu;"></i>
+              <i class="fa fa-trash" data-toggle="modal" data-target="#RemoveModal" (click)="operation = 'remove'; selectedIndividu = individu;"></i>
             </a>
           </td>
         </tr>
@@ -66,7 +66,7 @@
 
     <div class="card-body">
       <div ngDraggable class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
-        <div class="modal-dialog" class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-dialog" class="modal-dialog modal-dialog-centered"  role="document">
           <div class="modal-content">
             <div class="modal-header" style="background-color: #12899e;cursor:move;" >
               <h5 class="modal-title" id="AddModalLabel" style="color: white">
@@ -127,15 +127,6 @@
                     </button>
                   </form>
                 </div>
-                <div *ngIf="operation == 'remove'">
-                  <p class="card-title">
-                    ID: {{selectedIndividu.nui}}
-                  </p>
-                  <p>
-                    Voulez vous supprimer cette Id Contact?
-                  </p>
-                  <button class="btn btn-success" data-dismiss="modal" [disabled]="!selectedIndividu.nui" (click)="deleteIndividu()">Confirmer</button>
-                </div>
               </div>
             </div>
           </div>
@@ -143,6 +134,31 @@
       </div>
     </div>
 
+    <div ngDraggable class="modal fade" id="RemoveModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+      <div class="modal-dialog" class="modal-dialog modal-dialog-centered"  role="document">
+        <div class="modal-content" style="height: auto">
+          <div class="modal-header" style="background-color: #12899e;cursor:move;" >
+            <h5 class="modal-title" id="RemoveLabel" style="color: white">
+              {{ 'Supprimer Individu'}}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="text-align:right;width:auto">
+              <span aria-hidden="true">&times;</span></button>
+          </div>
+          <div class="modal-body">
+            <div class="card-body">
+              <div>
+                <p class="card-title">
+                  ID: {{selectedIndividu.nui}}
+                </p>
+                <p>
+                  Voulez vous supprimer cette Id Contact?
+                </p>
+                <button class="btn btn-success" data-dismiss="modal" [disabled]="!selectedIndividu.nui" (click)="deleteIndividu()">Confirmer</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
 </div>
