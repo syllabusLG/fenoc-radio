@@ -1,10 +1,11 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import { saveAs } from 'file-saver';
 import {IndividusService} from "./individus.service";
 import {Individus} from "../shared/individus.model";
 import {CookieService} from 'ngx-cookie-service';
+import {COUNTRY} from '../shared/countries.code';
 
 
 @Component({
@@ -26,7 +27,8 @@ export class IndividusComponent implements OnInit {
   individusForm: FormGroup;
   operation: string = '';
   selectedIndividu: Individus;
-
+  @Input()
+  listcountries:any;
 
   constructor(private individusService: IndividusService,
               private cookieService: CookieService,
@@ -39,6 +41,7 @@ export class IndividusComponent implements OnInit {
     this.initIndividu();
     this.individus = this.route.snapshot.data.individus;
     this.loadIndividus();
+    this.listcountries = COUNTRY;
   }
 
   createForm() {

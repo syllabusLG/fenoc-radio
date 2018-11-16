@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {Adresse} from '../shared/adresse.model';
 import {ActivatedRoute} from '@angular/router';
 import { saveAs } from 'file-saver';
@@ -7,6 +7,8 @@ import {AdresseService} from './adresse.service';
 import * as jsPDF from 'jspdf';
 import {Individus} from '../shared/individus.model';
 import {CookieService} from 'ngx-cookie-service';
+import {COUNTRY} from '../shared/countries.code';
+
 declare const $;
 @Component({
   selector: 'app-adresse',
@@ -28,6 +30,10 @@ export class AdresseComponent implements OnInit {
   adresseForm: FormGroup;
   operation: string='';
   selectedAdresse: Adresse;
+  @Input()
+  listcountries:any;
+
+
 
   constructor(private adresseService: AdresseService,
               private cookieService: CookieService,
@@ -40,6 +46,7 @@ export class AdresseComponent implements OnInit {
     this.initAdresse();
     this.adresses = this.changeIndividu(this.route.snapshot.data.adresses);
     this.loadAdresses();
+    this.listcountries = COUNTRY;
 
   }
   changeIndividu(adresses: Adresse[]){

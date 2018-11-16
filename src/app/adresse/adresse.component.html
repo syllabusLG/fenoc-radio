@@ -126,7 +126,10 @@
                   </div>
                   <div class="form-group">
                     <label>Pays:</label>
-                    <input type="text" class="form-control" formControlName="country" [(ngModel)]="selectedAdresse.country"/>
+                    <select class="form-control" formControlName="country" [(ngModel)]="selectedAdresse.country" (select)="selectedAdresse.country" >
+                          <option value="">-- Choisir Pays --</option>
+                          <option *ngFor="let item of listcountries" [value]="item.code">{{item.name}}</option>
+                    </select>
                   </div>
                   <div class="form-group">
                     <label>Type d'adresse:</label>

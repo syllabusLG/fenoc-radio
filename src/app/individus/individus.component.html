@@ -115,7 +115,10 @@
                     </div>
                     <div class="form-group">
                       <label>Code de pays de naissance:</label>
-                      <input type="text" class="form-control" formControlName="birthCountry" [(ngModel)]="selectedIndividu.birthCountry"/>
+                      <select class="form-control" formControlName="birthCountry" [(ngModel)]="selectedIndividu.birthCountry" (select)="selectedIndividu.birthCountry" >
+                        <option value="">-- Choisir Pays --</option>
+                        <option *ngFor="let item of listcountries" [value]="item.code">{{item.name}}</option>
+                      </select>
                     </div>
                     <div class="form-group">
                       <label>Nationalité:</label>
