@@ -5,6 +5,8 @@ import { saveAs } from 'file-saver';
 import {PaymentService} from "./payment.service";
 import {Payment} from "../shared/payment.model";
 import {CookieService} from 'ngx-cookie-service';
+import {Individus} from '../shared/individus.model';
+import {Adresse} from '../shared/adresse.model';
 
 @Component({
   selector: 'app-payment',
@@ -38,7 +40,7 @@ export class PaymentComponent implements OnInit {
   ngOnInit() {
 
     this.initPayment();
-    this.payments = this.route.snapshot.data.payments;
+    this.payments = this.changeIndividu(this.route.snapshot.data.payments);
     this.loadPayments();
   }
 
@@ -114,6 +116,16 @@ export class PaymentComponent implements OnInit {
   }
   changedOtherPayment($event){
     this.selectedPayment.otherPayment = "";
+  }
+
+  changeIndividu(payments: Payment[]){
+    for(let i = 0; i < payments.length; i++){
+      let individu: Individus = new Individus();
+      individu.firstName = payments[i].individu.firstName;
+      individu.lastName = payments[i].individu.lastName;
+      payments[i].individu = individu;
+    }
+    return payments;
   }
 
 
