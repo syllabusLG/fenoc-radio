@@ -21,7 +21,6 @@ export class AppService {
       this.cookieService.set('username', credentials.username);
       this.http.get(API_URLS.USER_URL).subscribe(response =>{
         if(response && response['name']){
-          console.log(response);
           this.authenticated = true;
           this.store.dispatch({
             type: SAVE_PRINCIPAL,

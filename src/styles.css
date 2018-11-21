@@ -24,3 +24,12 @@ html, body {
   text-align: center;
   font-weight: bold;
 }
+
+.clickable {
+  cursor: pointer;
+  color: #007bff;
+}
+
+a.nav-link.clickable {
+  color: #007bff !important;
+}

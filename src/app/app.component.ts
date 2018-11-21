@@ -82,12 +82,9 @@ export class AppComponent implements OnInit{
   ngOnInit(){
     if(!this.appService.authenticated){
       this.router.navigateByUrl('/login');
-      console.log("ERROR");
       this.isLogin = true;
     }else{
       this.router.navigateByUrl('home/(contentOutlet:file)');
-      console.log("GOOOD");
-
     }
 
   }

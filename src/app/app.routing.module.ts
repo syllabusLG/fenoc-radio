@@ -119,8 +119,9 @@ export const appRoutes: Routes = [
         resolve: {
           resolvers: AuditResolver
         },
-        outlet: 'contentOutlet'
+        outlet: 'contentOutlet',
       },
+
 
     ]
   },

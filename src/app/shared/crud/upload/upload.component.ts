@@ -919,7 +919,6 @@ export class UploadComponent implements OnInit {
     for (let i = 0; i < dataArray.length; i++){
       if(dataArray[i].civility.length !== 0 && +dataArray[i].civility !== 1 && +dataArray[i].civility !== 2 && +dataArray[i].civility !== 3){
         this.civilityRequiredLine += i;
-        console.log('civility: '+ dataArray[i].civility);
         return false;
       }
     }
@@ -1111,7 +1110,6 @@ export class UploadComponent implements OnInit {
     }
 
     for (let i = 0; i < dataArray.length; i++) {
-      console.log('country: ',i, this.listCodePays[i]+' ', this.listLibPays[i]);
       if(!this.listCodePays.includes(dataArray[i].birthCountry.toUpperCase())){
         isFound = false;
         this.codePaysFoundLine+=i;
@@ -1369,8 +1367,6 @@ export class UploadComponent implements OnInit {
 
   isBicIbanValid(dataArray){
     for (let i = 0; i < dataArray.length; i++){
-      console.log('Compare BIC '+ dataArray[i].bic.substr(4,2));
-      console.log('Compare IBAN '+ dataArray[i].iban.substr(0,2));
       if(dataArray[i].bic.substr(4,2) !== dataArray[i].iban.substr(0, 2)){
         this.bicIbanValidLine += i;
         return false;

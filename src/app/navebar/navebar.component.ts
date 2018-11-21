@@ -49,7 +49,6 @@ export class NavebarComponent implements OnInit {
     this.username = this.cookieService.get('username');
     this.userservice.getUserByUsername(this.username).subscribe(
       data=>{
-        console.log("user data: "+data);
         this.user=data;
         this.pleaseChangePass = this.user.changePassword=="FALSE" ? true : false;
         this.user.oldPassword = this.user.password;
