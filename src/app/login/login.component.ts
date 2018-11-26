@@ -33,6 +33,7 @@ export class LoginComponent implements OnInit {
     this.appservice.authenticate(this.credentials, ()=>{
       this.router.navigateByUrl('home/(contentOutlet:file)');
       this.cookieService.set('dateConnexion' , this.loginDate());
+      //this.cookieService.set('username', this.credentials.username);
     })
   }
   loginDate(){

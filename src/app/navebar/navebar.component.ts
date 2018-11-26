@@ -40,8 +40,8 @@ export class NavebarComponent implements OnInit {
               private auditService: AuditService,
               private appService: AppService,
               private fb: FormBuilder,
-              private userservice: UserService
-              ) {
+              private userservice: UserService) {
+
     this.createForm();
   }
 
@@ -63,7 +63,6 @@ export class NavebarComponent implements OnInit {
       currentPassword:['', Validators.required],
       confirmationnewpassword: ['', [Validators.required, matchOtherValidator('currentPassword')]],
       });
-
   }
 
   afficherSideBar(){
@@ -75,9 +74,10 @@ export class NavebarComponent implements OnInit {
       this.router.navigateByUrl('/login');
       this.audit = this.appService.setAudit(this.audit);
       this.auditService.add(this.audit).subscribe();
-      this.cookieService.deleteAll('http://localhost:4200');
+      this.cookieService.deleteAll('/');
     });
   }
+
   updateUserPassword(){
     this.user.password=this.currentpassword;
     this.user.changePassword='TRUE';
@@ -85,6 +85,5 @@ export class NavebarComponent implements OnInit {
     this.userservice.update(this.user).subscribe();
     this.router.navigateByUrl('/login');
   }
-
 
 }

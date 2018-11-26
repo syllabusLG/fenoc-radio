@@ -1,11 +1,14 @@
 import {Component, HostListener, OnInit} from '@angular/core';
 import {AppService} from './app.service';
-import {NavigationEnd, Router} from '@angular/router';
+import {NavigationEnd, NavigationStart, Router} from '@angular/router';
 import {DEFAULT_INTERRUPTSOURCES, Idle} from "@ng-idle/core";
 import {Keepalive} from "@ng-idle/keepalive";
 import {CookieService} from 'ngx-cookie-service';
 import {Audit} from './shared/audit.model';
 import {AuditService} from './audit/audit.service';
+import {SAVE_PRINCIPAL} from "./shared/save.principal.action";
+import {Store} from "@ngrx/store";
+import {PrincipalState} from "./shared/principal.state";
 
 @Component({
   selector: 'app-root',
@@ -23,17 +26,16 @@ export class AppComponent implements OnInit{
   unloadHandler(event) {
     this.audit = this.appService.setAudit(this.audit);
     this.auditService.add(this.audit).subscribe();
-    this.cookieService.deleteAll('http://localhost:4200');
-
+    // this.cookieService.deleteAll('http://localhost:4200');
   }
-
 
   constructor(private appService: AppService,
               private cookieService: CookieService,
               private auditService: AuditService,
               private router: Router,
               private idle: Idle,
-              private keepalive: Keepalive){
+              private keepalive: Keepalive,
+              private store: Store<PrincipalState>){
 
     this.router.events.subscribe(
       ( event) : void => {
@@ -63,6 +65,7 @@ export class AppComponent implements OnInit{
 
     keepalive.onPing.subscribe(() => this.lastPing = new Date());
     this.reset();
+
   }
   reset() {
     this.idle.watch();
@@ -70,22 +73,26 @@ export class AppComponent implements OnInit{
     this.timedOut = false;
   }
 
-  changeToLoginPage()
-  {
+  changeToLoginPage()  {
     this.audit = this.appService.setAudit(this.audit);
     this.auditService.add(this.audit).subscribe();
-    this.cookieService.deleteAll('http://localhost:4200');
+    this.cookieService.deleteAll('/');
     return this.router.navigateByUrl('/login');
 
   }
 
-  ngOnInit(){
-    if(!this.appService.authenticated){
-      this.router.navigateByUrl('/login');
-      this.isLogin = true;
-    }else{
-      this.router.navigateByUrl('home/(contentOutlet:file)');
-    }
+  ngOnInit() {
 
-  }
+      if (!this.cookieService.get('principal')) {
+        this.router.navigateByUrl('/login');
+        this.isLogin = true;
+      } else {
+        let principal = JSON.parse(this.cookieService.get('principal'));
+        this.store.dispatch({
+          type: SAVE_PRINCIPAL,
+          payload: principal
+        });
+        this.router.navigateByUrl('home/(contentOutlet:file)');
+      }
+    }
 }

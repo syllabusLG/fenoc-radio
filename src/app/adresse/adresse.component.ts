@@ -1,4 +1,5 @@
-import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, HostListener, Input, OnInit, ViewChild} from '@angular/core';
+import {Router} from '@angular/router'
 import {Adresse} from '../shared/adresse.model';
 import {ActivatedRoute} from '@angular/router';
 import { saveAs } from 'file-saver';
@@ -34,11 +35,11 @@ export class AdresseComponent implements OnInit {
   listcountries:any;
 
 
-
   constructor(private adresseService: AdresseService,
               private cookieService: CookieService,
               private fb: FormBuilder,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private router: Router) {
     this.createForm();
   }
 
@@ -47,8 +48,8 @@ export class AdresseComponent implements OnInit {
     this.adresses = this.changeIndividu(this.route.snapshot.data.adresses);
     this.loadAdresses();
     this.listcountries = COUNTRY;
-
   }
+
   changeIndividu(adresses: Adresse[]){
     for(let i = 0; i < adresses.length; i++){
       let individu: Individus = new Individus();
@@ -83,17 +84,9 @@ export class AdresseComponent implements OnInit {
       }, error=>{
         console.log(error);
       });
-    /*this.adresseService.getAll().subscribe(
-      data=>{this.adresses = data},
-      error=>{console.log("An error was occured")},
-      ()=>{console.log("loading adresses was done")}
-    );*/
   }
   searchAdresse(){
     this.loadAdresses();
-
-
-
   }
   gotoPage(i:number){
     this.currentPage = i;

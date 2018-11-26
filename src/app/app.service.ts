@@ -14,7 +14,9 @@ export class AppService {
               private cookieService: CookieService,
               private store: Store<PrincipalState>) { }
 
+
   authenticate(credentials, callback){
+
     if(credentials){
       const token = btoa(credentials.username+ ':' + credentials.password);
       this.cookieService.set('token', token);
@@ -26,6 +28,7 @@ export class AppService {
             type: SAVE_PRINCIPAL,
             payload: response
           });
+          this.cookieService.set('principal', JSON.stringify(response));
         }
         else{
           this.authenticated = false;
@@ -39,6 +42,7 @@ export class AppService {
   }
   logout(callback){
     this.authenticated = false;
+    //this.cookieService.deleteAll('/');
     return callback && callback();
   }
   setAudit(audit){

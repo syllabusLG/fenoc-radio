@@ -1,5 +1,5 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import { saveAs } from 'file-saver';
 import {PaymentService} from "./payment.service";
@@ -33,7 +33,8 @@ export class PaymentComponent implements OnInit {
   constructor(private paymentService: PaymentService,
               private cookieService: CookieService,
               private fb: FormBuilder,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private router: Router) {
     this.createForm();
   }
 
@@ -73,7 +74,6 @@ export class PaymentComponent implements OnInit {
   }
 
   updatePayment(){
-    console.log(this.selectedPayment);
     this.paymentService.update(this.selectedPayment).subscribe(
       res=>{
         this.cookieService.set('updatePayment', this.selectedPayment.bic);
@@ -97,7 +97,6 @@ export class PaymentComponent implements OnInit {
     this.selectedPayment = new Payment();
     this.createForm();
   }
-
 
   downloadFile(data: any) {
     let file = 'payments_'+ new Date()+'.csv';
