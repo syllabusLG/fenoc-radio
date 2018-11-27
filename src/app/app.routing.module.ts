@@ -23,6 +23,8 @@ import {IndividusResolver} from "./individus/individus.resolver";
 import {HabilitationComponent} from "./habilitation/habilitation.component";
 import {AuditComponent} from "./audit/audit.component";
 import {AuditResolver} from "./audit/audit.resolver";
+import {MovementComponent} from "./movement/movement.component";
+import {PositionComponent} from "./position/position.component";
 
 
 
@@ -121,8 +123,16 @@ export const appRoutes: Routes = [
         },
         outlet: 'contentOutlet',
       },
-
-
+      {
+        path: 'movement',
+        component: MovementComponent,
+        outlet: 'contentOutlet',
+      },
+      {
+        path: 'position',
+        component: PositionComponent,
+        outlet: 'contentOutlet',
+      },
     ]
   },
 

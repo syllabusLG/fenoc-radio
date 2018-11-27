@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Router} from '@angular/router';
+import {NavigationEnd, Router} from '@angular/router';
 import {AppService} from '../app.service';
 import {AuditService} from '../audit/audit.service';
 import {Audit} from '../shared/audit.model';
@@ -33,7 +33,7 @@ export class NavebarComponent implements OnInit {
 
   @Input()
   pleaseChangePass: boolean = false;
-
+  compteSessionActive: boolean=false;
 
   constructor(private router: Router,
               private cookieService: CookieService,
@@ -43,6 +43,12 @@ export class NavebarComponent implements OnInit {
               private userservice: UserService) {
 
     this.createForm();
+    this.router.events.subscribe(
+      ( event) : void => {
+        this.compteSessionActive = ((this.router.url === "/home/(contentOutlet:compte)")|| (this.router.url === "/home/(contentOutlet:movement)") ||
+          (this.router.url === "/home/(contentOutlet:position)")) ? true : false;
+      }
+    );
   }
 
   ngOnInit() {
@@ -56,6 +62,7 @@ export class NavebarComponent implements OnInit {
         console.log(error);
       });
   }
+
 
   createForm() {
     this.userForm = this.fb.group({

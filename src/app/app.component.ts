@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit} from '@angular/core';
+import {Component, HostListener, Input, OnInit} from '@angular/core';
 import {AppService} from './app.service';
 import {NavigationEnd, NavigationStart, Router} from '@angular/router';
 import {DEFAULT_INTERRUPTSOURCES, Idle} from "@ng-idle/core";

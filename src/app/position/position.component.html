@@ -1,0 +1,40 @@
+<h3 class="h3-class">Position</h3>
+
+<div>
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link active" href="#importer" data-toggle="tab" role="tab" aria-controls="importer">Importer un fichier</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#simple" data-toggle="tab" role="tab" aria-controls="simple">Simple Crud</a>
+    </li>
+
+  </ul>
+
+
+  <div class="tab-content">
+    <div class="tab-pane fade show active" id="importer" role="tabpanel">
+      <br>
+      <div class="custom-file">
+        <input type="file" class="custom-file-input" id="inputGroupFilePosition" aria-describedby="inputGroupFilePosition01">
+        <label class="custom-file-label" for="inputGroupFilePosition">{{fileName ? fileName : 'Choisissez un fichier!'}}</label>
+      </div>
+    </div>
+    <div class="tab-pane fade" id="simple" role="tabpanel">
+      <div class="col-sm-12">
+        <table class="col-sm-12 table table-hover">
+          <thead>
+          <tr>
+            <th>Num Compte</th>
+            <th>Reference Instrument</th>
+            <th>Quantité Instrument</th>
+            <th>PRU Instrument</th>
+            <th>Date Mises à Jour</th>
+          </tr>
+          </thead>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</div>

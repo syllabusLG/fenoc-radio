@@ -25,17 +25,16 @@
 
   <nav class="navbar navbar-expand-sm bg-light" style="height:40px ">
     <i class="glyphicon glyphicon-search"></i>
-    <!---ul class="navbar-nav">
+    <ul class="navbar-nav" *ngIf="compteSessionActive">
       <li class="nav-item">
-        <a class="nav-link" href="#">Link 1</a>
+        <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'movement'}}]"
+           routerLinkActive="active">Mouvement</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Link 2</a>
+        <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'position'}}]"
+           routerLinkActive="active">Position</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Link 3</a>
-      </li>
-    </ul>-->
+    </ul>
   </nav>
 
 <div class="card-body">

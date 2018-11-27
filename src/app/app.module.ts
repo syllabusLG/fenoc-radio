@@ -51,6 +51,8 @@ import {AuditComponent} from "./audit/audit.component";
 import {AuditService} from "./audit/audit.service";
 import {MomentModule} from "angular2-moment";
 import {NgIdleKeepaliveModule} from "@ng-idle/keepalive";
+import {MovementComponent} from "./movement/movement.component";
+import {PositionComponent} from "./position/position.component";
 
 
 @NgModule({
@@ -79,8 +81,9 @@ import {NgIdleKeepaliveModule} from "@ng-idle/keepalive";
     ReportUpdateFileComponent,
     MyChartComponent,
     HabilitationComponent,
-    AuditComponent
-
+    AuditComponent,
+    MovementComponent,
+    PositionComponent
   ],
   imports: [
     BrowserModule,

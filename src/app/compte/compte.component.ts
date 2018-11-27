@@ -1,11 +1,10 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {CompteService} from "./compte.service";
 import {Compte} from "../shared/compte.model";
 import { saveAs } from 'file-saver';
 import {Individus} from '../shared/individus.model';
-import {Adresse} from '../shared/adresse.model';
 import {CookieService} from 'ngx-cookie-service';
 
 
@@ -15,6 +14,7 @@ import {CookieService} from 'ngx-cookie-service';
   styleUrls: ['./compte.component.css']
 })
 export class CompteComponent implements OnInit {
+
 
   @ViewChild('reportCompte')
   reportCompte: ElementRef;
@@ -31,10 +31,12 @@ export class CompteComponent implements OnInit {
   selectedCompte: Compte;
 
 
+
   constructor(private compteService: CompteService,
               private cookieService: CookieService,
               private fb: FormBuilder,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              ) {
     this.createForm();
   }
 
