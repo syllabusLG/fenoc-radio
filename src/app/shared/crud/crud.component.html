@@ -142,8 +142,6 @@
     <li class="nav-item">
       <a class="nav-link" data-toggle="collapse" *ngIf="title== 'Utilisateurs' || title== 'Adresses'" [ngClass]="{'active': crudType == 'sample' }" href="" (click)="crudType = 'sample'">Simple Crud</a>
     </li>
-    <li >
-      <a data-toggle="collapse" [ngClass]="{'active': crudType == 'upload' }" href="" (click)="crudType = 'upload'"></a>
 
     <li class="nav-item">
       <a class="nav-link" data-toggle="collapse" [ngClass]="{'active': crudType == 'upload' }" href="" (click)="crudType = 'upload'">Importer un fichier</a>
