@@ -53,6 +53,8 @@ import {MomentModule} from "angular2-moment";
 import {NgIdleKeepaliveModule} from "@ng-idle/keepalive";
 import {MovementComponent} from "./movement/movement.component";
 import {PositionComponent} from "./position/position.component";
+import {PositionService} from './position/position.service';
+import {MovementService} from './movement/movement.service';
 
 
 @NgModule({
@@ -113,7 +115,9 @@ import {PositionComponent} from "./position/position.component";
     FiscaliteService,
     ReportCreateFileService,
     ReportUpdateFileService,
-    AuditService
+    AuditService,
+    PositionService,
+    MovementService
   ],
   bootstrap: [AppComponent]
 })

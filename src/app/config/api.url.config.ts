@@ -26,4 +26,8 @@ export const API_URLS = {
   USERNAME_URL: BASE + ':'+ PORT + PATH + '/username',
   AUDIT_URL: BASE + ':' + PORT + PATH + '/audit',
   AUDIT_URL_SEARCH: BASE + ':' + PORT + PATH + '/audit/search',
+  POSITION_URL: BASE + ':' + PORT + PATH + '/position',
+  POSITION_URL_SEARCH: BASE + ':' + PORT + PATH + '/position/search',
+  MOVEMENT_URL: BASE + ':' + PORT + PATH + '/movement',
+  MOVEMENT_URL_SEARCH: BASE + ':' + PORT + PATH + '/movement/search',
 };
