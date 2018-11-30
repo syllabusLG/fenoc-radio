@@ -8,6 +8,8 @@ import {ReportCreateFile} from "../shared/report.create.file.model";
 import {ReportUpdateFile} from "../shared/report.update.file.model";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute} from "@angular/router";
+import {ReportUpdateFileService} from '../report-update-file/report.update.file.service';
+import {ReportCreateFileService} from '../report-create-file/report.create.file.service';
 
 @Component({
   selector: 'app-movement',
@@ -92,7 +94,11 @@ export class MovementComponent implements  OnInit{
   selectedMovement: Mouvements;
   movementForm: FormGroup;
   movements: Mouvements[];
-  constructor(private movementService: MovementService,private fb: FormBuilder,private route: ActivatedRoute){
+  constructor(private movementService: MovementService,
+              private reportCreateFileService: ReportCreateFileService,
+              private reportUpdateFileService: ReportUpdateFileService,
+              private fb: FormBuilder,
+              private route: ActivatedRoute){
     this.createForm();
   }
 
@@ -101,7 +107,7 @@ export class MovementComponent implements  OnInit{
       new DataModel( 'numMouvement', 'Número Mouvements', 'string', false,[]),
       new DataModel( 'sens', 'Sens', 'string', false,[]),
       new DataModel( 'refInstrument', 'Reférence Instrument', 'string', false,[]),
-      new DataModel( 'quantiteInstrument', 'Quantité', 'string', false,[]),
+      new DataModel( 'quantiteInstrument', 'Quantité', 'number', false,[]),
       new DataModel( 'nav', 'Nav', 'string', false,[]),
       new DataModel( 'pruInstrument', 'PRU', 'string', false,[]),
       new DataModel( 'dateCompte', 'Date Compte', 'string', false,[]),
@@ -397,10 +403,17 @@ export class MovementComponent implements  OnInit{
   }
 
   sendMovementsToServer(){
-    console.log("Movements Array: "+this.movementsDataArray);
     this.movementService.addAll(this.movementsDataArray).subscribe((data)=> {
-    this.dataFromServer = data;
-    this.dataSentToServer = true;
+      this.movementReportCreateFile.nbreLinesCreated = this.movementsCreatedDataArray.length;
+      this.movementReportUpdateFile.nbreLinesUpdated = this.movementsUpdateDataArray.length;
+      if(this.movementsCreatedDataArray.length > 0){
+        this.reportCreateFileService.add(this.movementReportCreateFile).subscribe();
+      }
+      if(this.movementsUpdateDataArray.length > 0){
+        this.reportUpdateFileService.add(this.movementReportUpdateFile).subscribe();
+      }
+      this.dataFromServer = data;
+      this.dataSentToServer = true;
 
     });
   }
@@ -412,6 +425,13 @@ export class MovementComponent implements  OnInit{
     {
       let moviments: Mouvements = new Mouvements();
       let compte: Compte = new Compte();
+      this.movementService.getOne(dataArray[i].numMouvement).subscribe((data)=>{
+        if(data !== null){
+          this.movementsUpdateDataArray.push(data);
+        }else{
+          this.movementsCreatedDataArray.push(data);
+        }
+      });
       compte.numCompte = dataArray[i].compte;
       moviments.compte = compte;
       moviments.dateCompte = dataArray[i].dateCompte;
@@ -420,6 +440,7 @@ export class MovementComponent implements  OnInit{
       moviments.nav = dataArray[i].nav;
       moviments.numMouvement = dataArray[i].numMouvement;
       moviments.pruInstrument = dataArray[i].pruInstrument;
+      moviments.quantiteInstrument = dataArray[i].quantiteInstrument;
       moviments.refInstrument = dataArray[i].refInstrument;
       moviments.sens = dataArray[i].sens;
       this.movementsDataArray.push(moviments);
