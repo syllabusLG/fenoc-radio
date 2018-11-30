@@ -132,14 +132,14 @@
             </tr>
             </tbody>
           </table>
-          <div class="container">
-            <ul class="nav">
-              <li class="nav-item " [ngClass]="{'activePagin': i === currentPage}" *ngFor="let p of pages; let i=index">
-                <a class="nav-link clickable" (click)="gotoPage(i)">{{i}}</a>
-              </li>
-            </ul>
-          </div>
         </div>
+      <!--<div class="container">
+        <ul class="nav">
+          <li class="nav-item " [ngClass]="{'activePagin': i === currentPage}" *ngFor="let p of pages; let i=index">
+            <a class="nav-link clickable" (click)="gotoPage(i)">{{i}}</a>
+          </li>
+        </ul>
+      </div>-->
     </div>
   </div>
 </div>
