@@ -119,7 +119,7 @@
               <th>Date Operation</th>
               <th>
                 <a href="" data-toggle="collapse">
-                  <i class="fa fa-plus" data-toggle="tooltip" data-toggle="modal" data-target="#ModalMovements" title="Ajouter Movoument"  (click)="operation= 'add'; initMoviments()"></i>
+                  <!--<i class="fa fa-plus" data-toggle="tooltip" data-toggle="modal" data-target="#ModalMovements" title="Ajouter Movoument"  (click)="operation= 'add'; initMoviments()"></i>-->
                 </a>
               </th>
             </tr>
@@ -217,14 +217,6 @@
                   <label>Date Valeur:</label>
                   <input type="date" class="form-control" formControlName="dateValeur" [(ngModel)]="selectedMovement.dateValeur"
                          value="{{parse(selectedMovement.dateValeur) | date:'yyyy-MM-dd' }}"/>
-                </div>
-
-                <div class="form-group">
-                  <label>Compte Num:</label>
-                  <select class="form-control" formControlName="compte" [(ngModel)]="selectedMovement.compte" (select)="selectedMovement.compte">
-                      <option value="">-- Choisir Compte --</option>
-                      <option *ngFor="let item of dataValues" [value]="dataKeys[item]">{{dataValues[item]}}</option>
-                    </select>
                 </div>
 
                 <button class="btn btn-info" data-dismiss="modal"

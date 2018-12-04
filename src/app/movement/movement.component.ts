@@ -100,13 +100,6 @@ export class MovementComponent implements  OnInit{
   movementForm: FormGroup;
   movements: Mouvements[];
 
-  @Input()
-  listcomptes:any;
-  @Input()
-  dataKeys: any;
-  @Input()
-  dataValues: any;
-
   constructor(private movementService: MovementService,
               private reportCreateFileService: ReportCreateFileService,
               private reportUpdateFileService: ReportUpdateFileService,
@@ -134,23 +127,7 @@ export class MovementComponent implements  OnInit{
     this.initMoviments();
     this.movements = this.changeMovement(this.route.snapshot.data.movements);
     this.loadMovements();
-
   }
-
-  getCompteList(){
-    this.compteService.getAll().subscribe(data=> {
-      this.listcomptes = data;
-    }, error=>{
-      console.log(error);
-    });
-
-    for(let key in this.listcomptes) {   //Pay attention to the 'in'
-      this.dataValues.push(this.listcomptes[key]);
-      this.dataKeys.push(key);
-    }
-    console.log("this list comptes: "+ this.listcomptes);
-  }
-
 
   initMoviments(){
     this.selectedMovement = new Mouvements();
@@ -189,8 +166,6 @@ export class MovementComponent implements  OnInit{
       }, error=>{
         console.log(error);
       });
-    this.getCompteList();
-
   }
 
   getBindHeadersDataModelListArray(headers){
