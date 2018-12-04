@@ -1,5 +1,4 @@
-import {Component, ElementRef, HostListener, Input, OnInit, ViewChild} from '@angular/core';
-import {Router} from '@angular/router'
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {Adresse} from '../shared/adresse.model';
 import {ActivatedRoute} from '@angular/router';
 import { saveAs } from 'file-saver';
@@ -38,8 +37,7 @@ export class AdresseComponent implements OnInit {
   constructor(private adresseService: AdresseService,
               private cookieService: CookieService,
               private fb: FormBuilder,
-              private route: ActivatedRoute,
-              private router: Router) {
+              private route: ActivatedRoute) {
     this.createForm();
   }
 

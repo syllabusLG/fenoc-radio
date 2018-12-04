@@ -14,9 +14,10 @@ html, body {
   display: table-cell;
 }
 
-.activePagin, .li:hover {
+.activePagin, .li:hover .li {
   background-color: #7ac8bc;
   color: black;
+  width: 40px;
 }
 
 .h3-class {

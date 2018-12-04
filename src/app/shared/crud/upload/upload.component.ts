@@ -53,6 +53,8 @@ export class UploadComponent implements OnInit {
   @Output()
   errorMessages: EventEmitter<any> = new EventEmitter<any>();
 
+  typeOfReport: string = '';
+
   dataArray:  any = null;
   individusDataArray: Individus[] = [];
   individusCreatedDataArray: Individus[] = [];
@@ -1434,9 +1436,10 @@ export class UploadComponent implements OnInit {
   }
 
   public downloadPDFModules($event:any){
+    this.typeOfReport = 'modules';
     $event.preventDefault();
     $event.stopPropagation();
-    Filemanagement.downloadPDFModules(this.report.nativeElement.innerHTML);
+    Filemanagement.downloadPDFModules(this.report.nativeElement.innerHTML, this.typeOfReport);
     this.currentStep = 4;
     this.cookieService.set('reportFileName', 'reportFile'+new Date()+'.pdf');
   }
