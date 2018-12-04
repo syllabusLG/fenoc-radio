@@ -28,7 +28,7 @@ export class Filemanagement {
       doc.save(file);
   }
 
-  public static downloadPDFModules(innerHTML: string){
+  public static downloadPDFModules(innerHTML: string, typeOfReport: string){
 
     let doc = new jsPDF();
     let file = "reportFile"+new Date()+".pdf";
@@ -44,7 +44,12 @@ export class Filemanagement {
     doc.setDrawColor(150,150,150);
     //doc.text('Rapport derreur',x:20,y:30,w:40,h:30);
 
-    doc.text('Rapport d\' Integration des Modules',68,40,null,null,null);
+    if(typeOfReport=='mouvement'){
+      doc.text('Rapport d\' Integration des Mouvements', 68, 40, null, null, null);
+    }
+    else {
+      doc.text('Rapport d\' Integration des Modules', 68, 40, null, null, null);
+    }
     doc.line(17, 45, 200, 45);
     doc.fromHTML(innerHTML, 17, 45, {
       'width': 190,

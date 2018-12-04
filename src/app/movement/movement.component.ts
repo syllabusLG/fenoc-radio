@@ -10,6 +10,9 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute} from "@angular/router";
 import {ReportUpdateFileService} from '../report-update-file/report.update.file.service';
 import {ReportCreateFileService} from '../report-create-file/report.create.file.service';
+import { saveAs } from 'file-saver';
+import {Individus} from "../shared/individus.model";
+import {CompteService} from "../compte/compte.service";
 
 @Component({
   selector: 'app-movement',
@@ -19,6 +22,9 @@ import {ReportCreateFileService} from '../report-create-file/report.create.file.
 
 export class MovementComponent implements  OnInit{
 
+  @ViewChild('reportMovement')
+  reportMovement: ElementRef;
+  typeOfReport: string = '';
   pageMovements:any;
   motCle:string='';
   currentPage:number=0;
@@ -31,7 +37,6 @@ export class MovementComponent implements  OnInit{
   dataModelListFiltred: any;
   dataFromServer: any = null;
   dataSentToServer: boolean = false;
-  nbreLigneRejete: number = 0;
 
   @Input()
   dataModelList: DataModel[];
@@ -94,11 +99,20 @@ export class MovementComponent implements  OnInit{
   selectedMovement: Mouvements;
   movementForm: FormGroup;
   movements: Mouvements[];
+
+  @Input()
+  listcomptes:any;
+  @Input()
+  dataKeys: any;
+  @Input()
+  dataValues: any;
+
   constructor(private movementService: MovementService,
               private reportCreateFileService: ReportCreateFileService,
               private reportUpdateFileService: ReportUpdateFileService,
               private fb: FormBuilder,
-              private route: ActivatedRoute){
+              private route: ActivatedRoute,
+              private compteService: CompteService){
     this.createForm();
   }
 
@@ -118,14 +132,38 @@ export class MovementComponent implements  OnInit{
     this.dataModelListFiltred = this.dataModelList.filter(dataModel => !dataModel.readonly);
 
     this.initMoviments();
-    this.movements = this.route.snapshot.data.mouvements;
+    this.movements = this.changeMovement(this.route.snapshot.data.movements);
+    this.loadMovements();
 
   }
+
+  getCompteList(){
+    this.compteService.getAll().subscribe(data=> {
+      this.listcomptes = data;
+    }, error=>{
+      console.log(error);
+    });
+
+    for(let key in this.listcomptes) {   //Pay attention to the 'in'
+      this.dataValues.push(this.listcomptes[key]);
+      this.dataKeys.push(key);
+    }
+    console.log("this list comptes: "+ this.listcomptes);
+  }
+
 
   initMoviments(){
     this.selectedMovement = new Mouvements();
     this.createForm();
-    this.loadMovements();
+  }
+
+  changeMovement(movements: Mouvements[]){
+    for(let i = 0; i < movements.length; i++){
+      let compte: Compte = new Compte();
+      compte.numCompte = movements[i].compte.numCompte;
+      movements[i].compte = compte;
+    }
+    return movements;
   }
 
   createForm(){
@@ -151,6 +189,8 @@ export class MovementComponent implements  OnInit{
       }, error=>{
         console.log(error);
       });
+    this.getCompteList();
+
   }
 
   getBindHeadersDataModelListArray(headers){
@@ -400,6 +440,7 @@ export class MovementComponent implements  OnInit{
   sendDataToServer(){
     this.sendMovementsToServer();
     this.currentStep = 3;
+    this.loadMovements();
   }
 
   sendMovementsToServer(){
@@ -423,7 +464,7 @@ export class MovementComponent implements  OnInit{
     this.movementReportUpdateFile.module = 'Movements'
     for(let i=0; i< dataArray.length; i++)
     {
-      let moviments: Mouvements = new Mouvements();
+      let movements: Mouvements = new Mouvements();
       let compte: Compte = new Compte();
       this.movementService.getOne(dataArray[i].numMouvement).subscribe((data)=>{
         if(data !== null){
@@ -433,17 +474,17 @@ export class MovementComponent implements  OnInit{
         }
       });
       compte.numCompte = dataArray[i].compte;
-      moviments.compte = compte;
-      moviments.dateCompte = dataArray[i].dateCompte;
-      moviments.dateOperation = dataArray[i].dateOperation;
-      moviments.dateValeur = dataArray[i].dateValeur;
-      moviments.nav = dataArray[i].nav;
-      moviments.numMouvement = dataArray[i].numMouvement;
-      moviments.pruInstrument = dataArray[i].pruInstrument;
-      moviments.quantiteInstrument = dataArray[i].quantiteInstrument;
-      moviments.refInstrument = dataArray[i].refInstrument;
-      moviments.sens = dataArray[i].sens;
-      this.movementsDataArray.push(moviments);
+      movements.compte = compte;
+      movements.dateCompte = dataArray[i].dateCompte;
+      movements.dateOperation = dataArray[i].dateOperation;
+      movements.dateValeur = dataArray[i].dateValeur;
+      movements.nav = dataArray[i].nav;
+      movements.numMouvement = dataArray[i].numMouvement;
+      movements.pruInstrument = dataArray[i].pruInstrument;
+      movements.quantiteInstrument = dataArray[i].quantiteInstrument;
+      movements.refInstrument = dataArray[i].refInstrument;
+      movements.sens = dataArray[i].sens;
+      this.movementsDataArray.push(movements);
     }
 
   }
@@ -511,9 +552,10 @@ export class MovementComponent implements  OnInit{
   }
 
   public downloadPDFModules($event:any){
+    this.typeOfReport = 'mouvement';
     $event.preventDefault();
     $event.stopPropagation();
-    Filemanagement.downloadPDFModules(this.report.nativeElement.innerHTML);
+    Filemanagement.downloadPDFModules(this.report.nativeElement.innerHTML,this.typeOfReport);
     this.currentStep = 4;
   }
 
@@ -528,6 +570,22 @@ export class MovementComponent implements  OnInit{
   }
 
   updateMovement(){
+    let dateValeur = this.selectedMovement.dateValeur;
+    let dateOperation = this.selectedMovement.dateOperation;
+    let dateCompte = this.selectedMovement.dateCompte;
+
+    if(dateValeur || dateOperation || dateCompte )
+    {
+      if(dateValeur && (dateValeur.indexOf('-') > -1)){
+        this.selectedMovement.dateValeur = this.fillDate(dateValeur);
+      }
+      if(dateOperation && (dateOperation.indexOf('-') > -1)){
+        this.selectedMovement.dateOperation = this.fillDate(dateOperation);
+      }
+      if(dateCompte && (dateCompte.indexOf('-') > -1)){
+        this.selectedMovement.dateCompte = this.fillDate(dateCompte);
+      }
+    }
     this.movementService.update(this.selectedMovement).subscribe(
       res=>{
         this.initMoviments();
@@ -548,5 +606,50 @@ export class MovementComponent implements  OnInit{
   gotoPage(i: number) {
     this.currentPage = i;
     this.loadMovements();
+  }
+
+  searchAMovements(){
+    this.loadMovements();
+  }
+
+  downloadFile(data: any) {
+    let file = 'mouvements_'+ new Date()+'.csv';
+    const replacer = (key, value) => value === null ? '' : value; // specify how you want to handle null values here
+    const header = Object.keys(data[0]);
+    let csv = data.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(';'));
+    csv.unshift(header.join(';'));
+    let csvArray = csv.join('\r\n');
+    var blob = new Blob([csvArray], {type: 'text/csv' })
+    saveAs(blob, file);
+  }
+
+  parse(value: any): Date | null {
+    if ((typeof value === 'string') && (value.indexOf('/') > -1)) {
+      const str = value.split('/');
+
+      const year = Number(str[2]);
+      const month = Number(str[1]) - 1;
+      const date = Number(str[0]);
+
+      return new Date(year, month, date);
+    } else if((typeof value === 'string') && value === '') {
+      return new Date();
+    }
+    const timestamp = typeof value === 'number' ? value : Date.parse(value);
+    return isNaN(timestamp) ? null : new Date(timestamp);
+  }
+
+  fillDate(date:any){
+    if(date && (date.indexOf('-') > -1)) {
+      let year = new Date(Date.parse(date)).getFullYear();
+      let month = new Date(Date.parse(date)).getMonth() + 1;
+      let day = new Date(Date.parse(date)).getDate();
+      let dateFormat = day + '/' + month + '/' + year;
+      if(day>=1&&day<=9)
+      {
+        dateFormat = '0'+day + '/' + month + '/' + year;
+      }
+      return dateFormat;
+    }
   }
 }
