@@ -36,6 +36,7 @@ export class PositionComponent implements OnInit{
 
   @ViewChild('report')
   report: ElementRef;
+  typeOfReport: string = '';
 
   operation: string='';
 
@@ -201,9 +202,10 @@ export class PositionComponent implements OnInit{
   }
 
   public downloadPDFModules($event:any){
+    this.typeOfReport = 'position';
     $event.preventDefault();
     $event.stopPropagation();
-    Filemanagement.downloadPDFModules(this.report.nativeElement.innerHTML);
+    Filemanagement.downloadPDFModules(this.report.nativeElement.innerHTML,this.typeOfReport);
     this.currentStep = 4;
   }
 
