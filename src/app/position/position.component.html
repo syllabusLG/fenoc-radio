@@ -1,40 +1,239 @@
-<h3 class="h3-class">Position</h3>
-
-<div>
-  <ul class="nav nav-tabs">
-    <li class="nav-item">
-      <a class="nav-link active" href="#importer" data-toggle="tab" role="tab" aria-controls="importer">Importer un fichier</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#simple" data-toggle="tab" role="tab" aria-controls="simple">Simple Crud</a>
-    </li>
-
-  </ul>
+<h3 class="h3-class">Movement</h3>
+<br>
 
 
-  <div class="tab-content">
-    <div class="tab-pane fade show active" id="importer" role="tabpanel">
-      <br>
+<div class="bd-example bd-example-tabs">
+  <!----IMPORTER----->
+  <nav class="nav nav-tabs" id="nav-tab" role="tablist">
+    <a class="nav-item nav-link active" id="nav-importer-tab" data-toggle="tab" href="#nav-importer" role="tab" aria-controls="importer" aria-expanded="true">Importer un fichier</a>
+    <a class="nav-item nav-link" id="nav-table-tab" data-toggle="tab" href="#nav-table" role="tab" aria-controls="table" aria-expanded="false">Simple Crud</a>
+  </nav>
+  <div class="tab-content" id="nav-tabContent">
+    <br>
+    <div class="tab-pane fade active show" id="nav-importer" role="tabpanel" aria-labelledby="nav-importer-tab" aria-expanded="true">
       <div class="custom-file">
-        <input type="file" class="custom-file-input" id="inputGroupFilePosition" aria-describedby="inputGroupFilePosition01">
-        <label class="custom-file-label" for="inputGroupFilePosition">{{fileName ? fileName : 'Choisissez un fichier!'}}</label>
+        <input type="file" id="customFile" #fileUploadInput style="width: 90%" (change)="selectFile($event)"  accept=".csv" >
+        <label class="custom-file-label" for="customFile">{{fileName ? fileName : 'Choisissez un fichier!'}}</label>
+      </div>
+      <div class="checkout-wrap">
+        <ul class="checkout-bar">
+          <li [ngClass]="{active: currentStep == 1, visited: currentStep>1}" (click)="selectedStep=1;" >Importer un fichier</li>
+          <li [ngClass]="{active: currentStep == 2, visited: currentStep>2}" (click)="selectedStep=2;" >Envoyer</li>
+          <li [ngClass]="{active: currentStep == 3, visited: currentStep>3}" (click)="selectedStep=3;" >Récupérer les données</li>
+        </ul>
+      </div>
+
+      <div [ngSwitch]="selectedStep" >
+
+        <div *ngSwitchCase="1">
+          <div *ngIf="dataArray; else emptyData">
+            <table class="table table-hover">
+              <thead>
+              <tr>
+                <th *ngFor="let dataModel of dataModelListFiltred">{{dataModel.columnReference}}</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let item of dataArray">
+                <td *ngFor="let dataModel of dataModelListFiltred">{{item[dataModel.columnName]}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <!--<div *ngIf="!dataArray">
+            <p>Aucune donnée importée.</p>
+          </div>-->
+        </div>
+        <div *ngSwitchCase="2">
+          <div >
+            <p>Cliquez pour envoyer les données au serveur !</p>
+            <button class="btn btn-default" style="width: fit-content" (click)="sendDataToServer()">Send</button>
+          </div>
+          <div *ngIf="dataSentToServer">
+            <p>L'envoie est terminé.</p>
+          </div>
+        </div>
+        <div *ngSwitchCase="3">
+          <div id="report" #report>
+            <div class="text-center">
+              <p class="badge badge-info">Ce fichier contient {{dataArray.length}} lignes </p>
+            </div>
+            <!-- <div class="text-center">
+               <p class="badge badge-secondary">Nombre de lignes rejétés: {{nbreLigneRejete}}</p>
+             </div>-->
+            <div class="row container">
+              <div class="col-lg-6">
+                <p class="badge badge-info">Phase de creation</p><br/>
+                <p class="badge badge-light">Module Position: Nombre de lignes crées: <span class="badge badge-info">{{positionCreatedDataArray.length}}</span></p>
+              </div>
+              <div class="col-lg-6">
+                <p class="badge badge-info">Phase de mise à jour</p><br/>
+                <p class="badge badge-light">Module Mouvement: Nombre de lignes mises à jour: <span class="badge badge-info">{{positionUpdateDataArray.length}}</span></p>
+              </div>
+            </div>
+          </div>
+          <div class="text-center">
+            <button type="button" class="btn btn-info btn-lg btn-block" (click)="downloadPDFModules($event)" >EXPORT REPORT TO PDF</button>
+          </div>
+          <div *ngIf="dataFromServer">
+            <div *ngIf="!dataFromServer">
+              <p>Aucune donnée récupérée.</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="tab-pane fade" id="simple" role="tabpanel">
+
+
+
+    <!----TABLE---->
+    <div class="tab-pane fade" id="nav-table" role="tabpanel" aria-labelledby="nav-table-tab" aria-expanded="false">
       <div class="col-sm-12">
         <table class="col-sm-12 table table-hover">
           <thead>
           <tr>
             <th>Num Compte</th>
-            <th>Reference Instrument</th>
-            <th>Quantité Instrument</th>
-            <th>PRU Instrument</th>
-            <th>Date Mises à Jour</th>
+            <th>Num Movement</th>
+            <th>Sens</th>
+            <th>Quantité</th>
+            <th>Reférence Instrument</th>
+            <th>Nav</th>
+            <th>PRU</th>
+            <th>Date Compte</th>
+            <th>Date Valeur </th>
+            <th>Date Operation</th>
+            <th>
+              <a href="" data-toggle="collapse">
+                <i class="fa fa-plus" data-toggle="tooltip" data-toggle="modal" data-target="#ModalMovements" title="Ajouter Movoument"  (click)="operation= 'add'; initMoviments()"></i>
+              </a>
+            </th>
           </tr>
           </thead>
+          <tbody>
+          <tr *ngFor="let movement of pageMovements?.content">
+            <td>{{movement.compte.numCompte}}</td>
+            <td>{{movement.numMouvement}}</td>
+            <td>{{movement.sens}}</td>
+            <td>{{movement.quantiteInstrument}}</td>
+            <td>{{movement.refInstrument}}</td>
+            <td>{{movement.nav}}</td>
+            <td>{{movement.pruInstrument}}</td>
+            <td>{{movement.dateCompte}}</td>
+            <td>{{movement.dateValeur}}</td>
+            <td>{{movement.dateOperation}}</td>
+            <td>
+              <a href=""  data-toggle="collapse" >
+                <i class="fa fa-edit" data-toggle="modal" data-target="#ModalMovements" (click)="operation = 'edit'; selectedMovement = movement;"></i>
+              </a>
+              <a href="" data-toggle="collapse">
+                <i class="fa fa-trash" data-toggle="modal" data-target="#RemoveModalMovement" (click)="operation = 'remove'; selectedMovement = movement;"></i>
+              </a>
+            </td>
+          </tr>
+          </tbody>
         </table>
       </div>
+      <!--<div class="container">
+        <ul class="nav">
+          <li class="nav-item " [ngClass]="{'activePagin': i === currentPage}" *ngFor="let p of pages; let i=index">
+            <a class="nav-link clickable" (click)="gotoPage(i)">{{i}}</a>
+          </li>
+        </ul>
+      </div>-->
+    </div>
+  </div>
+</div>
 
+
+<div class="card-body">
+  <div ngDraggable class="modal fade" id="ModalMovements" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+    <div class="modal-dialog" class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header" style="background-color: #12899e;cursor:move;" >
+          <h5 class="modal-title" id="AddModalLabel" style="color: white">
+            {{ operation == 'add' ? 'Ajouter Mouvements' : operation == 'edit' ? 'Modifier Mouvements' :''}}</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="text-align:right;width:auto">
+            <span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+          <div class="card-body">
+            <div *ngIf="operation == 'add' || operation == 'edit'">
+              <form [formGroup]="movementForm" style="border-color: white; overflow-y: auto">
+                <div class="form-group">
+                  <label class="control-label">Número Mouvements:</label>
+                  <input type="text" class="form-control" formControlName="numMouvement" [(ngModel)]="selectedMovement.numMouvement"/>
+                </div>
+                <div class="form-group" *ngIf="operation=='add'">
+                  <label>Numéro Compte:</label>
+                  <input type="number" class="form-control" formControlName="compte" [(ngModel)]="selectedMovement.compte"/>
+                </div>
+                <div class="form-group">
+                  <label>Nav:</label>
+                  <input type="text" class="form-control" formControlName="nav" [(ngModel)]="selectedMovement.nav"/>
+                </div>
+                <div class="form-group">
+                  <label>Sens:</label>
+                  <input type="text" class="form-control" formControlName="sens" [(ngModel)]="selectedMovement.sens"/>
+                </div>
+                <div class="form-group">
+                  <label>Quantité:</label>
+                  <input type="text" class="form-control" formControlName="quantiteInstrument" [(ngModel)]="selectedMovement.quantiteInstrument"/>
+                </div>
+                <div class="form-group">
+                  <label>PRU:</label>
+                  <input type="text" class="form-control" formControlName="pruInstrument" [(ngModel)]="selectedMovement.pruInstrument"/>
+                </div>
+                <div class="form-group">
+                  <label>Reférence Instrument:</label>
+                  <input type="text" class="form-control" formControlName="refInstrument" [(ngModel)]="selectedMovement.refInstrument"/>
+                </div>
+                <div class="form-group">
+                  <label>Date Compte:</label>
+                  <input type="text" class="form-control" formControlName="dateCompte" [(ngModel)]="selectedMovement.dateCompte"/>
+                </div>
+                <div class="form-group">
+                  <label>Date Operation:</label>
+                  <input type="text" class="form-control" formControlName="dateOperation" [(ngModel)]="selectedMovement.dateOperation"/>
+                </div>
+                <div class="form-group">
+                  <label>Date Valeur:</label>
+                  <input type="text" class="form-control" formControlName="dateValeur" [(ngModel)]="selectedMovement.dateValeur"/>
+                </div>
+                <button class="btn btn-info" data-dismiss="modal"
+                        (click)="operation == 'add' ? addMovement() : updateMovement()">
+                  {{operation == 'add' ? 'Ajouter': operation == 'edit' ? 'Modifier': ''}}
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div ngDraggable class="modal fade" id="RemoveModalMovement" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+  <div class="modal-dialog" class="modal-dialog modal-dialog-centered"  role="document">
+    <div class="modal-content" style="height: auto">
+      <div class="modal-header" style="background-color: #12899e;cursor:move;" >
+        <h5 class="modal-title" id="RemoveLabel" style="color: white">
+          {{ 'Supprimer Mouvements'}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="text-align:right;width:auto">
+          <span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <div class="card-body">
+          <div>
+            <p class="card-title">
+              ID: {{selectedMovement.numMouvement}}
+            </p>
+            <p>
+              Voulez vous supprimer cette Mouvements?
+            </p>
+            <button class="btn btn-success" data-dismiss="modal" (click)="deleteMouvement()">Confirmer</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
