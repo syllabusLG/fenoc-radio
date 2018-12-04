@@ -87,120 +87,113 @@
 
 
     <!----TABLE---->
+
     <div class="tab-pane fade" id="nav-table" role="tabpanel" aria-labelledby="nav-table-tab" aria-expanded="false">
       <div class="col-sm-12">
+        <div class=" row">
+          <div class="form-group col-sm-10">
+            <label style="margin-left: 10px">Mot Clé</label>
+            <input style="height: 33px;width: fit-content" type="text" [(ngModel)]="motCle"/>
+            <button class="btn btn-info" style="width: fit-content" (click)="searchPosition()">Chercher</button>
+          </div>
+          <div class="col-sm-2" id="reportPosition" #reportPosition>
+            <div class="d-inline-block">
+              <a href="" data-toggle="collapse">
+                <button type="button" style="margin-bottom: 14px" class="btn btn-info" (click)="downloadFile(positions)">Export to CSV</button>
+              </a>
+            </div>
+          </div>
+        </div>
         <table class="col-sm-12 table table-hover">
           <thead>
           <tr>
-            <th>Num Compte</th>
-            <th>Num Movement</th>
-            <th>Sens</th>
-            <th>Quantité</th>
-            <th>Reférence Instrument</th>
-            <th>Nav</th>
-            <th>PRU</th>
-            <th>Date Compte</th>
-            <th>Date Valeur </th>
-            <th>Date Operation</th>
+            <th>Référence instrument</th>
+            <th>Quantité instrument</th>
+            <th>PRU instrument</th>
+            <th>Date modification</th>
+            <th>Compte</th>
             <th>
               <a href="" data-toggle="collapse">
-                <i class="fa fa-plus" data-toggle="tooltip" data-toggle="modal" data-target="#ModalMovements" title="Ajouter Movoument"  (click)="operation= 'add'; initMoviments()"></i>
+                <!--<i class="fa fa-plus" data-toggle="tooltip" data-toggle="modal" data-target="#ModalMovements" title="Ajouter Movoument"  (click)="operation= 'add'; initMoviments()"></i>-->
               </a>
             </th>
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let movement of pageMovements?.content">
-            <td>{{movement.compte.numCompte}}</td>
-            <td>{{movement.numMouvement}}</td>
-            <td>{{movement.sens}}</td>
-            <td>{{movement.quantiteInstrument}}</td>
-            <td>{{movement.refInstrument}}</td>
-            <td>{{movement.nav}}</td>
-            <td>{{movement.pruInstrument}}</td>
-            <td>{{movement.dateCompte}}</td>
-            <td>{{movement.dateValeur}}</td>
-            <td>{{movement.dateOperation}}</td>
+          <tr *ngFor="let position of pagePositions?.content">
+            <td>{{position.refInstrument}}</td>
+            <td>{{position.quantiteInstrument}}</td>
+            <td>{{position.pruInstrument}}</td>
+            <td>{{position.dateUpdate}}</td>
+            <td>{{position.compte.numCompte}}</td>
             <td>
               <a href=""  data-toggle="collapse" >
-                <i class="fa fa-edit" data-toggle="modal" data-target="#ModalMovements" (click)="operation = 'edit'; selectedMovement = movement;"></i>
+                <i class="fa fa-edit" data-toggle="modal" data-target="#ModalPosition" (click)="operation = 'edit'; selectedPosition = position;"></i>
               </a>
               <a href="" data-toggle="collapse">
-                <i class="fa fa-trash" data-toggle="modal" data-target="#RemoveModalMovement" (click)="operation = 'remove'; selectedMovement = movement;"></i>
+                <i class="fa fa-trash" data-toggle="modal" data-target="#RemoveModalPosition" (click)="operation = 'remove'; selectedPosition = position;"></i>
               </a>
             </td>
           </tr>
           </tbody>
         </table>
       </div>
-      <!--<div class="container">
+      <div class="container">
         <ul class="nav">
-          <li class="nav-item " [ngClass]="{'activePagin': i === currentPage}" *ngFor="let p of pages; let i=index">
+          <li class="nav-item liclass"[ngClass]="{'activePagin': i === currentPage}" *ngFor="let p of pages; let i=index">
             <a class="nav-link clickable" (click)="gotoPage(i)">{{i}}</a>
           </li>
         </ul>
-      </div>-->
+      </div>
+
     </div>
   </div>
 </div>
 
 
 <div class="card-body">
-  <div ngDraggable class="modal fade" id="ModalMovements" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+  <div ngDraggable class="modal fade" id="ModalPosition" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
     <div class="modal-dialog" class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header" style="background-color: #12899e;cursor:move;" >
           <h5 class="modal-title" id="AddModalLabel" style="color: white">
-            {{ operation == 'add' ? 'Ajouter Mouvements' : operation == 'edit' ? 'Modifier Mouvements' :''}}</h5>
+            {{ operation == 'add' ? 'Ajouter Position' : operation == 'edit' ? 'Modifier Position' :''}}
+          </h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="text-align:right;width:auto">
-            <span aria-hidden="true">&times;</span></button>
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
         <div class="modal-body">
           <div class="card-body">
             <div *ngIf="operation == 'add' || operation == 'edit'">
-              <form [formGroup]="movementForm" style="border-color: white; overflow-y: auto">
+              <form [formGroup]="positionForm" style="border-color: white; overflow-y: auto">
                 <div class="form-group">
-                  <label class="control-label">Número Mouvements:</label>
-                  <input type="text" class="form-control" formControlName="numMouvement" [(ngModel)]="selectedMovement.numMouvement"/>
+                  <label class="control-label">ID Position:</label>
+                  <input type="text" class="form-control" formControlName="idPosition" [(ngModel)]="selectedPosition.idPosition"/>
                 </div>
                 <div class="form-group" *ngIf="operation=='add'">
                   <label>Numéro Compte:</label>
-                  <input type="number" class="form-control" formControlName="compte" [(ngModel)]="selectedMovement.compte"/>
+                  <input type="number" class="form-control" formControlName="compte" [(ngModel)]="selectedPosition.compte"/>
                 </div>
                 <div class="form-group">
-                  <label>Nav:</label>
-                  <input type="text" class="form-control" formControlName="nav" [(ngModel)]="selectedMovement.nav"/>
+                  <label>Référence Instrument:</label>
+                  <input type="text" class="form-control" formControlName="refInstrument" [(ngModel)]="selectedPosition.refInstrument"/>
                 </div>
                 <div class="form-group">
-                  <label>Sens:</label>
-                  <input type="text" class="form-control" formControlName="sens" [(ngModel)]="selectedMovement.sens"/>
+                  <label>Quantité Instrument:</label>
+                  <input type="text" class="form-control" formControlName="quantiteInstrument" [(ngModel)]="selectedPosition.quantiteInstrument"/>
                 </div>
                 <div class="form-group">
-                  <label>Quantité:</label>
-                  <input type="text" class="form-control" formControlName="quantiteInstrument" [(ngModel)]="selectedMovement.quantiteInstrument"/>
+                  <label>PRU Instrument:</label>
+                  <input type="text" class="form-control" formControlName="pruInstrument" [(ngModel)]="selectedPosition.pruInstrument"/>
                 </div>
                 <div class="form-group">
-                  <label>PRU:</label>
-                  <input type="text" class="form-control" formControlName="pruInstrument" [(ngModel)]="selectedMovement.pruInstrument"/>
-                </div>
-                <div class="form-group">
-                  <label>Reférence Instrument:</label>
-                  <input type="text" class="form-control" formControlName="refInstrument" [(ngModel)]="selectedMovement.refInstrument"/>
-                </div>
-                <div class="form-group">
-                  <label>Date Compte:</label>
-                  <input type="text" class="form-control" formControlName="dateCompte" [(ngModel)]="selectedMovement.dateCompte"/>
-                </div>
-                <div class="form-group">
-                  <label>Date Operation:</label>
-                  <input type="text" class="form-control" formControlName="dateOperation" [(ngModel)]="selectedMovement.dateOperation"/>
-                </div>
-                <div class="form-group">
-                  <label>Date Valeur:</label>
-                  <input type="text" class="form-control" formControlName="dateValeur" [(ngModel)]="selectedMovement.dateValeur"/>
+                  <label>Date modification:</label>
+                  <input type="date" class="form-control" formControlName="dateUpdate" [(ngModel)]="selectedPosition.dateUpdate"
+                         value="{{parse(selectedPosition.dateUpdate) | date:'yyyy-MM-dd' }}"/>
                 </div>
                 <button class="btn btn-info" data-dismiss="modal"
-                        (click)="operation == 'add' ? addMovement() : updateMovement()">
+                        (click)="operation == 'add' ? addPosition() : updatePosition()">
                   {{operation == 'add' ? 'Ajouter': operation == 'edit' ? 'Modifier': ''}}
                 </button>
               </form>
@@ -212,12 +205,12 @@
   </div>
 </div>
 
-<div ngDraggable class="modal fade" id="RemoveModalMovement" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+<div ngDraggable class="modal fade" id="RemoveModalPosition" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
   <div class="modal-dialog" class="modal-dialog modal-dialog-centered"  role="document">
     <div class="modal-content" style="height: auto">
       <div class="modal-header" style="background-color: #12899e;cursor:move;" >
         <h5 class="modal-title" id="RemoveLabel" style="color: white">
-          {{ 'Supprimer Mouvements'}}</h5>
+          {{ 'Supprimer Position'}}</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="text-align:right;width:auto">
           <span aria-hidden="true">&times;</span></button>
       </div>
@@ -225,15 +218,16 @@
         <div class="card-body">
           <div>
             <p class="card-title">
-              ID: {{selectedMovement.numMouvement}}
+              ID: {{selectedPosition.idPosition}}
             </p>
             <p>
-              Voulez vous supprimer cette Mouvements?
+              Voulez vous supprimer cette Position?
             </p>
-            <button class="btn btn-success" data-dismiss="modal" (click)="deleteMouvement()">Confirmer</button>
+            <button class="btn btn-success" data-dismiss="modal" (click)="deletePosition()">Confirmer</button>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+

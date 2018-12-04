@@ -11,6 +11,7 @@ import {ReportUpdateFileService} from '../report-update-file/report.update.file.
 import {PositionService} from './position.service';
 import {Positions} from '../shared/position.model';
 import {Filemanagement} from '../common/filemanagement';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-position',
@@ -71,6 +72,7 @@ export class PositionComponent implements OnInit{
     this.dataModelListFiltred = this.dataModelList.filter(dataModel => !dataModel.readonly);
     this.initPosition();
     this.positions = this.route.snapshot.data.positions;
+    this.loadPositions();
   }
 
   createForm(){
@@ -228,7 +230,7 @@ export class PositionComponent implements OnInit{
     )
   }
 
-  deleteMouvement(){
+  deletePosition(){
     this.positionService.delete(this.selectedPosition.idPosition).subscribe(
       res=>{
         this.selectedPosition = new Mouvements();
@@ -257,4 +259,36 @@ export class PositionComponent implements OnInit{
     this.currentPage = i;
     this.loadPositions();
   }
+
+  searchPosition(){
+    this.loadPositions();
+  }
+
+  downloadFile(data: any) {
+    let file = 'positions_'+ new Date()+'.csv';
+    const replacer = (key, value) => value === null ? '' : value;
+    const header = Object.keys(data[0]);
+    let csv = data.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(';'));
+    csv.unshift(header.join(';'));
+    let csvArray = csv.join('\r\n');
+    var blob = new Blob([csvArray], {type: 'text/csv' })
+    saveAs(blob, file);
+  }
+
+  parse(value: any): Date | null {
+    if ((typeof value === 'string') && (value.indexOf('/') > -1)) {
+      const str = value.split('/');
+
+      const year = Number(str[2]);
+      const month = Number(str[1]) - 1;
+      const date = Number(str[0]);
+
+      return new Date(year, month, date);
+    } else if((typeof value === 'string') && value === '') {
+      return new Date();
+    }
+    const timestamp = typeof value === 'number' ? value : Date.parse(value);
+    return isNaN(timestamp) ? null : new Date(timestamp);
+  }
+
 }
