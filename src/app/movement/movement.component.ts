@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnInit, ViewChild} from "@angular/core";
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from "@angular/core";
 import {DataModel} from "../shared/data.model";
 import {Mouvements} from "../shared/mouvements.model";
 import {MovementService} from "./movement.service";
@@ -99,13 +99,16 @@ export class MovementComponent implements  OnInit{
   selectedMovement: Mouvements;
   movementForm: FormGroup;
   movements: Mouvements[];
+  BadHeaders: boolean = false;
+  errors: any = {};
+  @Output()
+  errorMessages: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(private movementService: MovementService,
               private reportCreateFileService: ReportCreateFileService,
               private reportUpdateFileService: ReportUpdateFileService,
               private fb: FormBuilder,
-              private route: ActivatedRoute,
-              private compteService: CompteService){
+              private route: ActivatedRoute){
     this.createForm();
   }
 
@@ -177,6 +180,8 @@ export class MovementComponent implements  OnInit{
       this.dataModelList.forEach(dataModel => {
         if(dataModel.columnName == header){
           dataType = dataModel.dataType;
+        }else{
+          this.BadHeaders = true;
         }
       });
       return dataType;

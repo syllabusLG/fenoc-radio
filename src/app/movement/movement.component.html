@@ -1,5 +1,17 @@
 <h3 class="h3-class">Mouvement</h3>
 <br>
+<!-----ERRORS Messages ----->
+<ng-container>
+  <div id="content" #content>
+    <div class="row" style="margin-left: 20px">
+      <div class="col-sm-11" style="font-size: small;">
+        <div *ngIf="errors.company_cd_required == false">
+          <p class=" badge-dark " style="with: 100px">Le code de l'entreprise de la ligne {{errors.company_cd_required_line}} n'est pas renseigné !</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
 
 
 <div class="bd-example bd-example-tabs">
@@ -40,9 +52,6 @@
             </tbody>
           </table>
         </div>
-        <!--<div *ngIf="!dataArray">
-          <p>Aucune donnée importée.</p>
-        </div>-->
       </div>
       <div *ngSwitchCase="2">
         <div >
@@ -58,9 +67,6 @@
           <div class="text-center">
             <p class="badge badge-info">Ce fichier contient {{dataArray.length}} lignes </p>
           </div>
-         <!-- <div class="text-center">
-            <p class="badge badge-secondary">Nombre de lignes rejétés: {{nbreLigneRejete}}</p>
-          </div>-->
           <div class="row container">
             <div class="col-lg-6">
               <p class="badge badge-info">Phase de creation</p><br/>
