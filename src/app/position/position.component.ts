@@ -185,6 +185,7 @@ export class PositionComponent implements OnInit{
   sendDataToServer(){
     this.sendPositionToServer();
     this.currentStep = 3;
+    this.loadPositions();
   }
 
   sendPositionToServer(){
@@ -222,6 +223,13 @@ export class PositionComponent implements OnInit{
   }
 
   updatePosition(){
+
+    let dateUpdate = this.selectedPosition.dateUpdate;
+
+    if(dateUpdate && (dateUpdate.indexOf('-') > -1)){
+      this.selectedPosition.dateUpdate = this.fillDate(dateUpdate);
+    }
+
     this.positionService.update(this.selectedPosition).subscribe(
       res=>{
         this.initPosition();
@@ -242,7 +250,6 @@ export class PositionComponent implements OnInit{
   initPosition(){
     this.selectedPosition = new Positions();
     this.createForm();
-    this.loadPositions();
   }
 
   loadPositions(){
@@ -289,6 +296,20 @@ export class PositionComponent implements OnInit{
     }
     const timestamp = typeof value === 'number' ? value : Date.parse(value);
     return isNaN(timestamp) ? null : new Date(timestamp);
+  }
+
+  fillDate(date:any){
+    if(date && (date.indexOf('-') > -1)) {
+      let year = new Date(Date.parse(date)).getFullYear();
+      let month = new Date(Date.parse(date)).getMonth() + 1;
+      let day = new Date(Date.parse(date)).getDate();
+      let dateFormat = day + '/' + month + '/' + year;
+      if(day>=1&&day<=9)
+      {
+        dateFormat = '0'+day + '/' + month + '/' + year;
+      }
+      return dateFormat;
+    }
   }
 
 }

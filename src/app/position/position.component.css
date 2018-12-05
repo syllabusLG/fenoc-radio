@@ -202,8 +202,9 @@ ul.checkout-bar a {
   }
 }
 
-li {
+.lipaging{
   width: 30% !important;
+
 }
 
 a.adisabled {
@@ -211,3 +212,6 @@ a.adisabled {
   opacity: .65;
 }
 
+.liclass{
+  width: 40px;
+}

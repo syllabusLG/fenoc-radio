@@ -1,4 +1,4 @@
-<h3 class="h3-class">Movement</h3>
+<h3 class="h3-class">Position</h3>
 <br>
 
 
@@ -17,9 +17,9 @@
       </div>
       <div class="checkout-wrap">
         <ul class="checkout-bar">
-          <li [ngClass]="{active: currentStep == 1, visited: currentStep>1}" (click)="selectedStep=1;" >Importer un fichier</li>
-          <li [ngClass]="{active: currentStep == 2, visited: currentStep>2}" (click)="selectedStep=2;" >Envoyer</li>
-          <li [ngClass]="{active: currentStep == 3, visited: currentStep>3}" (click)="selectedStep=3;" >Récupérer les données</li>
+          <li class="lipaging" [ngClass]="{active: currentStep == 1, visited: currentStep>1}" (click)="selectedStep=1;" >Importer un fichier</li>
+          <li class="lipaging" [ngClass]="{active: currentStep == 2, visited: currentStep>2}" (click)="selectedStep=2;" >Envoyer</li>
+          <li class="lipaging" [ngClass]="{active: currentStep == 3, visited: currentStep>3}" (click)="selectedStep=3;" >Récupérer les données</li>
         </ul>
       </div>
 
