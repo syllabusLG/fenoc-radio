@@ -1,5 +1,39 @@
 <h3 class="h3-class">Position</h3>
 <br>
+<!----- ERROR Messages ------>
+<ng-container>
+  <div id="content" #content>
+    <div class="row" style="margin-left: 20px">
+      <div class="col-sm-10" style="font-size: small;">
+        <div *ngIf="BadHeaders==true">
+          <p class=" badge-dark " style="with: 100px">FILE IS NOT FOR POSITION MODULE GOOD PLEASE INSERT A FILE WITH THE FOLLOWING HEADERS AND DATA: REFINSTRUMENT, QUANTITEINSTRUMENT,
+            PRUINSTRUMENT, DATEUPDATE, COMPTE</p>
+        </div>
+      <div *ngIf="refInstrumentRequired==false">
+        <p class=" badge-dark " style="with: 100px">Le code de le Reference Instrument de la ligne {{refInstrumentRequiredLine}} n'est pas renseigné !</p>
+      </div>
+      <div *ngIf="quantiteInstrumentRequired==false">
+        <p class=" badge-dark " style="with: 100px">Le code de le Quantite Instrument de la ligne {{quantiteInstrumentRequiredLine}} n'est pas renseigné !</p>
+      </div>
+      <div *ngIf="pruInstrumentRequired==false">
+        <p class=" badge-dark " style="with: 100px">Le code de le Pru Instrument de la ligne {{pruInstrumentRequiredLine}} n'est pas renseigné !</p>
+      </div>
+      <div *ngIf="dateModificationRequired==false">
+        <p class=" badge-dark " style="with: 100px">Le code de le Date Moditication de la ligne {{dateModificationRequiredLine}} n'est pas renseigné !</p>
+      </div>
+      <div *ngIf="compteRequired==false">
+        <p class=" badge-dark " style="with: 100px">Le code de le Compte de la ligne {{compteRequiredLine}} n'est pas renseigné !</p>
+      </div>
+    </div>
+      <div class="col-sm-2" style="align-self:center" *ngIf="(refInstrumentRequired == false || BadHeaders == true || quantiteInstrumentRequired == false
+        || pruInstrumentRequired  == false || dateModificationRequired == false  || compteRequired == false )">
+        <a href="" (click)="downloadPDF($event)">
+          <i class="fa fa-arrow-circle-o-down" style="font-size:40px;color:#12899e;" ></i>
+        </a>
+      </div>
+  </div>
+    </div>
+</ng-container>
 
 
 <div class="bd-example bd-example-tabs">
@@ -40,9 +74,6 @@
               </tbody>
             </table>
           </div>
-          <!--<div *ngIf="!dataArray">
-            <p>Aucune donnée importée.</p>
-          </div>-->
         </div>
         <div *ngSwitchCase="2">
           <div >
@@ -58,9 +89,6 @@
             <div class="text-center">
               <p class="badge badge-info">Ce fichier contient {{dataArray.length}} lignes </p>
             </div>
-            <!-- <div class="text-center">
-               <p class="badge badge-secondary">Nombre de lignes rejétés: {{nbreLigneRejete}}</p>
-             </div>-->
             <div class="row container">
               <div class="col-lg-6">
                 <p class="badge badge-info">Phase de creation</p><br/>

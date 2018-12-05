@@ -176,14 +176,17 @@ export class MovementComponent implements  OnInit{
   getBindHeadersDataModelListArray(headers){
     let bindArray = [];
     let index = 0;
-
+    let movementHeaders = this.dataModelList.map(function(a) {return a.columnName;});
     let getDataType = (header) => {
       let dataType = '';
       this.dataModelList.forEach(dataModel => {
         if(dataModel.columnName == header){
           dataType = dataModel.dataType;
         }else{
-          this.BadHeaders = true;
+          if(movementHeaders.indexOf(header) <= -1){
+            this.BadHeaders = true;
+          }
+
         }
       });
       return dataType;

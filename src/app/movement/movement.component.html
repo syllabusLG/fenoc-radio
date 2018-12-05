@@ -5,9 +5,13 @@
   <div id="content" #content>
     <div class="row" style="margin-left: 20px">
       <div class="col-sm-10" style="font-size: small;">
+        <div *ngIf="BadHeaders">
+          <p class="badge-dark " style="with: 100px">FILE IS NOT A GOOD FOR MOVEMENT MODULE PLEASE INSERT A FILE WITH THE FOLLOWING HEADERS AND DATA: NUMMOUVEMENT, SENS,
+            REFINSTRUMENT, QUANTITEINSTRUMENT, NAV, PRUINSTRUMENT, DATECOMPTE, DATEVALEUR, DATEOPERATION, COMPTE</p>
+        </div>
         <div *ngIf="numMouvementRequired == false">
         <p class=" badge-dark " style="with: 100px">Le code de le mouvement de la ligne {{numMouvementRequiredLine}} n'est pas renseigné !</p>
-      </div>
+        </div>
         <div *ngIf="numMouvement_unique == false">
           <p class=" badge-dark ">Votre fichier doit être mono-mouvement. Il comporte plusieurs numero mouvement !</p>
         </div>
@@ -47,7 +51,7 @@
           <p class=" badge-dark " style="with: 100px">Le code de le date Compte de la ligne {{dateOperationRequiredLine}} n'est pas renseigné !</p>
         </div>
       </div>
-      <div class="col-sm-2" style="align-self:center" *ngIf="(numMouvementRequired == false || compteRequired == false
+      <div class="col-sm-2" style="align-self:center" *ngIf="(numMouvementRequired == false || BadHeaders == true || compteRequired == false
         || compteValid  == false || sensRequired == false  || quantiteInstrumentRequired == false  ||  refInstrumentRequired== false  || navRequired == false
         || pruInstrumentRequired == false || dateCompteRequired == false || dateValeurRequired == false ||  dateOperationRequired== false)">
         <a href="" (click)="downloadPDF($event)">

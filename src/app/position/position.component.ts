@@ -1,6 +1,5 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {DataModel} from '../shared/data.model';
-import {Mouvements} from '../shared/mouvements.model';
 import {Compte} from '../shared/compte.model';
 import {ReportUpdateFile} from '../shared/report.update.file.model';
 import {ReportCreateFile} from '../shared/report.create.file.model';
@@ -35,6 +34,9 @@ export class PositionComponent implements OnInit{
   dataSentToServer: boolean = false;
   dataModelList: DataModel[];
 
+  @ViewChild('content')
+  content: ElementRef;
+
   @ViewChild('report')
   report: ElementRef;
   typeOfReport: string = '';
@@ -42,9 +44,30 @@ export class PositionComponent implements OnInit{
   operation: string='';
 
   dataArray:  any = null;
+
   positionDataArray: Positions[]=[];
   positionCreatedDataArray: Positions[]=[];
   positionUpdateDataArray: Positions[]=[];
+
+  refInstrumentRequired: boolean = true;
+  refInstrumentRequiredLine: number =1;
+  refInstrument_unique: boolean = true;
+
+  quantiteInstrumentRequired: boolean = true;
+  quantiteInstrumentRequiredLine: number = 1;
+  quantitteInstrument_unique: boolean= true;
+
+  pruInstrumentRequired: boolean=true;
+  pruInstrumentRequiredLine: number = 1;
+  pruInstrument_unique: boolean = true;
+
+  dateModificationRequired: boolean = true;
+  dateModificationRequiredLine: number =1;
+  dateMotification_unique: boolean = true;
+
+  compteRequired: boolean = true;
+  compteRequiredLine: number=1;
+  compte_unique:boolean = true;
 
   positionReportCreateFile: ReportCreateFile = new ReportCreateFile();
   positionReportUpdateFile: ReportUpdateFile = new ReportUpdateFile();
@@ -52,6 +75,7 @@ export class PositionComponent implements OnInit{
   selectedPosition: Positions;
   positionForm: FormGroup;
   positions: Positions[];
+  BadHeaders: boolean = false;
 
   constructor(private positionService: PositionService,
               private reportCreateFileService: ReportCreateFileService,
@@ -89,12 +113,17 @@ export class PositionComponent implements OnInit{
   getBindHeadersDataModelListArray(headers){
     let bindArray = [];
     let index = 0;
+    let movementHeaders = this.dataModelList.map(function(a) {return a.columnName;});
 
     let getDataType = (header) => {
       let dataType = '';
       this.dataModelList.forEach(dataModel => {
         if(dataModel.columnName == header){
           dataType = dataModel.dataType;
+        }else{
+          if(movementHeaders.indexOf(header) <= -1){
+            this.BadHeaders = true;
+          }
         }
       });
       return dataType;
@@ -109,6 +138,7 @@ export class PositionComponent implements OnInit{
       index++;
       bindArray.push(bindItem);
     });
+
     return bindArray;
   }
 
@@ -126,6 +156,64 @@ export class PositionComponent implements OnInit{
       }
     }
     return dataArray;
+  }
+  isRefIntrumentRequired(dataArray){
+    for(let i=0; i<dataArray.length; i++){
+      if(dataArray[i].refInstrument == 0){
+        this.refInstrumentRequiredLine +=i;
+        this.currentStep =-1;
+        return false;
+      }
+    }
+    return true;
+  }
+  isQuantiteInstrumentRequired(dataArray){
+    for(let i=0; i<dataArray.length; i++){
+      if(dataArray[i].quantiteInstrument == 0){
+        this.quantiteInstrumentRequiredLine +=i;
+        this.currentStep =-1;
+        return false;
+      }
+    }
+    return true;
+  }
+  isPruInstrumentRequired(dataArray){
+    for(let i=0; i<dataArray.length; i++){
+      if(dataArray[i].pruInstrument == 0){
+        this.pruInstrumentRequiredLine +=i;
+        this.currentStep =-1;
+        return false;
+      }
+    }
+    return true;
+  }
+  isDateModificationRequired(dataArray){
+    for(let i=0; i<dataArray.length; i++){
+      if(dataArray[i].dateUpdate == 0){
+        this.dateModificationRequiredLine +=i;
+        this.currentStep =-1;
+        return false;
+      }
+    }
+    return true;
+  }
+  isCompteRequired(dataArray){
+    for(let i=0; i<dataArray.length; i++){
+      if(dataArray[i].compte == 0){
+        this.compteRequiredLine +=i;
+        this.currentStep =-1;
+        return false;
+      }
+    }
+    return true;
+  }
+
+  controleModuleMovement(dataArray){
+    this.refInstrumentRequired = this.isRefIntrumentRequired(dataArray);
+    this.quantiteInstrumentRequired = this.isQuantiteInstrumentRequired(dataArray);
+    this.pruInstrumentRequired = this.isPruInstrumentRequired(dataArray);
+    this.dateModificationRequired = this.isDateModificationRequired(dataArray);
+    this.compteRequired = this.isCompteRequired(dataArray);
   }
 
   selectFile($event){
@@ -148,7 +236,7 @@ export class PositionComponent implements OnInit{
         // create data bindArray
         this.dataArray = this.buildDataArray(bindArray, csvRecordsArray);
 
-        //this.controleModuleMovement(this.dataArray);
+        this.controleModuleMovement(this.dataArray);
 
         //Integration du module position
         this.buildPositionDataArray(this.dataArray);
@@ -241,7 +329,7 @@ export class PositionComponent implements OnInit{
   deletePosition(){
     this.positionService.delete(this.selectedPosition.idPosition).subscribe(
       res=>{
-        this.selectedPosition = new Mouvements();
+        this.selectedPosition = new Positions();
         this.loadPositions();
       }
     )
@@ -298,18 +386,23 @@ export class PositionComponent implements OnInit{
     return isNaN(timestamp) ? null : new Date(timestamp);
   }
 
-  fillDate(date:any){
-    if(date && (date.indexOf('-') > -1)) {
+  fillDate(date:any) {
+    if (date && (date.indexOf('-') > -1)) {
       let year = new Date(Date.parse(date)).getFullYear();
       let month = new Date(Date.parse(date)).getMonth() + 1;
       let day = new Date(Date.parse(date)).getDate();
       let dateFormat = day + '/' + month + '/' + year;
-      if(day>=1&&day<=9)
-      {
-        dateFormat = '0'+day + '/' + month + '/' + year;
+      if (day >= 1 && day <= 9) {
+        dateFormat = '0' + day + '/' + month + '/' + year;
       }
       return dateFormat;
     }
   }
+  public downloadPDF($event:any){
+      $event.preventDefault();
+      $event.stopPropagation();
+      Filemanagement.downloadPDF(this.content.nativeElement.innerHTML);
+    }
+
 
 }
