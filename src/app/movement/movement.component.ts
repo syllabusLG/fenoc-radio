@@ -38,7 +38,7 @@ export class MovementComponent implements  OnInit{
   dataFromServer: any = null;
   dataSentToServer: boolean = false;
 
-  @Input()
+
   dataModelList: DataModel[];
 
   @ViewChild('report')
@@ -114,17 +114,17 @@ export class MovementComponent implements  OnInit{
 
   ngOnInit() {
     this.dataModelList = [
-      new DataModel( 'numMouvement', 'Número Mouvements', 'string', false,[]),
+      new DataModel( 'numMouvement', 'Numero Mouvements', 'string', false,[]),
       new DataModel( 'sens', 'Sens', 'string', false,[]),
-      new DataModel( 'refInstrument', 'Reférence Instrument', 'string', false,[]),
-      new DataModel( 'quantiteInstrument', 'Quantité', 'number', false,[]),
+      new DataModel( 'refInstrument', 'Référence Instrument', 'string', false,[]),
+      new DataModel( 'quantiteInstrument', 'Quantité instrument', 'number', false,[]),
       new DataModel( 'nav', 'Nav', 'string', false,[]),
-      new DataModel( 'pruInstrument', 'PRU', 'string', false,[]),
+      new DataModel( 'pruInstrument', 'PRU instrument', 'string', false,[]),
       new DataModel( 'dateCompte', 'Date Compte', 'string', false,[]),
       new DataModel( 'dateValeur', 'Date Value', 'string', false,[]),
       new DataModel( 'dateOperation', 'Date Operational', 'string', false,[]),
-      new DataModel( 'compte', 'Número Compte', 'string', false,[]),
-    ]
+      new DataModel( 'compte', 'Numero Compte', 'string', false,[]),
+    ];
     this.dataModelListFiltred = this.dataModelList.filter(dataModel => !dataModel.readonly);
 
     this.initMoviments();

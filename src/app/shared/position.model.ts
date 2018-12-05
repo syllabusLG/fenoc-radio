@@ -1,6 +1,6 @@
 import {Compte} from './compte.model';
 
-export class Position {
+export class Positions {
 
   constructor(public idPosition?: string,
               public refInstrument?: string,

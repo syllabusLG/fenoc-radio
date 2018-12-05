@@ -1,40 +1,233 @@
-<h3 class="h3-class">Position</h3>
-
-<div>
-  <ul class="nav nav-tabs">
-    <li class="nav-item">
-      <a class="nav-link active" href="#importer" data-toggle="tab" role="tab" aria-controls="importer">Importer un fichier</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#simple" data-toggle="tab" role="tab" aria-controls="simple">Simple Crud</a>
-    </li>
-
-  </ul>
+<h3 class="h3-class">Movement</h3>
+<br>
 
 
-  <div class="tab-content">
-    <div class="tab-pane fade show active" id="importer" role="tabpanel">
-      <br>
+<div class="bd-example bd-example-tabs">
+  <!----IMPORTER----->
+  <nav class="nav nav-tabs" id="nav-tab" role="tablist">
+    <a class="nav-item nav-link active" id="nav-importer-tab" data-toggle="tab" href="#nav-importer" role="tab" aria-controls="importer" aria-expanded="true">Importer un fichier</a>
+    <a class="nav-item nav-link" id="nav-table-tab" data-toggle="tab" href="#nav-table" role="tab" aria-controls="table" aria-expanded="false">Simple Crud</a>
+  </nav>
+  <div class="tab-content" id="nav-tabContent">
+    <br>
+    <div class="tab-pane fade active show" id="nav-importer" role="tabpanel" aria-labelledby="nav-importer-tab" aria-expanded="true">
       <div class="custom-file">
-        <input type="file" class="custom-file-input" id="inputGroupFilePosition" aria-describedby="inputGroupFilePosition01">
-        <label class="custom-file-label" for="inputGroupFilePosition">{{fileName ? fileName : 'Choisissez un fichier!'}}</label>
+        <input type="file" id="customFile" #fileUploadInput style="width: 90%" (change)="selectFile($event)"  accept=".csv" >
+        <label class="custom-file-label" for="customFile">{{fileName ? fileName : 'Choisissez un fichier!'}}</label>
+      </div>
+      <div class="checkout-wrap">
+        <ul class="checkout-bar">
+          <li [ngClass]="{active: currentStep == 1, visited: currentStep>1}" (click)="selectedStep=1;" >Importer un fichier</li>
+          <li [ngClass]="{active: currentStep == 2, visited: currentStep>2}" (click)="selectedStep=2;" >Envoyer</li>
+          <li [ngClass]="{active: currentStep == 3, visited: currentStep>3}" (click)="selectedStep=3;" >Récupérer les données</li>
+        </ul>
+      </div>
+
+      <div [ngSwitch]="selectedStep" >
+
+        <div *ngSwitchCase="1">
+          <div *ngIf="dataArray; else emptyData">
+            <table class="table table-hover">
+              <thead>
+              <tr>
+                <th *ngFor="let dataModel of dataModelListFiltred">{{dataModel.columnReference}}</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let item of dataArray">
+                <td *ngFor="let dataModel of dataModelListFiltred">{{item[dataModel.columnName]}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <!--<div *ngIf="!dataArray">
+            <p>Aucune donnée importée.</p>
+          </div>-->
+        </div>
+        <div *ngSwitchCase="2">
+          <div >
+            <p>Cliquez pour envoyer les données au serveur !</p>
+            <button class="btn btn-default" style="width: fit-content" (click)="sendDataToServer()">Send</button>
+          </div>
+          <div *ngIf="dataSentToServer">
+            <p>L'envoie est terminé.</p>
+          </div>
+        </div>
+        <div *ngSwitchCase="3">
+          <div id="report" #report>
+            <div class="text-center">
+              <p class="badge badge-info">Ce fichier contient {{dataArray.length}} lignes </p>
+            </div>
+            <!-- <div class="text-center">
+               <p class="badge badge-secondary">Nombre de lignes rejétés: {{nbreLigneRejete}}</p>
+             </div>-->
+            <div class="row container">
+              <div class="col-lg-6">
+                <p class="badge badge-info">Phase de creation</p><br/>
+                <p class="badge badge-light">Module Position: Nombre de lignes crées: <span class="badge badge-info">{{positionCreatedDataArray.length}}</span></p>
+              </div>
+              <div class="col-lg-6">
+                <p class="badge badge-info">Phase de mise à jour</p><br/>
+                <p class="badge badge-light">Module Mouvement: Nombre de lignes mises à jour: <span class="badge badge-info">{{positionUpdateDataArray.length}}</span></p>
+              </div>
+            </div>
+          </div>
+          <div class="text-center">
+            <button type="button" class="btn btn-info btn-lg btn-block" (click)="downloadPDFModules($event)" >EXPORT REPORT TO PDF</button>
+          </div>
+          <div *ngIf="dataFromServer">
+            <div *ngIf="!dataFromServer">
+              <p>Aucune donnée récupérée.</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="tab-pane fade" id="simple" role="tabpanel">
+
+
+
+    <!----TABLE---->
+
+    <div class="tab-pane fade" id="nav-table" role="tabpanel" aria-labelledby="nav-table-tab" aria-expanded="false">
       <div class="col-sm-12">
+        <div class=" row">
+          <div class="form-group col-sm-10">
+            <label style="margin-left: 10px">Mot Clé</label>
+            <input style="height: 33px;width: fit-content" type="text" [(ngModel)]="motCle"/>
+            <button class="btn btn-info" style="width: fit-content" (click)="searchPosition()">Chercher</button>
+          </div>
+          <div class="col-sm-2" id="reportPosition" #reportPosition>
+            <div class="d-inline-block">
+              <a href="" data-toggle="collapse">
+                <button type="button" style="margin-bottom: 14px" class="btn btn-info" (click)="downloadFile(positions)">Export to CSV</button>
+              </a>
+            </div>
+          </div>
+        </div>
         <table class="col-sm-12 table table-hover">
           <thead>
           <tr>
-            <th>Num Compte</th>
-            <th>Reference Instrument</th>
-            <th>Quantité Instrument</th>
-            <th>PRU Instrument</th>
-            <th>Date Mises à Jour</th>
+            <th>Référence instrument</th>
+            <th>Quantité instrument</th>
+            <th>PRU instrument</th>
+            <th>Date modification</th>
+            <th>Compte</th>
+            <th>
+              <a href="" data-toggle="collapse">
+                <!--<i class="fa fa-plus" data-toggle="tooltip" data-toggle="modal" data-target="#ModalMovements" title="Ajouter Movoument"  (click)="operation= 'add'; initMoviments()"></i>-->
+              </a>
+            </th>
           </tr>
           </thead>
+          <tbody>
+          <tr *ngFor="let position of pagePositions?.content">
+            <td>{{position.refInstrument}}</td>
+            <td>{{position.quantiteInstrument}}</td>
+            <td>{{position.pruInstrument}}</td>
+            <td>{{position.dateUpdate}}</td>
+            <td>{{position.compte.numCompte}}</td>
+            <td>
+              <a href=""  data-toggle="collapse" >
+                <i class="fa fa-edit" data-toggle="modal" data-target="#ModalPosition" (click)="operation = 'edit'; selectedPosition = position;"></i>
+              </a>
+              <a href="" data-toggle="collapse">
+                <i class="fa fa-trash" data-toggle="modal" data-target="#RemoveModalPosition" (click)="operation = 'remove'; selectedPosition = position;"></i>
+              </a>
+            </td>
+          </tr>
+          </tbody>
         </table>
+      </div>
+      <div class="container">
+        <ul class="nav">
+          <li class="nav-item liclass"[ngClass]="{'activePagin': i === currentPage}" *ngFor="let p of pages; let i=index">
+            <a class="nav-link clickable" (click)="gotoPage(i)">{{i}}</a>
+          </li>
+        </ul>
       </div>
 
     </div>
   </div>
 </div>
+
+
+<div class="card-body">
+  <div ngDraggable class="modal fade" id="ModalPosition" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+    <div class="modal-dialog" class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header" style="background-color: #12899e;cursor:move;" >
+          <h5 class="modal-title" id="AddModalLabel" style="color: white">
+            {{ operation == 'add' ? 'Ajouter Position' : operation == 'edit' ? 'Modifier Position' :''}}
+          </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="text-align:right;width:auto">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="card-body">
+            <div *ngIf="operation == 'add' || operation == 'edit'">
+              <form [formGroup]="positionForm" style="border-color: white; overflow-y: auto">
+                <div class="form-group">
+                  <label class="control-label">ID Position:</label>
+                  <input type="text" class="form-control" formControlName="idPosition" [(ngModel)]="selectedPosition.idPosition"/>
+                </div>
+                <div class="form-group" *ngIf="operation=='add'">
+                  <label>Numéro Compte:</label>
+                  <input type="number" class="form-control" formControlName="compte" [(ngModel)]="selectedPosition.compte"/>
+                </div>
+                <div class="form-group">
+                  <label>Référence Instrument:</label>
+                  <input type="text" class="form-control" formControlName="refInstrument" [(ngModel)]="selectedPosition.refInstrument"/>
+                </div>
+                <div class="form-group">
+                  <label>Quantité Instrument:</label>
+                  <input type="text" class="form-control" formControlName="quantiteInstrument" [(ngModel)]="selectedPosition.quantiteInstrument"/>
+                </div>
+                <div class="form-group">
+                  <label>PRU Instrument:</label>
+                  <input type="text" class="form-control" formControlName="pruInstrument" [(ngModel)]="selectedPosition.pruInstrument"/>
+                </div>
+                <div class="form-group">
+                  <label>Date modification:</label>
+                  <input type="date" class="form-control" formControlName="dateUpdate" [(ngModel)]="selectedPosition.dateUpdate"
+                         value="{{parse(selectedPosition.dateUpdate) | date:'yyyy-MM-dd' }}"/>
+                </div>
+                <button class="btn btn-info" data-dismiss="modal"
+                        (click)="operation == 'add' ? addPosition() : updatePosition()">
+                  {{operation == 'add' ? 'Ajouter': operation == 'edit' ? 'Modifier': ''}}
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div ngDraggable class="modal fade" id="RemoveModalPosition" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+  <div class="modal-dialog" class="modal-dialog modal-dialog-centered"  role="document">
+    <div class="modal-content" style="height: auto">
+      <div class="modal-header" style="background-color: #12899e;cursor:move;" >
+        <h5 class="modal-title" id="RemoveLabel" style="color: white">
+          {{ 'Supprimer Position'}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="text-align:right;width:auto">
+          <span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <div class="card-body">
+          <div>
+            <p class="card-title">
+              ID: {{selectedPosition.idPosition}}
+            </p>
+            <p>
+              Voulez vous supprimer cette Position?
+            </p>
+            <button class="btn btn-success" data-dismiss="modal" (click)="deletePosition()">Confirmer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
