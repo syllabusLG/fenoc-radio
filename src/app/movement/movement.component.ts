@@ -95,6 +95,7 @@ export class MovementComponent implements  OnInit{
   compteRequired: boolean = true;
   compteRequiredLine: number = 1;
   compteValid: boolean = true;
+  compteValidedLine: number =1;
 
 
   movementReportCreateFile: ReportCreateFile = new ReportCreateFile();
@@ -104,9 +105,11 @@ export class MovementComponent implements  OnInit{
   movementForm: FormGroup;
   movements: Mouvements[];
   BadHeaders: boolean = false;
+  compteDataArray: Compte[]=[];
 
 
   constructor(private movementService: MovementService,
+              private  compteService: CompteService,
               private reportCreateFileService: ReportCreateFileService,
               private reportUpdateFileService: ReportUpdateFileService,
               private fb: FormBuilder,
@@ -185,6 +188,8 @@ export class MovementComponent implements  OnInit{
         }else{
           if(movementHeaders.indexOf(header) <= -1){
             this.BadHeaders = true;
+            this.currentStep = -1;
+
           }
 
         }
@@ -231,15 +236,6 @@ export class MovementComponent implements  OnInit{
     return true;
   }
 
-  isNumMouvementUnique(dataArray){
-    for(let i=0; i<dataArray.length -1; i++){
-      if(dataArray[i].numMouvement!== dataArray[i+1].numMouvement){
-        this.currentStep = -1;
-        return false;
-      }
-    }
-    return true;
-  }
 
   isCompteRequired(dataArray) {
     for(let i=0; i<dataArray.length; i++){
@@ -252,10 +248,21 @@ export class MovementComponent implements  OnInit{
     return true;
   }
 
-  isCompteValid(dataArray){
-    for(let i=0; i<this.dataArray.length; i++){
-      if(dataArray[i].compte!== 0){
-        return false;
+  isCompteCreated(dataArray){
+    for(let i=0; i< dataArray.length; i++)
+    {
+      if(dataArray[i].compte !==0){
+        this.compteService.getOne(dataArray[i].compte).subscribe((data) => {
+          if(data!== null){
+            this.compteDataArray.push(data);
+          }
+        });
+
+        if(this.compteDataArray.length !==0) {
+          this.compteValidedLine += i;
+          this.currentStep = -1;
+          return false;
+        }
       }
     }
     return true;
@@ -272,14 +279,6 @@ export class MovementComponent implements  OnInit{
     return true;
   }
 
-  /**isSensValid(dataArray){
-    for(let i=0; i<this.dataArray.length; i++){
-      if(dataArray[i].sens!== 0 && !this.isSensValid(dataArray[i].sens)){
-        return false;
-      }
-    }
-    return true;
-  }**/
 
   isQuantiteInstrumentRequired(dataArray){
     for(let i=0; i<dataArray.length; i++){
@@ -292,14 +291,6 @@ export class MovementComponent implements  OnInit{
     return true;
   }
 
-  /**isQuantiteInstrumentValid(dataArray){
-    for(let i=0; i<dataArray.length; i++){
-      if(dataArray[i].quantiteInstrument!== 0 && !this.isQuantiteInstrumentValid(dataArray[i].quantiteInstrument)){
-        return false;
-      }
-    }
-    return true;
-  }**/
 
   isRefInstrumentRequired(dataArray){
     for(let i=0; i<dataArray.length; i++){
@@ -311,15 +302,7 @@ export class MovementComponent implements  OnInit{
     }
     return true;
   }
- /**
-  isRefInstrumentValid(dataArray){
-    for(let i=0; i<dataArray.length; i++){
-      if(dataArray[i].refInstrument!== 0 && !this.isRefInstrumentValid(dataArray[i].refInstrument)){
-        return false;
-      }
-    }
-    return true;
-  }**/
+
 
   isNavRequired(dataArray){
     for(let i=0; i < dataArray.length; i++){
@@ -332,15 +315,6 @@ export class MovementComponent implements  OnInit{
     return true;
   }
 
-  /**isNavValid(dataArray){
-    for(let i=0; i<dataArray.length; i++){
-      if(dataArray[i].nav!== 0 && !this.isNavValid(dataArray[i].nav)){
-        return false;
-      }
-    }
-    return true;
-  }**/
-
   ispruInstrumentRequired(dataArray){
     for(let i=0; i<dataArray.length; i++){
       if(dataArray[i].pruInstrument == 0){
@@ -351,15 +325,6 @@ export class MovementComponent implements  OnInit{
     }
     return true;
   }
-
-  /**ispruInstrumentValid(dataArray){
-    for(let i=0; i<dataArray.length; i++){
-      if(dataArray[i].pruInstrument!== 0 && !this.ispruInstrumentValid(dataArray[i].pruInstrument)){
-        return false;
-      }
-    }
-    return true;
-  }**/
 
   isDateCompteRequired(dataArray)
   {
@@ -373,16 +338,6 @@ export class MovementComponent implements  OnInit{
     return true;
   }
 
-  /**isDateCompteValid(dataArray)
-  {
-    for(let i=0; i<dataArray.length; i++){
-      if(dataArray[i].dateCompte!== 0 && !this.isDateCompteValid(dataArray[i].dateCompte)){
-        return false;
-      }
-    }
-    return true;
-  }**/
-
   isDateValuerRequired(dataArray){
     for(let i=0; i<dataArray.length; i++){
       if(dataArray[i].dateValeur == 0){
@@ -394,14 +349,6 @@ export class MovementComponent implements  OnInit{
     return true;
   }
 
-  /**isDateValuerValid(dataArray){
-    for(let i=0; i<dataArray.length; i++){
-      if(dataArray[i].dateValeur!== 0 && !this.isDateValuerValid(dataArray[i].dateValeur)){
-        return false;
-      }
-    }
-    return true;
-  }**/
 
   isDateOperationRequired(dataArray){
     for(let i=0; i<dataArray.length; i++){
@@ -414,16 +361,7 @@ export class MovementComponent implements  OnInit{
     return true;
   }
 
-  /**isDateOperationValid(dataArray){
-    for(let i=0; i<dataArray.length; i++){
-      if(dataArray[i].dateOperation!== 0 && !this.isDateOperationValid(dataArray[i].dateOperation)){
-        return false;
-      }
-    }
-    return true;
-  }**/
-
-  sendDataToServer(){
+    sendDataToServer(){
     this.sendMovementsToServer();
     this.currentStep = 3;
     this.loadMovements();
@@ -477,34 +415,26 @@ export class MovementComponent implements  OnInit{
   controleModuleMovement(dataArray){
 
     this.compteRequired = this.isCompteRequired(dataArray);
-    //this.compteValid = this.isCompteValid(dataArray);
+
+    this.compteValid= this.isCompteCreated(dataArray);
 
     this.numMouvementRequired = this.isNumMouvementRequired(dataArray);
-    //this.numMouvement_unique = this.isNumMouvementUnique(dataArray);
 
     this.sensRequired = this.isSensRequired(dataArray);
-    //this.sensValid = this.isSensValid(dataArray);
 
     this.refInstrumentRequired = this.isRefInstrumentRequired(dataArray);
-    //this.refInstrumentValid = this.isRefInstrumentValid(dataArray);
 
     this.navRequired = this.isNavRequired(dataArray);
-    //this.navValid = this.isNavValid(dataArray);
 
     this.pruInstrumentRequired = this.ispruInstrumentRequired(dataArray);
-    //this.pruInstrumentValid = this.ispruInstrumentValid(dataArray);
 
     this.dateCompteRequired = this.isDateCompteRequired(dataArray);
-    //this.dateCompteValid = this.isDateCompteValid(dataArray);
 
     this.dateValeurRequired = this.isDateValuerRequired(dataArray);
-    //this.dateValuerValid = this.isDateValuerValid(dataArray);
 
     this.dateOperationRequired = this.isDateOperationRequired(dataArray);
-    //this.dateOperationValid = this.isDateOperationValid(dataArray);
 
     this.quantiteInstrumentRequired = this.isQuantiteInstrumentRequired(dataArray);
-    //this.quantiteInstrumentValid = this.isQuantiteInstrumentValid(dataArray);
 
   }
 

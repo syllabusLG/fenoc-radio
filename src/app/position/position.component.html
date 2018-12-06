@@ -24,8 +24,11 @@
       <div *ngIf="compteRequired==false">
         <p class=" badge-dark " style="with: 100px">Le code de le Compte de la ligne {{compteRequiredLine}} n'est pas renseigné !</p>
       </div>
+        <div *ngIf="compteValid==false">
+          <p class=" badge-dark " style="with: 100px">Le code de le Compte de la ligne {{compteValidedLine}} n'exist pas !</p>
+        </div>
     </div>
-      <div class="col-sm-2" style="align-self:center" *ngIf="(refInstrumentRequired == false || BadHeaders == true || quantiteInstrumentRequired == false
+      <div class="col-sm-2" style="align-self:center" *ngIf="(refInstrumentRequired == false || compteValid==false || BadHeaders == true || quantiteInstrumentRequired == false
         || pruInstrumentRequired  == false || dateModificationRequired == false  || compteRequired == false )">
         <a href="" (click)="downloadPDF($event)">
           <i class="fa fa-arrow-circle-o-down" style="font-size:40px;color:#12899e;" ></i>

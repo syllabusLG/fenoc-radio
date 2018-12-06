@@ -11,6 +11,7 @@ import {PositionService} from './position.service';
 import {Positions} from '../shared/position.model';
 import {Filemanagement} from '../common/filemanagement';
 import { saveAs } from 'file-saver';
+import {CompteService} from "../compte/compte.service";
 
 @Component({
   selector: 'app-position',
@@ -51,23 +52,20 @@ export class PositionComponent implements OnInit{
 
   refInstrumentRequired: boolean = true;
   refInstrumentRequiredLine: number =1;
-  refInstrument_unique: boolean = true;
 
   quantiteInstrumentRequired: boolean = true;
   quantiteInstrumentRequiredLine: number = 1;
-  quantitteInstrument_unique: boolean= true;
 
   pruInstrumentRequired: boolean=true;
   pruInstrumentRequiredLine: number = 1;
-  pruInstrument_unique: boolean = true;
 
   dateModificationRequired: boolean = true;
   dateModificationRequiredLine: number =1;
-  dateMotification_unique: boolean = true;
 
   compteRequired: boolean = true;
   compteRequiredLine: number=1;
-  compte_unique:boolean = true;
+  compteValidedLine: number=1;
+  compteValid:boolean = true;
 
   positionReportCreateFile: ReportCreateFile = new ReportCreateFile();
   positionReportUpdateFile: ReportUpdateFile = new ReportUpdateFile();
@@ -76,8 +74,10 @@ export class PositionComponent implements OnInit{
   positionForm: FormGroup;
   positions: Positions[];
   BadHeaders: boolean = false;
+  compteDataArray: Compte[] =[];
 
   constructor(private positionService: PositionService,
+              private compteService: CompteService,
               private reportCreateFileService: ReportCreateFileService,
               private reportUpdateFileService: ReportUpdateFileService,
               private fb: FormBuilder,
@@ -123,6 +123,8 @@ export class PositionComponent implements OnInit{
         }else{
           if(movementHeaders.indexOf(header) <= -1){
             this.BadHeaders = true;
+            this.currentStep = -1;
+
           }
         }
       });
@@ -208,12 +210,33 @@ export class PositionComponent implements OnInit{
     return true;
   }
 
+  isCompteCreated(dataArray){
+    for(let i=0; i< dataArray.length; i++)
+    {
+      if(dataArray[i].compte !==0){
+        this.compteService.getOne(dataArray[i].compte).subscribe((data) => {
+          if(data!== null){
+            this.compteDataArray.push(data);
+          }
+        });
+
+        if(this.compteDataArray.length !==0) {
+          this.compteValidedLine += i;
+          this.currentStep = -1;
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
   controleModuleMovement(dataArray){
     this.refInstrumentRequired = this.isRefIntrumentRequired(dataArray);
     this.quantiteInstrumentRequired = this.isQuantiteInstrumentRequired(dataArray);
     this.pruInstrumentRequired = this.isPruInstrumentRequired(dataArray);
     this.dateModificationRequired = this.isDateModificationRequired(dataArray);
     this.compteRequired = this.isCompteRequired(dataArray);
+    this.compteValid = this.isCompteCreated(dataArray);
   }
 
   selectFile($event){
@@ -242,7 +265,6 @@ export class PositionComponent implements OnInit{
         this.buildPositionDataArray(this.dataArray);
 
         this.currentStep++;
-        //this.emmitErrors();
       };
     }
   }
@@ -311,13 +333,10 @@ export class PositionComponent implements OnInit{
   }
 
   updatePosition(){
-
     let dateUpdate = this.selectedPosition.dateUpdate;
-
     if(dateUpdate && (dateUpdate.indexOf('-') > -1)){
       this.selectedPosition.dateUpdate = this.fillDate(dateUpdate);
     }
-
     this.positionService.update(this.selectedPosition).subscribe(
       res=>{
         this.initPosition();
