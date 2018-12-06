@@ -124,7 +124,6 @@ export class PositionComponent implements OnInit{
           if(movementHeaders.indexOf(header) <= -1){
             this.BadHeaders = true;
             this.currentStep = -1;
-
           }
         }
       });

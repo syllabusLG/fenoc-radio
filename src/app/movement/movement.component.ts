@@ -42,19 +42,16 @@ export class MovementComponent implements  OnInit{
   dataFromServer: any = null;
   dataSentToServer: boolean = false;
 
-
   dataModelList: DataModel[];
 
   @ViewChild('report')
   report: ElementRef;
 
   operation: string='';
-
   dataArray:  any = null
   movementsDataArray: Mouvements[]=[];
   movementsCreatedDataArray: Mouvements[]=[];
   movementsUpdateDataArray: Mouvements[]=[];
-
 
   numMouvementRequired: boolean = true;
   numMouvementRequiredLine: number =1;
@@ -62,35 +59,27 @@ export class MovementComponent implements  OnInit{
 
   sensRequired: boolean = true;
   sensRequiredLine: number = 1;
-  sensValid: boolean = true;
 
   refInstrumentRequired: boolean = true;
   refInstrumentRequiredLine: number = 1;
-  refInstrumentValid: boolean = true;
 
   quantiteInstrumentRequired: boolean = true;
   quantiteInstrumentRequiredLine: number = 1;
-  quantiteInstrumentValid: boolean = true;
 
   navRequired: boolean = true;
   navRequiredLine: number = 1;
-  navValid: boolean = true;
 
   pruInstrumentRequired: boolean = true;
   pruInstrumentRequiredLine: number = 1;
-  pruInstrumentValid: boolean = true;
 
   dateCompteRequired: boolean = true;
   dateCompteRequiredLine: number =1;
-  dateCompteValid: boolean = true;
 
   dateValeurRequired: boolean = true;
   dateValuerRequiredLine: number = 1;
-  dateValuerValid: boolean = true;
 
   dateOperationRequired: boolean = true;
   dateOperationRequiredLine: number = 1;
-  dateOperationValid: boolean = true;
 
   compteRequired: boolean = true;
   compteRequiredLine: number = 1;
@@ -236,7 +225,6 @@ export class MovementComponent implements  OnInit{
     return true;
   }
 
-
   isCompteRequired(dataArray) {
     for(let i=0; i<dataArray.length; i++){
       if(dataArray[i].compte == 0){
@@ -279,7 +267,6 @@ export class MovementComponent implements  OnInit{
     return true;
   }
 
-
   isQuantiteInstrumentRequired(dataArray){
     for(let i=0; i<dataArray.length; i++){
       if(dataArray[i].quantiteInstrument == 0){
@@ -291,7 +278,6 @@ export class MovementComponent implements  OnInit{
     return true;
   }
 
-
   isRefInstrumentRequired(dataArray){
     for(let i=0; i<dataArray.length; i++){
       if(dataArray[i].refInstrument == 0){
@@ -302,7 +288,6 @@ export class MovementComponent implements  OnInit{
     }
     return true;
   }
-
 
   isNavRequired(dataArray){
     for(let i=0; i < dataArray.length; i++){
@@ -379,7 +364,6 @@ export class MovementComponent implements  OnInit{
       }
       this.dataFromServer = data;
       this.dataSentToServer = true;
-
     });
   }
 
@@ -413,29 +397,17 @@ export class MovementComponent implements  OnInit{
 
   }
   controleModuleMovement(dataArray){
-
     this.compteRequired = this.isCompteRequired(dataArray);
-
     this.compteValid= this.isCompteCreated(dataArray);
-
     this.numMouvementRequired = this.isNumMouvementRequired(dataArray);
-
     this.sensRequired = this.isSensRequired(dataArray);
-
     this.refInstrumentRequired = this.isRefInstrumentRequired(dataArray);
-
     this.navRequired = this.isNavRequired(dataArray);
-
     this.pruInstrumentRequired = this.ispruInstrumentRequired(dataArray);
-
     this.dateCompteRequired = this.isDateCompteRequired(dataArray);
-
     this.dateValeurRequired = this.isDateValuerRequired(dataArray);
-
     this.dateOperationRequired = this.isDateOperationRequired(dataArray);
-
     this.quantiteInstrumentRequired = this.isQuantiteInstrumentRequired(dataArray);
-
   }
 
   selectFile($event){
@@ -543,11 +515,9 @@ export class MovementComponent implements  OnInit{
   parse(value: any): Date | null {
     if ((typeof value === 'string') && (value.indexOf('/') > -1)) {
       const str = value.split('/');
-
       const year = Number(str[2]);
       const month = Number(str[1]) - 1;
       const date = Number(str[0]);
-
       return new Date(year, month, date);
     } else if((typeof value === 'string') && value === '') {
       return new Date();
