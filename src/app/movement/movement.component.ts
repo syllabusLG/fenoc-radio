@@ -86,7 +86,6 @@ export class MovementComponent implements  OnInit{
   compteValid: boolean = true;
   compteValidedLine: number =1;
 
-
   movementReportCreateFile: ReportCreateFile = new ReportCreateFile();
   movementReportUpdateFile: ReportUpdateFile = new ReportUpdateFile()
 
@@ -94,8 +93,6 @@ export class MovementComponent implements  OnInit{
   movementForm: FormGroup;
   movements: Mouvements[];
   BadHeaders: boolean = false;
-  compteDataArray: Compte[]=[];
-
 
   constructor(private movementService: MovementService,
               private  compteService: CompteService,
@@ -178,9 +175,7 @@ export class MovementComponent implements  OnInit{
           if(movementHeaders.indexOf(header) <= -1){
             this.BadHeaders = true;
             this.currentStep = -1;
-
           }
-
         }
       });
       return dataType;
@@ -207,7 +202,6 @@ export class MovementComponent implements  OnInit{
         bindArray.forEach(bindItem => {
           dataCrud[bindItem.columnName] = bindItem.dataType == 'number' ? Number(dataCsv[bindItem.index]) : dataCsv[bindItem.index];
         });
-
         dataArray.push(dataCrud);
       }
     }

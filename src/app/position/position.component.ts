@@ -74,8 +74,6 @@ export class PositionComponent implements OnInit{
   positionForm: FormGroup;
   positions: Positions[];
   BadHeaders: boolean = false;
-  compteDataArrayGood: Compte[] =[];
-  compteDataArrayBad: Compte[] =[];
 
 
   constructor(private positionService: PositionService,
@@ -154,7 +152,6 @@ export class PositionComponent implements OnInit{
         bindArray.forEach(bindItem => {
           dataCrud[bindItem.columnName] = bindItem.dataType == 'number' ? Number(dataCsv[bindItem.index]) : dataCsv[bindItem.index];
         });
-
         dataArray.push(dataCrud);
       }
     }
@@ -229,7 +226,6 @@ export class PositionComponent implements OnInit{
     else{
       return true;
     }
-
   }
 
   controleModulePosition(dataArray){
@@ -251,7 +247,6 @@ export class PositionComponent implements OnInit{
       let input = $event.target;
       let reader = new FileReader();
       reader.readAsText(input.files[0], 'ISO-8859-1');
-
       reader.onload = (data) => {
         let csvData = reader.result;
         //csvData = "data:text/csv;charset=utf-8,";
@@ -261,12 +256,9 @@ export class PositionComponent implements OnInit{
         let bindArray = this.getBindHeadersDataModelListArray(headers);
         // create data bindArray
         this.dataArray = this.buildDataArray(bindArray, csvRecordsArray);
-
         this.controleModulePosition(this.dataArray);
-
         //Integration du module position
         this.buildPositionDataArray(this.dataArray);
-
         this.currentStep++;
       };
     }
@@ -313,7 +305,6 @@ export class PositionComponent implements OnInit{
       }
       this.dataFromServer = data;
       this.dataSentToServer = true;
-
     });
   }
 

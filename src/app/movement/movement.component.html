@@ -6,49 +6,49 @@
     <div class="row" style="margin-left: 20px">
       <div class="col-sm-10" style="font-size: small;">
         <div *ngIf="BadHeaders">
-          <p class="badge-dark " style="with: 100px">FILE IS NOT A GOOD FOR MOVEMENT MODULE PLEASE INSERT A FILE WITH THE FOLLOWING HEADERS AND DATA: NUMMOUVEMENT, SENS,
+          <p class="badge-dark " style="with: 100px">Ce fichier n'est pas approprié pour ce module. Merci de rensegner le bon fichier au format suivant: NUMMOUVEMENT, SENS,
             REFINSTRUMENT, QUANTITEINSTRUMENT, NAV, PRUINSTRUMENT, DATECOMPTE, DATEVALEUR, DATEOPERATION, COMPTE</p>
         </div>
         <div *ngIf="numMouvementRequired == false">
-        <p class=" badge-dark " style="with: 100px">Le code de le mouvement de la ligne {{numMouvementRequiredLine}} n'est pas renseigné !</p>
+        <p class=" badge-dark " style="with: 100px">Le code du mouvement de la ligne {{numMouvementRequiredLine}} n'est pas renseigné !</p>
         </div>
         <div *ngIf="numMouvement_unique == false">
-          <p class=" badge-dark ">Votre fichier doit être mono-mouvement. Il comporte plusieurs numero mouvement !</p>
+          <p class=" badge-dark ">Votre fichier doit être mono-mouvement. Il comporte plusieurs numeros mouvements !</p>
         </div>
         <div *ngIf="compteRequired == false">
-          <p class=" badge-dark " style="with: 100px">Le code de le compte de la ligne {{compteRequiredLine}} n'est pas renseigné !</p>
+          <p class=" badge-dark " style="with: 100px">Le numéro de compte de la ligne {{compteRequiredLine}} n'est pas renseigné !</p>
         </div>
         <div *ngIf="compteValid == false">
-          <p class=" badge-dark ">Le code de le compte de la ligne {{compteValidedLine}} n'est pas existe !</p>
+          <p class=" badge-dark ">Le numéro de compte de la ligne {{compteValidedLine}} n'existe pas!</p>
         </div>
         <div *ngIf="sensRequired == false">
-          <p class=" badge-dark " style="with: 100px">Le code de le sens de la ligne {{sensRequiredLine}} n'est pas renseigné !</p>
+          <p class=" badge-dark " style="with: 100px">Le sens de la ligne {{sensRequiredLine}} n'est pas renseigné !</p>
         </div>
         <div *ngIf="quantiteInstrumentRequired == false">
-          <p class=" badge-dark " style="with: 100px">Le code de le quantite Instrument de la ligne {{quantiteInstrumentRequiredLine}} n'est pas renseigné !</p>
+          <p class=" badge-dark " style="with: 100px">La quantité d'instrument de la ligne {{quantiteInstrumentRequiredLine}} n'est pas renseignée !</p>
         </div>
         <div *ngIf="refInstrumentRequired == false">
-          <p class=" badge-dark " style="with: 100px">Le code de le reference Instrument de la ligne {{refInstrumentRequiredLine}} n'est pas renseigné !</p>
+          <p class=" badge-dark " style="with: 100px">La référence d'instrument de la ligne {{refInstrumentRequiredLine}} n'est pas renseignée !</p>
         </div>
 
         <div *ngIf="navRequired == false">
-        <p class=" badge-dark " style="with: 100px">Le code de le nav de la ligne {{navRequiredLine}} n'est pas renseigné !</p>
+        <p class=" badge-dark " style="with: 100px">La nav de la ligne {{navRequiredLine}} n'est pas renseignée !</p>
        </div>
 
         <div *ngIf="pruInstrumentRequired == false">
-          <p class=" badge-dark " style="with: 100px">Le code de le pru de la ligne {{pruInstrumentRequiredLine}} n'est pas renseigné !</p>
+          <p class=" badge-dark " style="with: 100px">Le code PRU instrument de la ligne {{pruInstrumentRequiredLine}} n'est pas renseigné !</p>
         </div>
 
         <div *ngIf="dateCompteRequired == false">
-          <p class=" badge-dark " style="with: 100px">Le code de le date Compte de la ligne {{dateCompteRequiredLine}} n'est pas renseigné !</p>
+          <p class=" badge-dark " style="with: 100px">La date Compte de la ligne {{dateCompteRequiredLine}} n'est pas renseignée !</p>
         </div>
 
         <div *ngIf="dateValeurRequired == false">
-          <p class=" badge-dark " style="with: 100px">Le code de le date Compte de la ligne {{dateValuerRequiredLine}} n'est pas renseigné !</p>
+          <p class=" badge-dark " style="with: 100px">La date valeur de la ligne {{dateValuerRequiredLine}} n'est pas renseignée !</p>
         </div>
 
         <div *ngIf="dateOperationRequired == false">
-          <p class=" badge-dark " style="with: 100px">Le code de le date Compte de la ligne {{dateOperationRequiredLine}} n'est pas renseigné !</p>
+          <p class=" badge-dark " style="with: 100px">La date d'opération de la ligne {{dateOperationRequiredLine}} n'est pas renseignée !</p>
         </div>
       </div>
       <div class="col-sm-2" style="align-self:center" *ngIf="(numMouvementRequired == false || compteValid== false || BadHeaders == true || compteRequired == false
