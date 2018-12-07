@@ -74,7 +74,9 @@ export class PositionComponent implements OnInit{
   positionForm: FormGroup;
   positions: Positions[];
   BadHeaders: boolean = false;
-  compteDataArray: Compte[] =[];
+  compteDataArrayGood: Compte[] =[];
+  compteDataArrayBad: Compte[] =[];
+
 
   constructor(private positionService: PositionService,
               private compteService: CompteService,
@@ -210,32 +212,34 @@ export class PositionComponent implements OnInit{
   }
 
   isCompteCreated(dataArray){
-    for(let i=0; i< dataArray.length; i++)
-    {
-      if(dataArray[i].compte !==0){
-        this.compteService.getOne(dataArray[i].compte).subscribe((data) => {
-          if(data!== null){
-            this.compteDataArray.push(data);
+    let isdataNull = true;
+    for(let i=0; i< dataArray.length; i++) {
+      this.compteService.getOne(this.dataArray[i].compte).subscribe( data => {
+          if(data===null){
+            isdataNull == false;
+            this.compteValidedLine += i;
+            this.currentStep = -1;
           }
-        });
-
-        if(this.compteDataArray.length !==0) {
-          this.compteValidedLine += i;
-          this.currentStep = -1;
-          return false;
         }
-      }
+      );
     }
-    return true;
+    if(isdataNull){
+      return false;
+    }
+    else{
+      return true;
+    }
+
   }
 
-  controleModuleMovement(dataArray){
+  controleModulePosition(dataArray){
     this.refInstrumentRequired = this.isRefIntrumentRequired(dataArray);
     this.quantiteInstrumentRequired = this.isQuantiteInstrumentRequired(dataArray);
     this.pruInstrumentRequired = this.isPruInstrumentRequired(dataArray);
     this.dateModificationRequired = this.isDateModificationRequired(dataArray);
     this.compteRequired = this.isCompteRequired(dataArray);
     this.compteValid = this.isCompteCreated(dataArray);
+    console.log("compteValid"+this.compteValid);
   }
 
   selectFile($event){
@@ -258,7 +262,7 @@ export class PositionComponent implements OnInit{
         // create data bindArray
         this.dataArray = this.buildDataArray(bindArray, csvRecordsArray);
 
-        this.controleModuleMovement(this.dataArray);
+        this.controleModulePosition(this.dataArray);
 
         //Integration du module position
         this.buildPositionDataArray(this.dataArray);

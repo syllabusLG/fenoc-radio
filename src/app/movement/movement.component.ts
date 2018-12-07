@@ -237,23 +237,23 @@ export class MovementComponent implements  OnInit{
   }
 
   isCompteCreated(dataArray){
-    for(let i=0; i< dataArray.length; i++)
-    {
-      if(dataArray[i].compte !==0){
-        this.compteService.getOne(dataArray[i].compte).subscribe((data) => {
-          if(data!== null){
-            this.compteDataArray.push(data);
+    let isdataNull = true;
+    for(let i=0; i< dataArray.length; i++) {
+      this.compteService.getOne(this.dataArray[i].compte).subscribe( data => {
+          if(data===null){
+            isdataNull == false;
+            this.compteValidedLine += i;
+            this.currentStep = -1;
           }
-        });
-
-        if(this.compteDataArray.length !==0) {
-          this.compteValidedLine += i;
-          this.currentStep = -1;
-          return false;
         }
-      }
+      );
     }
-    return true;
+    if(isdataNull){
+      return false;
+    }
+    else{
+      return true;
+    }
   }
 
   isSensRequired(dataArray){
