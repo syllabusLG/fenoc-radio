@@ -237,12 +237,13 @@ export class MovementComponent implements  OnInit{
           if(data===null){
             isdataNull == false;
             this.compteValidedLine += i;
-            this.currentStep = -1;
+
           }
         }
       );
     }
     if(isdataNull){
+      this.currentStep = -1;
       return false;
     }
     else{

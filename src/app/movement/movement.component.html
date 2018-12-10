@@ -18,16 +18,16 @@
         <div *ngIf="compteRequired == false">
           <p class=" badge-dark " style="with: 100px">Le numéro de compte de la ligne {{compteRequiredLine}} n'est pas renseigné !</p>
         </div>
-        <div *ngIf="compteValid == false">
+        <div *ngIf="compteValid == false && compteRequired!==false">
           <p class=" badge-dark ">Le numéro de compte de la ligne {{compteValidedLine}} n'existe pas!</p>
         </div>
-        <div *ngIf="sensRequired == false">
+        <div *ngIf="sensRequired == false ">
           <p class=" badge-dark " style="with: 100px">Le sens de la ligne {{sensRequiredLine}} n'est pas renseigné !</p>
         </div>
         <div *ngIf="quantiteInstrumentRequired == false">
           <p class=" badge-dark " style="with: 100px">La quantité d'instrument de la ligne {{quantiteInstrumentRequiredLine}} n'est pas renseignée !</p>
         </div>
-        <div *ngIf="refInstrumentRequired == false">
+        <div *ngIf="refInstrumentRequired == false ">
           <p class=" badge-dark " style="with: 100px">La référence d'instrument de la ligne {{refInstrumentRequiredLine}} n'est pas renseignée !</p>
         </div>
 

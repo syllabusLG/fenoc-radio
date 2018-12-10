@@ -24,7 +24,7 @@
       <div *ngIf="compteRequired==false">
         <p class=" badge-dark " style="with: 100px">Le numéro de compte de la ligne {{compteRequiredLine}} n'est pas renseigné !</p>
       </div>
-        <div *ngIf="compteValid==false">
+        <div *ngIf="compteValid==false && compteRequired!==false">
           <p class=" badge-dark " style="with: 100px">Le numéro de compte de la ligne {{compteValidedLine}} n'exist pas !</p>
         </div>
     </div>

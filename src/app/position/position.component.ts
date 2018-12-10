@@ -214,13 +214,13 @@ export class PositionComponent implements OnInit{
       this.compteService.getOne(this.dataArray[i].compte).subscribe( data => {
           if(data===null){
             isdataNull == false;
-            this.compteValidedLine += i;
             this.currentStep = -1;
           }
         }
       );
     }
     if(isdataNull){
+      this.currentStep = -1;
       return false;
     }
     else{
