@@ -230,7 +230,6 @@ export class PositionComponent implements OnInit{
     this.dateModificationRequired = this.isDateModificationRequired(dataArray);
     this.compteRequired = this.isCompteRequired(dataArray);
     this.compteValid = this.isCompteCreated(dataArray);
-    console.log("compteValid"+this.compteValid);
   }
 
   selectFile($event){
