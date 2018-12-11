@@ -74,7 +74,7 @@ export class PositionComponent implements OnInit{
   positionForm: FormGroup;
   positions: Positions[];
   BadHeaders: boolean = false;
-
+  isdataNull: boolean = false;
 
   constructor(private positionService: PositionService,
               private compteService: CompteService,
@@ -209,23 +209,18 @@ export class PositionComponent implements OnInit{
   }
 
   isCompteCreated(dataArray){
-    let isdataNull = true;
     for(let i=0; i< dataArray.length; i++) {
       this.compteService.getOne(this.dataArray[i].compte).subscribe( data => {
-          if(data===null){
-            isdataNull == false;
+          if (data === null) {
+            this.isdataNull = true;
+            this.compteValidedLine += i;
             this.currentStep = -1;
+            return false;
           }
         }
       );
     }
-    if(isdataNull){
-      this.currentStep = -1;
-      return false;
-    }
-    else{
-      return true;
-    }
+    return true;
   }
 
   controleModulePosition(dataArray){

@@ -87,12 +87,13 @@ export class MovementComponent implements  OnInit{
   compteValidedLine: number =1;
 
   movementReportCreateFile: ReportCreateFile = new ReportCreateFile();
-  movementReportUpdateFile: ReportUpdateFile = new ReportUpdateFile()
+  movementReportUpdateFile: ReportUpdateFile = new ReportUpdateFile();
 
   selectedMovement: Mouvements;
   movementForm: FormGroup;
   movements: Mouvements[];
   BadHeaders: boolean = false;
+  isdataNull: boolean = false;
 
   constructor(private movementService: MovementService,
               private  compteService: CompteService,
@@ -231,24 +232,18 @@ export class MovementComponent implements  OnInit{
   }
 
   isCompteCreated(dataArray){
-    let isdataNull = true;
     for(let i=0; i< dataArray.length; i++) {
       this.compteService.getOne(this.dataArray[i].compte).subscribe( data => {
-          if(data===null){
-            isdataNull == false;
+          if (data === null) {
+            this.isdataNull = true;
             this.compteValidedLine += i;
-
+            this.currentStep = -1;
+            return false;
           }
         }
       );
     }
-    if(isdataNull){
-      this.currentStep = -1;
-      return false;
-    }
-    else{
-      return true;
-    }
+    return true;
   }
 
   isSensRequired(dataArray){
@@ -430,7 +425,6 @@ export class MovementComponent implements  OnInit{
         this.buildMovementsDataArray(this.dataArray);
 
         this.currentStep++;
-        //this.emmitErrors();
       };
     }
   }

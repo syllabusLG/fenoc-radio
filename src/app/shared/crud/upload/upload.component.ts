@@ -216,6 +216,8 @@ export class UploadComponent implements OnInit {
 
   COUNTRY = COUNTRY;
   @Output() messageEvent = new EventEmitter<any>();
+  BadHeaders: boolean = false;
+
   constructor(private individusService: IndividusService,
               private cookieService: CookieService,
               private salarieService: SalarieService,
@@ -235,13 +237,19 @@ export class UploadComponent implements OnInit {
   getBindHeadersDataModelListArray(headers){
     let bindArray = [];
     let index = 0;
+    let movementHeaders = this.dataModelList.map(function(a) {return a.columnName;});
 
     let getDataType = (header) => {
       let dataType = '';
       this.dataModelList.forEach(dataModel => {
         if(dataModel.columnName == header){
           dataType = dataModel.dataType;
-        }
+        }/**else{
+          if(movementHeaders.indexOf(header) <= -1){
+            this.BadHeaders = true;
+            this.currentStep = -1;
+          }
+        }**/
       });
       return dataType;
     };
@@ -704,7 +712,8 @@ export class UploadComponent implements OnInit {
       ibanValid: this.ibanValid,
       ibanValidLine: this.ibanValidLine,
       bicIbanValid: this.bicIbanValid,
-      bicIbanValidLine: this.bicIbanValidLine
+      bicIbanValidLine: this.bicIbanValidLine,
+      BadHeaders: this.BadHeaders,
     });
   }
   controlePrealable(dataArray){

@@ -1,7 +1,11 @@
 <ng-container>
     <div id="content" #content>
-      <div class="row" style="margin-left: 20px">
-        <div class="col-sm-11" style="font-size: small;">
+      <div class="row"style="margin-left: 20px">
+        <div class="col-sm-11"  style="font-size: small;">
+        <!--<div *ngIf="errors.BadHeaders">
+            <p class="badge-dark " style="with: 100px">Ce fichier n'est pas approprié pour ce module. Merci de rensegner le bon fichier au format suivant: NUMMOUVEMENT, SENS,
+              REFINSTRUMENT, QUANTITEINSTRUMENT, NAV, PRUINSTRUMENT, DATECOMPTE, DATEVALEUR, DATEOPERATION, COMPTE</p>
+          </div>-->
       <div *ngIf="errors.company_cd_required == false">
         <p class=" badge-dark " style="with: 100px">Le code de l'entreprise de la ligne {{errors.company_cd_required_line}} n'est pas renseigné !</p>
       </div>
@@ -118,7 +122,7 @@
       </div>
         </div>
 
-        <div class="col-sm-1" style="align-self:center" *ngIf="(errors.company_cd_required == false || errors.company_cd_unique== false ||
+        <div class="col-sm-1" style="align-self:center" *ngIf="( errors.BadHeaders == true || errors.company_cd_required == false || errors.company_cd_unique== false ||
                 errors.numIdentityUniqueRequired== false || errors.employee_id_required== false || errors.employeeIdWellFormatted== false ||
                 errors.noEmployeeDuplicated== false || errors.civilityRequired== false || errors.civilityFalseValue== false || errors.lastNameGiven== false ||
                 errors.firstNameGiven== false || errors.personalEmailValid== false || errors.businessEmailValid== false || errors.birthDateGiven ==false ||
