@@ -68,7 +68,7 @@
   <!----IMPORTER----->
   <nav class="nav nav-tabs" id="nav-tab" role="tablist">
     <a class="nav-item nav-link active" id="nav-importer-tab" data-toggle="tab" href="#nav-importer" role="tab" aria-controls="importer" aria-expanded="true">Importer un fichier</a>
-    <a class="nav-item nav-link" id="nav-table-tab" data-toggle="tab" href="#nav-table" role="tab" aria-controls="table" aria-expanded="false">Simple Crud</a>
+    <a class="nav-item nav-link" id="nav-table-tab" data-toggle="tab" href="#nav-table" role="tab" aria-controls="table" aria-expanded="false" (click)="loadMovements()">Simple Crud</a>
   </nav>
   <div class="tab-content" id="nav-tabContent">
     <br>
@@ -154,7 +154,7 @@
             </div>
             <div class="col-sm-2" id="reportMovement" #reportMovement>
               <div class="d-inline-block">
-                <a href="" data-toggle="collapse">
+                <a href="" data-toggle="collapse" *ngIf="movements?.length">
                   <button type="button" style="margin-bottom: 14px" class="btn btn-info" (click)="downloadFile(movements)">Export to CSV</button>
                 </a>
               </div>

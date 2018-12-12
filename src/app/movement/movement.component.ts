@@ -13,6 +13,7 @@ import {ReportCreateFileService} from '../report-create-file/report.create.file.
 import { saveAs } from 'file-saver';
 import {Individus} from "../shared/individus.model";
 import {CompteService} from "../compte/compte.service";
+import {CookieService} from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-movement',
@@ -97,6 +98,7 @@ export class MovementComponent implements  OnInit{
 
   constructor(private movementService: MovementService,
               private  compteService: CompteService,
+              private cookieService: CookieService,
               private reportCreateFileService: ReportCreateFileService,
               private reportUpdateFileService: ReportUpdateFileService,
               private fb: FormBuilder,
@@ -120,7 +122,7 @@ export class MovementComponent implements  OnInit{
     this.dataModelListFiltred = this.dataModelList.filter(dataModel => !dataModel.readonly);
 
     this.initMoviments();
-    this.movements = this.changeMovement(this.route.snapshot.data.movements);
+    this.movements = this.changeCompte(this.route.snapshot.data.movements);
     this.loadMovements();
   }
 
@@ -129,7 +131,7 @@ export class MovementComponent implements  OnInit{
     this.createForm();
   }
 
-  changeMovement(movements: Mouvements[]){
+  changeCompte(movements: Mouvements[]){
     for(let i = 0; i < movements.length; i++){
       let compte: Compte = new Compte();
       compte.numCompte = movements[i].compte.numCompte;
@@ -405,7 +407,7 @@ export class MovementComponent implements  OnInit{
     let file = fileList[0];
     if(file && file.name.endsWith(".csv")){
       this.fileName = file.name;
-      //this.cookieService.set('uploadFileName', file.name);
+      this.cookieService.set('uploadMovementFile', 'Upload du fichier: '+file.name);
       let input = $event.target;
       let reader = new FileReader();
       reader.readAsText(input.files[0], 'ISO-8859-1');
@@ -466,6 +468,7 @@ export class MovementComponent implements  OnInit{
     }
     this.movementService.update(this.selectedMovement).subscribe(
       res=>{
+        this.cookieService.set('updateMouvement', 'Modification du mouvement: '+this.selectedMovement.numMouvement);
         this.initMoviments();
         this.loadMovements();
       }
@@ -475,6 +478,7 @@ export class MovementComponent implements  OnInit{
   deleteMouvement(){
     this.movementService.delete(this.selectedMovement.numMouvement).subscribe(
       res=>{
+        this.cookieService.set('deleteMouvement', 'Suppression du mouvement: '+this.selectedMovement.numMouvement);
         this.selectedMovement = new Mouvements();
         this.loadMovements();
       }
@@ -492,6 +496,7 @@ export class MovementComponent implements  OnInit{
 
   downloadFile(data: any) {
     let file = 'mouvements_'+ new Date()+'.csv';
+    this.cookieService.set('exportMovementCSV', 'Telechargement du fichier: '+file);
     const replacer = (key, value) => value === null ? '' : value; // specify how you want to handle null values here
     const header = Object.keys(data[0]);
     let csv = data.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(';'));

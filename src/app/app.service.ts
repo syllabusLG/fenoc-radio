@@ -74,6 +74,14 @@ export class AppService {
     audit.updateUser = this.cookieService.get('updateUser');
     audit.deleteUser = this.cookieService.get('deleteUser');
     audit.changePassword = this.cookieService.get('changePassword');
+    audit.updateMouvement = this.cookieService.get('updateMouvement');
+    audit.deleteMouvement = this.cookieService.get('deleteMouvement');
+    audit.updatePosition = this.cookieService.get('updatePosition');
+    audit.deletePosition = this.cookieService.get('deletePosition');
+    audit.uploadMovementFile = this.cookieService.get('uploadMovementFile');
+    audit.uploadPositionFile = this.cookieService.get('uploadPositionFile');
+    audit.exportMovementCSV = this.cookieService.get('exportMovementCSV');
+    audit.exportPositionCSV = this.cookieService.get('exportPositionCSV');
     return audit;
   }
 }

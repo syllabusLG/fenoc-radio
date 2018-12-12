@@ -12,6 +12,8 @@ import {Positions} from '../shared/position.model';
 import {Filemanagement} from '../common/filemanagement';
 import { saveAs } from 'file-saver';
 import {CompteService} from "../compte/compte.service";
+import {CookieService} from 'ngx-cookie-service';
+import {Mouvements} from '../shared/mouvements.model';
 
 @Component({
   selector: 'app-position',
@@ -78,6 +80,7 @@ export class PositionComponent implements OnInit{
 
   constructor(private positionService: PositionService,
               private compteService: CompteService,
+              private cookieService: CookieService,
               private reportCreateFileService: ReportCreateFileService,
               private reportUpdateFileService: ReportUpdateFileService,
               private fb: FormBuilder,
@@ -95,7 +98,7 @@ export class PositionComponent implements OnInit{
     ];
     this.dataModelListFiltred = this.dataModelList.filter(dataModel => !dataModel.readonly);
     this.initPosition();
-    this.positions = this.route.snapshot.data.positions;
+    this.positions = this.changeCompte(this.route.snapshot.data.positions);
     this.loadPositions();
   }
 
@@ -237,7 +240,7 @@ export class PositionComponent implements OnInit{
     let file = fileList[0];
     if(file && file.name.endsWith(".csv")){
       this.fileName = file.name;
-      //this.cookieService.set('uploadFileName', file.name);
+      this.cookieService.set('uploadPositionFile', 'Upload du fichier :'+file.name);
       let input = $event.target;
       let reader = new FileReader();
       reader.readAsText(input.files[0], 'ISO-8859-1');
@@ -327,6 +330,7 @@ export class PositionComponent implements OnInit{
     }
     this.positionService.update(this.selectedPosition).subscribe(
       res=>{
+        this.cookieService.set('updatePosition', 'Modification de la position: '+this.selectedPosition.idPosition);
         this.initPosition();
         this.loadPositions();
       }
@@ -336,6 +340,7 @@ export class PositionComponent implements OnInit{
   deletePosition(){
     this.positionService.delete(this.selectedPosition.idPosition).subscribe(
       res=>{
+        this.cookieService.set('deletePosition', 'Suppression de la position: '+this.selectedPosition.idPosition);
         this.selectedPosition = new Positions();
         this.loadPositions();
       }
@@ -368,6 +373,7 @@ export class PositionComponent implements OnInit{
 
   downloadFile(data: any) {
     let file = 'positions_'+ new Date()+'.csv';
+    this.cookieService.set('exportPositionCSV', 'Telechargement du fichier: '+file);
     const replacer = (key, value) => value === null ? '' : value;
     const header = Object.keys(data[0]);
     let csv = data.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(';'));
@@ -409,7 +415,13 @@ export class PositionComponent implements OnInit{
       $event.preventDefault();
       $event.stopPropagation();
       Filemanagement.downloadPDF(this.content.nativeElement.innerHTML);
+  }
+  changeCompte(position: Positions[]){
+    for(let i = 0; i < position.length; i++){
+      let compte: Compte = new Compte();
+      compte.numCompte = position[i].compte.numCompte;
+      position[i].compte = compte;
     }
-
-
+    return position;
+  }
 }

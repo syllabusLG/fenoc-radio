@@ -64,6 +64,14 @@ export class AuditComponent implements OnInit {
       createUser:'',
       deleteUser:'',
       updateUser:'',
+      updateMouvement: '',
+      deleteMouvement: '',
+      updatePosition: '',
+      deletePosition: '',
+      uploadMovementFile: '',
+      uploadPositionFile: '',
+      exportMovementCSV: '',
+      exportPositionCSV: ''
     });
   }
   initAudit(){

@@ -97,6 +97,27 @@
                       </textarea>
                     </div>
                     <div class="form-group">
+                      <label class="control-label">Import CSV Operation Mouvement:</label>
+                      <textarea type="text" readonly class="form-control" formControlName="exportMovementCSV" [(ngModel)]="selectedAudit.exportMovementCSV">
+                      </textarea>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label">Import CSV Operation Position:</label>
+                      <textarea type="text" readonly class="form-control" formControlName="exportPositionCSV" [(ngModel)]="selectedAudit.exportPositionCSV">
+                      </textarea>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label">Upload Operation Mouvement:</label>
+                      <textarea type="text" readonly class="form-control" formControlName="uploadMovementFile" [(ngModel)]="selectedAudit.uploadMovementFile">
+                      </textarea>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label">Upload Operation Position:</label>
+                      <textarea type="text" readonly class="form-control" formControlName="uploadPositionFile" [(ngModel)]="selectedAudit.uploadPositionFile">
+                      </textarea>
+                    </div>
+
+                    <div class="form-group">
                       <label class="control-label">Import CSV Module Compte:</label>
                       <textarea type="text" readonly class="form-control" formControlName="compteReportCSV" [(ngModel)]="selectedAudit.compteReportCSV">
                       </textarea>
@@ -137,6 +158,16 @@
                       </textarea>
                     </div>
                     <div class="form-group">
+                      <label class="control-label">Update Opération Movement:</label>
+                      <textarea type="text" readonly class="form-control" formControlName="updateMouvement" [(ngModel)]="selectedAudit.updateMouvement">
+                      </textarea>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label">Update Opération Position:</label>
+                      <textarea type="text" readonly class="form-control" formControlName="updatePosition" [(ngModel)]="selectedAudit.updatePosition">
+                      </textarea>
+                    </div>
+                    <div class="form-group">
                       <label class="control-label">Update Module User:</label>
                       <textarea type="text" readonly class="form-control" formControlName="updateUser" [(ngModel)]="selectedAudit.updateUser">
                       </textarea>
@@ -169,6 +200,16 @@
                     <div class="form-group">
                       <label class="control-label">Delete Module Compte:</label>
                       <textarea type="text" readonly class="form-control" formControlName="deleteCompte" [(ngModel)]="selectedAudit.deleteCompte">
+                      </textarea>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label">Delete Operation Movement:</label>
+                      <textarea type="text" readonly class="form-control" formControlName="deleteMouvement" [(ngModel)]="selectedAudit.deleteMouvement">
+                      </textarea>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label">Delete Operation Position:</label>
+                      <textarea type="text" readonly class="form-control" formControlName="deletePosition" [(ngModel)]="selectedAudit.deletePosition">
                       </textarea>
                     </div>
 

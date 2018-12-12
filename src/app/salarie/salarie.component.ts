@@ -125,7 +125,7 @@ export class SalarieComponent implements OnInit {
 
   downloadFile(data: any) {
     let file = 'salaries_' + new Date() + '.csv';
-    this.cookieService.set('salarieReportCSV', file);
+    this.cookieService.set('salarieReportCSV', 'Telechargement du fichier: '+file);
     const replacer = (key, value) => value === null ? '' : value; // specify how you want to handle null values here
     const header = Object.keys(data[0]);
     let csv = data.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(';'));

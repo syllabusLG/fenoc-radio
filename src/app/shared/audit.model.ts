@@ -27,6 +27,14 @@ export class Audit {
               public habilitation?: string,
               public createUser?: string,
               public updateUser?: string,
-              public deleteUser?: string){}
+              public deleteUser?: string,
+              public updateMouvement?: string,
+              public deleteMouvement?: string,
+              public updatePosition?: string,
+              public deletePosition?: string,
+              public uploadMovementFile?: string,
+              public uploadPositionFile?: string,
+              public exportMovementCSV?: string,
+              public exportPositionCSV?: string){}
 
 }
