@@ -237,19 +237,12 @@ export class UploadComponent implements OnInit {
   getBindHeadersDataModelListArray(headers){
     let bindArray = [];
     let index = 0;
-    let movementHeaders = this.dataModelList.map(function(a) {return a.columnName;});
-
     let getDataType = (header) => {
       let dataType = '';
       this.dataModelList.forEach(dataModel => {
         if(dataModel.columnName == header){
           dataType = dataModel.dataType;
-        }/**else{
-          if(movementHeaders.indexOf(header) <= -1){
-            this.BadHeaders = true;
-            this.currentStep = -1;
-          }
-        }**/
+        }
       });
       return dataType;
     };
@@ -266,6 +259,19 @@ export class UploadComponent implements OnInit {
     return bindArray;
   }
 
+  controleHeaders (headers){
+    let uploadHeaders = "nui;company_CD;employeeId;employeeStatus;civility;lastName;useName;firstName;personalEmail;businessEmail;birthDate;statut;vip;mySensitive;dateEndSensitive;birthCountry;hireDate;departDate;lastHireDate;lastDepartDate;numberStreet;street;codePostal;city;country;additionalAdress_1;additionalAdress_2;additionalAdress_3;bic;iban;birthPlace;nationality;cellPhone;homePhone;businessPhone;spc;level_1;level_2;level_3;level_4;level_5;branch_CD;numCompte;libCompte;type;ouvert;lettrage;statutAff;typage;idCptPc;nif";
+    let uploadHeadersArray= uploadHeaders.split(";");
+    for(let i=0; i<headers.length; i++) {
+      let ind = headers[i];
+      if (uploadHeadersArray.indexOf(headers[i]) <= -1) {
+        this.BadHeaders = true;
+        this.currentStep = -1;
+        return true;
+      }
+    }
+    return false;
+  }
   buildDataArray(bindArray, csvRecordsArray){
     let dataArray = [];
     if(csvRecordsArray && csvRecordsArray.length>2){
@@ -608,12 +614,17 @@ export class UploadComponent implements OnInit {
         let csvData = reader.result;
         //csvData = "data:text/csv;charset=utf-8,";
         let csvRecordsArray = csvData.split(/\r\n|\n/);
-        let headers = csvRecordsArray && csvRecordsArray.length>0 ? csvRecordsArray[0].split(";") : [];
+        let headers = csvRecordsArray && csvRecordsArray.length > 0 ? csvRecordsArray[0].split(";") : [];
         // bind headers with dataModelist
         let bindArray = this.getBindHeadersDataModelListArray(headers);
 
+        //check is the headers are good or not
+       this.BadHeaders = this.controleHeaders(headers);
+
         // create data bindArray
         this.dataArray = this.buildDataArray(bindArray, csvRecordsArray);
+
+        if (!this.BadHeaders) {
 
         //Gestion des contrôles préalables
         this.controlePrealable(this.dataArray);
@@ -634,7 +645,7 @@ export class UploadComponent implements OnInit {
         this.buildAdresseDataArray(this.dataArray);
         this.buildCompteDataArray(this.dataArray);
         //this.buildFiscaliteDataArray(this.dataArray);
-
+      }
         this.currentStep++;
 
         this.emmitErrors();
@@ -858,6 +869,7 @@ export class UploadComponent implements OnInit {
     this.currentStep = 3;
   }
   isCompanyCdCorrect(dataArray){
+
     for (let i = 0; i < dataArray.length; i++){
       if(dataArray[i].company_CD.length === 0){
         this.company_cd_required_line += i;

@@ -53,7 +53,6 @@ export class CrudComponent implements OnInit {
     this.errors = allErrors;
   }
 
-
   public downloadPDF($event:any){
     $event.preventDefault();
     $event.stopPropagation();
