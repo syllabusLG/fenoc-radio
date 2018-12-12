@@ -614,6 +614,10 @@ export class UploadComponent implements OnInit {
         let csvData = reader.result;
         //csvData = "data:text/csv;charset=utf-8,";
         let csvRecordsArray = csvData.split(/\r\n|\n/);
+        // Check if the last row is empty. This works
+        if(csvRecordsArray[csvRecordsArray.length-1] ===''){
+          csvRecordsArray.pop()
+        }
         let headers = csvRecordsArray && csvRecordsArray.length > 0 ? csvRecordsArray[0].split(";") : [];
         // bind headers with dataModelist
         let bindArray = this.getBindHeadersDataModelListArray(headers);
