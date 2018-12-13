@@ -1,6 +1,6 @@
 import {Component, HostListener, Input, OnInit} from '@angular/core';
 import {AppService} from './app.service';
-import {NavigationEnd, NavigationStart, Router} from '@angular/router';
+import {NavigationEnd,Router} from '@angular/router';
 import {DEFAULT_INTERRUPTSOURCES, Idle} from "@ng-idle/core";
 import {Keepalive} from "@ng-idle/keepalive";
 import {CookieService} from 'ngx-cookie-service';

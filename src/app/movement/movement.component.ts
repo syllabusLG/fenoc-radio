@@ -11,7 +11,6 @@ import {ActivatedRoute} from "@angular/router";
 import {ReportUpdateFileService} from '../report-update-file/report.update.file.service';
 import {ReportCreateFileService} from '../report-create-file/report.create.file.service';
 import { saveAs } from 'file-saver';
-import {Individus} from "../shared/individus.model";
 import {CompteService} from "../compte/compte.service";
 import {CookieService} from 'ngx-cookie-service';
 

@@ -13,7 +13,6 @@ import {Filemanagement} from '../common/filemanagement';
 import { saveAs } from 'file-saver';
 import {CompteService} from "../compte/compte.service";
 import {CookieService} from 'ngx-cookie-service';
-import {Mouvements} from '../shared/mouvements.model';
 
 @Component({
   selector: 'app-position',

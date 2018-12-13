@@ -5,7 +5,6 @@ import {ContactService} from "./contact.service";
 import {Contact} from "../shared/contact.model";
 import { saveAs } from 'file-saver';
 import {Individus} from '../shared/individus.model';
-import {Compte} from '../shared/compte.model';
 import {CookieService} from 'ngx-cookie-service';
 
 

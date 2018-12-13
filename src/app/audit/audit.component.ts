@@ -1,5 +1,4 @@
 import {Component, ElementRef, OnInit, ViewChild} from "@angular/core";
-import {Adresse} from "../shared/adresse.model";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import { saveAs } from 'file-saver';
 import {ActivatedRoute} from "@angular/router";

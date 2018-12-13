@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {User} from '../shared/user.model';
 import {DataModel} from '../shared/data.model';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {FileModel} from '../shared/file.model';

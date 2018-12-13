@@ -1,11 +1,9 @@
 import {Component, OnInit, Input, ViewChild, ElementRef} from '@angular/core';
-import { FormGroup, Validators} from '@angular/forms';
+import { FormGroup} from '@angular/forms';
 
 import { CrudService } from '../crud.service';
 import { DataModel } from '../data.model';
-import * as jsPDF from "jspdf";
 import {Filemanagement} from "../../common/filemanagement";
-import {UploadComponent} from "./upload/upload.component";
 import {CookieService} from 'ngx-cookie-service';
 @Component({
   selector: 'app-crud',

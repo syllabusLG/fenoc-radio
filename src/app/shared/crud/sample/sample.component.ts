@@ -3,7 +3,6 @@ import {CrudService} from '../../crud.service';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {DataModel} from '../../data.model';
 import { saveAs } from 'file-saver';
-import {User} from '../../user.model';
 import {CookieService} from 'ngx-cookie-service';
 
 

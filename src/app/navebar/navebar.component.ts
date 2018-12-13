@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {NavigationEnd, Router} from '@angular/router';
+import { Router} from '@angular/router';
 import {AppService} from '../app.service';
 import {AuditService} from '../audit/audit.service';
 import {Audit} from '../shared/audit.model';

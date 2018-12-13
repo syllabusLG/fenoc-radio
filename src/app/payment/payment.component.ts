@@ -1,12 +1,11 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import { saveAs } from 'file-saver';
 import {PaymentService} from "./payment.service";
 import {Payment} from "../shared/payment.model";
 import {CookieService} from 'ngx-cookie-service';
 import {Individus} from '../shared/individus.model';
-import {Adresse} from '../shared/adresse.model';
 
 @Component({
   selector: 'app-payment',
