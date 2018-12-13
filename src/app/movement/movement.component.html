@@ -244,7 +244,13 @@
                 </div>
                 <div class="form-group">
                   <label>Sens:</label>
-                  <input type="text" class="form-control" formControlName="sens" [(ngModel)]="selectedMovement.sens"/>
+                  <select class="form-control" formControlName="sens" [(ngModel)]="selectedMovement.sens">
+                    <option value=""> -- Sens --</option>
+                    <option value="D">D</option>
+                    <option value="C">C</option>
+                    <option value="AD">AD</option>
+                    <option value="AC">AC</option>
+                  </select>
                 </div>
                 <div class="form-group">
                   <label>Quantité:</label>
