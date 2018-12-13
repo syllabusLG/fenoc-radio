@@ -269,12 +269,16 @@ export class PositionComponent implements OnInit{
         // bind headers with dataModelist
         let bindArray = this.getBindHeadersDataModelListArray(headers);
         //check is the headers are good or not
+
         this.BadHeaders = this.controleHeaders(headers);
-        // create data bindArray
-        this.dataArray = this.buildDataArray(bindArray, csvRecordsArray);
-        this.controleModulePosition(this.dataArray);
-        //Integration du module position
-        this.buildPositionDataArray(this.dataArray);
+
+        if(!this.BadHeaders) {
+          // create data bindArray
+          this.dataArray = this.buildDataArray(bindArray, csvRecordsArray);
+          this.controleModulePosition(this.dataArray);
+          //Integration du module position
+          this.buildPositionDataArray(this.dataArray);
+        }
         this.currentStep++;
       };
     }

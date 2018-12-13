@@ -440,13 +440,14 @@ export class MovementComponent implements  OnInit{
         //check is the headers are good or not
         this.BadHeaders = this.controleHeaders(headers);
 
-        // create data bindArray
-        this.dataArray = this.buildDataArray(bindArray, csvRecordsArray);
+        if(!this.BadHeaders) {
+          // create data bindArray
+          this.dataArray = this.buildDataArray(bindArray, csvRecordsArray);
 
-        this.controleModuleMovement(this.dataArray);
+          this.controleModuleMovement(this.dataArray);
 
-        this.buildMovementsDataArray(this.dataArray);
-
+          this.buildMovementsDataArray(this.dataArray);
+        }
         this.currentStep++;
       };
     }
