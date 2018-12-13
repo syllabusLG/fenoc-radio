@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
 import {API_URLS} from './config/api.url.config';
 import {CookieService} from 'ngx-cookie-service';
 import {Store} from '@ngrx/store';
@@ -14,9 +14,7 @@ export class AppService {
               private cookieService: CookieService,
               private store: Store<PrincipalState>) { }
 
-
   authenticate(credentials, callback){
-
     if(credentials){
       const token = btoa(credentials.username+ ':' + credentials.password);
       this.cookieService.set('token', token);
@@ -35,16 +33,17 @@ export class AppService {
         }
         return callback && callback();
       });
-
     }else{
       this.authenticated = false;
     }
   }
+
   logout(callback){
     this.authenticated = false;
     //this.cookieService.deleteAll('/');
     return callback && callback();
   }
+
   setAudit(audit){
     audit.username = this.cookieService.get('username');
     audit.loginDate = this.cookieService.get('dateConnexion');
