@@ -342,7 +342,9 @@ export class MovementComponent implements  OnInit{
     this.sendMovementsToServer();
     this.currentStep = 3;
     this.loadMovements();
-  }
+    this.movements = this.movementsDataArray;
+
+    }
 
   sendMovementsToServer(){
     this.movementService.addAll(this.movementsDataArray).subscribe((data)=> {
@@ -388,7 +390,19 @@ export class MovementComponent implements  OnInit{
     }
 
   }
-  controleModuleMovement(dataArray){
+  controleHeaders (headers) {
+    let uploadHeaders = "numMouvement;sens;refInstrument;quantiteInstrument;nav;pruInstrument;dateCompte;dateValeur;dateOperation;compte";
+    let uploadHeadersArray = uploadHeaders.split(";");
+    for (let i = 0; i < headers.length; i++) {
+      if (uploadHeadersArray.indexOf(headers[i]) <= -1) {
+        this.BadHeaders = true;
+        this.currentStep = -1;
+        return true;
+      }
+    }
+    return false;
+  }
+    controleModuleMovement(dataArray){
     this.compteRequired = this.isCompteRequired(dataArray);
     this.compteValid= this.isCompteCreated(dataArray);
     this.numMouvementRequired = this.isNumMouvementRequired(dataArray);
@@ -423,6 +437,9 @@ export class MovementComponent implements  OnInit{
         let headers = csvRecordsArray && csvRecordsArray.length>0 ? csvRecordsArray[0].split(";") : [];
         // bind headers with dataModelist
         let bindArray = this.getBindHeadersDataModelListArray(headers);
+        //check is the headers are good or not
+        this.BadHeaders = this.controleHeaders(headers);
+
         // create data bindArray
         this.dataArray = this.buildDataArray(bindArray, csvRecordsArray);
 

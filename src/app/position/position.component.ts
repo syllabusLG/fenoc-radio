@@ -226,6 +226,19 @@ export class PositionComponent implements OnInit{
     return true;
   }
 
+  controleHeaders (headers) {
+    let uploadHeaders = "refInstrument;quantiteInstrument;pruInstrument;dateUpdate;compte";
+    let uploadHeadersArray = uploadHeaders.split(";");
+    for (let i = 0; i < headers.length; i++) {
+      if (uploadHeadersArray.indexOf(headers[i]) <= -1) {
+        this.BadHeaders = true;
+        this.currentStep = -1;
+        return true;
+      }
+    }
+    return false;
+  }
+
   controleModulePosition(dataArray){
     this.refInstrumentRequired = this.isRefIntrumentRequired(dataArray);
     this.quantiteInstrumentRequired = this.isQuantiteInstrumentRequired(dataArray);
@@ -255,6 +268,8 @@ export class PositionComponent implements OnInit{
         let headers = csvRecordsArray && csvRecordsArray.length>0 ? csvRecordsArray[0].split(";") : [];
         // bind headers with dataModelist
         let bindArray = this.getBindHeadersDataModelListArray(headers);
+        //check is the headers are good or not
+        this.BadHeaders = this.controleHeaders(headers);
         // create data bindArray
         this.dataArray = this.buildDataArray(bindArray, csvRecordsArray);
         this.controleModulePosition(this.dataArray);
@@ -292,6 +307,8 @@ export class PositionComponent implements OnInit{
     this.sendPositionToServer();
     this.currentStep = 3;
     this.loadPositions();
+    this.positions = this.positionDataArray;
+
   }
 
   sendPositionToServer(){

@@ -154,7 +154,7 @@
             </div>
             <div class="col-sm-2" id="reportMovement" #reportMovement>
               <div class="d-inline-block">
-                <a href="" data-toggle="collapse" *ngIf="movements?.length">
+                <a href="" data-toggle="collapse" *ngIf="movements">
                   <button type="button" style="margin-bottom: 14px" class="btn btn-info" (click)="downloadFile(movements)">Export to CSV</button>
                 </a>
               </div>
