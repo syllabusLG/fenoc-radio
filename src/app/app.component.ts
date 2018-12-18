@@ -2,13 +2,13 @@ import {Component, HostListener, Input, OnInit} from '@angular/core';
 import {AppService} from './app.service';
 import {NavigationEnd,Router} from '@angular/router';
 import {DEFAULT_INTERRUPTSOURCES, Idle} from "@ng-idle/core";
-import {Keepalive} from "@ng-idle/keepalive";
 import {CookieService} from 'ngx-cookie-service';
 import {Audit} from './shared/audit.model';
 import {AuditService} from './audit/audit.service';
 import {SAVE_PRINCIPAL} from "./shared/save.principal.action";
 import {Store} from "@ngrx/store";
 import {PrincipalState} from "./shared/principal.state";
+import {Keepalive} from '@ng-idle/keepalive';
 
 @Component({
   selector: 'app-root',

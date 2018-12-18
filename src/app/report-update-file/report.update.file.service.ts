@@ -1,10 +1,12 @@
 import {CrudService} from '../shared/crud.service';
 import {API_URLS} from '../config/api.url.config';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class ReportUpdateFileService implements CrudService{
 
   constructor(private http: HttpClient){}

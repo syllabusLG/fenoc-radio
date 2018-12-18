@@ -1,10 +1,12 @@
 import {CrudService} from '../shared/crud.service';
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {API_URLS} from '../config/api.url.config';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class CompteService implements CrudService{
 
   constructor(private http: HttpClient){}

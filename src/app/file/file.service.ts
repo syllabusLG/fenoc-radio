@@ -1,10 +1,12 @@
 import {CrudService} from '../shared/crud.service';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {API_URLS} from '../config/api.url.config';
 import {Injectable} from '@angular/core';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class FileService implements CrudService{
   constructor(private http: HttpClient){}
   getAll(): Observable<any>{

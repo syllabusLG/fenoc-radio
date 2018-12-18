@@ -101,23 +101,8 @@ import {MovementService} from './movement/movement.service';
     NgIdleKeepaliveModule.forRoot()
   ],
   providers: [
-    AppService,
     {provide: HTTP_INTERCEPTORS, useClass: XhrInterceptor, multi: true},
     CookieService,
-    UserService,
-    FileService,
-    IndividusService,
-    SalarieService,
-    ContactService,
-    PaymentService,
-    AdresseService,
-    CompteService,
-    FiscaliteService,
-    ReportCreateFileService,
-    ReportUpdateFileService,
-    AuditService,
-    PositionService,
-    MovementService
   ],
   bootstrap: [AppComponent]
 })

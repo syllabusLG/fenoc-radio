@@ -2,9 +2,11 @@ import {Injectable} from '@angular/core';
 import {CrudService} from '../shared/crud.service';
 import {API_URLS} from '../config/api.url.config';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class PositionService implements CrudService{
 
   constructor(private http: HttpClient){}

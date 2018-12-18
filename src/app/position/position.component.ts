@@ -257,7 +257,7 @@ export class PositionComponent implements OnInit{
       let reader = new FileReader();
       reader.readAsText(input.files[0], 'ISO-8859-1');
       reader.onload = (data) => {
-        let csvData = reader.result;
+        let csvData = String(reader.result);
         //csvData = "data:text/csv;charset=utf-8,";
         let csvRecordsArray = csvData.split(/\r\n|\n/);
         // Check if the last row is empty. This works

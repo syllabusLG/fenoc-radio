@@ -1,10 +1,12 @@
 import {Injectable} from '@angular/core';
 import {CrudService} from '../shared/crud.service';
 import {API_URLS} from '../config/api.url.config';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class FiscaliteService implements CrudService{
 
   constructor(private http: HttpClient){}

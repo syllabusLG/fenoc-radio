@@ -6,7 +6,9 @@ import {Store} from '@ngrx/store';
 import {PrincipalState} from './shared/principal.state';
 import {SAVE_PRINCIPAL} from './shared/save.principal.action';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class AppService {
 
   authenticated: boolean = false;

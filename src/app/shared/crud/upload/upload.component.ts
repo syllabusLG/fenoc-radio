@@ -604,14 +604,14 @@ export class UploadComponent implements OnInit {
     let file = fileList[0];
     if(file && file.name.endsWith(".csv")){
       this.fileName = file.name;
-      this.cookieService.set('uploadFileName', file.name);
+      this.cookieService.set('uploadFileName', this.cookieService.get('uploadFileName')+';'+file.name);
       let input = $event.target;
       let reader = new FileReader();
       reader.readAsText(input.files[0], 'ISO-8859-1');
 
       reader.onload = (data) => {
 
-        let csvData = reader.result;
+        let csvData = String(reader.result);
         //csvData = "data:text/csv;charset=utf-8,";
         let csvRecordsArray = csvData.split(/\r\n|\n/);
         // Check if the last row is empty. This works
@@ -1466,7 +1466,7 @@ export class UploadComponent implements OnInit {
     $event.stopPropagation();
     Filemanagement.downloadPDFModules(this.report.nativeElement.innerHTML, this.typeOfReport);
     this.currentStep = 4;
-    this.cookieService.set('reportFileName', 'reportFile'+new Date()+'.pdf');
+    this.cookieService.set('reportFileName', this.cookieService.get('reportFileName')+';reportFile'+new Date()+'.pdf');
   }
 
 }
