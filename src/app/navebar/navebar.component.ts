@@ -45,8 +45,10 @@ export class NavebarComponent implements OnInit {
     this.createForm();
     this.router.events.subscribe(
       ( event) : void => {
-        this.compteSessionActive = ((this.router.url === "/home/(contentOutlet:compte)")|| (this.router.url === "/home/(contentOutlet:movement)") ||
-          (this.router.url === "/home/(contentOutlet:position)")) ? true : false;
+        this.compteSessionActive = ((this.router.url === "/home/(contentOutlet:compte)")
+          || (this.router.url === "/home/(contentOutlet:movement)")
+          || (this.router.url === "/home/(contentOutlet:position)")
+          || (this.router.url === "/home/(contentOutlet:operations)")) ? true : false;
       }
     );
   }

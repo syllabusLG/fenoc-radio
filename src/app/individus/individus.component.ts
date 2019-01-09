@@ -142,15 +142,15 @@ export class IndividusComponent implements OnInit {
   fillDate(date:any){
     if(date && (date.indexOf('-') > -1)) {
       let year = new Date(Date.parse(date)).getFullYear();
-      let month = new Date(Date.parse(date)).getMonth() + 1;
-      let day = new Date(Date.parse(date)).getDate();
-      let dateFormat = day + '/' + month + '/' + year;
-      if(day>=1&&day<=9)
-      {
-        dateFormat = '0'+day + '/' + month + '/' + year;
+      let month = String(new Date(Date.parse(date)).getMonth() + 1);
+      let day = String(new Date(Date.parse(date)).getDate());
+      if (Number(day) >= 1 && Number(day) <= 9) {
+        day = '0' + day;
       }
-      return dateFormat;
+      if(Number(month) >= 1 && Number(month) <= 9) {
+        month = '0' + month;
+      }
+      return day + '/' + month + '/' + year;
     }
   }
 }
-

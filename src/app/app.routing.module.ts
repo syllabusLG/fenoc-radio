@@ -27,6 +27,7 @@ import {MovementComponent} from "./movement/movement.component";
 import {PositionComponent} from "./position/position.component";
 import {MovementResolver} from "./movement/movement.resolver";
 import {PositionResolver} from './position/position.resolver';
+import {OperationsComponent} from './operations/operations.component';
 
 
 
@@ -139,6 +140,11 @@ export const appRoutes: Routes = [
         resolve: {
           positions: PositionResolver
         },
+        outlet: 'contentOutlet',
+      },
+      {
+        path: 'operations',
+        component: OperationsComponent,
         outlet: 'contentOutlet',
       },
     ]

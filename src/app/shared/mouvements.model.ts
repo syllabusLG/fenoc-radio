@@ -7,9 +7,10 @@ export class Mouvements {
               public refInstrument?: string,
               public quantiteInstrument?: number,
               public nav?: string,
-              public pruInstrument?: string,
+              public pruInstrument?: number,
               public dateCompte?: any,
               public dateValeur?: any,
               public dateOperation?: any,
-              public compte?: Compte){}
+              public compte?: Compte,
+              public idEntityMere?: string){}
 }

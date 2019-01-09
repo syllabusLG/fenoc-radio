@@ -22,6 +22,8 @@ import {ReportUpdateFileService} from '../../../report-update-file/report.update
 import {ReportCreateFile} from '../../report.create.file.model';
 import {ReportUpdateFile} from '../../report.update.file.model';
 import {CookieService} from 'ngx-cookie-service';
+import {Positions} from '../../position.model';
+import {PositionService} from '../../../position/position.service';
 
 @Component({
   selector: 'app-upload',
@@ -72,6 +74,7 @@ export class UploadComponent implements OnInit {
   adresseCreatedDataArray: Adresse[] = [];
   adresseUpdatedDataArray: Adresse[] = [];
   compteDataArray: Compte[] = [];
+  positionDataArray: Positions[]=[];
   compteCreatedDataArray: Compte[] = [];
   compteUpdatedDataArray: Compte[] = [];
 
@@ -225,6 +228,7 @@ export class UploadComponent implements OnInit {
               private paymentService: PaymentService,
               private adresseService: AdresseService,
               private compteService: CompteService,
+              private positionService: PositionService,
               private fiscaliteService: FiscaliteService,
               private reportCreateFileService: ReportCreateFileService,
               private reportUpdateFileService: ReportUpdateFileService) { }
@@ -527,6 +531,7 @@ export class UploadComponent implements OnInit {
     this.compteReportUpdateFile.module = 'Compte';
     for (let i = 0; i < dataArray.length; i++){
       let compte: Compte = new Compte();
+      let position: Positions = new Positions();
       let individu: Individus = new Individus();
       if(dataArray[i].lastName.length !== 0 && dataArray[i].firstName.length !== 0 && dataArray[i].civility.length !== 0 &&
         (+dataArray[i].civility === 1 || +dataArray[i].civility === 2 || +dataArray[i].civility === 3) &&
@@ -554,7 +559,15 @@ export class UploadComponent implements OnInit {
           compte.typeCompte = 'CASH';
           individu.nui = dataArray[i].nui;
           compte.individu = individu;
+          //Les positions par defaut pour chaque compte
+          position.idPosition = 'default'+i+1+'_ID';
+          position.compte = compte;
+          position.dateUpdate = this.fillDate(new Date());
+          position.pruInstrument = 0;
+          position.quantiteInstrument = 0;
+          position.refInstrument = 'Reference instrument par defaut';
           this.compteDataArray.push(compte);
+          this.positionDataArray.push(position);
         }
         if ( dataArray[i].numCompte.length !== 0 && dataArray[i].idCptPc.length == 0 && (dataArray[i].statutAff.length !== 0 || dataArray[i].typage.length !== 0)){
           //compte de titSal
@@ -568,7 +581,15 @@ export class UploadComponent implements OnInit {
           compte.typeCompte = 'TIT';
           individu.nui = dataArray[i].nui;
           compte.individu = individu;
+          //Les positions par defaut pour chaque compte
+          position.idPosition = 'default'+i+1+'_ID';
+          position.compte = compte;
+          position.dateUpdate = this.fillDate(new Date());
+          position.pruInstrument = 0;
+          position.quantiteInstrument = 0;
+          position.refInstrument = 'Reference instrument par defaut';
           this.compteDataArray.push(compte);
+          this.positionDataArray.push(position);
         }
       }
 
@@ -863,6 +884,7 @@ export class UploadComponent implements OnInit {
       if(this.compteUpdatedDataArray.length > 0){
         this.reportUpdateFileService.add(this.compteReportUpdateFile).subscribe();
       }
+      this.positionService.addAll(this.positionDataArray).subscribe();
     });
   }
   /*sendFiscaliteToServer(){
@@ -1467,6 +1489,18 @@ export class UploadComponent implements OnInit {
     Filemanagement.downloadPDFModules(this.report.nativeElement.innerHTML, this.typeOfReport);
     this.currentStep = 4;
     this.cookieService.set('reportFileName', this.cookieService.get('reportFileName')+';reportFile'+new Date()+'.pdf');
+  }
+  fillDate(date:any) {
+    let year = new Date(Date.parse(date)).getFullYear();
+    let month = String(new Date(Date.parse(date)).getMonth() + 1);
+    let day = String(new Date(Date.parse(date)).getDate());
+    if (Number(day) >= 1 && Number(day) <= 9) {
+      day = '0' + day;
+    }
+    if(Number(month) >= 1 && Number(month) <= 9) {
+      month = '0' + month;
+    }
+    return day + '/' + month + '/' + year;
   }
 
 }

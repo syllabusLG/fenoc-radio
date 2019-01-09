@@ -63,7 +63,7 @@
           <div class="modal-content">
             <div class="modal-header" style="background-color: #12899e;cursor:move;" >
               <h5 class="modal-title" id="AddModalLabel" style="color: white">
-                {{ 'Plus d\'information'}}</h5>
+                Plus d'informations</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="text-align:right;width:auto">
                 <span aria-hidden="true">&times;</span></button>
             </div>
@@ -71,149 +71,149 @@
               <div class="card-body">
                 <div>
                   <form [formGroup]="auditForm" style="border-color: white; overflow-y: auto">
-                    <div class="form-group">
+                    <div class="form-group" *ngIf="selectedAudit.individuReportCSV">
                       <label class="control-label">Import CSV Module Individu:</label>
                       <textarea type="text" readonly class="form-control" formControlName="individuReportCSV" [(ngModel)]="selectedAudit.individuReportCSV">
                       </textarea>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" *ngIf="selectedAudit.salarieReportCSV">
                       <label class="control-label">Import CSV Module Salarie:</label>
                       <textarea type="text" readonly class="form-control" formControlName="salarieReportCSV" [(ngModel)]="selectedAudit.salarieReportCSV">
                       </textarea>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" *ngIf="selectedAudit.contactReportCSV">
                       <label class="control-label">Import CSV Module Contact:</label>
                       <textarea type="text" readonly class="form-control" formControlName="contactReportCSV" [(ngModel)]="selectedAudit.contactReportCSV">
                       </textarea>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" *ngIf="selectedAudit.paymentReportCSV">
                       <label class="control-label">Import CSV Module Payment:</label>
                       <textarea type="text" readonly class="form-control" formControlName="paymentReportCSV" [(ngModel)]="selectedAudit.paymentReportCSV">
                       </textarea>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" *ngIf="selectedAudit.adresseReportCSV">
                       <label class="control-label">Import CSV Module Adresse:</label>
                       <textarea type="text" readonly class="form-control" formControlName="adresseReportCSV" [(ngModel)]="selectedAudit.adresseReportCSV">
                       </textarea>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" *ngIf="selectedAudit.exportMovementCSV">
                       <label class="control-label">Import CSV Operation Mouvement:</label>
                       <textarea type="text" readonly class="form-control" formControlName="exportMovementCSV" [(ngModel)]="selectedAudit.exportMovementCSV">
                       </textarea>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" *ngIf="selectedAudit.exportPositionCSV">
                       <label class="control-label">Import CSV Operation Position:</label>
                       <textarea type="text" readonly class="form-control" formControlName="exportPositionCSV" [(ngModel)]="selectedAudit.exportPositionCSV">
                       </textarea>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" *ngIf="selectedAudit.uploadMovementFile">
                       <label class="control-label">Upload Operation Mouvement:</label>
                       <textarea type="text" readonly class="form-control" formControlName="uploadMovementFile" [(ngModel)]="selectedAudit.uploadMovementFile">
                       </textarea>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" *ngIf="selectedAudit.uploadPositionFile">
                       <label class="control-label">Upload Operation Position:</label>
                       <textarea type="text" readonly class="form-control" formControlName="uploadPositionFile" [(ngModel)]="selectedAudit.uploadPositionFile">
                       </textarea>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group" *ngIf="selectedAudit.compteReportCSV">
                       <label class="control-label">Import CSV Module Compte:</label>
                       <textarea type="text" readonly class="form-control" formControlName="compteReportCSV" [(ngModel)]="selectedAudit.compteReportCSV">
                       </textarea>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" *ngIf="selectedAudit.createUser">
                       <label class="control-label">Create Module User:</label>
                       <textarea type="text" readonly class="form-control" formControlName="createUser" [(ngModel)]="selectedAudit.createUser">
                       </textarea>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" *ngIf="selectedAudit.updateIndividu">
                       <label class="control-label">Update Module Individu:</label>
                       <textarea type="text" readonly class="form-control" formControlName="updateIndividu" [(ngModel)]="selectedAudit.updateIndividu">
                       </textarea>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" *ngIf="selectedAudit.updateSalarie">
                       <label class="control-label">Update Module Salarie:</label>
                       <textarea type="text" readonly class="form-control" formControlName="updateSalarie" [(ngModel)]="selectedAudit.updateSalarie">
                       </textarea>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" *ngIf="selectedAudit.updateContact">
                       <label class="control-label">Update Module Contact:</label>
                       <textarea type="text" readonly class="form-control" formControlName="updateContact" [(ngModel)]="selectedAudit.updateContact">
                       </textarea>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" *ngIf="selectedAudit.updatePayment">
                       <label class="control-label">Update Module Payment:</label>
                       <textarea type="text" readonly class="form-control" formControlName="updatePayment" [(ngModel)]="selectedAudit.updatePayment">
                       </textarea>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" *ngIf="selectedAudit.updateAdresse">
                       <label class="control-label">Update Module Adresse:</label>
                       <textarea type="text" readonly class="form-control" formControlName="updateAdresse" [(ngModel)]="selectedAudit.updateAdresse">
                       </textarea>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" *ngIf="selectedAudit.updateCompte">
                       <label class="control-label">Update Module Compte:</label>
                       <textarea type="text" readonly class="form-control" formControlName="updateCompte" [(ngModel)]="selectedAudit.updateCompte">
                       </textarea>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" *ngIf="selectedAudit.updateMouvement">
                       <label class="control-label">Update Opération Movement:</label>
                       <textarea type="text" readonly class="form-control" formControlName="updateMouvement" [(ngModel)]="selectedAudit.updateMouvement">
                       </textarea>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" *ngIf="selectedAudit.updatePosition">
                       <label class="control-label">Update Opération Position:</label>
                       <textarea type="text" readonly class="form-control" formControlName="updatePosition" [(ngModel)]="selectedAudit.updatePosition">
                       </textarea>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" *ngIf="selectedAudit.updateUser">
                       <label class="control-label">Update Module User:</label>
                       <textarea type="text" readonly class="form-control" formControlName="updateUser" [(ngModel)]="selectedAudit.updateUser">
                       </textarea>
                     </div>
-                    <div class="form-group">
-                    <label class="control-label">Delete Module Individu:</label>
-                    <textarea type="text" readonly class="form-control" formControlName="deleteIndividu" [(ngModel)]="selectedAudit.deleteIndividu">
-                    </textarea>
-                  </div>
-                    <div class="form-group">
+                    <div class="form-group" *ngIf="selectedAudit.deleteIndividu">
+                      <label class="control-label">Delete Module Individu:</label>
+                      <textarea type="text" readonly class="form-control" formControlName="deleteIndividu" [(ngModel)]="selectedAudit.deleteIndividu">
+                      </textarea>
+                    </div>
+                    <div class="form-group" *ngIf="selectedAudit.deleteSalarie">
                       <label class="control-label">Delete Module Salarie:</label>
                       <textarea type="text" readonly class="form-control" formControlName="deleteSalarie" [(ngModel)]="selectedAudit.deleteSalarie">
                       </textarea>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" *ngIf="selectedAudit.deleteContact">
                       <label class="control-label">Delete Module Contact:</label>
                       <textarea type="text" readonly class="form-control" formControlName="deleteContact" [(ngModel)]="selectedAudit.deleteContact">
                       </textarea>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" *ngIf="selectedAudit.deletePayment">
                       <label class="control-label">Delete Module Payment:</label>
                       <textarea type="text" readonly class="form-control" formControlName="deletePayment" [(ngModel)]="selectedAudit.deletePayment">
                       </textarea>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" *ngIf="selectedAudit.deleteAdresse">
                       <label class="control-label">Delete Module Adresse:</label>
                       <textarea type="text" readonly class="form-control" formControlName="deleteAdresse" [(ngModel)]="selectedAudit.deleteAdresse">
                       </textarea>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" *ngIf="selectedAudit.deleteCompte">
                       <label class="control-label">Delete Module Compte:</label>
                       <textarea type="text" readonly class="form-control" formControlName="deleteCompte" [(ngModel)]="selectedAudit.deleteCompte">
                       </textarea>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" *ngIf="selectedAudit.deleteMouvement">
                       <label class="control-label">Delete Operation Movement:</label>
                       <textarea type="text" readonly class="form-control" formControlName="deleteMouvement" [(ngModel)]="selectedAudit.deleteMouvement">
                       </textarea>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" *ngIf="selectedAudit.deletePosition">
                       <label class="control-label">Delete Operation Position:</label>
                       <textarea type="text" readonly class="form-control" formControlName="deletePosition" [(ngModel)]="selectedAudit.deletePosition">
                       </textarea>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group" *ngIf="selectedAudit.deleteUser">
                       <label class="control-label">Delete Module User:</label>
                       <textarea type="text" readonly class="form-control" formControlName="deleteUser" [(ngModel)]="selectedAudit.deleteUser">
                       </textarea>

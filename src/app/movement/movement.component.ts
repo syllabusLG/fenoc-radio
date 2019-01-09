@@ -13,6 +13,8 @@ import {ReportCreateFileService} from '../report-create-file/report.create.file.
 import { saveAs } from 'file-saver';
 import {CompteService} from "../compte/compte.service";
 import {CookieService} from 'ngx-cookie-service';
+import {Positions} from '../shared/position.model';
+import {PositionService} from '../position/position.service';
 
 @Component({
   selector: 'app-movement',
@@ -86,17 +88,22 @@ export class MovementComponent implements  OnInit{
   compteValid: boolean = true;
   compteValidedLine: number =1;
 
+  entityMereRequired: boolean = true;
+  entityMereRequiredLine: number = 1;
+
   movementReportCreateFile: ReportCreateFile = new ReportCreateFile();
   movementReportUpdateFile: ReportUpdateFile = new ReportUpdateFile();
 
   selectedMovement: Mouvements;
   movementForm: FormGroup;
   movements: Mouvements[];
+  positions: Positions[];
   BadHeaders: boolean = false;
   isdataNull: boolean = false;
 
   constructor(private movementService: MovementService,
-              private  compteService: CompteService,
+              private positionService: PositionService,
+              private compteService: CompteService,
               private cookieService: CookieService,
               private reportCreateFileService: ReportCreateFileService,
               private reportUpdateFileService: ReportUpdateFileService,
@@ -112,11 +119,12 @@ export class MovementComponent implements  OnInit{
       new DataModel( 'refInstrument', 'Référence Instrument', 'string', false,[]),
       new DataModel( 'quantiteInstrument', 'Quantité instrument', 'number', false,[]),
       new DataModel( 'nav', 'Nav', 'string', false,[]),
-      new DataModel( 'pruInstrument', 'PRU instrument', 'string', false,[]),
+      new DataModel( 'pruInstrument', 'PRU instrument', 'number', false,[]),
       new DataModel( 'dateCompte', 'Date Compte', 'string', false,[]),
       new DataModel( 'dateValeur', 'Date Value', 'string', false,[]),
       new DataModel( 'dateOperation', 'Date Operational', 'string', false,[]),
       new DataModel( 'compte', 'Numero Compte', 'string', false,[]),
+      new DataModel( 'idEntityMere', 'Entité mère', 'string', false,[]),
     ];
     this.dataModelListFiltred = this.dataModelList.filter(dataModel => !dataModel.readonly);
 
@@ -142,6 +150,7 @@ export class MovementComponent implements  OnInit{
   createForm(){
     this.movementForm = this.fb.group({
       compte:'',
+      idEntityMere: '',
       numMouvement: ['', Validators.required],
       quantiteInstrument:'',
       sens: '',
@@ -243,6 +252,17 @@ export class MovementComponent implements  OnInit{
           }
         }
       );
+    }
+    return true;
+  }
+
+  isEntityRequired(dataArray) {
+    for(let i = 0; i < dataArray.length; i++) {
+      if(dataArray[i].idEntityMere == 0){
+        this.entityMereRequiredLine += i;
+        this.currentStep = -1;
+        return false;
+      }
     }
     return true;
   }
@@ -385,12 +405,13 @@ export class MovementComponent implements  OnInit{
       movements.quantiteInstrument = dataArray[i].quantiteInstrument;
       movements.refInstrument = dataArray[i].refInstrument;
       movements.sens = dataArray[i].sens;
+      movements.idEntityMere = dataArray[i].idEntityMere;
       this.movementsDataArray.push(movements);
     }
 
   }
   controleHeaders (headers) {
-    let uploadHeaders = "numMouvement;sens;refInstrument;quantiteInstrument;nav;pruInstrument;dateCompte;dateValeur;dateOperation;compte";
+    let uploadHeaders = "numMouvement;sens;refInstrument;quantiteInstrument;nav;pruInstrument;dateCompte;dateValeur;dateOperation;compte;idEntityMere";
     let uploadHeadersArray = uploadHeaders.split(";");
     for (let i = 0; i < headers.length; i++) {
       if (uploadHeadersArray.indexOf(headers[i]) <= -1) {
@@ -401,9 +422,10 @@ export class MovementComponent implements  OnInit{
     }
     return false;
   }
-    controleModuleMovement(dataArray){
+  controleModuleMovement(dataArray){
     this.compteRequired = this.isCompteRequired(dataArray);
     this.compteValid= this.isCompteCreated(dataArray);
+    this.entityMereRequired = this.isEntityRequired(dataArray);
     this.numMouvementRequired = this.isNumMouvementRequired(dataArray);
     this.sensRequired = this.isSensRequired(dataArray);
     this.refInstrumentRequired = this.isRefInstrumentRequired(dataArray);
@@ -415,6 +437,15 @@ export class MovementComponent implements  OnInit{
     this.quantiteInstrumentRequired = this.isQuantiteInstrumentRequired(dataArray);
   }
 
+  /*isPositionsUpload(){
+    this.positionService.getAll().subscribe(data =>{
+      if(data == null){
+        this.currentStep = -1;
+        return false;
+      }
+    });
+    return true;
+  }*/
   selectFile($event){
     let fileList = $event.srcElement.files;
     let file = fileList[0];
@@ -439,7 +470,6 @@ export class MovementComponent implements  OnInit{
         let bindArray = this.getBindHeadersDataModelListArray(headers);
         //check is the headers are good or not
         this.BadHeaders = this.controleHeaders(headers);
-
         if(!this.BadHeaders) {
           // create data bindArray
           this.dataArray = this.buildDataArray(bindArray, csvRecordsArray);
@@ -545,14 +575,15 @@ export class MovementComponent implements  OnInit{
   fillDate(date:any){
     if(date && (date.indexOf('-') > -1)) {
       let year = new Date(Date.parse(date)).getFullYear();
-      let month = new Date(Date.parse(date)).getMonth() + 1;
-      let day = new Date(Date.parse(date)).getDate();
-      let dateFormat = day + '/' + month + '/' + year;
-      if(day>=1&&day<=9)
-      {
-        dateFormat = '0'+day + '/' + month + '/' + year;
+      let month = String(new Date(Date.parse(date)).getMonth() + 1);
+      let day = String(new Date(Date.parse(date)).getDate());
+      if (Number(day) >= 1 && Number(day) <= 9) {
+        day = '0' + day;
       }
-      return dateFormat;
+      if(Number(month) >= 1 && Number(month) <= 9) {
+        month = '0' + month;
+      }
+      return day + '/' + month + '/' + year;
     }
   }
 

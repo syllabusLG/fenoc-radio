@@ -77,8 +77,10 @@ export class HabilitationComponent implements OnInit {
         }
 
         this.user.roles = userRoles;
-        this.userService.update(this.user).subscribe();
-        this.cookieService.set('habilitation', this.user.firstName+' '+this.user.lastName+' {'+roles+'}');
+        this.userService.update(this.user).subscribe(data => {
+          this.cookieService.set('habilitation', this.cookieService.get('habilitation')+';'+this.user.firstName+' '+this.user.lastName+' {'+roles+'}');
+        });
+
       });
     }
   }
