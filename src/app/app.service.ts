@@ -28,7 +28,7 @@ export class AppService {
             type: SAVE_PRINCIPAL,
             payload: response
           });
-          this.cookieService.set('principal', JSON.stringify(response));
+          //this.cookieService.set('principal', JSON.stringify(response));
         }
         else{
           this.authenticated = false;
