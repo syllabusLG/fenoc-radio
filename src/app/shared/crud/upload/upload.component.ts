@@ -560,7 +560,7 @@ export class UploadComponent implements OnInit {
           individu.nui = dataArray[i].nui;
           compte.individu = individu;
           //Les positions par defaut pour chaque compte
-          position.idPosition = 'default'+i+1+'_ID';
+          position.idPosition = 'my_default'+i+1+'_ID';
           position.compte = compte;
           position.dateUpdate = this.fillDate(new Date());
           position.pruInstrument = 0;
@@ -582,7 +582,7 @@ export class UploadComponent implements OnInit {
           individu.nui = dataArray[i].nui;
           compte.individu = individu;
           //Les positions par defaut pour chaque compte
-          position.idPosition = 'default'+i+1+'_ID';
+          position.idPosition = 'my_default'+i+1+'_ID';
           position.compte = compte;
           position.dateUpdate = this.fillDate(new Date());
           position.pruInstrument = 0;

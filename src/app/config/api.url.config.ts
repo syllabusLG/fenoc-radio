@@ -28,6 +28,7 @@ export const API_URLS = {
   AUDIT_URL_SEARCH: BASE + ':' + PORT + PATH + '/audit/search',
   POSITION_URL: BASE + ':' + PORT + PATH + '/position',
   POSITION_URL_SEARCH: BASE + ':' + PORT + PATH + '/position/search',
+  POSITION_URL_DROP: BASE + ':' + PORT + PATH + '/position/defaultPositions',
   MOVEMENT_URL: BASE + ':' + PORT + PATH + '/movement',
   MOVEMENT_URL_SEARCH: BASE + ':' + PORT + PATH + '/movement/search',
   MOVEMENT_URL_DATE: BASE + ':' + PORT + PATH + '/movement/movementsByDate',

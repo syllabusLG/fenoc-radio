@@ -37,4 +37,7 @@ export class PositionService implements CrudService{
   search(motCle:string, page:number, size:number): Observable<any>{
     return this.http.get(API_URLS.POSITION_URL_SEARCH +'?mc='+motCle+'&size='+size+'&page='+page);
   }
+  dropDefaultPositions(): Observable<any>{
+    return this.http.delete(API_URLS.POSITION_URL_DROP);
+  }
 }

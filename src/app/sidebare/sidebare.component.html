@@ -5,11 +5,11 @@
                           routerLinkActive="active"
                           *ngIf="hasRoleUser()">Home</a>
     </li>
-    <li class="nav-item">
+    <!--<li class="nav-item">
       <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'dashboard'}}]"
                           routerLinkActive="active"
                           *ngIf="hasRoleDashboard()|| hasRoleAdmin()">Dashboard</a>
-    </li>
+    </li>-->
     <li class="nav-item">
       <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'user'}}]"
                           routerLinkActive="active"
