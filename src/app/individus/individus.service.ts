@@ -37,4 +37,8 @@ export class IndividusService implements CrudService{
     return this.http.get(API_URLS.INDIVIDUS_URL_SEARCH+'?mc='+motCle+'&size='+size+'&page='+page);
   }
 
+  getIndividusByName(name): Observable<any>{
+    return this.http.get(API_URLS.INDIVIDUS_URL_NAME + `/${name}`);
+  }
+
 }

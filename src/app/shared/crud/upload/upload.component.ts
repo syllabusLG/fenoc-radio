@@ -24,6 +24,9 @@ import {ReportUpdateFile} from '../../report.update.file.model';
 import {CookieService} from 'ngx-cookie-service';
 import {Positions} from '../../position.model';
 import {PositionService} from '../../../position/position.service';
+import {AuditService} from '../../../audit/audit.service';
+import {Audit} from '../../audit.model';
+import {AppService} from '../../../app.service';
 
 @Component({
   selector: 'app-upload',
@@ -217,12 +220,16 @@ export class UploadComponent implements OnInit {
   compteReportCreateFile: ReportCreateFile = new ReportCreateFile();
   compteReportUpdateFile: ReportUpdateFile = new ReportUpdateFile();
 
+  audit: Audit = new Audit();
+
   COUNTRY = COUNTRY;
   @Output() messageEvent = new EventEmitter<any>();
   BadHeaders: boolean = false;
 
   constructor(private individusService: IndividusService,
               private cookieService: CookieService,
+              private auditService: AuditService,
+              private appService: AppService,
               private salarieService: SalarieService,
               private contactService: ContactService,
               private paymentService: PaymentService,
@@ -626,6 +633,8 @@ export class UploadComponent implements OnInit {
     if(file && file.name.endsWith(".csv")){
       this.fileName = file.name;
       this.cookieService.set('uploadFileName', this.cookieService.get('uploadFileName')+';'+file.name);
+      this.audit.uploadFileName = file.name;
+      this.appService.saveAudit(this.audit);
       let input = $event.target;
       let reader = new FileReader();
       reader.readAsText(input.files[0], 'ISO-8859-1');
@@ -1483,12 +1492,16 @@ export class UploadComponent implements OnInit {
   }
 
   public downloadPDFModules($event:any){
+    let audit: Audit = new Audit();
     this.typeOfReport = 'modules';
     $event.preventDefault();
     $event.stopPropagation();
     Filemanagement.downloadPDFModules(this.report.nativeElement.innerHTML, this.typeOfReport);
     this.currentStep = 4;
     this.cookieService.set('reportFileName', this.cookieService.get('reportFileName')+';reportFile'+new Date()+'.pdf');
+    audit.reportFileName = 'reportFile'+new Date()+'.pdf';
+    this.appService.saveAudit(audit);
+
   }
   fillDate(date:any) {
     let year = new Date(Date.parse(date)).getFullYear();
@@ -1502,5 +1515,6 @@ export class UploadComponent implements OnInit {
     }
     return day + '/' + month + '/' + year;
   }
+
 
 }

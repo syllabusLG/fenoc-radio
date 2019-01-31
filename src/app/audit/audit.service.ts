@@ -36,4 +36,9 @@ export class AuditService implements CrudService{
   search(motCle:string, page:number, size:number): Observable<any>{
     return this.http.get(API_URLS.AUDIT_URL_SEARCH+'?mc='+motCle+'&size='+size+'&page='+page);
   }
+
+  auditsByDate(dateBefore: any, dateAfter: any, page:number, size:number): Observable<any>{
+    return this.http.get(API_URLS.AUDIT_URL_DATE+'?dateBefore='+dateBefore+'&dateAfter='+dateAfter+'&size='+size+'&page='+page);
+  }
+
 }

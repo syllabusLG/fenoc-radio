@@ -276,9 +276,9 @@ export class PositionComponent implements OnInit{
           this.dataArray = this.buildDataArray(bindArray, csvRecordsArray);
           this.controleModulePosition(this.dataArray);
           //Delete default positions
-          this.positionService.dropDefaultPositions().subscribe(resp =>{
+          /*this.positionService.dropDefaultPositions().subscribe(resp =>{
             console.log('les données sont supprimées: '+resp);
-          });
+          });*/
           //Integration du module position
           this.buildPositionDataArray(this.dataArray);
         }

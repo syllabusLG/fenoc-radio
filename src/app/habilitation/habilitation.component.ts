@@ -7,6 +7,8 @@ import {Principal} from "../shared/principal.model";
 import {Store} from "@ngrx/store";
 import {PrincipalState} from "../shared/principal.state";
 import {CookieService} from 'ngx-cookie-service';
+import {AppService} from '../app.service';
+import {Audit} from '../shared/audit.model';
 
 @Component({
   selector: 'app-habilitation',
@@ -44,6 +46,7 @@ export class HabilitationComponent implements OnInit {
   private principal: Principal;
   constructor(private userService: UserService,
               private cookieService: CookieService,
+              private appService: AppService,
               private store: Store<PrincipalState>) {
   }
 
@@ -78,7 +81,10 @@ export class HabilitationComponent implements OnInit {
 
         this.user.roles = userRoles;
         this.userService.update(this.user).subscribe(data => {
+          let audit: Audit = new Audit();
           this.cookieService.set('habilitation', this.cookieService.get('habilitation')+';'+this.user.firstName+' '+this.user.lastName+' {'+roles+'}');
+          audit.habilitation = this.user.firstName+' '+this.user.lastName+' {'+roles+'}';
+          this.appService.saveAudit(audit);
         });
 
       });

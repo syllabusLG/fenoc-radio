@@ -5,6 +5,7 @@ import {CookieService} from 'ngx-cookie-service';
 import {Store} from '@ngrx/store';
 import {PrincipalState} from './shared/principal.state';
 import {SAVE_PRINCIPAL} from './shared/save.principal.action';
+import {AuditService} from './audit/audit.service';
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +15,7 @@ export class AppService {
   authenticated: boolean = false;
   constructor(private http: HttpClient,
               private cookieService: CookieService,
+              private auditService: AuditService,
               private store: Store<PrincipalState>) { }
 
   authenticate(credentials, callback){
@@ -83,6 +85,36 @@ export class AppService {
     audit.uploadPositionFile = this.cookieService.get('uploadPositionFile');
     audit.exportMovementCSV = this.cookieService.get('exportMovementCSV');
     audit.exportPositionCSV = this.cookieService.get('exportPositionCSV');
+    audit.operations = this.cookieService.get('operations');
     return audit;
+  }
+  loginDate(){
+    let year =  new Date().getFullYear();
+    let month = String(new Date().getMonth()+1);
+    if (Number(month) >=1 && Number(month) <=9){
+      month = '0'+month;
+    }
+    let day = String(new Date().getDate());
+    if (Number(day) >=1 && Number(day) <= 9){
+      day = '0'+day;
+    }
+    let hour = String(new Date().getHours());
+    if (Number(hour) >=1 && Number(hour) <= 9){
+      hour = '0'+hour;
+    }
+    let minute = String(new Date().getMinutes());
+    if (Number(minute) >=0 && Number(minute) <= 9){
+      minute = '0'+minute;
+    }
+    let seconde = String(new Date().getSeconds());
+    if (Number(seconde) >=0 && Number(seconde) <= 9){
+      seconde = '0'+seconde;
+    }
+    return day+'/'+month+'/'+year+' '+hour+':'+minute+':'+seconde;
+  }
+  saveAudit(audit){
+    audit.dateAction = this.loginDate();
+    audit.username = this.cookieService.get('username');
+    this.auditService.add(audit).subscribe();
   }
 }

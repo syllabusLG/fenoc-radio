@@ -15,6 +15,8 @@ import {CompteService} from "../compte/compte.service";
 import {CookieService} from 'ngx-cookie-service';
 import {Positions} from '../shared/position.model';
 import {PositionService} from '../position/position.service';
+import {AppService} from '../app.service';
+import {Audit} from '../shared/audit.model';
 
 @Component({
   selector: 'app-movement',
@@ -29,6 +31,8 @@ export class MovementComponent implements  OnInit{
 
   @ViewChild('content')
   content: ElementRef;
+
+  audit: Audit = new Audit();
 
   typeOfReport: string = '';
   pageMovements:any;
@@ -103,6 +107,7 @@ export class MovementComponent implements  OnInit{
 
   constructor(private movementService: MovementService,
               private positionService: PositionService,
+              private appService: AppService,
               private compteService: CompteService,
               private cookieService: CookieService,
               private reportCreateFileService: ReportCreateFileService,
@@ -452,6 +457,8 @@ export class MovementComponent implements  OnInit{
     if(file && file.name.endsWith(".csv")){
       this.fileName = file.name;
       this.cookieService.set('uploadMovementFile', 'Upload du fichier: '+file.name);
+      this.audit.uploadMovementFile = 'Upload du fichier: '+file.name;
+      this.appService.saveAudit(this.audit);
       let input = $event.target;
       let reader = new FileReader();
       reader.readAsText(input.files[0], 'ISO-8859-1');

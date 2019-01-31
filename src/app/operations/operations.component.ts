@@ -2,6 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import {MovementService} from '../movement/movement.service';
 import {saveAs} from 'file-saver';
 import {CookieService} from 'ngx-cookie-service';
+import {Individus} from '../shared/individus.model';
+import {IndividusService} from '../individus/individus.service';
+import {Compte} from '../shared/compte.model';
+import {CompteService} from '../compte/compte.service';
+import {Audit} from '../shared/audit.model';
+import {AppService} from '../app.service';
 
 @Component({
   selector: 'app-operations',
@@ -12,14 +18,23 @@ export class OperationsComponent implements OnInit {
 
   dateBefore: any;
   dateAfter: any;
+  name: string;
+  filter: string;
   pageOperations: any;
   currentPage: number = 0;
   size: number = 5;
   pages: Array<number>;
+  individus: Individus[];
+  selectedIndividu: Individus;
+  comptes: Compte[];
+  selectedCompte: Compte;
   //operations: Mouvements[];
 
   constructor(private movementService: MovementService,
-              private cookieService: CookieService) { }
+              private individuService: IndividusService,
+              private compteService: CompteService,
+              private cookieService: CookieService,
+              private appService: AppService) { }
 
   ngOnInit() {
   }
@@ -27,13 +42,18 @@ export class OperationsComponent implements OnInit {
   loadOperations(){
     let dateBeforeFormat = this.fillDate(this.dateBefore);
     let dateAfterFormat = this.fillDate(this.dateAfter);
+    let audit: Audit = new Audit();
     console.log("Date before format: "+dateBeforeFormat);
     console.log("Date after format: "+dateAfterFormat);
-    this.movementService.movementsByDate(dateBeforeFormat, dateAfterFormat, this.currentPage, this.size)
+    console.log('Filtre------: '+ this.filter);
+    this.movementService.movementsByDate(this.selectedCompte.numCompte,dateBeforeFormat, dateAfterFormat, this.currentPage, this.size, this.filter)
       .subscribe(data => {
         console.log(data);
         this.pageOperations = data;
         this.pages = new Array<number>(data['totalPages']);
+        this.cookieService.set('operations', this.cookieService.get('operations')+';Operations: search movement according to positions');
+        audit.operations = 'Operations: search movement according to positions';
+        this.appService.saveAudit(audit);
       }, error1 => {
         console.log(error1);
       });
@@ -44,6 +64,21 @@ export class OperationsComponent implements OnInit {
   gotoPage(i: number){
     this.currentPage = i;
     this.loadOperations();
+  }
+  individusByName(){
+    this.individuService.getIndividusByName(this.name).subscribe(data =>{
+      this.individus = data;
+    }, error => {
+      console.log(error);
+    });
+  }
+  comptesByIndividu(){
+    this.compteService.getComptesByIndividu(this.selectedIndividu.nui).subscribe(data =>{
+      this.comptes = data;
+      console.log(this.comptes)
+    }, error =>{
+      console.log(error);
+    });
   }
   /*downloadFile(data: any) {
     let file = 'operations_' + new Date() + '.csv';

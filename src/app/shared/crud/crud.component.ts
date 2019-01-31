@@ -5,6 +5,8 @@ import { CrudService } from '../crud.service';
 import { DataModel } from '../data.model';
 import {Filemanagement} from "../../common/filemanagement";
 import {CookieService} from 'ngx-cookie-service';
+import {Audit} from '../audit.model';
+import {AppService} from '../../app.service';
 @Component({
   selector: 'app-crud',
   templateUrl: './crud.component.html',
@@ -37,7 +39,8 @@ export class CrudComponent implements OnInit {
 
   errors: any = {};
 
-  constructor(private cookieService: CookieService){
+  constructor(private cookieService: CookieService,
+              private appService: AppService){
   }
 
   ngOnInit(){
@@ -52,10 +55,13 @@ export class CrudComponent implements OnInit {
   }
 
   public downloadPDF($event:any){
+    let audit: Audit = new Audit();
     $event.preventDefault();
     $event.stopPropagation();
     Filemanagement.downloadPDF(this.content.nativeElement.innerHTML);
     this.cookieService.set('fileUploadError', this.cookieService.get('fileUploadError')+';fileUploadError'+new Date()+'.pdf');
+    audit.errorFileName = 'fileUploadError'+new Date()+'.pdf';
+    this.appService.saveAudit(audit);
   }
 
 

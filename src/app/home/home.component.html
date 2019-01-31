@@ -5,7 +5,9 @@
   <div [ngClass]="{'col-lg-12': showHideSideBar == false, 'col-lg-10': showHideSideBar}">
     <div>
       <app-navebar [showSideBar]="showHideSideBar"
-                   (showSideBarChange)="onShowSideBarChange($event)"></app-navebar>
+                   (showSideBarChange)="onShowSideBarChange($event)">
+
+      </app-navebar>
     </div>
 
     <div style="height: auto">

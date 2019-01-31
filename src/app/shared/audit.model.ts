@@ -3,6 +3,7 @@ export class Audit {
   constructor(public id?: string,
               public username?: string,
               public loginDate?: any,
+              public dateAction?: any,
               public uploadFileName?: string,
               public errorFileName?: string,
               public reportFileName?: string,
@@ -35,6 +36,7 @@ export class Audit {
               public uploadMovementFile?: string,
               public uploadPositionFile?: string,
               public exportMovementCSV?: string,
-              public exportPositionCSV?: string){}
+              public exportPositionCSV?: string,
+              public operations?: string){}
 
 }
