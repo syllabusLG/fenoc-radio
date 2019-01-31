@@ -1,4 +1,4 @@
-<div [ngClass]="{'body-34': !isLogin, 'body-login-wrapper': isLogin}">
+<div [ngClass]="{'body-wrapper': !isLogin, 'body-login-wrapper': isLogin}">
   <router-outlet></router-outlet>
 
   <div class="footer-wrapper" *ngIf="!isLogin">
