@@ -4,9 +4,9 @@
       <div class="col-lg-5 globalcontainer">
 
         <form [formGroup]="loginForm" (submit)="login()" class="loginForm">
-         <!-- <div class="imgcontainer">
+          <div class="imgcontainer">
             <img>
-          </div>-->
+          </div>
           <div class="container">
             <input type="text" placeholder="Username" id="username" name="username" formControlName="username"
                    [(ngModel)]="credentials.username">
