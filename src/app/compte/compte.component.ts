@@ -71,7 +71,8 @@ export class CompteComponent implements OnInit {
       });
   }
 
-  searchComptes() {
+  searchComptes(event : any) {
+    this.motCle = event;
     this.loadComptes();
   }
 

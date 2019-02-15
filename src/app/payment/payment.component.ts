@@ -63,7 +63,8 @@ export class PaymentComponent implements OnInit {
       });
   }
 
-  searchPayment(){
+  searchPayment(event : any){
+    this.motCle = event;
     this.loadPayments();
   }
 

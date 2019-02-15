@@ -4,13 +4,7 @@
 
   <div>
     <div class=" row">
-      <div class="form-inline col-sm-4">
-        <div class="form-group mx-sm-3 mb-2">
-          <label for="username" class="sr-only">Username</label>
-          <input type="text" class="form-control" id="username" placeholder="Mot Clé" [(ngModel)]="motCle">
-        </div>
-        <button type="submit" class="btn btn-info mb-2" (click)="searchPayment()">Chercher</button>
-      </div>
+      <search-input (clickSearch)="searchPayment($event)" class="form-inline col-sm-4"></search-input>
       <div class="col-sm-2" id="reportIban" #reportIban>
         <div class="d-inline-block">
           <a href="" data-toggle="collapse">
