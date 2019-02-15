@@ -2,9 +2,9 @@
   <a href="" data-toggle="collapse" (click)="afficherSideBar()">
     <i class="fa fa-bars" style="font-size:40px;color:white; margin: 15px;" ></i>
   </a>
-  <a class="navbar-brand logosmallimg">
+  <!--<a class="navbar-brand logosmallimg">
     <img >
-  </a>
+  </a>-->
   <p *ngIf="pleaseChangePass" class="thicker" style="margin-left: auto; margin-right: auto ;margin-bottom:0">Please change your password!</p>
   <div class="navbar-nav ml-auto">
   </div>
@@ -22,6 +22,10 @@
 <nav class="navbar nav-pills navbar-expand-sm bg-light" style="height:40px ">
   <i class="glyphicon glyphicon-search"></i>
   <ul class="navbar-nav" *ngIf="compteSessionActive">
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'instrument'}}]"
+         routerLinkActive="active">Instrument</a>
+    </li>
     <li class="nav-item">
       <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'movement'}}]"
            routerLinkActive="active">Mouvement</a>

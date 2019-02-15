@@ -28,6 +28,8 @@ import {PositionComponent} from "./position/position.component";
 import {MovementResolver} from "./movement/movement.resolver";
 import {PositionResolver} from './position/position.resolver';
 import {OperationsComponent} from './operations/operations.component';
+import {InstrumentsComponent} from './instruments/instruments.component';
+import {InstrumentResolver} from './instruments/instrument.resolver';
 
 
 
@@ -127,6 +129,14 @@ export const appRoutes: Routes = [
         outlet: 'contentOutlet',
       },
       {
+        path: 'instrument',
+        component: InstrumentsComponent,
+        resolve: {
+          instruments: InstrumentResolver
+        },
+        outlet: 'contentOutlet',
+      },
+      {
         path: 'movement',
         component: MovementComponent,
         resolve: {
@@ -165,6 +175,6 @@ export const appRoutes: Routes = [
     )
   ],
   exports: [RouterModule],
-  providers: [UserResolver, AdresseResolver, SalarieResolver, PaymentResolver, CompteResolver,ContactResolver,IndividusResolver, AuditResolver, MovementResolver, PositionResolver]
+  providers: [UserResolver, AdresseResolver, SalarieResolver, PaymentResolver, CompteResolver,ContactResolver,IndividusResolver, AuditResolver, MovementResolver, PositionResolver, InstrumentResolver]
 })
 export class AppRoutingModule { }

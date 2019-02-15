@@ -17,6 +17,7 @@ import {Positions} from '../shared/position.model';
 import {PositionService} from '../position/position.service';
 import {AppService} from '../app.service';
 import {Audit} from '../shared/audit.model';
+import {Instruments} from '../shared/instruments.model';
 
 @Component({
   selector: 'app-movement',
@@ -48,6 +49,9 @@ export class MovementComponent implements  OnInit{
   dataFromServer: any = null;
   dataSentToServer: boolean = false;
 
+  possibleMovment: boolean = true;
+  possibleMovmentLine: number = 1;
+
   dataModelList: DataModel[];
 
   @ViewChild('report')
@@ -58,6 +62,8 @@ export class MovementComponent implements  OnInit{
   movementsDataArray: Mouvements[]=[];
   movementsCreatedDataArray: Mouvements[]=[];
   movementsUpdateDataArray: Mouvements[]=[];
+
+  positionsDataArray: Positions[] = [];
 
   numMouvementRequired: boolean = true;
   numMouvementRequiredLine: number =1;
@@ -121,7 +127,7 @@ export class MovementComponent implements  OnInit{
     this.dataModelList = [
       new DataModel( 'numMouvement', 'Numero Mouvements', 'string', false,[]),
       new DataModel( 'sens', 'Sens', 'string', false,[]),
-      new DataModel( 'refInstrument', 'Référence Instrument', 'string', false,[]),
+      new DataModel( 'instruments', 'Référence Instrument', 'string', false,[]),
       new DataModel( 'quantiteInstrument', 'Quantité instrument', 'number', false,[]),
       new DataModel( 'nav', 'Nav', 'string', false,[]),
       new DataModel( 'pruInstrument', 'PRU instrument', 'number', false,[]),
@@ -130,6 +136,7 @@ export class MovementComponent implements  OnInit{
       new DataModel( 'dateOperation', 'Date Operational', 'string', false,[]),
       new DataModel( 'compte', 'Numero Compte', 'string', false,[]),
       new DataModel( 'idEntityMere', 'Entité mère', 'string', false,[]),
+      //new DataModel( 'position', 'ID position', 'number', false,[])
     ];
     this.dataModelListFiltred = this.dataModelList.filter(dataModel => !dataModel.readonly);
 
@@ -189,6 +196,7 @@ export class MovementComponent implements  OnInit{
           dataType = dataModel.dataType;
         }else{
           if(movementHeaders.indexOf(header) <= -1){
+            console.log("****************"+movementHeaders.indexOf(header));
             this.BadHeaders = true;
             this.currentStep = -1;
           }
@@ -361,6 +369,22 @@ export class MovementComponent implements  OnInit{
     }
     return true;
   }
+  isPossibleMovement(dataArray){
+    let position: Positions;
+    for(let i = 0; i <dataArray.length; i++){
+      this.positionService.getPositionByCodeInstrument(dataArray[i].instruments).subscribe( data=>{
+        if(data !== null){
+          position = data;
+          if (dataArray[i].sens === 'C' && (Number(position.quantiteInstrument) - Number(dataArray[i].quantiteInstrument) < 0)) {
+            this.possibleMovmentLine += i;
+            this.currentStep =-1;
+            this.possibleMovment = false;
+            console.log("possibleMovement: "+this.possibleMovment+" line: "+this.possibleMovmentLine);
+          }
+        }
+      });
+    }
+  }
 
     sendDataToServer(){
     this.sendMovementsToServer();
@@ -382,16 +406,19 @@ export class MovementComponent implements  OnInit{
       }
       this.dataFromServer = data;
       this.dataSentToServer = true;
+      this.positionService.addAll(this.positionsDataArray).subscribe();
     });
   }
 
   buildMovementsDataArray(dataArray){
     this.movementReportCreateFile.module = 'Movements';
-    this.movementReportUpdateFile.module = 'Movements'
+    this.movementReportUpdateFile.module = 'Movements';
     for(let i=0; i< dataArray.length; i++)
     {
       let movements: Mouvements = new Mouvements();
       let compte: Compte = new Compte();
+      let position: Positions = new Positions();
+      let instrument: Instruments = new Instruments();
       this.movementService.getOne(dataArray[i].numMouvement).subscribe((data)=>{
         if(data !== null){
           this.movementsUpdateDataArray.push(data);
@@ -400,7 +427,30 @@ export class MovementComponent implements  OnInit{
         }
       });
       compte.numCompte = dataArray[i].compte;
+      instrument.code = dataArray[i].instruments;
+      this.positionService.getPositionByCodeInstrument(dataArray[i].instruments).subscribe( data=>{
+        if(data !== null){
+          movements.position = data;
+          position = data;
+          if (dataArray[i].sens === 'C' && (position.quantiteInstrument - Number(dataArray[i].quantiteInstrument) < 0)){
+            return;
+          }
+          if(dataArray[i].sens === 'C'){
+            if(position.quantiteInstrument - Number(dataArray[i].quantiteInstrument) >= 0){
+              position.quantiteInstrument -= Number(dataArray[i].quantiteInstrument);
+            }
+          }else{
+            position.quantiteInstrument += Number(dataArray[i].quantiteInstrument);
+          }
+          position.pruInstrument  = dataArray[i].pruInstrument;
+          position.dateUpdate = this.fillDate(new Date());
+          this.positionsDataArray.push(position);
+          //this.positionService.add(position).subscribe();
+        }
+      });
+
       movements.compte = compte;
+      movements.instruments = instrument;
       movements.dateCompte = dataArray[i].dateCompte;
       movements.dateOperation = dataArray[i].dateOperation;
       movements.dateValeur = dataArray[i].dateValeur;
@@ -408,7 +458,6 @@ export class MovementComponent implements  OnInit{
       movements.numMouvement = dataArray[i].numMouvement;
       movements.pruInstrument = dataArray[i].pruInstrument;
       movements.quantiteInstrument = dataArray[i].quantiteInstrument;
-      movements.refInstrument = dataArray[i].refInstrument;
       movements.sens = dataArray[i].sens;
       movements.idEntityMere = dataArray[i].idEntityMere;
       this.movementsDataArray.push(movements);
@@ -416,7 +465,7 @@ export class MovementComponent implements  OnInit{
 
   }
   controleHeaders (headers) {
-    let uploadHeaders = "numMouvement;sens;refInstrument;quantiteInstrument;nav;pruInstrument;dateCompte;dateValeur;dateOperation;compte;idEntityMere";
+    let uploadHeaders = "numMouvement;sens;instruments;quantiteInstrument;nav;pruInstrument;dateCompte;dateValeur;dateOperation;compte;idEntityMere";
     let uploadHeadersArray = uploadHeaders.split(";");
     for (let i = 0; i < headers.length; i++) {
       if (uploadHeadersArray.indexOf(headers[i]) <= -1) {
@@ -440,17 +489,10 @@ export class MovementComponent implements  OnInit{
     this.dateValeurRequired = this.isDateValuerRequired(dataArray);
     this.dateOperationRequired = this.isDateOperationRequired(dataArray);
     this.quantiteInstrumentRequired = this.isQuantiteInstrumentRequired(dataArray);
+    this.isPossibleMovement(dataArray);
+    //console.log("isPossibleMovment: "+this.isPossibleMovement(dataArray));
   }
 
-  /*isPositionsUpload(){
-    this.positionService.getAll().subscribe(data =>{
-      if(data == null){
-        this.currentStep = -1;
-        return false;
-      }
-    });
-    return true;
-  }*/
   selectFile($event){
     let fileList = $event.srcElement.files;
     let file = fileList[0];
@@ -580,7 +622,7 @@ export class MovementComponent implements  OnInit{
   }
 
   fillDate(date:any){
-    if(date && (date.indexOf('-') > -1)) {
+    if(date) {
       let year = new Date(Date.parse(date)).getFullYear();
       let month = String(new Date(Date.parse(date)).getMonth() + 1);
       let day = String(new Date(Date.parse(date)).getDate());

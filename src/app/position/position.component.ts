@@ -13,6 +13,7 @@ import {Filemanagement} from '../common/filemanagement';
 import { saveAs } from 'file-saver';
 import {CompteService} from "../compte/compte.service";
 import {CookieService} from 'ngx-cookie-service';
+import {Instruments} from '../shared/instruments.model';
 
 @Component({
   selector: 'app-position',
@@ -89,7 +90,7 @@ export class PositionComponent implements OnInit{
 
   ngOnInit(){
     this.dataModelList = [
-      new DataModel('refInstrument', 'Référence instrument', 'string', false, []),
+      new DataModel('instruments', 'Référence instrument', 'string', false, []),
       new DataModel('quantiteInstrument', 'Quantité instrument', 'number', false, []),
       new DataModel('pruInstrument', 'PRU instrument', 'string', false, []),
       new DataModel('dateUpdate', 'Date modification', 'any', false, []),
@@ -161,7 +162,7 @@ export class PositionComponent implements OnInit{
   }
   isRefIntrumentRequired(dataArray){
     for(let i=0; i<dataArray.length; i++){
-      if(dataArray[i].refInstrument == 0){
+      if(dataArray[i].refInstrument === 0){
         this.refInstrumentRequiredLine +=i;
         this.currentStep =-1;
         return false;
@@ -171,7 +172,7 @@ export class PositionComponent implements OnInit{
   }
   isQuantiteInstrumentRequired(dataArray){
     for(let i=0; i<dataArray.length; i++){
-      if(dataArray[i].quantiteInstrument == 0){
+      if(Number(dataArray[i].quantiteInstrument) < 0){
         this.quantiteInstrumentRequiredLine +=i;
         this.currentStep =-1;
         return false;
@@ -181,7 +182,7 @@ export class PositionComponent implements OnInit{
   }
   isPruInstrumentRequired(dataArray){
     for(let i=0; i<dataArray.length; i++){
-      if(dataArray[i].pruInstrument == 0){
+      if(Number(dataArray[i].pruInstrument) < 0){
         this.pruInstrumentRequiredLine +=i;
         this.currentStep =-1;
         return false;
@@ -191,7 +192,7 @@ export class PositionComponent implements OnInit{
   }
   isDateModificationRequired(dataArray){
     for(let i=0; i<dataArray.length; i++){
-      if(dataArray[i].dateUpdate == 0){
+      if(dataArray[i].dateUpdate === 0){
         this.dateModificationRequiredLine +=i;
         this.currentStep =-1;
         return false;
@@ -201,7 +202,7 @@ export class PositionComponent implements OnInit{
   }
   isCompteRequired(dataArray){
     for(let i=0; i<dataArray.length; i++){
-      if(dataArray[i].compte == 0){
+      if(dataArray[i].compte === 0){
         this.compteRequiredLine +=i;
         this.currentStep =-1;
         return false;
@@ -226,7 +227,7 @@ export class PositionComponent implements OnInit{
   }
 
   controleHeaders (headers) {
-    let uploadHeaders = "refInstrument;quantiteInstrument;pruInstrument;dateUpdate;compte";
+    let uploadHeaders = "instruments;quantiteInstrument;pruInstrument;dateUpdate;compte";
     let uploadHeadersArray = uploadHeaders.split(";");
     for (let i = 0; i < headers.length; i++) {
       if (uploadHeadersArray.indexOf(headers[i]) <= -1) {
@@ -292,19 +293,21 @@ export class PositionComponent implements OnInit{
     for(let i = 0; i < dataArray.length; i++){
       let position: Positions = new Positions();
       let compte: Compte = new Compte();
-      this.positionService.getOne(dataArray[i].refInstrument.toUpperCase() + dataArray[i].quantiteInstrument+'_ID').subscribe((data) =>{
+      let instruments: Instruments = new Instruments();
+      this.positionService.getOne(i).subscribe((data) =>{
         if(data != null){
           this.positionUpdateDataArray.push(data);
         }else{
           this.positionCreatedDataArray.push(data);
         }
       });
-      position.idPosition = dataArray[i].refInstrument.toUpperCase() + dataArray[i].quantiteInstrument+'_ID';
-      position.refInstrument = dataArray[i].refInstrument;
+     // position.idPosition = dataArray[i].instruments.toUpperCase() + dataArray[i].quantiteInstrument+'_ID';
       position.quantiteInstrument = dataArray[i].quantiteInstrument;
       position.pruInstrument = dataArray[i].pruInstrument;
       position.dateUpdate = dataArray[i].dateUpdate;
+      instruments.code = dataArray[i].instruments;
       compte.numCompte = dataArray[i].compte;
+      position.instruments = instruments;
       position.compte = compte;
       this.positionDataArray.push(position);
     }

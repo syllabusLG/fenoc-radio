@@ -34,6 +34,7 @@ export class Audit {
               public updatePosition?: string,
               public deletePosition?: string,
               public uploadMovementFile?: string,
+              public uploadInstrumentFile?: string,
               public uploadPositionFile?: string,
               public exportMovementCSV?: string,
               public exportPositionCSV?: string,

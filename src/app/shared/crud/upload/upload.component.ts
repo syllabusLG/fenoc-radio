@@ -538,7 +538,6 @@ export class UploadComponent implements OnInit {
     this.compteReportUpdateFile.module = 'Compte';
     for (let i = 0; i < dataArray.length; i++){
       let compte: Compte = new Compte();
-      let position: Positions = new Positions();
       let individu: Individus = new Individus();
       if(dataArray[i].lastName.length !== 0 && dataArray[i].firstName.length !== 0 && dataArray[i].civility.length !== 0 &&
         (+dataArray[i].civility === 1 || +dataArray[i].civility === 2 || +dataArray[i].civility === 3) &&
@@ -566,15 +565,7 @@ export class UploadComponent implements OnInit {
           compte.typeCompte = 'CASH';
           individu.nui = dataArray[i].nui;
           compte.individu = individu;
-          //Les positions par defaut pour chaque compte
-          position.idPosition = 'my_default'+i+1+'_ID';
-          position.compte = compte;
-          position.dateUpdate = this.fillDate(new Date());
-          position.pruInstrument = 0;
-          position.quantiteInstrument = 0;
-          position.refInstrument = 'Reference instrument par defaut';
           this.compteDataArray.push(compte);
-          this.positionDataArray.push(position);
         }
         if ( dataArray[i].numCompte.length !== 0 && dataArray[i].idCptPc.length == 0 && (dataArray[i].statutAff.length !== 0 || dataArray[i].typage.length !== 0)){
           //compte de titSal
@@ -588,15 +579,8 @@ export class UploadComponent implements OnInit {
           compte.typeCompte = 'TIT';
           individu.nui = dataArray[i].nui;
           compte.individu = individu;
-          //Les positions par defaut pour chaque compte
-          position.idPosition = 'my_default'+i+1+'_ID';
-          position.compte = compte;
-          position.dateUpdate = this.fillDate(new Date());
-          position.pruInstrument = 0;
-          position.quantiteInstrument = 0;
-          position.refInstrument = 'Reference instrument par defaut';
           this.compteDataArray.push(compte);
-          this.positionDataArray.push(position);
+
         }
       }
 
