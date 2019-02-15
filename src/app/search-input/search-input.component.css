@@ -1,0 +1,15 @@
+.h3-class {
+    color: #12899e;
+    text-align: center;
+    font-weight: bold;
+  }
+  .modal-dialog,
+  .modal-content {
+    /* 80% of window height */
+    height:95%;
+  }
+  
+  .modal-body {
+    max-height: calc(100% - 120px);
+    overflow-y: scroll;
+  }

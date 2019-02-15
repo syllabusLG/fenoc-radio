@@ -36,7 +36,7 @@
   <div *ngSwitchCase="2">
     <div *ngIf="!dataSentToServer && company_cd_required">
       <p>Cliquez pour envoyer les données au serveur !</p>
-      <button class="btn btn-default" style="width: fit-content" (click)="sendDataToServer()">Send</button>
+      <button class="btn btn-success" style="width: fit-content" (click)="sendDataToServer()">Send</button>
     </div>
     <div *ngIf="dataSentToServer">
       <p>L'envoie est terminé.</p>

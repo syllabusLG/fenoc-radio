@@ -41,6 +41,7 @@ import {NgIdleKeepaliveModule} from "@ng-idle/keepalive";
 import {MovementComponent} from "./movement/movement.component";
 import {PositionComponent} from "./position/position.component";
 import { OperationsComponent } from './operations/operations.component';
+import { SearchInputComponent } from './search-input/search-input.component';
 
 
 @NgModule({
@@ -72,7 +73,8 @@ import { OperationsComponent } from './operations/operations.component';
     AuditComponent,
     MovementComponent,
     PositionComponent,
-    OperationsComponent
+    OperationsComponent,
+    SearchInputComponent
   ],
   imports: [
     BrowserModule,

@@ -2,12 +2,8 @@
   <h3 class="h3-class">Salarie</h3>
   <hr>
   <div>
-    <div class=" row">
-      <div class="form-group col-sm-10">
-        <label style="margin-left: 10px">Mot Clé</label>
-        <input style="height: 33px;width: fit-content" type="text" [(ngModel)]="motCle"/>
-        <button class="btn btn-info" style="width: fit-content" (click)="searchSalarie()">Chercher</button>
-      </div>
+    <div class="row">
+          <search-input (clickSearch)="searchSalarie($event)" class="form-inline col-sm-4"></search-input>
       <div class="col-sm-2" id="reportSalarie" #reportSalarie>
         <div class="d-inline-block">
           <a href="" data-toggle="collapse">

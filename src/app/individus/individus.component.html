@@ -3,10 +3,12 @@
   <hr>
   <div>
     <div class=" row">
-      <div class="form-group col-sm-10">
-        <label style="margin-left: 10px">Mot Clé</label>
-        <input style="height: 33px;width: fit-content" type="text" [(ngModel)]="motCle"/>
-        <button class="btn btn-info" style="width: fit-content" (click)="searchIndividus()">Chercher</button>
+      <div class="form-inline col-sm-4">
+        <div class="form-group mx-sm-3 mb-2">
+          <label for="username" class="sr-only">Username</label>
+          <input type="text" class="form-control" id="username" placeholder="Mot Clé" [(ngModel)]="motCle">
+        </div>
+        <button type="submit" class="btn btn-info mb-2" (click)="searchIndividus()">Chercher</button>
       </div>
       <div class="col-sm-2" id="reportSalarie" #reportSalarie>
         <div class="d-inline-block">
