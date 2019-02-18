@@ -2,6 +2,9 @@ import {Compte} from './compte.model';
 import {Instruments} from './instruments.model';
 import {Positions} from './position.model';
 
+/**
+ * Class Movement
+ */
 export class Mouvements {
 
   constructor(public numMouvement?: string,
