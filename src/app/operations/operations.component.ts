@@ -65,8 +65,8 @@ export class OperationsComponent implements OnInit {
     this.currentPage = i;
     this.loadOperations();
   }
-  individusByName(){
-    this.individuService.getIndividusByName(this.name).subscribe(data =>{
+  individusByName(event){
+    this.individuService.getIndividusByName(event).subscribe(data =>{
       this.individus = data;
     }, error => {
       console.log(error);

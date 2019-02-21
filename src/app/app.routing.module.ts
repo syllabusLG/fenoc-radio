@@ -30,6 +30,7 @@ import {PositionResolver} from './position/position.resolver';
 import {OperationsComponent} from './operations/operations.component';
 import {InstrumentsComponent} from './instruments/instruments.component';
 import {InstrumentResolver} from './instruments/instrument.resolver';
+import { CanDeactivateGuard } from './shared/crud/upload/can-deactivate-guard.service';
 
 
 
@@ -57,7 +58,8 @@ export const appRoutes: Routes = [
       {
         path: 'file',
         component: FileComponent,
-        outlet: 'contentOutlet'
+        outlet: 'contentOutlet',
+        canDeactivate: [CanDeactivateGuard]
       },
       {
         path: 'user',
@@ -175,6 +177,6 @@ export const appRoutes: Routes = [
     )
   ],
   exports: [RouterModule],
-  providers: [UserResolver, AdresseResolver, SalarieResolver, PaymentResolver, CompteResolver,ContactResolver,IndividusResolver, AuditResolver, MovementResolver, PositionResolver, InstrumentResolver]
+  providers: [UserResolver, AdresseResolver, SalarieResolver, PaymentResolver, CompteResolver,ContactResolver,IndividusResolver, AuditResolver, MovementResolver, PositionResolver, InstrumentResolver, CanDeactivateGuard]
 })
 export class AppRoutingModule { }

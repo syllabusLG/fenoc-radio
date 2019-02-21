@@ -5,7 +5,9 @@ import {Salarie} from "../shared/salarie.model";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {saveAs} from 'file-saver';
 import {Individus} from '../shared/individus.model';
+import {SearchInputComponent} from "../search-input/search-input.component";
 import {CookieService} from 'ngx-cookie-service';
+import { debug } from 'util';
 
 
 @Component({
@@ -68,7 +70,8 @@ export class SalarieComponent implements OnInit {
       });
   }
 
-  searchSalarie() {
+  searchSalarie(event:any) {
+    this.motCle = event;
     this.loadSalaries();
   }
 

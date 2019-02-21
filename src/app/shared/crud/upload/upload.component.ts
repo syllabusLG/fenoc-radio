@@ -27,14 +27,16 @@ import {PositionService} from '../../../position/position.service';
 import {AuditService} from '../../../audit/audit.service';
 import {Audit} from '../../audit.model';
 import {AppService} from '../../../app.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-upload',
   templateUrl: './upload.component.html',
   styleUrls: ['./upload.component.css']
 })
-export class UploadComponent implements OnInit {
 
+
+export class UploadComponent implements OnInit {
   @ViewChild("fileUploadInput")
   fileUploadInput: any;
 
@@ -238,14 +240,14 @@ export class UploadComponent implements OnInit {
               private positionService: PositionService,
               private fiscaliteService: FiscaliteService,
               private reportCreateFileService: ReportCreateFileService,
-              private reportUpdateFileService: ReportUpdateFileService) { }
+              private reportUpdateFileService: ReportUpdateFileService,
+              private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
     this.dataModelListFiltred = this.dataModelList.filter(dataModel => !dataModel.readonly);
-  }
+    }
 
-
-  getBindHeadersDataModelListArray(headers){
+    getBindHeadersDataModelListArray(headers){
     let bindArray = [];
     let index = 0;
     let getDataType = (header) => {
@@ -611,7 +613,7 @@ export class UploadComponent implements OnInit {
   }*/
 
   selectFile($event){
-
+    this.spinner.show();
     let fileList = $event.srcElement.files;
     let file = fileList[0];
     if(file && file.name.endsWith(".csv")){
@@ -667,7 +669,7 @@ export class UploadComponent implements OnInit {
         this.currentStep++;
 
         this.emmitErrors();
-
+        this.spinner.hide();
       };
     }
   }
@@ -796,7 +798,7 @@ export class UploadComponent implements OnInit {
     this.bicIbanValid = this.isBicIbanValid(dataArray);
   }
 
-  sendIndividusToServer(){
+  async sendIndividusToServer(){
       this.individusService.addAll(this.individusDataArray).subscribe((data)=>{
       this.dataFromServer = data;
       this.dataSentToServer=true;
@@ -883,10 +885,13 @@ export class UploadComponent implements OnInit {
   /*sendFiscaliteToServer(){
     this.fiscaliteService.addAll(this.fiscaliteDataArray).subscribe();
   }*/
-  sendDataToServer(){
-    this.sendIndividusToServer();
+  async sendDataToServer(){
+    this.spinner.show();
+    await this.sendIndividusToServer(); 
+    this.spinner.hide()
     this.currentStep = 3;
   }
+  
   isCompanyCdCorrect(dataArray){
 
     for (let i = 0; i < dataArray.length; i++){

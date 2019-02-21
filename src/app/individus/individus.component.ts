@@ -70,7 +70,8 @@ export class IndividusComponent implements OnInit {
       });
   }
 
-  searchIndividus() {
+  searchIndividus(event : any) {
+    this.motCle = event;
     this.loadIndividus();
   }
 

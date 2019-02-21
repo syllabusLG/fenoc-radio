@@ -1,9 +1,7 @@
 <div class="container">
   <div *ngIf="!selectedCompte">
     <div class="form-group col-sm-10">
-      <label style="margin-left: 10px">Nom individu</label>
-      <input style="height: 33px;width: fit-content" type="text" [(ngModel)]="name"/>
-      <button class="btn btn-info" style="width: fit-content" (click)="individusByName()">Chercher</button>
+      <search-input (clickSearch)="individusByName($event)" class="form-inline"></search-input>
     </div>
     <div class="col-sm-12">
       <table class="col-sm-12 table table-hover">

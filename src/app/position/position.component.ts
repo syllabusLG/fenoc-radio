@@ -398,7 +398,8 @@ export class PositionComponent implements OnInit{
     this.loadPositions();
   }
 
-  searchPosition(){
+  searchPosition(event){
+    this.motCle = event;
     this.loadPositions();
   }
 
