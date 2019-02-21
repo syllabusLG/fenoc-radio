@@ -107,24 +107,24 @@ export class UploadComponent implements OnInit {
   civilityRequiredLine: number = 1;
   civilityFalseValue: boolean = true;
 
-  statusGiven: boolean = true;
+ /* statusGiven: boolean = true;
   statusGivenLine: number = 1;
-  statusValid: boolean = true;
+  statusValid: boolean = true;*/
 
   employeStatusGiven: boolean = true;
   employeStatusGivenLine: number = 1;
   employeStatusValid: boolean = true;
 
-  vipGiven: boolean = true;
+  /*vipGiven: boolean = true;
   vipGivenLine: number = 1;
-  vipValid: boolean = true;
+  vipValid: boolean = true;*/
 
-  sensitiveGiven: boolean = true;
+  /*sensitiveGiven: boolean = true;
   sensitiveGivenLine: number = 1;
-  sensitiveValid: boolean = true;
+  sensitiveValid: boolean = true;*/
 
-  conformFlagSensitive: boolean = true;
-  conformFlagSensitiveLine: number = 1;
+  /*conformFlagSensitive: boolean = true;
+  conformFlagSensitiveLine: number = 1;*/
 
   lastNameGiven: boolean = true;
   lastNameGivenline: number = 1;
@@ -161,20 +161,20 @@ export class UploadComponent implements OnInit {
   birthDateValid: boolean = true;
   birthDateValidLine: number = 1;
 
-  dateEndSensitiveValid: boolean = true;
-  dateEndSensitiveValidLine: number = 1;
+  /*dateEndSensitiveValid: boolean = true;
+  dateEndSensitiveValidLine: number = 1;*/
 
   hireDateValid: boolean = true;
   hireDateValidLine: number = 1;
 
-  lastHireDateValid: boolean = true;
-  lastHireDateValidLine: number = 1;
+ /* lastHireDateValid: boolean = true;
+  lastHireDateValidLine: number = 1;*/
 
   departDateValid: boolean = true;
   departDateValidLine: number = 1;
 
-  lastDepartDateValid: boolean = true;
-  lastDepartDateValidLine: number = 1;
+  /*lastDepartDateValid: boolean = true;
+  lastDepartDateValidLine: number = 1;*/
 
   employeNoDepartDate: boolean = true;
   employeNoDepartDateLine: number = 1;
@@ -271,7 +271,7 @@ export class UploadComponent implements OnInit {
   }
 
   controleHeaders (headers){
-    let uploadHeaders = "nui;company_CD;employeeId;employeeStatus;civility;lastName;useName;firstName;personalEmail;businessEmail;birthDate;statut;vip;mySensitive;dateEndSensitive;birthCountry;hireDate;departDate;lastHireDate;lastDepartDate;numberStreet;street;codePostal;city;country;additionalAdress_1;additionalAdress_2;additionalAdress_3;bic;iban;birthPlace;nationality;cellPhone;homePhone;businessPhone;spc;level_1;level_2;level_3;level_4;level_5;branch_CD;numCompte;libCompte;type;ouvert;lettrage;statutAff;typage;idCptPc;nif";
+    let uploadHeaders = "nui;company_CD;employeeId;employeeStatus;civility;lastName;firstName;personalEmail;businessEmail;birthDate;birthPlace;birthCountry;nationality;hireDate;departDate;numberStreet;street;codePostal;city;country;additionalAdress_1;additionalAdress_2;additionalAdress_3;bic;iban;otherPayment;cellPhone;homePhone;businessPhone;numCompte;libCompte;type;ouvert;lettrage;statutAff;typage;idCptPc;nif";
     let uploadHeadersArray= uploadHeaders.split(";");
     for(let i=0; i<headers.length; i++) {
       let ind = headers[i];
@@ -309,10 +309,7 @@ export class UploadComponent implements OnInit {
       if(dataArray[i].lastName.length !== 0 && dataArray[i].firstName.length !== 0 && dataArray[i].civility.length !== 0 &&
         (+dataArray[i].civility === 1 || +dataArray[i].civility === 2 || +dataArray[i].civility === 3) &&
          dataArray[i].birthDate.length !== 0 && this.isValidateDate(dataArray[i].birthDate) && this.isDateValide(dataArray[i].birthDate) && this.isAgeValide(dataArray[i].birthDate) &&
-         dataArray[i].statut.length !== 0 && (dataArray[i].statut.toUpperCase() === 'A' || dataArray[i].statut.toUpperCase() === 'D') &&
-         dataArray[i].employeeStatus.length !== 0 && (dataArray[i].employeeStatus.toUpperCase() === 'P' || dataArray[i].employeeStatus.toUpperCase() === 'S' || dataArray[i].employeeStatus.toUpperCase() === 'R') &&
-         dataArray[i].vip.length !== 0 && (dataArray[i].vip.toUpperCase() === 'Y' || dataArray[i].vip.toUpperCase() === 'N') &&
-         dataArray[i].mySensitive.length !== 0 && (dataArray[i].mySensitive.toUpperCase() === 'Y' || dataArray[i].mySensitive.toUpperCase() === 'N')) {
+         dataArray[i].employeeStatus.length !== 0 && (dataArray[i].employeeStatus.toUpperCase() === 'P' || dataArray[i].employeeStatus.toUpperCase() === 'S' || dataArray[i].employeeStatus.toUpperCase() === 'R')) {
 
         this.individusService.getOne(dataArray[i].nui).subscribe((data)=>{
           if(data !== null){
@@ -326,7 +323,7 @@ export class UploadComponent implements OnInit {
         individus.nui = dataArray[i].nui;
         individus.civility = dataArray[i].civility;
         individus.lastName = dataArray[i].lastName;
-        individus.useName = dataArray[i].useName;
+        //individus.useName = dataArray[i].useName;
         individus.firstName = dataArray[i].firstName;
         individus.birthDate = dataArray[i].birthDate;
         individus.birthPlace = dataArray[i].birthPlace;
@@ -363,10 +360,7 @@ export class UploadComponent implements OnInit {
       if(dataArray[i].lastName.length !== 0 && dataArray[i].firstName.length !== 0 && dataArray[i].civility.length !== 0 &&
         (+dataArray[i].civility === 1 || +dataArray[i].civility === 2 || +dataArray[i].civility === 3) &&
         dataArray[i].birthDate.length !== 0 && this.isValidateDate(dataArray[i].birthDate) && this.isDateValide(dataArray[i].birthDate) && this.isAgeValide(dataArray[i].birthDate) &&
-        dataArray[i].statut.length !== 0 && (dataArray[i].statut.toUpperCase() === 'A' || dataArray[i].statut.toUpperCase() === 'D') &&
-        dataArray[i].employeeStatus.length !== 0 && (dataArray[i].employeeStatus.toUpperCase() === 'P' || dataArray[i].employeeStatus.toUpperCase() === 'S' || dataArray[i].employeeStatus.toUpperCase() === 'R') &&
-        dataArray[i].vip.length !== 0 && (dataArray[i].vip.toUpperCase() === 'Y' || dataArray[i].vip.toUpperCase() === 'N') &&
-        dataArray[i].mySensitive.length !== 0 && (dataArray[i].mySensitive.toUpperCase() === 'Y' || dataArray[i].mySensitive.toUpperCase() === 'N')){
+        dataArray[i].employeeStatus.length !== 0 && (dataArray[i].employeeStatus.toUpperCase() === 'P' || dataArray[i].employeeStatus.toUpperCase() === 'S' || dataArray[i].employeeStatus.toUpperCase() === 'R')){
 
         this.salarieService.getOne(dataArray[i].employeeId).subscribe((data)=>{
           if(data !== null){
@@ -378,21 +372,8 @@ export class UploadComponent implements OnInit {
         salarie.employeeId = dataArray[i].employeeId;
         salarie.employeeStatus = dataArray[i].employeeStatus;
         salarie.company_CD = dataArray[i].company_CD;
-        salarie.spc = dataArray[i].spc;
-        salarie.level_1 = dataArray[i].level_1;
-        salarie.level_2 = dataArray[i].level_2;
-        salarie.level_3 = dataArray[i].level_3;
-        salarie.level_4 = dataArray[i].level_4;
-        salarie.level_5 = dataArray[i].level_5;
         salarie.hireDate = dataArray[i].hireDate;
         salarie.departDate = dataArray[i].departDate;
-        salarie.lastHireDate = dataArray[i].lastHireDate;
-        salarie.lastDepartDate = dataArray[i].lastDepartDate;
-        salarie.branch_CD = dataArray[i].branch_CD;
-        salarie.statut = dataArray[i].statut;
-        salarie.vip = dataArray[i].vip;
-        salarie.mySensitive = dataArray[i].mySensitive;
-        salarie.dateEndSensitive = dataArray[i].dateEndSensitive;
         individu.nui = dataArray[i].nui;
         salarie.individu = individu;
         this.salarieDataArray.push(salarie);
@@ -409,10 +390,7 @@ export class UploadComponent implements OnInit {
       if(dataArray[i].lastName.length !== 0 && dataArray[i].firstName.length !== 0 && dataArray[i].civility.length !== 0 &&
         (+dataArray[i].civility === 1 || +dataArray[i].civility === 2 || +dataArray[i].civility === 3) &&
         dataArray[i].birthDate.length !== 0 && this.isValidateDate(dataArray[i].birthDate) && this.isDateValide(dataArray[i].birthDate) && this.isAgeValide(dataArray[i].birthDate) &&
-        dataArray[i].statut.length !== 0 && (dataArray[i].statut.toUpperCase() === 'A' || dataArray[i].statut.toUpperCase() === 'D') &&
-        dataArray[i].employeeStatus.length !== 0 && (dataArray[i].employeeStatus.toUpperCase() === 'P' || dataArray[i].employeeStatus.toUpperCase() === 'S' || dataArray[i].employeeStatus.toUpperCase() === 'R') &&
-        dataArray[i].vip.length !== 0 && (dataArray[i].vip.toUpperCase() === 'Y' || dataArray[i].vip.toUpperCase() === 'N') &&
-        dataArray[i].mySensitive.length !== 0 && (dataArray[i].mySensitive.toUpperCase() === 'Y' || dataArray[i].mySensitive.toUpperCase() === 'N')){
+        dataArray[i].employeeStatus.length !== 0 && (dataArray[i].employeeStatus.toUpperCase() === 'P' || dataArray[i].employeeStatus.toUpperCase() === 'S' || dataArray[i].employeeStatus.toUpperCase() === 'R')){
 
         this.contactService.getOne(dataArray[i].employeeId.toUpperCase()+"_ID").subscribe((data) =>{
           if(data !== null){
@@ -447,10 +425,7 @@ export class UploadComponent implements OnInit {
       if(dataArray[i].lastName.length !== 0 && dataArray[i].firstName.length !== 0 && dataArray[i].civility.length !== 0 &&
         (+dataArray[i].civility === 1 || +dataArray[i].civility === 2 || +dataArray[i].civility === 3) &&
         dataArray[i].birthDate.length !== 0 && this.isValidateDate(dataArray[i].birthDate) && this.isDateValide(dataArray[i].birthDate) && this.isAgeValide(dataArray[i].birthDate) &&
-        dataArray[i].statut.length !== 0 && (dataArray[i].statut.toUpperCase() === 'A' || dataArray[i].statut.toUpperCase() === 'D') &&
-        dataArray[i].employeeStatus.length !== 0 && (dataArray[i].employeeStatus.toUpperCase() === 'P' || dataArray[i].employeeStatus.toUpperCase() === 'S' || dataArray[i].employeeStatus.toUpperCase() === 'R') &&
-        dataArray[i].vip.length !== 0 && (dataArray[i].vip.toUpperCase() === 'Y' || dataArray[i].vip.toUpperCase() === 'N') &&
-        dataArray[i].mySensitive.length !== 0 && (dataArray[i].mySensitive.toUpperCase() === 'Y' || dataArray[i].mySensitive.toUpperCase() === 'N')){
+        dataArray[i].employeeStatus.length !== 0 && (dataArray[i].employeeStatus.toUpperCase() === 'P' || dataArray[i].employeeStatus.toUpperCase() === 'S' || dataArray[i].employeeStatus.toUpperCase() === 'R')){
 
         if(dataArray[i].iban.length !== 0 && dataArray[i].bic.length !== 0
           && this.isValidIBANNumber(dataArray[i].iban) && this.isBic(dataArray[i].bic)
@@ -465,6 +440,7 @@ export class UploadComponent implements OnInit {
           });
           payment.bic =  dataArray[i].bic;
           payment.iban = dataArray[i].iban;
+          payment.otherPayment = dataArray[i].otherPayment;
           individu.nui = dataArray[i].nui;
           payment.individu = individu;
           this.paymentDataArray.push(payment);
@@ -482,10 +458,8 @@ export class UploadComponent implements OnInit {
       if(dataArray[i].lastName.length !== 0 && dataArray[i].firstName.length !== 0 && dataArray[i].civility.length !== 0 &&
         (+dataArray[i].civility === 1 || +dataArray[i].civility === 2 || +dataArray[i].civility === 3) &&
         dataArray[i].birthDate.length !== 0 && this.isValidateDate(dataArray[i].birthDate) && this.isDateValide(dataArray[i].birthDate) && this.isAgeValide(dataArray[i].birthDate) &&
-        dataArray[i].statut.length !== 0 && (dataArray[i].statut.toUpperCase() === 'A' || dataArray[i].statut.toUpperCase() === 'D') &&
-        dataArray[i].employeeStatus.length !== 0 && (dataArray[i].employeeStatus.toUpperCase() === 'P' || dataArray[i].employeeStatus.toUpperCase() === 'S' || dataArray[i].employeeStatus.toUpperCase() === 'R') &&
-        dataArray[i].vip.length !== 0 && (dataArray[i].vip.toUpperCase() === 'Y' || dataArray[i].vip.toUpperCase() === 'N') &&
-        dataArray[i].mySensitive.length !== 0 && (dataArray[i].mySensitive.toUpperCase() === 'Y' || dataArray[i].mySensitive.toUpperCase() === 'N')){
+
+        dataArray[i].employeeStatus.length !== 0 && (dataArray[i].employeeStatus.toUpperCase() === 'P' || dataArray[i].employeeStatus.toUpperCase() === 'S' || dataArray[i].employeeStatus.toUpperCase() === 'R')){
 
         this.adresseService.getOne(dataArray[i].nui.toUpperCase() + dataArray[i].numberStreet).subscribe((data)=>{
           if(data !== null){
@@ -542,10 +516,7 @@ export class UploadComponent implements OnInit {
       if(dataArray[i].lastName.length !== 0 && dataArray[i].firstName.length !== 0 && dataArray[i].civility.length !== 0 &&
         (+dataArray[i].civility === 1 || +dataArray[i].civility === 2 || +dataArray[i].civility === 3) &&
         dataArray[i].birthDate.length !== 0 && this.isValidateDate(dataArray[i].birthDate) && this.isDateValide(dataArray[i].birthDate) && this.isAgeValide(dataArray[i].birthDate) &&
-        dataArray[i].statut.length !== 0 && (dataArray[i].statut.toUpperCase() === 'A' || dataArray[i].statut.toUpperCase() === 'D') &&
-        dataArray[i].employeeStatus.length !== 0 && (dataArray[i].employeeStatus.toUpperCase() === 'P' || dataArray[i].employeeStatus.toUpperCase() === 'S' || dataArray[i].employeeStatus.toUpperCase() === 'R') &&
-        dataArray[i].vip.length !== 0 && (dataArray[i].vip.toUpperCase() === 'Y' || dataArray[i].vip.toUpperCase() === 'N') &&
-        dataArray[i].mySensitive.length !== 0 && (dataArray[i].mySensitive.toUpperCase() === 'Y' || dataArray[i].mySensitive.toUpperCase() === 'N')){
+        dataArray[i].employeeStatus.length !== 0 && (dataArray[i].employeeStatus.toUpperCase() === 'P' || dataArray[i].employeeStatus.toUpperCase() === 'S' || dataArray[i].employeeStatus.toUpperCase() === 'R')){
 
         this.compteService.getOne(dataArray[i].numCompte).subscribe((data)=>{
           if (data !== null){
@@ -701,7 +672,7 @@ export class UploadComponent implements OnInit {
       birthDateValid: this.birthDateValid,
       codePaysFound: this.codePaysFound,
       codePaysFoundLine: this.codePaysFoundLine,
-      statusGiven: this.statusGiven,
+      /*statusGiven: this.statusGiven,
       statusGivenLine: this.statusGivenLine,
       statusValid: this.statusValid,
       vipGiven: this.vipGiven,
@@ -713,7 +684,7 @@ export class UploadComponent implements OnInit {
       dateEndSensitiveValid: this.dateEndSensitiveValid,
       dateEndSensitiveValidLine: this.dateEndSensitiveValidLine,
       conformFlagSensitive: this.conformFlagSensitive,
-      conformFlagSensitiveLine: this.conformFlagSensitiveLine,
+      conformFlagSensitiveLine: this.conformFlagSensitiveLine,*/
       employeStatusGiven: this.employeStatusGiven,
       employeStatusGivenLine: this.employeStatusGivenLine,
       employeStatusValid: this.employeStatusValid,
@@ -725,10 +696,10 @@ export class UploadComponent implements OnInit {
       employeNoDepartDateLine: this.employeNoDepartDateLine,
       employeDepartDate: this.employeDepartDate,
       employeDepartDateLine: this.employeDepartDateLine,
-      lastHireDateValid: this.lastHireDateValid,
+      /*lastHireDateValid: this.lastHireDateValid,
       lastHireDateValidLine: this.lastHireDateValidLine,
       lastDepartDateValid: this.lastDepartDateValid,
-      lastDepartDateValidLine: this.lastDepartDateValidLine,
+      lastDepartDateValidLine: this.lastDepartDateValidLine,*/
       numberStreetIncomplet: this.numberStreetIncomplet,
       numberStreetIncompletLine: this.numberStreetIncompletLine,
       adressValidLine: this.adressValidLine,
@@ -762,14 +733,14 @@ export class UploadComponent implements OnInit {
     this.businessEmailValid = this.isBusinessEmailValid(dataArray);
     this.birthDateGiven = this.isBirthDateGiven(dataArray);
     this.birthDateValid = this.isBirthDateValid(dataArray);
-    this.statusGiven = this.isStatusGiven(dataArray);
+    /*this.statusGiven = this.isStatusGiven(dataArray);
     this.statusValid = this.isStatusValid(dataArray);
     this.vipGiven = this.isVipGiven(dataArray);
     this.vipValid = this.isVipValid(dataArray);
     this.sensitiveGiven = this.isSensitiveGiven(dataArray);
     this.sensitiveValid = this.isSensitiveValid(dataArray);
     this.dateEndSensitiveValid = this.isDateEndSensitiveValid(dataArray);
-    this.conformFlagSensitive = this.isConformFlagSensitive(dataArray);
+    this.conformFlagSensitive = this.isConformFlagSensitive(dataArray);*/
     this.codePaysFound = this.isCodeIsoValid(dataArray);
 
   }
@@ -780,8 +751,8 @@ export class UploadComponent implements OnInit {
     this.departDateValid = this.isDepartDateValide(dataArray);
     this.employeNoDepartDate = this.isEmployeNoDepartDate(dataArray);
     this.employeDepartDate = this.isEmployeDepartDate(dataArray);
-    this.lastHireDateValid = this.isLastHireDateValide(dataArray);
-    this.lastDepartDateValid = this.isLastDepartDateValide(dataArray);
+    /*this.lastHireDateValid = this.isLastHireDateValide(dataArray);
+    this.lastDepartDateValid = this.isLastDepartDateValide(dataArray);*/
 
   }
   controleModuleAdresse(dataArray){
@@ -1038,7 +1009,7 @@ export class UploadComponent implements OnInit {
     }
     return true;
   }
-  isDateEndSensitiveValid(dataArray){
+  /*isDateEndSensitiveValid(dataArray){
     for (let i = 0; i < dataArray.length; i++){
       if(dataArray[i].dateEndSensitive.length !== 0 && !this.isValidateDate(dataArray[i].dateEndSensitive)){
         this.dateEndSensitiveValidLine += i;
@@ -1050,9 +1021,9 @@ export class UploadComponent implements OnInit {
       }
     }
     return true;
-  }
+  }*/
 
-  isStatusGiven(dataArray){
+/*  isStatusGiven(dataArray){
     for (let i = 0; i < dataArray.length; i++){
       if(dataArray[i].statut.length === 0){
         this.statusGivenLine += i;
@@ -1060,8 +1031,8 @@ export class UploadComponent implements OnInit {
       }
     }
     return true;
-  }
-  isStatusValid(dataArray){
+  }*/
+ /* isStatusValid(dataArray){
     for (let i = 0; i < dataArray.length; i++){
       if(dataArray[i].statut.length !== 0 && dataArray[i].statut.toUpperCase() !== 'A' && dataArray[i].statut.toUpperCase() !== 'D'){
         this.statusGivenLine += i;
@@ -1069,7 +1040,7 @@ export class UploadComponent implements OnInit {
       }
     }
     return true;
-  }
+  }*/
 
   isEmployeStatusGiven(dataArray){
     for (let i = 0; i < dataArray.length; i++){
@@ -1090,7 +1061,7 @@ export class UploadComponent implements OnInit {
     return true;
   }
 
-  isVipGiven(dataArray){
+  /*isVipGiven(dataArray){
     for (let i = 0; i < dataArray.length; i++){
       if(dataArray[i].vip.length === 0){
         this.vipGivenLine += i;
@@ -1098,8 +1069,8 @@ export class UploadComponent implements OnInit {
       }
     }
     return true;
-  }
-  isVipValid(dataArray){
+  }*/
+  /*isVipValid(dataArray){
     for (let i = 0; i < dataArray.length; i++){
       if(dataArray[i].vip.length !== 0 && dataArray[i].vip.toUpperCase() !== 'Y' && dataArray[i].vip.toUpperCase() !== 'N'){
         this.vipGivenLine += i;
@@ -1108,8 +1079,8 @@ export class UploadComponent implements OnInit {
     }
     return true;
   }
-
-  isSensitiveGiven(dataArray){
+*/
+  /*isSensitiveGiven(dataArray){
     for (let i = 0; i < dataArray.length; i++){
       if(dataArray[i].mySensitive.length === 0){
         this.sensitiveGivenLine += i;
@@ -1117,8 +1088,8 @@ export class UploadComponent implements OnInit {
       }
     }
     return true;
-  }
-  isSensitiveValid(dataArray){
+  }*/
+  /*isSensitiveValid(dataArray){
     for (let i = 0; i < dataArray.length; i++){
       if(dataArray[i].mySensitive.length !== 0 && dataArray[i].mySensitive.toUpperCase() !== 'Y' && dataArray[i].mySensitive.toUpperCase() !== 'N'){
         this.sensitiveGivenLine += i;
@@ -1126,8 +1097,8 @@ export class UploadComponent implements OnInit {
       }
     }
     return true;
-  }
-  isConformFlagSensitive(dataArray){
+  }*/
+/*  isConformFlagSensitive(dataArray){
     for (let i = 0; i < dataArray.length; i++){
       if(dataArray[i].dateEndSensitive.length > 0 && dataArray[i].mySensitive.toUpperCase() !== 'Y'){
         this.conformFlagSensitiveLine += i;
@@ -1135,7 +1106,7 @@ export class UploadComponent implements OnInit {
       }
     }
     return true;
-  }
+  }*/
 
   isCodeIsoValid(dataArray){
     let isFound = false;
@@ -1247,7 +1218,7 @@ export class UploadComponent implements OnInit {
     }
     return true;
   }
-  isLastHireDateValide(dataArray){
+/*  isLastHireDateValide(dataArray){
     for (let i = 0; i < dataArray.length; i++){
       if(dataArray[i].lastHireDate.length !== 0 && !this.isValidateDate(dataArray[i].lastHireDate)){
         this.lastHireDateValidLine += i;
@@ -1263,7 +1234,7 @@ export class UploadComponent implements OnInit {
       }
     }
     return true;
-  }
+  }*/
   isDepartDateValide(dataArray){
     for (let i = 0; i < dataArray.length; i++){
       if(dataArray[i].departDate.length !== 0 && !this.isValidateDate(dataArray[i].departDate)){
@@ -1281,7 +1252,7 @@ export class UploadComponent implements OnInit {
     }
     return true;
   }
-  isLastDepartDateValide(dataArray){
+ /* isLastDepartDateValide(dataArray){
     for (let i = 0; i < dataArray.length; i++){
       if(dataArray[i].lastDepartDate.length !== 0 && !this.isValidateDate(dataArray[i].lastDepartDate)){
         this.lastDepartDateValidLine += i;
@@ -1301,7 +1272,7 @@ export class UploadComponent implements OnInit {
       }
     }
     return true;
-  }
+  }*/
   isEmployeNoDepartDate(dataArray){
     for (let i = 0; i < dataArray.length; i++){
       if (dataArray[i].employeeStatus.toUpperCase() === 'P' && dataArray[i].departDate.length !== 0){
