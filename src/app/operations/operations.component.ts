@@ -43,12 +43,8 @@ export class OperationsComponent implements OnInit {
     let dateBeforeFormat = this.fillDate(this.dateBefore);
     let dateAfterFormat = this.fillDate(this.dateAfter);
     let audit: Audit = new Audit();
-    console.log("Date before format: "+dateBeforeFormat);
-    console.log("Date after format: "+dateAfterFormat);
-    console.log('Filtre------: '+ this.filter);
     this.movementService.movementsByDate(this.selectedCompte.numCompte,dateBeforeFormat, dateAfterFormat, this.currentPage, this.size, this.filter)
       .subscribe(data => {
-        console.log(data);
         this.pageOperations = data;
         this.pages = new Array<number>(data['totalPages']);
         this.cookieService.set('operations', this.cookieService.get('operations')+';Operations: search movement according to positions');
@@ -75,7 +71,6 @@ export class OperationsComponent implements OnInit {
   comptesByIndividu(){
     this.compteService.getComptesByIndividu(this.selectedIndividu.nui).subscribe(data =>{
       this.comptes = data;
-      console.log(this.comptes)
     }, error =>{
       console.log(error);
     });

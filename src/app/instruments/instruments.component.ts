@@ -155,7 +155,6 @@ export class InstrumentsComponent implements OnInit {
           dataType = dataModel.dataType;
         }else{
           if(instrumentHeaders.indexOf(header) <= -1){
-            console.log('______****'+instrumentHeaders.indexOf(header));
             this.BadHeaders = true;
             //this.currentStep = -1;
           }
