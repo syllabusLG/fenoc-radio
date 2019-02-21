@@ -429,7 +429,7 @@ export class UploadComponent implements OnInit {
         dataArray[i].birthDate.length !== 0 && this.isValidateDate(dataArray[i].birthDate) && this.isDateValide(dataArray[i].birthDate) && this.isAgeValide(dataArray[i].birthDate) &&
         dataArray[i].employeeStatus.length !== 0 && (dataArray[i].employeeStatus.toUpperCase() === 'P' || dataArray[i].employeeStatus.toUpperCase() === 'S' || dataArray[i].employeeStatus.toUpperCase() === 'R')){
 
-        if(dataArray[i].iban.length !== 0 && dataArray[i].bic.length !== 0
+        if(dataArray[i].iban.length !== 0  && dataArray[i].bic.length !== 0
           && this.isValidIBANNumber(dataArray[i].iban) && this.isBic(dataArray[i].bic)
           && dataArray[i].bic.substr(4,2) === dataArray[i].iban.substr(0, 2)){
 
@@ -443,6 +443,7 @@ export class UploadComponent implements OnInit {
           payment.bic =  dataArray[i].bic;
           payment.iban = dataArray[i].iban;
           payment.otherPayment = dataArray[i].otherPayment;
+          console.log('Other Payement '+ dataArray[i].otherPayment);
           individu.nui = dataArray[i].nui;
           payment.individu = individu;
           this.paymentDataArray.push(payment);
@@ -1317,7 +1318,8 @@ export class UploadComponent implements OnInit {
   }
   isIbanGiven(dataArray){
     for (let i = 0; i < dataArray.length; i++){
-      if((dataArray[i].bic.length !== 0 && dataArray[i].iban.length === 0) || (dataArray[i].bic.length === 0 && dataArray[i].iban.length !== 0)){
+      if((dataArray[i].bic.length !== 0 && dataArray[i].otherPayment.length === 0 && dataArray[i].iban.length === 0)
+        || (dataArray[i].bic.length === 0 && dataArray[i].iban.length !== 0)){
         this.bicGivenLine += i;
         return false;
       }
@@ -1385,7 +1387,7 @@ export class UploadComponent implements OnInit {
 
   isBicIbanValid(dataArray){
     for (let i = 0; i < dataArray.length; i++){
-      if(dataArray[i].bic.substr(4,2) !== dataArray[i].iban.substr(0, 2)){
+      if(dataArray[i].otherPayment.length === 0 && dataArray[i].bic.substr(4,2) !== dataArray[i].iban.substr(0, 2)){
         this.bicIbanValidLine += i;
         return false;
       }
