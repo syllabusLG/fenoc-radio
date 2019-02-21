@@ -28,6 +28,7 @@ import {AuditService} from '../../../audit/audit.service';
 import {Audit} from '../../audit.model';
 import {AppService} from '../../../app.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { UploadedFileService } from '../../../services/uploaded-file.service';
 
 @Component({
   selector: 'app-upload',
@@ -227,6 +228,7 @@ export class UploadComponent implements OnInit {
   COUNTRY = COUNTRY;
   @Output() messageEvent = new EventEmitter<any>();
   BadHeaders: boolean = false;
+  isuploaded: boolean;
 
   constructor(private individusService: IndividusService,
               private cookieService: CookieService,
@@ -241,10 +243,12 @@ export class UploadComponent implements OnInit {
               private fiscaliteService: FiscaliteService,
               private reportCreateFileService: ReportCreateFileService,
               private reportUpdateFileService: ReportUpdateFileService,
-              private spinner: NgxSpinnerService) { }
+              private spinner: NgxSpinnerService,
+              private fileUploadedService: UploadedFileService) { }
 
   ngOnInit() {
     this.dataModelListFiltred = this.dataModelList.filter(dataModel => !dataModel.readonly);
+    this.fileUploadedService.currentuploadedfile.subscribe(isUploaded => this.isuploaded = isUploaded)
     }
 
     getBindHeadersDataModelListArray(headers){
@@ -585,6 +589,7 @@ export class UploadComponent implements OnInit {
 
   selectFile($event){
     this.spinner.show();
+    this.fileUploadedService.changeIsFileIsUploaded(true);
     let fileList = $event.srcElement.files;
     let file = fileList[0];
     if(file && file.name.endsWith(".csv")){
