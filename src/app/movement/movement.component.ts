@@ -591,7 +591,8 @@ export class MovementComponent implements  OnInit{
     this.loadMovements();
   }
 
-  searchAMovements(){
+  searchAMovements(event){
+    this.motCle = event;
     this.loadMovements();
   }
 

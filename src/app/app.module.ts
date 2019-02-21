@@ -41,8 +41,11 @@ import {NgIdleKeepaliveModule} from "@ng-idle/keepalive";
 import {MovementComponent} from "./movement/movement.component";
 import {PositionComponent} from "./position/position.component";
 import { OperationsComponent } from './operations/operations.component';
+import { SearchInputComponent } from './search-input/search-input.component';
 import { InstrumentsComponent } from './instruments/instruments.component';
-
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { CanDeactivateGuard } from './shared/crud/upload/can-deactivate-guard.service';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -73,8 +76,9 @@ import { InstrumentsComponent } from './instruments/instruments.component';
     AuditComponent,
     MovementComponent,
     PositionComponent,
+    SearchInputComponent,
     OperationsComponent,
-    InstrumentsComponent
+    InstrumentsComponent,
   ],
   imports: [
     BrowserModule,
@@ -87,11 +91,13 @@ import { InstrumentsComponent } from './instruments/instruments.component';
     ChartModule,
     TreeviewModule.forRoot(),
     MomentModule,
-    NgIdleKeepaliveModule.forRoot()
+    NgIdleKeepaliveModule.forRoot(),
+    NgxSpinnerModule,
+    NgbModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: XhrInterceptor, multi: true},
-    CookieService,
+    CookieService, CanDeactivateGuard
   ],
   bootstrap: [AppComponent]
 })

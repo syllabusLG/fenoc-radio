@@ -3,11 +3,7 @@
 <hr>
   <div>
     <div class=" row">
-        <div class="form-group col-sm-10">
-        <label style="margin-left: 10px">Mot Clé</label>
-        <input style="height: 33px;width: fit-content" type="text" [(ngModel)]="motCle"/>
-        <button class="btn btn-info" style="width: fit-content" (click)="searchAdresse()">Chercher</button>
-      </div>
+      <search-input (clickSearch)="searchAdresse($event)" class="form-inline col-sm-4"></search-input>
       <div class="col-sm-2" id="reportAdresse" #reportAdresse>
         <div class="d-inline-block">
           <a href="" data-toggle="collapse">

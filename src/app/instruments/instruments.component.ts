@@ -374,9 +374,11 @@ export class InstrumentsComponent implements OnInit {
     this.loadInstruments();
   }
 
-  searchInstrument(){
+  searchInstrument(event){
+    this.keyWord = event;
     this.loadInstruments();
   }
+  
   downloadFile(data: any){
     let file = 'instruments_'+ new Date()+'.csv';
     this.cookieService.set('exportInstrumentCSV', 'Telechargement du fichier: '+file);

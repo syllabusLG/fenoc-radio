@@ -9,6 +9,7 @@
     <li [ngClass]="{active: currentStep == 3, visited: currentStep>3}" (click)="selectedStep=3;" >Récupérer les données</li>
   </ul>
 </div>
+
 <div [ngSwitch]="selectedStep">
   <div *ngSwitchCase="1">
 
@@ -30,17 +31,23 @@
 
 
     <div *ngIf="!dataArray">
-      <p>Aucune donnée importée.</p>
+       <p>Aucune donnée importée.</p>
     </div>
+    <ngx-spinner>
+      <p style="color: white" > Chargement des données... </p>
+    </ngx-spinner>
   </div>
   <div *ngSwitchCase="2">
     <div *ngIf="!dataSentToServer && company_cd_required">
       <p>Cliquez pour envoyer les données au serveur !</p>
-      <button class="btn btn-default" style="width: fit-content" (click)="sendDataToServer()">Send</button>
+      <button class="btn btn-success" style="width: fit-content" (click)="sendDataToServer()">Send</button>
     </div>
     <div *ngIf="dataSentToServer">
       <p>L'envoie est terminé.</p>
     </div>
+    <ngx-spinner>
+      <p style="color: white" > Chargement des données... </p>
+    </ngx-spinner>
   </div>
   <div *ngSwitchCase="3">
     <div id="report" #report>

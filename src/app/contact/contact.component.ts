@@ -66,7 +66,8 @@ export class ContactComponent implements OnInit {
       });
   }
 
-  searchContacts() {
+  searchContacts(event : any) {
+    this.motCle = event;
     this.loadContacts();
   }
 

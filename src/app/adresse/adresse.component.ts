@@ -8,6 +8,7 @@ import * as jsPDF from 'jspdf';
 import {Individus} from '../shared/individus.model';
 import {CookieService} from 'ngx-cookie-service';
 import {COUNTRY} from '../shared/countries.code';
+import {SearchInputComponent} from "../search-input/search-input.component";
 
 declare const $;
 @Component({
@@ -83,7 +84,8 @@ export class AdresseComponent implements OnInit {
         console.log(error);
       });
   }
-  searchAdresse(){
+  searchAdresse(event:any){
+    this.motCle = event;
     this.loadAdresses();
   }
   gotoPage(i:number){
