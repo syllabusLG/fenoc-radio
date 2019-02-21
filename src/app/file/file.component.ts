@@ -4,8 +4,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FileModel } from '../shared/file.model';
 import { FileService } from './file.service';
 import { CanDeactivateGuard } from '../shared/crud/upload/can-deactivate-guard.service';
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { Content } from '@angular/compiler/src/render3/r3_ast';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { UploadedFileService } from '../services/uploaded-file.service';
 
 @Component({
   selector: 'app-file',
@@ -16,31 +16,19 @@ import { Content } from '@angular/compiler/src/render3/r3_ast';
 
 export class FileComponent implements OnInit, CanDeactivateGuard {
   @ViewChild('content') private content;
+  isUploaded: boolean;
+
   canDeactivate(component: import("../shared/crud/upload/can-deactivate-guard.service").CanComponentDeactivate): boolean | import("rxjs").Observable<boolean> | Promise<boolean> {
-    if (confirm('Voulez-vous quitter')) {
-      //this.open(this.content);
+    console.log();
+    //TODO : move the modal to a component
+    if (this.isUploaded) {
+      return this.modalService.open(this.content).result.then((result) => {
+        if(result)  
+          this.fileUploadedService.changeIsFileIsUploaded(false);
+        return result;
+      });
+    } else {
       return true;
-    } else {
-      return false;
-    }
-  }
-
-  closeResult: string;
-  open(content) {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-  }
-
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return  `with: ${reason}`;
     }
   }
 
@@ -51,8 +39,10 @@ export class FileComponent implements OnInit, CanDeactivateGuard {
   filesModel: DataModel[];
 
   fileForm: FormGroup;
-  constructor(private fileService: FileService, private fb: FormBuilder,
-    private modalService: NgbModal) { }
+  constructor(private fileService: FileService,
+    private fb: FormBuilder,
+    private modalService: NgbModal,
+    private fileUploadedService: UploadedFileService) { }
 
   ngOnInit() {
     this.fileForm = this.fb.group({
@@ -61,6 +51,7 @@ export class FileComponent implements OnInit, CanDeactivateGuard {
       lastName: '',
       firstName: ''
     });
+
     this.filesModel = [
       new DataModel('nui', 'Numero d\'identification unique', 'string', false, []),
       new DataModel('company_CD', 'Code entreprise', 'string', false, []),
@@ -71,5 +62,7 @@ export class FileComponent implements OnInit, CanDeactivateGuard {
       new DataModel('useName', 'Nom d\'usage', 'string', false, []),
       new DataModel('firstName', 'Prénom', 'string', false, []),
     ]
+
+    this.fileUploadedService.currentuploadedfile.subscribe(isUploaded => this.isUploaded = isUploaded);
   }
 }
