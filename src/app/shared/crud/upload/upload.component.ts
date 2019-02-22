@@ -28,7 +28,7 @@ import {AuditService} from '../../../audit/audit.service';
 import {Audit} from '../../audit.model';
 import {AppService} from '../../../app.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { UploadedFileService } from '../../../services/uploaded-file.service';
+import { UploadedFileService } from '../../../common/services/uploaded-file.service';
 
 @Component({
   selector: 'app-upload',
@@ -1468,7 +1468,7 @@ export class UploadComponent implements OnInit {
     this.cookieService.set('reportFileName', this.cookieService.get('reportFileName')+';reportFile'+new Date()+'.pdf');
     audit.reportFileName = 'reportFile'+new Date()+'.pdf';
     this.appService.saveAudit(audit);
-
+    this.fileUploadedService.changeIsFileIsUploaded(false);
   }
   fillDate(date:any) {
     let year = new Date(Date.parse(date)).getFullYear();

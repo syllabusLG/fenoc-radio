@@ -1,0 +1,15 @@
+
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-title">Etes-vous sur de vouloir quitter?</h4>
+    <button type="button" class="close" aria-describedby="modal-title" (click)="modal.close(false)">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <span class="text-danger">Cette operation est irrevocable.</span>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="modal.close(true)">Ok</button>
+    <button type="button" class="btn btn-outline-secondary" (click)="modal.close(false)">Annuler</button>
+  </div>
+  <pre>{{closeResult}}</pre>  

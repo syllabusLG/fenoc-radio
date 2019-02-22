@@ -41,11 +41,12 @@ import {NgIdleKeepaliveModule} from "@ng-idle/keepalive";
 import {MovementComponent} from "./movement/movement.component";
 import {PositionComponent} from "./position/position.component";
 import { OperationsComponent } from './operations/operations.component';
-import { SearchInputComponent } from './search-input/search-input.component';
+import { SearchInputComponent } from './shared/search-input/search-input.component';
 import { InstrumentsComponent } from './instruments/instruments.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { CanDeactivateGuard } from './shared/crud/upload/can-deactivate-guard.service';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { ConfirmModalComponent } from './common/confirm-modal/confirm-modal.component';
 
 @NgModule({
   declarations: [
@@ -79,6 +80,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     SearchInputComponent,
     OperationsComponent,
     InstrumentsComponent,
+    ConfirmModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -97,8 +99,9 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: XhrInterceptor, multi: true},
-    CookieService, CanDeactivateGuard
+    CookieService, CanDeactivateGuard,
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [ConfirmModalComponent]
 })
 export class AppModule { }
