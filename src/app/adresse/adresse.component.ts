@@ -8,7 +8,7 @@ import * as jsPDF from 'jspdf';
 import {Individus} from '../shared/individus.model';
 import {CookieService} from 'ngx-cookie-service';
 import {COUNTRY} from '../shared/countries.code';
-import {SearchInputComponent} from "../search-input/search-input.component";
+import {SearchInputComponent} from "../shared/search-input/search-input.component";
 
 declare const $;
 @Component({

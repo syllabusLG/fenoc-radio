@@ -5,7 +5,8 @@ import { FileModel } from '../shared/file.model';
 import { FileService } from './file.service';
 import { CanDeactivateGuard } from '../shared/crud/upload/can-deactivate-guard.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { UploadedFileService } from '../services/uploaded-file.service';
+import { UploadedFileService } from '../common/services/uploaded-file.service';
+import { ConfirmModalComponent } from '../common/confirm-modal/confirm-modal.component';
 
 @Component({
   selector: 'app-file',
@@ -19,10 +20,8 @@ export class FileComponent implements OnInit, CanDeactivateGuard {
   isUploaded: boolean;
 
   canDeactivate(component: import("../shared/crud/upload/can-deactivate-guard.service").CanComponentDeactivate): boolean | import("rxjs").Observable<boolean> | Promise<boolean> {
-    console.log();
-    //TODO : move the modal to a component
     if (this.isUploaded) {
-      return this.modalService.open(this.content).result.then((result) => {
+      return this.modalService.open(ConfirmModalComponent).result.then((result) => {
         if(result)  
           this.fileUploadedService.changeIsFileIsUploaded(false);
         return result;

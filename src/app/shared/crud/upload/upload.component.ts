@@ -28,8 +28,9 @@ import {AuditService} from '../../../audit/audit.service';
 import {Audit} from '../../audit.model';
 import {AppService} from '../../../app.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { UploadedFileService } from '../../../services/uploaded-file.service';
+//import { UploadedFileService } from '../../../services/uploaded-file.service';
 //import {PhoneNumberUtil} from 'google-libphonenumber';
+import { UploadedFileService } from '../../../common/services/uploaded-file.service';
 
 @Component({
   selector: 'app-upload',
@@ -302,7 +303,7 @@ export class UploadComponent implements OnInit {
        return false;
      }
      if(!this.isDateFile(tabFile[2])) {
-       this.currentStep = -1;      
+       this.currentStep = -1;
        return false;
      }
      return true;
@@ -889,7 +890,7 @@ export class UploadComponent implements OnInit {
     this.spinner.show();
     await this.sendIndividusToServer();
     this.currentStep = 3;
-    this.spinner.hide(); 
+    this.spinner.hide();
     this.fileUploadedService.changeIsFileIsUploaded(false);
   }
   
