@@ -14,6 +14,7 @@ import { saveAs } from 'file-saver';
 import {CompteService} from "../compte/compte.service";
 import {CookieService} from 'ngx-cookie-service';
 import {Instruments} from '../shared/instruments.model';
+import {NgxSpinnerService} from 'ngx-spinner';
 
 @Component({
   selector: 'app-position',
@@ -84,7 +85,8 @@ export class PositionComponent implements OnInit{
               private reportCreateFileService: ReportCreateFileService,
               private reportUpdateFileService: ReportUpdateFileService,
               private fb: FormBuilder,
-              private route: ActivatedRoute){
+              private route: ActivatedRoute,
+              private spinner: NgxSpinnerService){
     this.createForm();
   }
 
@@ -249,6 +251,7 @@ export class PositionComponent implements OnInit{
   }
 
   selectFile($event){
+    this.spinner.show();
     let fileList = $event.srcElement.files;
     let file = fileList[0];
     if(file && file.name.endsWith(".csv")){
@@ -283,6 +286,7 @@ export class PositionComponent implements OnInit{
           //Integration du module position
           this.buildPositionDataArray(this.dataArray);
         }
+        this.spinner.hide();
         this.currentStep++;
       };
     }

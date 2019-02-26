@@ -18,6 +18,7 @@ import {PositionService} from '../position/position.service';
 import {AppService} from '../app.service';
 import {Audit} from '../shared/audit.model';
 import {Instruments} from '../shared/instruments.model';
+import {NgxSpinnerService} from 'ngx-spinner';
 
 @Component({
   selector: 'app-movement',
@@ -119,7 +120,8 @@ export class MovementComponent implements  OnInit{
               private reportCreateFileService: ReportCreateFileService,
               private reportUpdateFileService: ReportUpdateFileService,
               private fb: FormBuilder,
-              private route: ActivatedRoute){
+              private route: ActivatedRoute,
+              private spinner: NgxSpinnerService){
     this.createForm();
   }
 
@@ -494,6 +496,7 @@ export class MovementComponent implements  OnInit{
   }
 
   selectFile($event){
+    this.spinner.show();
     let fileList = $event.srcElement.files;
     let file = fileList[0];
     if(file && file.name.endsWith(".csv")){
@@ -527,6 +530,7 @@ export class MovementComponent implements  OnInit{
 
           this.buildMovementsDataArray(this.dataArray);
         }
+        this.spinner.hide();
         this.currentStep++;
       };
     }

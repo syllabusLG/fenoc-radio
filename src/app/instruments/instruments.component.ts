@@ -13,6 +13,7 @@ import {ReportUpdateFileService} from '../report-update-file/report.update.file.
 import {ActivatedRoute} from '@angular/router';
 import {Filemanagement} from '../common/filemanagement';
 import { saveAs } from 'file-saver';
+import {NgxSpinnerService} from 'ngx-spinner';
 
 @Component({
   selector: 'app-instruments',
@@ -77,7 +78,8 @@ export class InstrumentsComponent implements OnInit {
               private reportCreateFileService: ReportCreateFileService,
               private reportUpdateFileService: ReportUpdateFileService,
               private fb: FormBuilder,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private spinner: NgxSpinnerService) {
     this.createForm();
   }
 
@@ -298,6 +300,7 @@ export class InstrumentsComponent implements OnInit {
     this.statutRequired = this.isStatutRequired(dataArray);
   }
   selectFile($event){
+    this.spinner.show();
     let fileList = $event.srcElement.files;
     let file = fileList[0];
     if(file && file.name.endsWith(".csv")){
@@ -331,6 +334,7 @@ export class InstrumentsComponent implements OnInit {
 
           this.buildInstrumentsDataArray(this.dataArray);
         }
+          this.spinner.hide();
         this.currentStep++;
       };
     }
