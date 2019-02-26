@@ -2,7 +2,7 @@ import {Individus} from './individus.model';
 
 export class Adresse {
   constructor(public id?: string,
-              public numberStreet?: number,
+              public numberStreet?: string,
               public street?: string,
               public additionalAdress_1?: string,
               public additionalAdress_2?: string,

@@ -39,7 +39,7 @@ export class MovementComponent implements  OnInit{
   pageMovements:any;
   motCle:string='';
   currentPage:number=0;
-  size:number=5;
+  size:number=20;
   pages:Array<number>;
 
   fileName: string = '';
@@ -465,7 +465,7 @@ export class MovementComponent implements  OnInit{
 
   }
   controleHeaders (headers) {
-    let uploadHeaders = "numMouvement;sens;instruments;quantiteInstrument;nav;pruInstrument;dateCompte;dateValeur;dateOperation;compte;idEntityMere";
+    let uploadHeaders = "numMouvement;sens;instruments;quantiteInstrument;nav;pruInstrument;dateCompte;dateValeur;dateOperation;compte;idEntityMere;company_CD";
     let uploadHeadersArray = uploadHeaders.split(";");
     for (let i = 0; i < headers.length; i++) {
       if (uploadHeadersArray.indexOf(headers[i]) <= -1) {

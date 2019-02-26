@@ -3,8 +3,10 @@
       <div class="row"style="margin-left: 20px">
         <div class="col-sm-11"  style="font-size: small;">
         <div *ngIf="errors.BadHeaders == true">
-            <p class="badge-dark " style="with: 100px">Ce fichier n'est pas approprié pour ce module. Merci de rensegner le bon fichier!
-            </p>
+            <p class="badge-dark " style="with: 100px">Ce fichier n'est pas approprié pour ce module. Merci de rensegner le bon fichier!</p>
+        </div>
+          <div *ngIf="errors.isControleFile === false">
+            <p class="badge-dark" style="with: 100px">Le nom du fichier est incorrect!!!</p>
           </div>
       <div *ngIf="errors.company_cd_required == false">
         <p class=" badge-dark " style="with: 100px">Ligne {{errors.company_cd_required_line}}: le code de l'entreprise n'est pas renseigné !</p>

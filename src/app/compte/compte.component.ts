@@ -22,7 +22,7 @@ export class CompteComponent implements OnInit {
   pageComptes: any;
   motCle: string = '';
   currentPage: number = 0;
-  size: number = 5;
+  size: number = 20;
   pages: Array<number>;
 
   comptes: Compte[];

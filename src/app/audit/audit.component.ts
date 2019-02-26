@@ -21,7 +21,7 @@ export class AuditComponent implements OnInit {
   dateBefore: any;
   dateAfter: any;
   currentPage:number=0;
-  size:number=5;
+  size:number=20;
   currentPageDate: number=0;
   sizeDate:number=5;
 

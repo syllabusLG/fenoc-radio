@@ -33,7 +33,7 @@ export class InstrumentsComponent implements OnInit {
   pageInstruments: any;
   keyWord: string= '';
   currentPage: number = 0;
-  size: number = 5;
+  size: number = 20;
   pages: Array<number>;
 
   fileName: string = '';

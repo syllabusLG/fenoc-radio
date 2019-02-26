@@ -21,7 +21,7 @@ export class ContactComponent implements OnInit {
   pageContacts: any;
   motCle: string = '';
   currentPage: number = 0;
-  size: number = 5;
+  size: number = 20;
   pages: Array<number>;
 
   contacts: Contact[];

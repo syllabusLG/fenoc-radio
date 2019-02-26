@@ -29,6 +29,7 @@ import {Audit} from '../../audit.model';
 import {AppService} from '../../../app.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { UploadedFileService } from '../../../services/uploaded-file.service';
+//import {PhoneNumberUtil} from 'google-libphonenumber';
 
 @Component({
   selector: 'app-upload',
@@ -94,6 +95,7 @@ export class UploadComponent implements OnInit {
 
   dataSentToServer: boolean = false;
 
+  isControleFile: boolean = true;
   company_cd_required: boolean = true;
   company_cd_required_line: number= 1;
   company_cd_unique: boolean = true;
@@ -289,6 +291,22 @@ export class UploadComponent implements OnInit {
     }
     return false;
   }
+  controleFile(dataArray, file){
+     let tabFile = file.split('_');
+     if(tabFile[0].toLowerCase() !== dataArray[0].company_CD.toLowerCase()){
+       this.currentStep = -1;
+       return false;
+     }
+     if(tabFile[1].toLowerCase() !== 'affiliation'){
+       this.currentStep = -1;
+       return false;
+     }
+     if(!this.isDateFile(tabFile[2])) {
+       this.currentStep = -1;      
+       return false;
+     }
+     return true;
+  }
   buildDataArray(bindArray, csvRecordsArray){
     let dataArray = [];
     if(csvRecordsArray && csvRecordsArray.length>2){
@@ -390,6 +408,7 @@ export class UploadComponent implements OnInit {
   buildContactDataArray(dataArray){
     this.contactReportCreateFile.module = 'Contact';
     this.contactReportUpdateFile.module = 'Contact';
+    //const phoneUtil = PhoneNumberUtil.getInstance();
     for (let i = 0; i < dataArray.length; i++){
       let contact: Contact = new Contact();
       let individu: Individus = new Individus();
@@ -409,6 +428,7 @@ export class UploadComponent implements OnInit {
         contact.homePhone = dataArray[i].homePhone;
         contact.businessPhone = dataArray[i].businessPhone;
         contact.cellPhone = dataArray[i].cellPhone;
+        //console.log(''+ phoneUtil. phoneUtil.isPossibleNumber(contact.cellPhone));
         individu.nui = dataArray[i].nui;
         contact.individu = individu;
         if(dataArray[i].personalEmail.length !== 0 && this.isValidateEmail(dataArray[i].personalEmail)){
@@ -447,7 +467,7 @@ export class UploadComponent implements OnInit {
           payment.bic =  dataArray[i].bic;
           payment.iban = dataArray[i].iban;
           payment.otherPayment = dataArray[i].otherPayment;
-          console.log('Other Payement '+ dataArray[i].otherPayment);
+          //console.log('Other Payement '+ dataArray[i].otherPayment);
           individu.nui = dataArray[i].nui;
           payment.individu = individu;
           this.paymentDataArray.push(payment);
@@ -622,7 +642,7 @@ export class UploadComponent implements OnInit {
         this.dataArray = this.buildDataArray(bindArray, csvRecordsArray);
 
         if (!this.BadHeaders) {
-
+         console.log(this.controleFile(this.dataArray, this.fileName));
         //Gestion des contrôles préalables
         this.controlePrealable(this.dataArray);
         //Gestion des contrôles du module individus
@@ -643,16 +663,18 @@ export class UploadComponent implements OnInit {
         this.buildCompteDataArray(this.dataArray);
         //this.buildFiscaliteDataArray(this.dataArray);
       }
+        this.spinner.hide();
         this.currentStep++;
 
         this.emmitErrors();
-        this.spinner.hide();
+
       };
     }
   }
 
   public emmitErrors() {
     this.errorMessages.emit({
+      isControleFile: this.isControleFile,
       company_cd_unique: this.company_cd_unique,
       company_cd_required_line: this.company_cd_required_line,
       numIdentityUniqueRequired: this.numIdentityUniqueRequired,
@@ -725,6 +747,7 @@ export class UploadComponent implements OnInit {
     });
   }
   controlePrealable(dataArray){
+    this.isControleFile  = this.controleFile(dataArray, this.fileName);
     this.company_cd_required = this.isCompanyCdCorrect(dataArray);
     this.company_cd_unique = this.isCompanyCdUnique(dataArray);
     this.employee_id_required = this.isEmployeeIdCorrect(dataArray);
@@ -864,9 +887,10 @@ export class UploadComponent implements OnInit {
   }*/
   async sendDataToServer(){
     this.spinner.show();
-    await this.sendIndividusToServer(); 
-    this.spinner.hide()
+    await this.sendIndividusToServer();
     this.currentStep = 3;
+    this.spinner.hide(); 
+    this.fileUploadedService.changeIsFileIsUploaded(false);
   }
   
   isCompanyCdCorrect(dataArray){
@@ -911,7 +935,7 @@ export class UploadComponent implements OnInit {
   }
   isEmployeeIdWellFormatted(dataArray){
     for (let i = 0; i < dataArray.length; i++){
-      if(dataArray[i].nui.toLowerCase()+dataArray[i].company_CD.toLowerCase() !== dataArray[i].employeeId.toLowerCase()){
+      if(dataArray[i].nui.toLowerCase()+'_'+dataArray[i].company_CD.toLowerCase() !== dataArray[i].employeeId.toLowerCase()){
         this.employeeIdWellFormattedLine += i;
         this.currentStep = -1;
         return false;
@@ -1379,6 +1403,9 @@ export class UploadComponent implements OnInit {
   }
   isBic(value){
     return /^([A-Z]{6}[A-Z2-9][A-NP-Z1-9])(X{3}|[A-WY-Z0-9][A-Z0-9]{2})?$/.test( value.toUpperCase() );
+  }
+  isDateFile(value){
+    return /^\s*(3[01]|[12][0-9]|0?[1-9])\.(1[012]|0?[1-9])\.((?:19|20)\d{2})\s*$/.test(value)
   }
   isValidBic(dataArray){
     for (let i = 0; i < dataArray.length; i++){

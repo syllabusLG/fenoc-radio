@@ -20,7 +20,7 @@ export class PaymentComponent implements OnInit {
   pagePayments:any;
   motCle:string='';
   currentPage:number=0;
-  size:number=5;
+  size:number=20;
   pages:Array<number>;
 
   payments: Payment[];

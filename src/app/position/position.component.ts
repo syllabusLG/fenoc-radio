@@ -26,7 +26,7 @@ export class PositionComponent implements OnInit{
   pagePositions:any;
   motCle:string='';
   currentPage:number=0;
-  size:number=5;
+  size:number=20;
   pages:Array<number>;
 
   fileName: string = '';
@@ -227,7 +227,7 @@ export class PositionComponent implements OnInit{
   }
 
   controleHeaders (headers) {
-    let uploadHeaders = "instruments;quantiteInstrument;pruInstrument;dateUpdate;compte";
+    let uploadHeaders = "instruments;quantiteInstrument;pruInstrument;dateUpdate;compte;company_CD";
     let uploadHeadersArray = uploadHeaders.split(";");
     for (let i = 0; i < headers.length; i++) {
       if (uploadHeadersArray.indexOf(headers[i]) <= -1) {
