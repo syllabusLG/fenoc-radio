@@ -34,3 +34,7 @@ html, body {
 a.nav-link.clickable {
   color: #007bff !important;
 }
+
+a.nav-link.not-clickable {
+  color: #bfbfbf;
+}
