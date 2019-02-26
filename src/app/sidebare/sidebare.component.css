@@ -5,3 +5,7 @@
   padding-right: 50px;
 }
 
+.sidebar-separator{
+  border-bottom: 1px solid black;
+}
+
