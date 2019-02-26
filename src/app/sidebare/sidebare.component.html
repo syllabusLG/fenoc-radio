@@ -11,7 +11,7 @@
                           *ngIf="hasRoleDashboard()|| hasRoleAdmin()">Dashboard</a>
     </li>-->
     <li class="nav-item">
-      <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'user'}}]"
+      <a class="nav-link not-clickable" [routerLink]="[{outlets: { contentOutlet: 'user'}}]"
                           routerLinkActive="active"
                           *ngIf="hasRoleAdmin()">Utilisateurs</a>
     </li>
@@ -45,20 +45,20 @@
          *ngIf="hasRoleIndividus()|| hasRoleAdmin()">Individu</a>
     </li>
 
-    <li class="nav-item">
+    <li class="nav-item sidebar-separator">
       <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'contact'}}]"
          routerLinkActive="active"
          *ngIf="hasRoleContact()|| hasRoleAdmin()">Contact</a>
     </li>
 
     <li class="nav-item">
-      <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'habilitation'}}]"
+      <a class="nav-link  not-clickable" [routerLink]="[{outlets: { contentOutlet: 'habilitation'}}]"
          routerLinkActive="active"
          *ngIf="hasRoleAdmin()">Habilitation</a>
     </li>
 
     <li class="nav-item">
-      <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'audit'}}]"
+      <a class="nav-link  not-clickable" [routerLink]="[{outlets: { contentOutlet: 'audit'}}]"
          routerLinkActive="active"
          *ngIf="hasRoleAdmin()">Audit</a>
     </li>
