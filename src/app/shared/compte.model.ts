@@ -2,7 +2,7 @@ import {Individus} from './individus.model';
 
 export class Compte {
 
-  constructor(public numCompte?: number,
+  constructor(public numCompte?: string,
               public libCompte?: string,
               public type?: string,
               public ouvert?: string,

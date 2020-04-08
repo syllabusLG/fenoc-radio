@@ -1,4 +1,4 @@
-<div class="custom-file">
+<div class="custom-file" *ngIf="selectedStep===1">
   <input type="file" id="customFile" #fileUploadInput (change)="selectFile($event)"  accept=".csv" >
   <label class="custom-file-label" for="customFile">{{fileName ? fileName : 'Choisissez un fichier!'}}</label>
 </div>
@@ -6,7 +6,7 @@
   <ul class="checkout-bar">
     <li [ngClass]="{active: currentStep == 1, visited: currentStep>1}" (click)="selectedStep=1;" >Importer un fichier</li>
     <li [ngClass]="{active: currentStep == 2, visited: currentStep>2}" (click)="selectedStep=2;" >Envoyer</li>
-    <li [ngClass]="{active: currentStep == 3, visited: currentStep>3}" (click)="selectedStep=3;" >Récupérer les données</li>
+    <li [ngClass]="{active: currentStep == 3, visited: currentStep>3}" (click)="selectedStep=3;" >Récupérer le rapport</li>
   </ul>
 </div>
 
@@ -42,7 +42,7 @@
       <button class="btn btn-success" style="width: fit-content" (click)="sendDataToServer()">Send</button>
     </div>
     <div *ngIf="dataSentToServer">
-      <p>L'envoie est terminé.</p>
+      <p>L'envoie est terminé, les données sont intégrées.</p>
     </div>
     <ngx-spinner>
       <p style="color: white" > Chargement des données... </p>
@@ -50,6 +50,12 @@
   </div>
   <div *ngSwitchCase="3">
     <div id="report" #report>
+      <div class="text-center">
+        <p class="badge badge-info">Fichier chargé: {{fileName}} </p>
+      </div>
+      <div class="text-center">
+        <p class="badge badge-info">Date de chargement: {{downloadDate}} à {{downloadHour}} </p>
+      </div>
       <div class="text-center">
         <p class="badge badge-info">Ce fichier contient {{dataArray.length}} lignes </p>
       </div>

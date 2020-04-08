@@ -15,6 +15,7 @@ import {CompteService} from "../compte/compte.service";
 import {CookieService} from 'ngx-cookie-service';
 import {Instruments} from '../shared/instruments.model';
 import {NgxSpinnerService} from 'ngx-spinner';
+import {Audit} from '../shared/audit.model';
 
 @Component({
   selector: 'app-position',
@@ -44,30 +45,36 @@ export class PositionComponent implements OnInit{
   @ViewChild('report')
   report: ElementRef;
   typeOfReport: string = '';
+  downloadDate: any;
+  downloadHour: any;
 
   operation: string='';
-
   dataArray:  any = null;
 
   positionDataArray: Positions[]=[];
   positionCreatedDataArray: Positions[]=[];
   positionUpdateDataArray: Positions[]=[];
 
+  isControleFile: boolean = true;
+
   refInstrumentRequired: boolean = true;
-  refInstrumentRequiredLine: number =1;
+  refInstrumentRequiredLine: number =2;
 
   quantiteInstrumentRequired: boolean = true;
-  quantiteInstrumentRequiredLine: number = 1;
+  quantiteInstrumentRequiredLine: number = 2;
 
   pruInstrumentRequired: boolean=true;
-  pruInstrumentRequiredLine: number = 1;
+  pruInstrumentRequiredLine: number = 2;
 
   dateModificationRequired: boolean = true;
-  dateModificationRequiredLine: number =1;
+  dateModificationRequiredLine: number =2;
+
+  noDuplicateInstrumentCompte: boolean = true;
+  noDuplicateInstrumentCompteLine: number = 2;
 
   compteRequired: boolean = true;
-  compteRequiredLine: number=1;
-  compteValidedLine: number=1;
+  compteRequiredLine: number=2;
+  compteValidedLine: number=2;
   compteValid:boolean = true;
 
   positionReportCreateFile: ReportCreateFile = new ReportCreateFile();
@@ -96,7 +103,7 @@ export class PositionComponent implements OnInit{
       new DataModel('quantiteInstrument', 'Quantité instrument', 'number', false, []),
       new DataModel('pruInstrument', 'PRU instrument', 'string', false, []),
       new DataModel('dateUpdate', 'Date modification', 'any', false, []),
-      new DataModel( 'compte', 'Numero Compte', 'any', false,[])
+      new DataModel( 'compte', 'Numero Compte', 'any', false,[]),
     ];
     this.dataModelListFiltred = this.dataModelList.filter(dataModel => !dataModel.readonly);
     this.initPosition();
@@ -128,7 +135,7 @@ export class PositionComponent implements OnInit{
         }else{
           if(movementHeaders.indexOf(header) <= -1){
             this.BadHeaders = true;
-            this.currentStep = -1;
+            //this.currentStep = -1;
           }
         }
       });
@@ -162,9 +169,50 @@ export class PositionComponent implements OnInit{
     }
     return dataArray;
   }
+  controleFile(dataArray, file){
+    let tabFile = file.split('_');
+    let isMultiCompany: boolean = false;
+    for(let i = 0; i < (dataArray.length -1); i++){
+      if(dataArray[i].company_CD.toLowerCase() !== dataArray[i+1].company_CD.toLowerCase()){
+        isMultiCompany = true;
+        break;
+      }
+    }
+    if(!isMultiCompany && tabFile[0].toLowerCase() !== dataArray[0].company_CD.toLowerCase()){
+      this.currentStep = -1;
+      return false;
+    }
+    if(isMultiCompany && tabFile[0].toLowerCase() !== 'multientreprise'){
+      this.currentStep = -1;
+      return false;
+    }
+    if(tabFile[1].toLowerCase() !== 'position'){
+      this.currentStep = -1;
+      return false;
+    }
+    if(!this.isDateFile(tabFile[2])) {
+      this.currentStep = -1;
+      return false;
+    }
+    return true;
+  }
+  isDateFile(value){
+    return /^\s*(3[01]|[12][0-9]|0?[1-9])\.(1[012]|0?[1-9])\.((?:19|20)\d{2})\s*$/.test(value)
+  }
+  isNoDuplicateInstrumentCompte(dataArray){
+    for(let i = 0; i < dataArray.length - 1; i++){
+      if(dataArray[i].instruments === dataArray[i+1].instruments
+        && dataArray[i].compte === dataArray[i+1].compte){
+        this.noDuplicateInstrumentCompteLine +=i;
+        this.currentStep =-1;
+        return false;
+      }
+    }
+    return true;
+  }
   isRefIntrumentRequired(dataArray){
     for(let i=0; i<dataArray.length; i++){
-      if(dataArray[i].refInstrument === 0){
+      if(dataArray[i].instruments.length === 0){
         this.refInstrumentRequiredLine +=i;
         this.currentStep =-1;
         return false;
@@ -174,7 +222,7 @@ export class PositionComponent implements OnInit{
   }
   isQuantiteInstrumentRequired(dataArray){
     for(let i=0; i<dataArray.length; i++){
-      if(Number(dataArray[i].quantiteInstrument) < 0){
+      if(dataArray[i].quantiteInstrument.length === 0 || Number(dataArray[i].quantiteInstrument) < 0){
         this.quantiteInstrumentRequiredLine +=i;
         this.currentStep =-1;
         return false;
@@ -184,7 +232,7 @@ export class PositionComponent implements OnInit{
   }
   isPruInstrumentRequired(dataArray){
     for(let i=0; i<dataArray.length; i++){
-      if(Number(dataArray[i].pruInstrument) < 0){
+      if(dataArray[i].pruInstrument.length === 0 || Number(dataArray[i].pruInstrument) < 0){
         this.pruInstrumentRequiredLine +=i;
         this.currentStep =-1;
         return false;
@@ -194,7 +242,7 @@ export class PositionComponent implements OnInit{
   }
   isDateModificationRequired(dataArray){
     for(let i=0; i<dataArray.length; i++){
-      if(dataArray[i].dateUpdate === 0){
+      if(dataArray[i].dateUpdate.length === 0){
         this.dateModificationRequiredLine +=i;
         this.currentStep =-1;
         return false;
@@ -204,7 +252,7 @@ export class PositionComponent implements OnInit{
   }
   isCompteRequired(dataArray){
     for(let i=0; i<dataArray.length; i++){
-      if(dataArray[i].compte === 0){
+      if(dataArray[i].compte.length === 0){
         this.compteRequiredLine +=i;
         this.currentStep =-1;
         return false;
@@ -242,6 +290,8 @@ export class PositionComponent implements OnInit{
   }
 
   controleModulePosition(dataArray){
+    this.isControleFile = this.controleFile(dataArray, this.fileName);
+    this.noDuplicateInstrumentCompte = this.isNoDuplicateInstrumentCompte(dataArray);
     this.refInstrumentRequired = this.isRefIntrumentRequired(dataArray);
     this.quantiteInstrumentRequired = this.isQuantiteInstrumentRequired(dataArray);
     this.pruInstrumentRequired = this.isPruInstrumentRequired(dataArray);
@@ -252,6 +302,8 @@ export class PositionComponent implements OnInit{
 
   selectFile($event){
     this.spinner.show();
+    this.downloadDate = this.fillDate(new Date());
+    this.downloadHour = this.fillDateHour(new Date());
     let fileList = $event.srcElement.files;
     let file = fileList[0];
     if(file && file.name.endsWith(".csv")){
@@ -344,7 +396,7 @@ export class PositionComponent implements OnInit{
     this.typeOfReport = 'position';
     $event.preventDefault();
     $event.stopPropagation();
-    Filemanagement.downloadPDFModules(this.report.nativeElement.innerHTML,this.typeOfReport);
+    Filemanagement.downloadPDFModules(this.report.nativeElement.innerHTML, this.typeOfReport);
     this.currentStep = 4;
   }
 
@@ -434,23 +486,46 @@ export class PositionComponent implements OnInit{
     const timestamp = typeof value === 'number' ? value : Date.parse(value);
     return isNaN(timestamp) ? null : new Date(timestamp);
   }
-
-  fillDate(date:any) {
-    if (date && (date.indexOf('-') > -1)) {
+  fillDate(date:any){
+    if(date) {
       let year = new Date(Date.parse(date)).getFullYear();
-      let month = new Date(Date.parse(date)).getMonth() + 1;
-      let day = new Date(Date.parse(date)).getDate();
-      let dateFormat = day + '/' + month + '/' + year;
-      if (day >= 1 && day <= 9) {
-        dateFormat = '0' + day + '/' + month + '/' + year;
+      let month = String(new Date(Date.parse(date)).getMonth() + 1);
+      let day = String(new Date(Date.parse(date)).getDate());
+      if (Number(day) >= 1 && Number(day) <= 9) {
+        day = '0' + day;
       }
-      return dateFormat;
+      if(Number(month) >= 1 && Number(month) <= 9) {
+        month = '0' + month;
+      }
+      return day + '/' + month + '/' + year;
     }
   }
-  public downloadPDF($event:any){
+  fillDateHour(date:any) {
+    let hour = String(new Date(Date.parse(date)).getHours());
+    let munite = String(new Date(Date.parse(date)).getMinutes());
+
+    if (Number(hour) >= 1 && Number(hour) <= 9) {
+      hour = '0' + hour;
+    }
+    if(Number(munite) >= 1 && Number(munite) <= 9) {
+      munite = '0' + munite;
+    }
+    return hour + ':' + munite;
+  }
+ /* public downloadPDF($event:any){
       $event.preventDefault();
       $event.stopPropagation();
       Filemanagement.downloadPDF(this.content.nativeElement.innerHTML);
+  }*/
+  public downloadPDF($event:any){
+    //let audit: Audit = new Audit();
+    this.typeOfReport = 'position';
+    $event.preventDefault();
+    $event.stopPropagation();
+    Filemanagement.downloadPDF(this.content.nativeElement.innerHTML, this.typeOfReport);
+    /*this.cookieService.set('fileUploadError', this.cookieService.get('fileUploadError')+';fileUploadError'+new Date()+'.pdf');
+    audit.errorFileName = 'fileUploadError'+new Date()+'.pdf';
+    this.appService.saveAudit(audit);*/
   }
   changeCompte(position: Positions[]){
     for(let i = 0; i < position.length; i++){

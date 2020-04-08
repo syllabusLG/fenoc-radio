@@ -27,13 +27,14 @@
          routerLinkActive="active">Instrument</a>
     </li>
     <li class="nav-item">
+      <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'position'}}]"
+         routerLinkActive="active">Position</a>
+    </li>
+    <li class="nav-item">
       <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'movement'}}]"
            routerLinkActive="active">Mouvement</a>
     </li>
-    <li class="nav-item">
-      <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'position'}}]"
-           routerLinkActive="active">Position</a>
-    </li>
+
     <li class="nav-item">
       <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'operations'}}]"
          routerLinkActive="active">Operations</a>

@@ -36,7 +36,7 @@ export class MovementService {
   search(motCle:string, page:number, size:number): Observable<any>{
     return this.http.get(API_URLS.MOVEMENT_URL_SEARCH +'?mc='+motCle+'&size='+size+'&page='+page);
   }
-  movementsByDate(numCompte: number, dateBefore: any, dateAfter: any, page:number, size:number, filter: string): Observable<any>{
+  movementsByDate(numCompte: string, dateBefore: any, dateAfter: any, page:number, size:number, filter: string): Observable<any>{
     return this.http.get(API_URLS.MOVEMENT_URL_DATE+'?numCompte='+numCompte+'&dateBefore='+dateBefore+'&dateAfter='+dateAfter+'&size='+size+'&page='+page+'&filter='+filter);
   }
 }

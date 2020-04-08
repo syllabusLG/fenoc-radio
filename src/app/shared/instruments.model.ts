@@ -19,7 +19,7 @@ export class Instruments {
               public cutOffFax?: any,
               public codeFundLife?: string,
               public idPlateforme?: string,
-              public idSocieteGestion?: number,
-              public idDepositaire?: number,
-              public idAgentTransfert?: number){}
+              public idSocieteGestion?: string,
+              public idDepositaire?: string,
+              public idAgentTransfert?: string){}
 }

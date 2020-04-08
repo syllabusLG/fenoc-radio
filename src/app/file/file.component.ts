@@ -52,13 +52,12 @@ export class FileComponent implements OnInit, CanDeactivateGuard {
     });
 
     this.filesModel = [
-      new DataModel('nui', 'Numero d\'identification unique', 'string', false, []),
+      new DataModel('nui', 'NUI', 'string', false, []),
       new DataModel('company_CD', 'Code entreprise', 'string', false, []),
       new DataModel('employeeId', 'Matricule salarié', 'string', false, []),
       new DataModel('employeeStatus', 'Type Salarié', 'string', false, []),
       new DataModel('civility', 'Civilité', 'string', false, []),
       new DataModel('lastName', 'Nom de famille', 'string', false, []),
-      new DataModel('useName', 'Nom d\'usage', 'string', false, []),
       new DataModel('firstName', 'Prénom', 'string', false, []),
     ]
 

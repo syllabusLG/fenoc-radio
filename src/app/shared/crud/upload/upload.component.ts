@@ -64,7 +64,9 @@ export class UploadComponent implements OnInit {
   errorMessages: EventEmitter<any> = new EventEmitter<any>();
 
   typeOfReport: string = '';
-
+  downloadDate: any;
+  downloadHour: any;
+  companyName: string;
   dataArray:  any = null;
   individusDataArray: Individus[] = [];
   individusCreatedDataArray: Individus[] = [];
@@ -98,19 +100,29 @@ export class UploadComponent implements OnInit {
 
   isControleFile: boolean = true;
   company_cd_required: boolean = true;
-  company_cd_required_line: number= 1;
+  company_cd_required_line: number= 2;
+  company_cd_listErreurLine: number[] = [];
   company_cd_unique: boolean = true;
 
   employee_id_required: boolean = true;
-  employee_id_required_line: number = 1;
+  employee_id_required_line: number = 2;
+  employeeIdListErrorLine: number[] = [];
   employeeIdWellFormatted: boolean = true;
-  employeeIdWellFormattedLine: number = 1;
+  //employeeIdWellFormattedLine: number = 1;
 
   numIdentityUniqueRequired: boolean = true;
-  numIdentityUniqueRequiredLine: number = 1;
+  numIdentityUniqueRequiredLine: number = 2;
+  NUI_listErrorLine: number[] = [];
+
+  noDuplicateNUI: boolean = true;
+  noDuplicateNUILine: number = 2;
+  noDuplicateNUIListErrorLine: number[] = [];
+
 
   civilityRequired: boolean = true;
-  civilityRequiredLine: number = 1;
+  civilityRequiredLine: number = 2;
+  civilityRequiredListErrorLine: number[] = [];
+  civilityFalseListErrorLine: number[] = [];
   civilityFalseValue: boolean = true;
 
  /* statusGiven: boolean = true;
@@ -118,7 +130,9 @@ export class UploadComponent implements OnInit {
   statusValid: boolean = true;*/
 
   employeStatusGiven: boolean = true;
-  employeStatusGivenLine: number = 1;
+  employeStatusGivenLine: number = 2;
+  employeStatusGivenListErrorLine: number[] = [];
+  employeStatusValidListErrorLine: number[] = [];
   employeStatusValid: boolean = true;
 
   /*vipGiven: boolean = true;
@@ -133,30 +147,46 @@ export class UploadComponent implements OnInit {
   conformFlagSensitiveLine: number = 1;*/
 
   lastNameGiven: boolean = true;
-  lastNameGivenline: number = 1;
+  lastNameGivenline: number = 2;
+  lastNameGivenListErrorLine: number[] = [];
 
   numberStreetIncomplet: boolean = true;
-  numberStreetIncompletLine: number = 1;
+  numberStreetIncompletLine: number = 2;
+  numberStreetIncompletListErrorLine: number[] = [];
   adressValid: boolean = true;
-  adressValidLine: number = 1;
+  adressValidLine: number = 2;
+  adressValidListErrorLine: number[] = [];
 
   firstNameGiven: boolean = true;
-  firstNameGivenline: number = 1;
+  firstNameGivenline: number = 2;
+  firstNameGivenListErrorLine: number[] = [];
 
   personalEmailValid: boolean = true;
-  personalEmailValidLine: number = 1;
+  personalEmailValidLine: number = 2;
+  personalEmailValidListErrorLine: number[] = [];
 
   businessEmailValid: boolean = true;
-  businessEmailValidLine: number = 1;
+  businessEmailValidLine: number = 2;
+  businessEmailValidListErrorLine: number[] = [];
 
+  phoneValid: boolean = true;
+  phoneValidLine: number = 2;
+
+  insertCodePays: boolean = false;
   codePaysFound: boolean = true;
-  codePaysFoundLine: number = 1;
+  codePaysFoundLine: number = 2;
+  codePaysFoundListErrorLine: number[] = [];
+
+  codeIsoNationalityValid: boolean = true;
+  codeIsoNationalityValidLine: number = 2;
+  codeIsoNationalityValidListErrorLine: number[] = [];
 
   listCodePays: string[] = [];
   listLibPays: string[] = [];
 
   codeIsoCountryValid: boolean = true;
-  codeIsoCountryValidLine: number = 1;
+  codeIsoCountryValidLine: number = 2;
+  codeIsoCountryValidListErrorLine: number[] = [];
 
   listCodeCountry: string[] = [];
   listLibCountry: string[] = [];
@@ -165,44 +195,61 @@ export class UploadComponent implements OnInit {
 
   birthDateGiven: boolean = true;
   birthDateValid: boolean = true;
-  birthDateValidLine: number = 1;
+  birthDateValidLine: number = 2;
+  birthDateGivenListErrorLine: number[] = [];
+  birthDateValidListErrorLine: number[] = [];
 
   /*dateEndSensitiveValid: boolean = true;
   dateEndSensitiveValidLine: number = 1;*/
 
   hireDateValid: boolean = true;
-  hireDateValidLine: number = 1;
+  hireDateValidLine: number = 2;
+  hireDateValidListErrorLine: number[] = [];
 
  /* lastHireDateValid: boolean = true;
   lastHireDateValidLine: number = 1;*/
 
   departDateValid: boolean = true;
-  departDateValidLine: number = 1;
+  departDateValidLine: number = 2;
+  departDateValidListErrorLine: number[] = [];
 
   /*lastDepartDateValid: boolean = true;
   lastDepartDateValidLine: number = 1;*/
 
   employeNoDepartDate: boolean = true;
-  employeNoDepartDateLine: number = 1;
+  employeNoDepartDateLine: number = 2;
+  employeNoDepartDateListErrorLine: number[] = [];
 
   employeDepartDate: boolean = true;
-  employeDepartDateLine: number = 1;
+  employeDepartDateLine: number = 2;
+  employeDepartDateListErrorLine: number[] = [];
 
   noEmployeeDuplicated = true;
   duplicateFirstName: string = '';
   duplicateLastName: string = '';
 
   bicGiven: boolean = true;
-  bicGivenLine: number = 1;
+  bicGivenLine: number = 2;
+  bicGivenListErrorLine: number[] = [];
+  otherPaymentGiven: boolean = true;
+  otherPaymentGivenLine: number = 2;
+  otherPaymentGivenListErrorLine: number[] = [];
 
   ibanValid: boolean = true;
-  ibanValidLine: number = 1;
+  ibanValidLine: number = 2;
+  ibanValidListErrorLine: number[] = [];
+
+  noIbanDuplicate: boolean = true;
+  noIbanDuplicateLine: number = 2;
+  noIbanDuplicateListErrorLine: number[] = [];
 
   bicValid: boolean = true;
-  bicValidLine: number = 1;
+  bicValidLine: number = 2;
+  bicValidListErrorLine: number[] = [];
 
   bicIbanValid: boolean = true;
-  bicIbanValidLine: number = 1;
+  bicIbanValidLine: number = 2;
+  bicIbanValidListErrorLine: number[] = [];
 
   dataModelListFiltred: any;
 
@@ -334,7 +381,15 @@ export class UploadComponent implements OnInit {
       if(dataArray[i].lastName.length !== 0 && dataArray[i].firstName.length !== 0 && dataArray[i].civility.length !== 0 &&
         (+dataArray[i].civility === 1 || +dataArray[i].civility === 2 || +dataArray[i].civility === 3) &&
          dataArray[i].birthDate.length !== 0 && this.isValidateDate(dataArray[i].birthDate) && this.isDateValide(dataArray[i].birthDate) && this.isAgeValide(dataArray[i].birthDate) &&
-         dataArray[i].employeeStatus.length !== 0 && (dataArray[i].employeeStatus.toUpperCase() === 'P' || dataArray[i].employeeStatus.toUpperCase() === 'S' || dataArray[i].employeeStatus.toUpperCase() === 'R')) {
+         dataArray[i].employeeStatus.length !== 0
+        && (dataArray[i].employeeStatus.toUpperCase() === 'P' || dataArray[i].employeeStatus.toUpperCase() === 'S' || dataArray[i].employeeStatus.toUpperCase() === 'R')
+        && this.listCodePays.includes(dataArray[i].birthCountry.toUpperCase())
+        && this.listCodePays.includes(dataArray[i].nationality.toUpperCase())
+        && this.listCodePays.includes(dataArray[i].country.toUpperCase())
+        && dataArray[i].numberStreet.length !== 0 && dataArray[i].street.length !== 0
+        && dataArray[i].city.length !== 0 && dataArray[i].codePostal.length !== 0 && dataArray[i].country.length !==0
+        && dataArray[i].hireDate.length !== 0 && this.isValidateDate(dataArray[i].hireDate) && this.isDateValide(dataArray[i].hireDate) && this.isPossibleHireDate(dataArray[i].birthDate, dataArray[i].hireDate)
+        && this.isPossibleDepartDate(dataArray[i].hireDate, dataArray[i].departDate)) {
 
         this.individusService.getOne(dataArray[i].nui).subscribe((data)=>{
           if(data !== null){
@@ -385,7 +440,15 @@ export class UploadComponent implements OnInit {
       if(dataArray[i].lastName.length !== 0 && dataArray[i].firstName.length !== 0 && dataArray[i].civility.length !== 0 &&
         (+dataArray[i].civility === 1 || +dataArray[i].civility === 2 || +dataArray[i].civility === 3) &&
         dataArray[i].birthDate.length !== 0 && this.isValidateDate(dataArray[i].birthDate) && this.isDateValide(dataArray[i].birthDate) && this.isAgeValide(dataArray[i].birthDate) &&
-        dataArray[i].employeeStatus.length !== 0 && (dataArray[i].employeeStatus.toUpperCase() === 'P' || dataArray[i].employeeStatus.toUpperCase() === 'S' || dataArray[i].employeeStatus.toUpperCase() === 'R')){
+        dataArray[i].employeeStatus.length !== 0
+        && (dataArray[i].employeeStatus.toUpperCase() === 'P' || dataArray[i].employeeStatus.toUpperCase() === 'S' || dataArray[i].employeeStatus.toUpperCase() === 'R')
+        && this.listCodePays.includes(dataArray[i].nationality.toUpperCase())
+        && this.listCodePays.includes(dataArray[i].birthCountry.toUpperCase())
+        && this.listCodePays.includes(dataArray[i].country.toUpperCase())
+        && dataArray[i].numberStreet.length !== 0 && dataArray[i].street.length !== 0
+        && dataArray[i].city.length !== 0 && dataArray[i].codePostal.length !== 0 && dataArray[i].country.length !==0
+        && dataArray[i].hireDate.length !== 0 && this.isValidateDate(dataArray[i].hireDate) && this.isDateValide(dataArray[i].hireDate) && this.isPossibleHireDate(dataArray[i].birthDate, dataArray[i].hireDate)
+        && this.isPossibleDepartDate(dataArray[i].hireDate, dataArray[i].departDate)){
 
         this.salarieService.getOne(dataArray[i].employeeId).subscribe((data)=>{
           if(data !== null){
@@ -397,6 +460,7 @@ export class UploadComponent implements OnInit {
         salarie.employeeId = dataArray[i].employeeId;
         salarie.employeeStatus = dataArray[i].employeeStatus;
         salarie.company_CD = dataArray[i].company_CD;
+        this.companyName = dataArray[i].company_CD;
         salarie.hireDate = dataArray[i].hireDate;
         salarie.departDate = dataArray[i].departDate;
         individu.nui = dataArray[i].nui;
@@ -416,7 +480,15 @@ export class UploadComponent implements OnInit {
       if(dataArray[i].lastName.length !== 0 && dataArray[i].firstName.length !== 0 && dataArray[i].civility.length !== 0 &&
         (+dataArray[i].civility === 1 || +dataArray[i].civility === 2 || +dataArray[i].civility === 3) &&
         dataArray[i].birthDate.length !== 0 && this.isValidateDate(dataArray[i].birthDate) && this.isDateValide(dataArray[i].birthDate) && this.isAgeValide(dataArray[i].birthDate) &&
-        dataArray[i].employeeStatus.length !== 0 && (dataArray[i].employeeStatus.toUpperCase() === 'P' || dataArray[i].employeeStatus.toUpperCase() === 'S' || dataArray[i].employeeStatus.toUpperCase() === 'R')){
+        dataArray[i].employeeStatus.length !== 0
+        && (dataArray[i].employeeStatus.toUpperCase() === 'P' || dataArray[i].employeeStatus.toUpperCase() === 'S' || dataArray[i].employeeStatus.toUpperCase() === 'R')
+        && this.listCodePays.includes(dataArray[i].nationality.toUpperCase())
+        && this.listCodePays.includes(dataArray[i].birthCountry.toUpperCase())
+        && this.listCodePays.includes(dataArray[i].country.toUpperCase())
+        && dataArray[i].numberStreet.length !== 0 && dataArray[i].street.length !== 0
+        && dataArray[i].city.length !== 0 && dataArray[i].codePostal.length !== 0 && dataArray[i].country.length !==0
+        && dataArray[i].hireDate.length !== 0 && this.isValidateDate(dataArray[i].hireDate) && this.isDateValide(dataArray[i].hireDate) && this.isPossibleHireDate(dataArray[i].birthDate, dataArray[i].hireDate)
+        && this.isPossibleDepartDate(dataArray[i].hireDate, dataArray[i].departDate)){
 
         this.contactService.getOne(dataArray[i].employeeId.toUpperCase()+"_ID").subscribe((data) =>{
           if(data !== null){
@@ -426,9 +498,16 @@ export class UploadComponent implements OnInit {
           }
         });
         contact.idContact = dataArray[i].employeeId.toUpperCase()+"_ID";
-        contact.homePhone = dataArray[i].homePhone;
-        contact.businessPhone = dataArray[i].businessPhone;
-        contact.cellPhone = dataArray[i].cellPhone;
+        if(dataArray[i].homePhone.length !== 0){
+          contact.homePhone = '+'+dataArray[i].homePhone;
+        }
+        if(dataArray[i].businessPhone.length !== 0){
+          contact.businessPhone = '+'+dataArray[i].businessPhone;
+        }
+        if(dataArray[i].cellPhone.length !== 0){
+          contact.cellPhone = '+'+dataArray[i].cellPhone;
+        }
+        //console.log('cellPhone: '+contact.cellPhone.startsWith('00'));
         //console.log(''+ phoneUtil. phoneUtil.isPossibleNumber(contact.cellPhone));
         individu.nui = dataArray[i].nui;
         contact.individu = individu;
@@ -452,23 +531,46 @@ export class UploadComponent implements OnInit {
       if(dataArray[i].lastName.length !== 0 && dataArray[i].firstName.length !== 0 && dataArray[i].civility.length !== 0 &&
         (+dataArray[i].civility === 1 || +dataArray[i].civility === 2 || +dataArray[i].civility === 3) &&
         dataArray[i].birthDate.length !== 0 && this.isValidateDate(dataArray[i].birthDate) && this.isDateValide(dataArray[i].birthDate) && this.isAgeValide(dataArray[i].birthDate) &&
-        dataArray[i].employeeStatus.length !== 0 && (dataArray[i].employeeStatus.toUpperCase() === 'P' || dataArray[i].employeeStatus.toUpperCase() === 'S' || dataArray[i].employeeStatus.toUpperCase() === 'R')){
+        dataArray[i].employeeStatus.length !== 0
+        && (dataArray[i].employeeStatus.toUpperCase() === 'P' || dataArray[i].employeeStatus.toUpperCase() === 'S' || dataArray[i].employeeStatus.toUpperCase() === 'R')
+        && this.listCodePays.includes(dataArray[i].nationality.toUpperCase())
+        && this.listCodePays.includes(dataArray[i].birthCountry.toUpperCase())
+        && this.listCodePays.includes(dataArray[i].country.toUpperCase())
+        && dataArray[i].numberStreet.length !== 0 && dataArray[i].street.length !== 0
+        && dataArray[i].city.length !== 0 && dataArray[i].codePostal.length !== 0 && dataArray[i].country.length !==0
+        && dataArray[i].hireDate.length !== 0 && this.isValidateDate(dataArray[i].hireDate) && this.isDateValide(dataArray[i].hireDate) && this.isPossibleHireDate(dataArray[i].birthDate, dataArray[i].hireDate)
+        && this.isPossibleDepartDate(dataArray[i].hireDate, dataArray[i].departDate)){
 
         if(dataArray[i].iban.length !== 0  && dataArray[i].bic.length !== 0
           && this.isValidIBANNumber(dataArray[i].iban) && this.isBic(dataArray[i].bic)
           && dataArray[i].bic.substr(4,2) === dataArray[i].iban.substr(0, 2)){
 
-          this.paymentService.getOne(dataArray[i].bic).subscribe((data)=>{
+          this.paymentService.getOne(dataArray[i].bic + dataArray[i].iban + dataArray[i].nui).subscribe((data)=>{
             if (data !== null){
               this.paymentUpdatedDataArray.push(data);
             } else {
               this.paymentCreatedDataArray.push(data);
             }
           });
+          payment.id = dataArray[i].bic + dataArray[i].iban + dataArray[i].nui;
           payment.bic =  dataArray[i].bic;
           payment.iban = dataArray[i].iban;
+          individu.nui = dataArray[i].nui;
+          payment.individu = individu;
+          this.paymentDataArray.push(payment);
+        }
+        if(dataArray[i].otherPayment.length !== 0 && dataArray[i].iban.length ===0 && dataArray[i].bic.length !== 0
+           && this.isBic(dataArray[i].bic)){
+          this.paymentService.getOne(dataArray[i].bic + dataArray[i].otherPayment + dataArray[i].nui).subscribe((data)=>{
+            if (data !== null){
+              this.paymentUpdatedDataArray.push(data);
+            } else {
+              this.paymentCreatedDataArray.push(data);
+            }
+          });
+          payment.id = dataArray[i].bic + dataArray[i].otherPayment + dataArray[i].nui;
+          payment.bic =  dataArray[i].bic;
           payment.otherPayment = dataArray[i].otherPayment;
-          //console.log('Other Payement '+ dataArray[i].otherPayment);
           individu.nui = dataArray[i].nui;
           payment.individu = individu;
           this.paymentDataArray.push(payment);
@@ -486,8 +588,15 @@ export class UploadComponent implements OnInit {
       if(dataArray[i].lastName.length !== 0 && dataArray[i].firstName.length !== 0 && dataArray[i].civility.length !== 0 &&
         (+dataArray[i].civility === 1 || +dataArray[i].civility === 2 || +dataArray[i].civility === 3) &&
         dataArray[i].birthDate.length !== 0 && this.isValidateDate(dataArray[i].birthDate) && this.isDateValide(dataArray[i].birthDate) && this.isAgeValide(dataArray[i].birthDate) &&
-
-        dataArray[i].employeeStatus.length !== 0 && (dataArray[i].employeeStatus.toUpperCase() === 'P' || dataArray[i].employeeStatus.toUpperCase() === 'S' || dataArray[i].employeeStatus.toUpperCase() === 'R')){
+        dataArray[i].employeeStatus.length !== 0
+        && (dataArray[i].employeeStatus.toUpperCase() === 'P' || dataArray[i].employeeStatus.toUpperCase() === 'S' || dataArray[i].employeeStatus.toUpperCase() === 'R')
+        && this.listCodePays.includes(dataArray[i].nationality.toUpperCase())
+        && this.listCodePays.includes(dataArray[i].birthCountry.toUpperCase())
+        && this.listCodePays.includes(dataArray[i].country.toUpperCase())
+        && dataArray[i].numberStreet.length !== 0 && dataArray[i].street.length !== 0
+        && dataArray[i].city.length !== 0 && dataArray[i].codePostal.length !== 0 && dataArray[i].country.length !==0
+        && dataArray[i].hireDate.length !== 0 && this.isValidateDate(dataArray[i].hireDate) && this.isDateValide(dataArray[i].hireDate) && this.isPossibleHireDate(dataArray[i].birthDate, dataArray[i].hireDate)
+        && this.isPossibleDepartDate(dataArray[i].hireDate, dataArray[i].departDate)){
 
         this.adresseService.getOne(dataArray[i].nui.toUpperCase() + dataArray[i].numberStreet).subscribe((data)=>{
           if(data !== null){
@@ -498,7 +607,7 @@ export class UploadComponent implements OnInit {
         });
         if(dataArray[i].nif.length !== 0){
           adresse.id = dataArray[i].nui.toUpperCase() + dataArray[i].numberStreet
-          if(dataArray[i].numberStreet.length !== 0 && (dataArray[i].additionalAdress_1.length !== 0 || dataArray[i].additionalAdress_2.length !== 0 || dataArray[i].additionalAdress_3.length !== 0)){
+          if(dataArray[i].numberStreet.length !== 0){
             adresse.numberStreet = dataArray[i].numberStreet;
           }
           adresse.street = dataArray[i].street;
@@ -516,7 +625,7 @@ export class UploadComponent implements OnInit {
           this.adresseDataArray.push(adresse);
         }else {
           adresse.id = dataArray[i].nui.toUpperCase() + dataArray[i].numberStreet
-          if(dataArray[i].numberStreet.length !== 0 && (dataArray[i].additionalAdress_1.length !== 0 || dataArray[i].additionalAdress_2.length !== 0 || dataArray[i].additionalAdress_3.length !== 0)){
+          if(dataArray[i].numberStreet.length !== 0){
             adresse.numberStreet = dataArray[i].numberStreet;
           }
           adresse.street = dataArray[i].street;
@@ -544,7 +653,15 @@ export class UploadComponent implements OnInit {
       if(dataArray[i].lastName.length !== 0 && dataArray[i].firstName.length !== 0 && dataArray[i].civility.length !== 0 &&
         (+dataArray[i].civility === 1 || +dataArray[i].civility === 2 || +dataArray[i].civility === 3) &&
         dataArray[i].birthDate.length !== 0 && this.isValidateDate(dataArray[i].birthDate) && this.isDateValide(dataArray[i].birthDate) && this.isAgeValide(dataArray[i].birthDate) &&
-        dataArray[i].employeeStatus.length !== 0 && (dataArray[i].employeeStatus.toUpperCase() === 'P' || dataArray[i].employeeStatus.toUpperCase() === 'S' || dataArray[i].employeeStatus.toUpperCase() === 'R')){
+        dataArray[i].employeeStatus.length !== 0
+        && (dataArray[i].employeeStatus.toUpperCase() === 'P' || dataArray[i].employeeStatus.toUpperCase() === 'S' || dataArray[i].employeeStatus.toUpperCase() === 'R')
+        && this.listCodePays.includes(dataArray[i].nationality.toUpperCase())
+        && this.listCodePays.includes(dataArray[i].birthCountry.toUpperCase())
+        && this.listCodePays.includes(dataArray[i].country.toUpperCase())
+        && dataArray[i].numberStreet.length !== 0 && dataArray[i].street.length !== 0
+        && dataArray[i].city.length !== 0 && dataArray[i].codePostal.length !== 0 && dataArray[i].country.length !==0
+        && dataArray[i].hireDate.length !== 0 && this.isValidateDate(dataArray[i].hireDate) && this.isDateValide(dataArray[i].hireDate) && this.isPossibleHireDate(dataArray[i].birthDate, dataArray[i].hireDate)
+        && this.isPossibleDepartDate(dataArray[i].hireDate, dataArray[i].departDate)){
 
         this.compteService.getOne(dataArray[i].numCompte).subscribe((data)=>{
           if (data !== null){
@@ -611,6 +728,8 @@ export class UploadComponent implements OnInit {
 
   selectFile($event){
     this.spinner.show();
+    this.downloadDate = this.fillDate(new Date());
+    this.downloadHour = this.fillDateHour(new Date());
     this.fileUploadedService.changeIsFileIsUploaded(true);
     let fileList = $event.srcElement.files;
     let file = fileList[0];
@@ -678,31 +797,48 @@ export class UploadComponent implements OnInit {
       isControleFile: this.isControleFile,
       company_cd_unique: this.company_cd_unique,
       company_cd_required_line: this.company_cd_required_line,
+      company_cd_listErreurLine: this.company_cd_listErreurLine,
       numIdentityUniqueRequired: this.numIdentityUniqueRequired,
       numIdentityUniqueRequiredLine: this.numIdentityUniqueRequiredLine,
+      NUI_listErrorLine: this.NUI_listErrorLine,
+      noDuplicateNUI: this.noDuplicateNUI,
+      noDuplicateNUILine: this.noDuplicateNUILine,
+      noDuplicateNUIListErrorLine: this.noDuplicateNUIListErrorLine,
       company_cd_required: this.company_cd_required,
       employee_id_required: this.employee_id_required,
       employee_id_required_line: this.employee_id_required_line,
-      employeeIdWellFormatted: this.employeeIdWellFormatted,
-      employeeIdWellFormattedLine: this.employeeIdWellFormattedLine,
+      employeeIdListErrorLine: this.employeeIdListErrorLine,
+      //employeeIdWellFormatted: this.employeeIdWellFormatted,
+      //employeeIdWellFormattedLine: this.employeeIdWellFormattedLine,
       noEmployeeDuplicated: this.noEmployeeDuplicated,
       duplicateFirstName: this.duplicateFirstName,
       duplicateLastName: this.duplicateLastName,
       civilityRequired: this.civilityRequired,
       civilityRequiredLine: this.civilityRequiredLine,
+      civilityRequiredListErrorLine: this.civilityRequiredListErrorLine,
+      civilityFalseListErrorLine: this.civilityFalseListErrorLine,
       civilityFalseValue: this.civilityFalseValue,
       lastNameGiven: this.lastNameGiven,
       lastNameGivenline: this.lastNameGivenline,
+      lastNameGivenListErrorLine: this.lastNameGivenListErrorLine,
       firstNameGiven: this.firstNameGiven,
       firstNameGivenline: this.firstNameGivenline,
+      firstNameGivenListErrorLine: this.firstNameGivenListErrorLine,
       personalEmailValid: this.personalEmailValid,
       personalEmailValidLine: this.personalEmailValidLine,
+      personalEmailValidListErrorLine: this.personalEmailValidListErrorLine,
       businessEmailValid: this.businessEmailValid,
+      //phoneValid: this.phoneValid,
+      //phoneValidLine: this.phoneValidLine,
       businessEmailValidLine: this.businessEmailValidLine,
+      businessEmailValidListErrorLine: this.businessEmailValidListErrorLine,
       birthDateGiven: this.birthDateGiven,
+      birthDateGivenListErrorLine: this.birthDateGivenListErrorLine,
+      birthDateValidListErrorLine: this.birthDateValidListErrorLine,
       birthDateValid: this.birthDateValid,
       codePaysFound: this.codePaysFound,
       codePaysFoundLine: this.codePaysFoundLine,
+      codePaysFoundListErrorLine: this.codePaysFoundListErrorLine,
       /*statusGiven: this.statusGiven,
       statusGivenLine: this.statusGivenLine,
       statusValid: this.statusValid,
@@ -718,33 +854,63 @@ export class UploadComponent implements OnInit {
       conformFlagSensitiveLine: this.conformFlagSensitiveLine,*/
       employeStatusGiven: this.employeStatusGiven,
       employeStatusGivenLine: this.employeStatusGivenLine,
+      employeStatusGivenListErrorLine: this.employeStatusGivenListErrorLine,
+      employeStatusValidListErrorLine: this.employeStatusValidListErrorLine,
       employeStatusValid: this.employeStatusValid,
       hireDateValid: this.hireDateValid,
       hireDateValidLine: this.hireDateValidLine,
+      hireDateValidListErrorLine: this.hireDateValidListErrorLine,
+      departDateValidListErrorLine: this.departDateValidListErrorLine,
       departDateValid: this.departDateValid,
       departDateValidLine: this.departDateValidLine,
       employeNoDepartDate: this.employeNoDepartDate,
       employeNoDepartDateLine: this.employeNoDepartDateLine,
+      employeNoDepartDateListErrorLine: this.employeNoDepartDateListErrorLine,
       employeDepartDate: this.employeDepartDate,
       employeDepartDateLine: this.employeDepartDateLine,
+      employeDepartDateListErrorLine: this.employeDepartDateListErrorLine,
       /*lastHireDateValid: this.lastHireDateValid,
       lastHireDateValidLine: this.lastHireDateValidLine,
       lastDepartDateValid: this.lastDepartDateValid,
       lastDepartDateValidLine: this.lastDepartDateValidLine,*/
       numberStreetIncomplet: this.numberStreetIncomplet,
       numberStreetIncompletLine: this.numberStreetIncompletLine,
+      numberStreetIncompletListErrorLine: this.numberStreetIncompletListErrorLine,
+      adressValid: this.adressValid,
       adressValidLine: this.adressValidLine,
+      adressValidListErrorLine: this.adressValidListErrorLine,
+
       codeIsoCountryValid: this.codeIsoCountryValid,
       codeIsoCountryValidLine: this.codeIsoCountryValidLine,
+      codeIsoCountryValidListErrorLine: this.codeIsoCountryValidListErrorLine,
+
+      codeIsoNationalityValid: this.codeIsoNationalityValid,
+      codeIsoNationalityValidLine: this.codeIsoNationalityValidLine,
+      codeIsoNationalityValidListErrorLine: this.codeIsoNationalityValidListErrorLine,
+
       bicGiven: this.bicGiven,
+      otherPaymentGiven: this.otherPaymentGiven,
+      otherPaymentGivenLine: this.otherPaymentGivenLine,
+      otherPaymentGivenListErrorLine: this.otherPaymentGivenListErrorLine,
       bicGivenLine: this.bicGivenLine,
+      bicGivenListErrorLine: this.bicGivenListErrorLine,
       bicValid: this.bicValid,
       bicValidLine: this.bicValidLine,
+      bicValidListErrorLine: this.bicValidListErrorLine,
       ibanValid: this.ibanValid,
+      noIbanDuplicate: this.noIbanDuplicate,
+      noIbanDuplicateLine: this.noIbanDuplicateLine,
+      noIbanDuplicateListErrorLine: this.noIbanDuplicateListErrorLine,
       ibanValidLine: this.ibanValidLine,
+      ibanValidListErrorLine: this.ibanValidListErrorLine,
       bicIbanValid: this.bicIbanValid,
       bicIbanValidLine: this.bicIbanValidLine,
+      bicIbanValidListErrorLine: this.bicIbanValidListErrorLine,
       BadHeaders: this.BadHeaders,
+      fileName: this.fileName,
+      downloadDate: this.downloadDate,
+      downloadHour: this.downloadHour,
+      companyName: this.companyName
     });
   }
   controlePrealable(dataArray){
@@ -753,7 +919,8 @@ export class UploadComponent implements OnInit {
     this.company_cd_unique = this.isCompanyCdUnique(dataArray);
     this.employee_id_required = this.isEmployeeIdCorrect(dataArray);
     this.numIdentityUniqueRequired = this.isNumIdentityUnique(dataArray);
-    this.employeeIdWellFormatted = this.isEmployeeIdWellFormatted(dataArray);
+    this.noDuplicateNUI = this.isNoDuplicateNUI(dataArray);
+    //this.employeeIdWellFormatted = this.isEmployeeIdWellFormatted(dataArray);
     this.noEmployeeDuplicated = this.isEmployeeNoDuplicated(dataArray);
   }
   controleModuleIndividu(dataArray){
@@ -763,6 +930,7 @@ export class UploadComponent implements OnInit {
     this.firstNameGiven = this.isFirstNameGiven(dataArray);
     this.personalEmailValid = this.isPersonalEmailValid(dataArray);
     this.businessEmailValid = this.isBusinessEmailValid(dataArray);
+    //this.phoneValid = this.isPhoneValid(dataArray);
     this.birthDateGiven = this.isBirthDateGiven(dataArray);
     this.birthDateValid = this.isBirthDateValid(dataArray);
     /*this.statusGiven = this.isStatusGiven(dataArray);
@@ -774,6 +942,7 @@ export class UploadComponent implements OnInit {
     this.dateEndSensitiveValid = this.isDateEndSensitiveValid(dataArray);
     this.conformFlagSensitive = this.isConformFlagSensitive(dataArray);*/
     this.codePaysFound = this.isCodeIsoValid(dataArray);
+    this.codeIsoNationalityValid = this.isCodeIsoNationalityValid(dataArray);
 
   }
   controleModuleSalarie(dataArray){
@@ -794,7 +963,9 @@ export class UploadComponent implements OnInit {
   }
   controleModuleIban(dataArray){
     this.bicGiven = this.isIbanGiven(dataArray);
+    this.otherPaymentGiven = this.isOtherPaymentGiven(dataArray);
     this.ibanValid = this.isValidIban(dataArray);
+    this.noIbanDuplicate = this.isNoIbanDuplicate(dataArray);
     this.bicValid = this.isValidBic(dataArray);
     this.bicIbanValid = this.isBicIbanValid(dataArray);
   }
@@ -895,15 +1066,18 @@ export class UploadComponent implements OnInit {
   }
   
   isCompanyCdCorrect(dataArray){
-
     for (let i = 0; i < dataArray.length; i++){
       if(dataArray[i].company_CD.length === 0){
         this.company_cd_required_line += i;
+        this.company_cd_listErreurLine.push(i+2)
         this.currentStep = -1;
-        return false;
       }
     }
-    return true;
+    if(this.company_cd_listErreurLine.length > 0){
+      return false
+    }else{
+      return true;
+    }
   }
   isCompanyCdUnique(dataArray){
     for (let i = 0; i < dataArray.length -1; i++){
@@ -918,32 +1092,54 @@ export class UploadComponent implements OnInit {
     for (let i = 0; i < dataArray.length; i++){
       if(dataArray[i].employeeId.length === 0){
         this.employee_id_required_line += i;
+        this.employeeIdListErrorLine.push(i+2);
         this.currentStep = -1;
-        return false;
       }
     }
-    return true;
+    if(this.employeeIdListErrorLine.length > 0){
+      return false;
+    }else{
+      return true;
+    }
   }
   isNumIdentityUnique(dataArray){
     for (let i = 0; i < dataArray.length; i++){
       if(dataArray[i].nui.length === 0){
         this.numIdentityUniqueRequiredLine += i;
+        this.NUI_listErrorLine.push(i+2);
         this.currentStep = -1;
-        return false;
       }
     }
-    return true;
+    if(this.NUI_listErrorLine.length > 0){
+      return false;
+    }else{
+      return true;
+    }
   }
-  isEmployeeIdWellFormatted(dataArray){
+  isNoDuplicateNUI(dataArray){
+    for (let i = 0; i < dataArray.length -1; i++){
+      if(dataArray[i].nui === dataArray[i+1].nui){
+        this.noDuplicateNUILine += i;
+        this.noDuplicateNUIListErrorLine.push(i+2);
+        this.currentStep = -1;
+      }
+    }
+    if(this.noDuplicateNUIListErrorLine.length > 0){
+      return false;
+    }else{
+      return true;
+    }
+  }
+  /*isEmployeeIdWellFormatted(dataArray){
     for (let i = 0; i < dataArray.length; i++){
-      if(dataArray[i].nui.toLowerCase()+'_'+dataArray[i].company_CD.toLowerCase() !== dataArray[i].employeeId.toLowerCase()){
+      if(dataArray[i].company_CD.toLowerCase()+'_'+dataArray[i].nui.toLowerCase()!== dataArray[i].employeeId.toLowerCase()){
         this.employeeIdWellFormattedLine += i;
         this.currentStep = -1;
         return false;
       }
     }
     return true;
-  }
+  }*/
   isEmployeeNoDuplicated(dataArray){
     for (let i = 0; i < dataArray.length -1; i++){
       if((dataArray[i].nui.toLowerCase() === dataArray[i+1].nui.toLowerCase()) && (dataArray[i].employeeId.toLowerCase() === dataArray[i+1].employeeId.toLowerCase())){
@@ -959,37 +1155,53 @@ export class UploadComponent implements OnInit {
     for (let i = 0; i < dataArray.length; i++){
       if(dataArray[i].civility.length === 0){
         this.civilityRequiredLine += i;
-        return false;
+        this.civilityRequiredListErrorLine.push(i+2);
       }
     }
-    return true;
+    if(this.civilityRequiredListErrorLine.length > 0){
+      return false;
+    }else{
+      return true;
+    }
   }
   isCivilityFalseValue(dataArray){
     for (let i = 0; i < dataArray.length; i++){
       if(dataArray[i].civility.length !== 0 && +dataArray[i].civility !== 1 && +dataArray[i].civility !== 2 && +dataArray[i].civility !== 3){
         this.civilityRequiredLine += i;
-        return false;
+        this.civilityFalseListErrorLine.push(i+2);
       }
     }
-    return true;
+    if(this.civilityFalseListErrorLine.length > 0){
+      return false;
+    }else{
+      return true;
+    }
   }
   isFirstNameGiven(dataArray){
     for (let i = 0; i < dataArray.length; i++){
       if(dataArray[i].firstName.length === 0){
         this.firstNameGivenline += i;
-        return false;
+        this.firstNameGivenListErrorLine.push(i+2);
       }
     }
-    return true;
+    if(this.firstNameGivenListErrorLine.length > 0){
+      return false;
+    }else{
+      return true;
+    }
   }
   isLastNameGiven(dataArray){
     for (let i = 0; i < dataArray.length; i++){
       if(dataArray[i].lastName.length === 0){
         this.lastNameGivenline += i;
-        return false;
+        this.lastNameGivenListErrorLine.push(i+2);
       }
     }
-    return true;
+    if(this.lastNameGivenListErrorLine.length > 0){
+      return false;
+    }else{
+      return true;
+    }
   }
   isValidateEmail(email) {
     let re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -1003,47 +1215,74 @@ export class UploadComponent implements OnInit {
     for (let i = 0; i < dataArray.length; i++){
       if(dataArray[i].personalEmail.length !== 0 && !this.isValidateEmail(dataArray[i].personalEmail)){
         this.personalEmailValidLine += i;
-        return false;
+        this.personalEmailValidListErrorLine.push(i+2);
       }
     }
-    return true;
+    if(this.personalEmailValidListErrorLine.length > 0){
+      return false;
+    }else{
+      return true;
+    }
   }
   isBusinessEmailValid(dataArray){
     for (let i = 0; i < dataArray.length; i++){
       if(dataArray[i].businessEmail.length !== 0 && !this.isValidateEmail(dataArray[i].businessEmail)){
         this.businessEmailValidLine += i;
+        this.businessEmailValidListErrorLine.push(i+2);
+      }
+    }
+    if(this.businessEmailValidListErrorLine.length > 0){
+      return false;
+    }else{
+      return true;
+    }
+  }
+  /*isPhoneValid(dataArray){
+    for(let i =  0; i < dataArray.length; i++){
+      if((dataArray[i].homePhone.length !== 0 && !dataArray[i].homePhone.startsWith('00'))
+          || (dataArray[i].businessPhone.length !== 0 && !dataArray[i].businessPhone.startsWith('00'))
+          || (dataArray[i].cellPhone.length !== 0 && !dataArray[i].cellPhone.startsWith('00'))){
+        this.phoneValidLine += i;
         return false;
       }
     }
     return true;
-  }
+  }*/
 
   isBirthDateGiven(dataArray){
     for (let i = 0; i < dataArray.length; i++){
       if(dataArray[i].birthDate.length === 0){
         this.birthDateValidLine += i;
-        return false;
+        this.birthDateGivenListErrorLine.push(i+2);
       }
     }
-    return true;
+    if(this.birthDateGivenListErrorLine.length > 0){
+      return false;
+    }else{
+      return true;
+    }
   }
 
   isBirthDateValid(dataArray){
     for (let i = 0; i < dataArray.length; i++){
       if(dataArray[i].birthDate.length !== 0 && !this.isValidateDate(dataArray[i].birthDate)){
         this.birthDateValidLine += i;
-        return false;
+        this.birthDateValidListErrorLine.push(i+2);
       }
       if(dataArray[i].birthDate.length !== 0 && this.isValidateDate(dataArray[i].birthDate) && !this.isDateValide(dataArray[i].birthDate)){
         this.birthDateValidLine += i;
-        return false;
+        this.birthDateValidListErrorLine.push(i+2);
       }
       if(dataArray[i].birthDate.length !== 0 && this.isValidateDate(dataArray[i].birthDate) && this.isDateValide(dataArray[i].birthDate) && !this.isAgeValide(dataArray[i].birthDate)){
         this.birthDateValidLine += i;
-        return false;
+        this.birthDateValidListErrorLine.push(i+2);
       }
     }
-    return true;
+    if(this.birthDateValidListErrorLine.length > 0){
+      return false;
+    }else{
+      return true;
+    }
   }
   /*isDateEndSensitiveValid(dataArray){
     for (let i = 0; i < dataArray.length; i++){
@@ -1082,19 +1321,27 @@ export class UploadComponent implements OnInit {
     for (let i = 0; i < dataArray.length; i++){
       if(dataArray[i].employeeStatus.length === 0){
         this.employeStatusGivenLine += i;
-        return false;
+        this.employeStatusGivenListErrorLine.push(i+2);
       }
     }
-    return true;
+    if(this.employeStatusGivenListErrorLine.length > 0){
+      return false;
+    }else{
+      return true;
+    }
   }
   isEmployeStatusValid(dataArray){
     for (let i = 0; i < dataArray.length; i++){
       if(dataArray[i].employeeStatus.length !== 0 && dataArray[i].employeeStatus.toUpperCase() !== 'P' && dataArray[i].employeeStatus.toUpperCase() !== 'S' && dataArray[i].employeeStatus.toUpperCase() !== 'R'){
         this.employeStatusGivenLine += i;
-        return false;
+        this.employeStatusValidListErrorLine.push(i+2);
       }
     }
-    return true;
+    if(this.employeStatusValidListErrorLine.length > 0){
+      return false;
+    }else{
+      return true;
+    }
   }
 
   /*isVipGiven(dataArray){
@@ -1145,12 +1392,13 @@ export class UploadComponent implements OnInit {
   }*/
 
   isCodeIsoValid(dataArray){
-    let isFound = false;
+    //let isFound = false;
     for (let i = 0; i < this.COUNTRY.length; i++){
 
       for (let j = 0; j < dataArray.length; j++){
         if (this.COUNTRY[i].code.toUpperCase() === dataArray[j].birthCountry.toUpperCase()){
-          isFound = true;
+          //isFound = true;
+          this.insertCodePays = true;
           this.listCodePays.push(this.COUNTRY[i].code);
           this.listLibPays.push(this.COUNTRY[i].name);
         }
@@ -1160,21 +1408,28 @@ export class UploadComponent implements OnInit {
 
     for (let i = 0; i < dataArray.length; i++) {
       if(!this.listCodePays.includes(dataArray[i].birthCountry.toUpperCase())){
-        isFound = false;
+        //isFound = false;
+        //this.insertCodePays = false;
         this.codePaysFoundLine+=i;
-        break;
+        this.codePaysFoundListErrorLine.push(i+2);
+        //break;
       }
     }
+    if(this.codePaysFoundListErrorLine.length > 0){
+      return false;
+    }else {
+      return true;
+    }
 
-    return isFound;
+    //return isFound;
   }
   isCodeIsoCountryValid(dataArray){
-    let isFound = false;
+    //let isFound = false;
     for (let i = 0; i < this.COUNTRY.length; i++){
 
       for (let j = 0; j < dataArray.length; j++){
         if (this.COUNTRY[i].code.toUpperCase() === dataArray[j].country.toUpperCase()){
-          isFound = true;
+          //isFound = true;
           this.listCodeCountry.push(this.COUNTRY[i].code);
           this.listLibCountry.push(this.COUNTRY[i].name);
         }
@@ -1184,12 +1439,44 @@ export class UploadComponent implements OnInit {
 
     for (let i = 0; i < dataArray.length; i++) {
       if(!this.listCodeCountry.includes(dataArray[i].country.toUpperCase())){
-        isFound = false;
+        //isFound = false;
         this.codeIsoCountryValidLine+=i;
-        break;
+        this.codeIsoCountryValidListErrorLine.push(i+2);
       }
     }
-    return isFound;
+    if(this.codeIsoCountryValidListErrorLine.length > 0){
+      return false;
+    }else{
+      return true;
+    }
+  }
+
+  isCodeIsoNationalityValid(dataArray){
+    //let isFound = false;
+    for (let i = 0; i < this.COUNTRY.length; i++){
+
+      for (let j = 0; j < dataArray.length; j++){
+        if (this.COUNTRY[i].code.toUpperCase() === dataArray[j].nationality.toUpperCase()){
+          //isFound = true;
+          this.listCodeCountry.push(this.COUNTRY[i].code);
+          this.listLibCountry.push(this.COUNTRY[i].name);
+        }
+      }
+
+    }
+
+    for (let i = 0; i < dataArray.length; i++) {
+      if(!this.listCodeCountry.includes(dataArray[i].nationality.toUpperCase())){
+        //isFound = false;
+        this.codeIsoNationalityValidLine+=i;
+        this.codeIsoNationalityValidListErrorLine.push(i+2);
+      }
+    }
+    if(this.codeIsoNationalityValidListErrorLine.length > 0){
+      return false;
+    }else{
+      return true;
+    }
   }
   isBissextile(year){
     //vérifier que le l année est bien fournie et la convertir en string si il faut
@@ -1241,18 +1528,22 @@ export class UploadComponent implements OnInit {
     for (let i = 0; i < dataArray.length; i++){
       if(dataArray[i].hireDate.length !== 0 && !this.isValidateDate(dataArray[i].hireDate)){
         this.hireDateValidLine += i;
-        return false;
+        this.hireDateValidListErrorLine.push(i+2);
       }
       if(dataArray[i].hireDate.length !== 0 && this.isValidateDate(dataArray[i].hireDate) && !this.isDateValide(dataArray[i].hireDate)){
         this.hireDateValidLine += i;
-        return false;
+        this.hireDateValidListErrorLine.push(i+2);
       }
       if(dataArray[i].hireDate.length !== 0 && this.isValidateDate(dataArray[i].hireDate) && this.isDateValide(dataArray[i].hireDate) && !this.isPossibleHireDate(dataArray[i].birthDate, dataArray[i].hireDate)){
         this.hireDateValidLine += i;
-        return false;
+        this.hireDateValidListErrorLine.push(i+2);
       }
     }
-    return true;
+    if(this.hireDateValidListErrorLine.length > 0){
+      return false;
+    }else{
+      return true;
+    }
   }
 /*  isLastHireDateValide(dataArray){
     for (let i = 0; i < dataArray.length; i++){
@@ -1275,18 +1566,22 @@ export class UploadComponent implements OnInit {
     for (let i = 0; i < dataArray.length; i++){
       if(dataArray[i].departDate.length !== 0 && !this.isValidateDate(dataArray[i].departDate)){
         this.departDateValidLine += i;
-        return false;
+        this.departDateValidListErrorLine.push(i+2);
       }
       if(dataArray[i].departDate.length !== 0 && this.isValidateDate(dataArray[i].departDate) && !this.isDateValide(dataArray[i].departDate)){
         this.departDateValidLine += i;
-        return false;
+        this.departDateValidListErrorLine.push(i+2);
       }
       if(dataArray[i].departDate.length !== 0 && this.isValidateDate(dataArray[i].departDate) && this.isDateValide(dataArray[i].departDate) && !this.isPossibleDepartDate(dataArray[i].hireDate, dataArray[i].departDate)){
         this.departDateValidLine += i;
-        return false;
+        this.departDateValidListErrorLine.push(i+2);
       }
     }
-    return true;
+    if(this.departDateValidListErrorLine.length > 0){
+      return false;
+    }else{
+      return true;
+    }
   }
  /* isLastDepartDateValide(dataArray){
     for (let i = 0; i < dataArray.length; i++){
@@ -1313,59 +1608,114 @@ export class UploadComponent implements OnInit {
     for (let i = 0; i < dataArray.length; i++){
       if (dataArray[i].employeeStatus.toUpperCase() === 'P' && dataArray[i].departDate.length !== 0){
         this.employeNoDepartDateLine += i;
-        return false;
+        this.employeNoDepartDateListErrorLine.push(i+2);
       }
     }
-    return true;
+    if(this.employeNoDepartDateListErrorLine.length > 0){
+      return false;
+    }else{
+      return true;
+    }
   }
   isEmployeDepartDate(dataArray){
     for (let i = 0; i < dataArray.length; i++){
       if ((dataArray[i].employeeStatus.toUpperCase() === 'S' || dataArray[i].employeeStatus.toUpperCase() === 'R') && dataArray[i].departDate.length === 0){
         this.employeDepartDateLine += i;
-        return false;
+        this.employeDepartDateListErrorLine.push(i+2);
       }
     }
-    return true;
+    if(this.employeDepartDateListErrorLine.length > 0){
+      return false;
+    }else{
+      return true;
+    }
   }
   isNumberStreetIncomplet(dataArray){
     for (let i = 0; i < dataArray.length; i++){
-      if(dataArray[i].numberStreet.length !== 0 && dataArray[i].additionalAdress_1.length === 0 && dataArray[i].additionalAdress_2.length === 0 && dataArray[i].additionalAdress_3.length === 0){
+      if(dataArray[i].numberStreet.length === 0 || dataArray[i].street.length === 0){
         this.numberStreetIncompletLine += i;
-        return false;
+        this.numberStreetIncompletListErrorLine.push(i+2);
       }
     }
-    return true;
+    if(this.numberStreetIncompletListErrorLine.length > 0){
+      return false;
+    }else{
+      return true;
+    }
   }
   isAdressValid(dataArray){
     for (let i = 0; i < dataArray.length; i++){
-      if((dataArray[i].street.length !== 0 || dataArray[i].additionalAdress_1.length !== 0 || dataArray[i].additionalAdress_2.length !== 0 || dataArray[i].additionalAdress_3.length !== 0)
-          &&(dataArray[i].city.length === 0 || dataArray[i].codePostal.length === 0 || dataArray[i].country.length ===0)){
+      if(dataArray[i].city.length === 0 || dataArray[i].codePostal.length === 0 || dataArray[i].country.length ===0){
         this.adressValidLine += i;
-        return false;
+        this.adressValidListErrorLine.push(i+2);
       }
     }
-    return true;
+    if(this.adressValidListErrorLine.length > 0){
+      return false;
+    }else{
+      return true;
+    }
   }
   isIbanGiven(dataArray){
     for (let i = 0; i < dataArray.length; i++){
       if((dataArray[i].bic.length !== 0 && dataArray[i].otherPayment.length === 0 && dataArray[i].iban.length === 0)
         || (dataArray[i].bic.length === 0 && dataArray[i].iban.length !== 0)){
         this.bicGivenLine += i;
-        return false;
+        this.bicGivenListErrorLine.push(i+2);
       }
     }
-    return true;
+    if(this.bicGivenListErrorLine.length > 0){
+      return false;
+    }else{
+      return true;
+    }
+  }
+
+  isOtherPaymentGiven(dataArray){
+    for(let i = 0; i < dataArray.length; i ++){
+      if(dataArray[i].bic.length === 0 && dataArray[i].otherPayment.length !==0){
+        this.otherPaymentGivenLine += i;
+        this.otherPaymentGivenListErrorLine.push(i+2);
+      }
+    }
+    if(this.otherPaymentGivenListErrorLine.length > 0){
+      return false;
+    }else{
+      return true;
+    }
   }
 
   isValidIban(dataArray){
     for (let i = 0; i < dataArray.length; i++){
       if(dataArray[i].iban.length !== 0 && !this.isValidIBANNumber(dataArray[i].iban)){
         this.ibanValidLine += i;
-        return false;
+        this.ibanValidListErrorLine.push(i+2);
       }
     }
-    return true;
+    if(this.ibanValidListErrorLine.length > 0){
+      return false;
+    }else{
+      return true;
+    }
   }
+  isNoIbanDuplicate(dataArray){
+    for (let i = 0; i < dataArray.length -1; i++){
+      if(dataArray[i].iban.length !== 0){
+        if((dataArray[i].iban.trim() === dataArray[i+1].iban.trim())){
+          this.noIbanDuplicateLine += i;
+          this.noIbanDuplicateListErrorLine.push(i+2);
+        }
+      }
+
+    }
+    if(this.noIbanDuplicateListErrorLine.length > 0){
+      return false;
+    }else{
+      return true;
+    }
+  }
+
+
 
   isValidIBANNumber(input) {
     let CODE_LENGTHS = {
@@ -1412,20 +1762,28 @@ export class UploadComponent implements OnInit {
     for (let i = 0; i < dataArray.length; i++){
       if(dataArray[i].bic.length !== 0 && !this.isBic(dataArray[i].bic)){
         this.bicValidLine += i;
-        return false;
+        this.bicValidListErrorLine.push(i+2);
       }
     }
-    return true;
+    if(this.bicValidListErrorLine.length > 0){
+      return false;
+    }else{
+      return true;
+    }
   }
 
   isBicIbanValid(dataArray){
     for (let i = 0; i < dataArray.length; i++){
       if(dataArray[i].otherPayment.length === 0 && dataArray[i].bic.substr(4,2) !== dataArray[i].iban.substr(0, 2)){
         this.bicIbanValidLine += i;
-        return false;
+        this.bicIbanValidListErrorLine.push(i+2);
       }
     }
-    return true;
+    if(this.bicIbanValidListErrorLine.length > 0){
+      return false;
+    }else{
+      return true;
+    }
   }
 
   public downloadPDF(){
@@ -1486,9 +1844,10 @@ export class UploadComponent implements OnInit {
 
   }
 
+
   public downloadPDFModules($event:any){
     let audit: Audit = new Audit();
-    this.typeOfReport = 'modules';
+    this.typeOfReport = 'affiliation';
     $event.preventDefault();
     $event.stopPropagation();
     Filemanagement.downloadPDFModules(this.report.nativeElement.innerHTML, this.typeOfReport);
@@ -1509,6 +1868,19 @@ export class UploadComponent implements OnInit {
       month = '0' + month;
     }
     return day + '/' + month + '/' + year;
+  }
+
+  fillDateHour(date:any) {
+    let hour = String(new Date(Date.parse(date)).getHours());
+    let munite = String(new Date(Date.parse(date)).getMinutes());
+
+    if (Number(hour) >= 1 && Number(hour) <= 9) {
+      hour = '0' + hour;
+    }
+    if(Number(munite) >= 1 && Number(munite) <= 9) {
+      munite = '0' + munite;
+    }
+    return hour + ':' + munite;
   }
 
 

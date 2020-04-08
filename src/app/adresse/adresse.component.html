@@ -17,7 +17,6 @@
       <table class="col-sm-12 table table-hover" id="example">
         <thead>
         <tr>
-          <th>ID</th>
           <th>Numéro</th>
           <th>Libellé Voie</th>
           <th>Lieu Dit</th>
@@ -38,7 +37,6 @@
         </thead>
         <tbody>
         <tr *ngFor="let adresse of pageAdresses?.content">
-          <td>{{adresse.id}}</td>
           <td>{{adresse.numberStreet}}</td>
           <td>{{adresse.street}}</td>
           <td>{{adresse.additionalAdress_1}}</td>

@@ -59,6 +59,7 @@ export class IndividusComponent implements OnInit {
     });
   }
 
+
   loadIndividus() {
 
     this.individusService.search(this.motCle, this.currentPage, this.size)

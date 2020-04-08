@@ -31,6 +31,8 @@ export class InstrumentsComponent implements OnInit {
   audit: Audit = new Audit();
 
   typeOfReport: string = '';
+  downloadDate: any;
+  downloadHour: any;
   pageInstruments: any;
   keyWord: string= '';
   currentPage: number = 0;
@@ -42,6 +44,7 @@ export class InstrumentsComponent implements OnInit {
   selectedStep = 1;
   dataModelListFiltred: any;
   dataFromServer: any = null;
+  isControleFile: boolean = true;
   dataSentToServer: boolean = false;
   dataModelList: DataModel[];
 
@@ -55,13 +58,13 @@ export class InstrumentsComponent implements OnInit {
   instrumentsUpdatedDataArray: Instruments[] = [];
 
   codeRequired: boolean = true;
-  codeRequiredLine: number = 1;
+  codeRequiredLine: number = 2;
 
   nomRequired: boolean = true;
-  nomRequiredLine: number = 1;
+  nomRequiredLine: number = 2;
 
   statutRequired: boolean=  true;
-  statutRequiredLine: number = 1;
+  statutRequiredLine: number = 2;
 
   instrumentReportCreateFile: ReportCreateFile = new ReportCreateFile();
   instrumentReportUpdateFile: ReportUpdateFile = new ReportUpdateFile();
@@ -294,13 +297,31 @@ export class InstrumentsComponent implements OnInit {
     }
     return false;
   }
+  controleFile(dataArray, file){
+    let tabFile = file.split('_');
+    if(tabFile[0].toLowerCase() !== 'instrument'){
+      this.currentStep = -1;
+      return false;
+    }
+    if(!this.isDateFile(tabFile[1])) {
+      this.currentStep = -1;
+      return false;
+    }
+    return true;
+  }
+  isDateFile(value){
+    return /^\s*(3[01]|[12][0-9]|0?[1-9])\.(1[012]|0?[1-9])\.((?:19|20)\d{2})\s*$/.test(value)
+  }
   controleModuleInstrument(dataArray){
+    this.isControleFile = this.controleFile(dataArray, this.fileName);
     this.codeRequired = this.isCodeRequired(dataArray);
     this.nomRequired = this.isNomRequired(dataArray);
     this.statutRequired = this.isStatutRequired(dataArray);
   }
   selectFile($event){
     this.spinner.show();
+    this.downloadDate = this.fillDate(new Date());
+    this.downloadHour = this.fillDateHour(new Date());
     let fileList = $event.srcElement.files;
     let file = fileList[0];
     if(file && file.name.endsWith(".csv")){
@@ -408,7 +429,7 @@ export class InstrumentsComponent implements OnInit {
     return isNaN(timestamp) ? null : new Date(timestamp);
   }
   fillDate(date:any){
-    if(date && (date.indexOf('-') > -1)) {
+    if(date) {
       let year = new Date(Date.parse(date)).getFullYear();
       let month = String(new Date(Date.parse(date)).getMonth() + 1);
       let day = String(new Date(Date.parse(date)).getDate());
@@ -421,10 +442,31 @@ export class InstrumentsComponent implements OnInit {
       return day + '/' + month + '/' + year;
     }
   }
+  fillDateHour(date:any) {
+    let hour = String(new Date(Date.parse(date)).getHours());
+    let munite = String(new Date(Date.parse(date)).getMinutes());
 
-  public downloadPDF($event:any){
+    if (Number(hour) >= 1 && Number(hour) <= 9) {
+      hour = '0' + hour;
+    }
+    if(Number(munite) >= 1 && Number(munite) <= 9) {
+      munite = '0' + munite;
+    }
+    return hour + ':' + munite;
+  }
+  /*public downloadPDF($event:any){
     $event.preventDefault();
     $event.stopPropagation();
     Filemanagement.downloadPDF(this.content.nativeElement.innerHTML);
+  }*/
+  public downloadPDF($event:any){
+    //let audit: Audit = new Audit();
+    this.typeOfReport = 'instrument';
+    $event.preventDefault();
+    $event.stopPropagation();
+    Filemanagement.downloadPDF(this.content.nativeElement.innerHTML, this.typeOfReport);
+    /*this.cookieService.set('fileUploadError', this.cookieService.get('fileUploadError')+';fileUploadError'+new Date()+'.pdf');
+    audit.errorFileName = 'fileUploadError'+new Date()+'.pdf';
+    this.appService.saveAudit(audit);*/
   }
 }

@@ -1,3 +1,4 @@
+
 <h3 class="h3-class">Instrument</h3>
 <br>
 <!-----ERRORS Messages ----->
@@ -5,12 +6,20 @@
   <div id="content" #content>
     <div class="row" style="margin-left: 20px">
       <div class="col-sm-10" style="font-size: small;">
+        <div class="text-center">
+          <p class="badge badge-info">Fichier chargé: {{fileName}} </p>
+        </div>
+        <div class="text-center">
+          <p class="badge badge-info">Date de chargement: {{downloadDate}} à {{downloadHour}} </p>
+        </div>
         <div *ngIf="BadHeaders">
           <p class="badge-dark " style="with: 100px">Ce fichier n'est pas approprié pour ce module. Merci de rensegner le bon fichier au format suivant: ID, CODE,
             NOM, CODESOCIETEGESTION, STATUT, NATURE, CLASSIFICATION, CODEEMPLOIREVENU, PERIODICITE, PRECISIONPART, PRECISIONVL, PRECISIONPLUSVALUE, CUTOFFSTP
             IDDEVISE, NIVEAURISQUE, HORIZONPLACEMENT, CUTOFF, CUTOFFFAX, CODEFUNDLIFE, IDPLATEFORME, IDSOCIETEGESTION, IDDEPOSITAIRE, IDAGENTTRANSFERT</p>
         </div>
-
+        <div *ngIf="isControleFile === false">
+          <p class="badge-dark" style="with: 100px">Le nom du fichier est incorrect!!!</p>
+        </div>
         <div *ngIf="codeRequired == false">
           <p class=" badge-dark " style="with: 100px">Le code de l'instrument de la ligne {{codeRequiredLine}} n'est pas renseigné !</p>
         </div>
@@ -83,6 +92,12 @@
         </div>
         <div *ngSwitchCase="3">
           <div id="report" #report>
+            <div class="text-center">
+              <p class="badge badge-info">Fichier chargé: {{fileName}} </p>
+            </div>
+            <div class="text-center">
+              <p class="badge badge-info">Date de chargement: {{downloadDate}} à {{downloadHour}} </p>
+            </div>
             <div class="text-center">
               <p class="badge badge-info">Ce fichier contient {{dataArray.length}} lignes </p>
             </div>

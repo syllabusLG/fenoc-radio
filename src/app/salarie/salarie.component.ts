@@ -5,9 +5,7 @@ import {Salarie} from "../shared/salarie.model";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {saveAs} from 'file-saver';
 import {Individus} from '../shared/individus.model';
-import {SearchInputComponent} from "../shared/search-input/search-input.component";
 import {CookieService} from 'ngx-cookie-service';
-import { debug } from 'util';
 
 
 @Component({
@@ -51,11 +49,6 @@ export class SalarieComponent implements OnInit {
       company_CD: '',
       hireDate: '',
       departDate: '',
-      lastHireDate: '',
-      lastDepartDate: '',
-      statut: '',
-      mySensitive: '',
-      dateEndSensitive: '',
       individu: ['', Validators.required],
     });
   }
@@ -83,23 +76,14 @@ export class SalarieComponent implements OnInit {
   updateSalarie() {
     let dateHire = this.selectedSalarie.hireDate;
     let dateDepart = this.selectedSalarie.departDate;
-    let dateLastHire = this.selectedSalarie.lastHireDate;
-    let dateLastDepart = this.selectedSalarie.lastDepartDate;
 
-    if(dateHire || dateDepart || dateLastHire || dateLastDepart )
+    if(dateHire || dateDepart)
     {
       if(dateHire && (dateHire.indexOf('-') > -1)){
         this.selectedSalarie.hireDate = this.fillDate(dateHire);
       }
       if(dateDepart && (dateDepart.indexOf('-') > -1)){
         this.selectedSalarie.departDate = this.fillDate(dateDepart);
-      }
-      if(dateLastDepart && (dateLastDepart.indexOf('-') > -1)){
-        this.selectedSalarie.lastDepartDate = this.fillDate(dateLastDepart);
-      }
-      if(dateLastHire && (dateLastHire.indexOf('-') > -1))
-      {
-        this.selectedSalarie.lastHireDate= this.fillDate(dateLastHire);
       }
     }
     this.salarieService.update(this.selectedSalarie).subscribe(

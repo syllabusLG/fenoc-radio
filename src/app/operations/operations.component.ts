@@ -48,6 +48,7 @@ export class OperationsComponent implements OnInit {
         this.pageOperations = data;
         this.pages = new Array<number>(data['totalPages']);
         this.cookieService.set('operations', this.cookieService.get('operations')+';Operations: search movement according to positions');
+        console.log('currentPage: ', this.currentPage, 'size: ', this.size, ' filter: ', this.filter)
         audit.operations = 'Operations: search movement according to positions';
         this.appService.saveAudit(audit);
       }, error1 => {

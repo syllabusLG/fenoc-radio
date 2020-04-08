@@ -37,6 +37,8 @@ export class MovementComponent implements  OnInit{
   audit: Audit = new Audit();
 
   typeOfReport: string = '';
+  downloadDate: any;
+  downloadHour: any;
   pageMovements:any;
   motCle:string='';
   currentPage:number=0;
@@ -50,8 +52,9 @@ export class MovementComponent implements  OnInit{
   dataFromServer: any = null;
   dataSentToServer: boolean = false;
 
+  isControleFile: boolean = true;
   possibleMovment: boolean = true;
-  possibleMovmentLine: number = 1;
+  possibleMovmentLine: number = 2;
 
   dataModelList: DataModel[];
 
@@ -67,40 +70,43 @@ export class MovementComponent implements  OnInit{
   positionsDataArray: Positions[] = [];
 
   numMouvementRequired: boolean = true;
-  numMouvementRequiredLine: number =1;
+  numMouvementRequiredLine: number =2;
   numMouvement_unique: boolean = true;
 
   sensRequired: boolean = true;
-  sensRequiredLine: number = 1;
+  sensRequiredLine: number = 2;
+
+  noDuplicateInstrumentCompte: boolean = true;
+  noDuplicateInstrumentCompteLine: number = 2;
 
   refInstrumentRequired: boolean = true;
-  refInstrumentRequiredLine: number = 1;
+  refInstrumentRequiredLine: number = 2;
 
   quantiteInstrumentRequired: boolean = true;
-  quantiteInstrumentRequiredLine: number = 1;
+  quantiteInstrumentRequiredLine: number = 2;
 
   navRequired: boolean = true;
-  navRequiredLine: number = 1;
+  navRequiredLine: number = 2;
 
   pruInstrumentRequired: boolean = true;
-  pruInstrumentRequiredLine: number = 1;
+  pruInstrumentRequiredLine: number = 2;
 
   dateCompteRequired: boolean = true;
-  dateCompteRequiredLine: number =1;
+  dateCompteRequiredLine: number =2;
 
   dateValeurRequired: boolean = true;
-  dateValuerRequiredLine: number = 1;
+  dateValuerRequiredLine: number = 2;
 
   dateOperationRequired: boolean = true;
-  dateOperationRequiredLine: number = 1;
+  dateOperationRequiredLine: number = 2;
 
   compteRequired: boolean = true;
-  compteRequiredLine: number = 1;
+  compteRequiredLine: number = 2;
   compteValid: boolean = true;
-  compteValidedLine: number =1;
+  compteValidedLine: number =2;
 
   entityMereRequired: boolean = true;
-  entityMereRequiredLine: number = 1;
+  entityMereRequiredLine: number = 2;
 
   movementReportCreateFile: ReportCreateFile = new ReportCreateFile();
   movementReportUpdateFile: ReportUpdateFile = new ReportUpdateFile();
@@ -200,7 +206,7 @@ export class MovementComponent implements  OnInit{
           if(movementHeaders.indexOf(header) <= -1){
             console.log("****************"+movementHeaders.indexOf(header));
             this.BadHeaders = true;
-            this.currentStep = -1;
+            //this.currentStep = -1;
           }
         }
       });
@@ -233,7 +239,47 @@ export class MovementComponent implements  OnInit{
     }
     return dataArray;
   }
-
+  controleFile(dataArray, file){
+    let tabFile = file.split('_');
+    let isMultiCompany: boolean = false;
+    for(let i = 0; i < (dataArray.length -1); i++){
+      if(dataArray[i].company_CD.toLowerCase() !== dataArray[i+1].company_CD.toLowerCase()){
+        isMultiCompany = true;
+        break;
+      }
+    }
+    if(!isMultiCompany && tabFile[0].toLowerCase() !== dataArray[0].company_CD.toLowerCase()){
+      this.currentStep = -1;
+      return false;
+    }
+    if(isMultiCompany && tabFile[0].toLowerCase() !== 'multientreprise'){
+      this.currentStep = -1;
+      return false;
+    }
+    if(tabFile[1].toLowerCase() !== 'movement'){
+      this.currentStep = -1;
+      return false;
+    }
+    if(!this.isDateFile(tabFile[2])) {
+      this.currentStep = -1;
+      return false;
+    }
+    return true;
+  }
+  isDateFile(value){
+    return /^\s*(3[01]|[12][0-9]|0?[1-9])\.(1[012]|0?[1-9])\.((?:19|20)\d{2})\s*$/.test(value)
+  }
+  isNoDuplicateInstrumentCompte(dataArray){
+    for(let i = 0; i < dataArray.length - 1; i++){
+      if(dataArray[i].instruments === dataArray[i+1].instruments
+        && dataArray[i].compte === dataArray[i+1].compte){
+        this.noDuplicateInstrumentCompteLine +=i;
+        this.currentStep =-1;
+        return false;
+      }
+    }
+    return true;
+  }
   isNumMouvementRequired(dataArray){
     for(let i=0; i<dataArray.length; i++){
       if(dataArray[i].numMouvement == 0){
@@ -306,7 +352,7 @@ export class MovementComponent implements  OnInit{
 
   isRefInstrumentRequired(dataArray){
     for(let i=0; i<dataArray.length; i++){
-      if(dataArray[i].refInstrument == 0){
+      if(dataArray[i].instruments == 0){
         this.refInstrumentRequiredLine +=i;
         this.currentStep =-1;
         return false;
@@ -374,7 +420,7 @@ export class MovementComponent implements  OnInit{
   isPossibleMovement(dataArray){
     let position: Positions;
     for(let i = 0; i <dataArray.length; i++){
-      this.positionService.getPositionByCodeInstrument(dataArray[i].instruments).subscribe( data=>{
+      this.positionService.getPositionByCodeInstrumentAndCompte(dataArray[i].instruments, String(dataArray[i].compte)).subscribe( data=>{
         if(data !== null){
           position = data;
           if (dataArray[i].sens === 'C' && (Number(position.quantiteInstrument) - Number(dataArray[i].quantiteInstrument) < 0)) {
@@ -415,7 +461,7 @@ export class MovementComponent implements  OnInit{
   buildMovementsDataArray(dataArray){
     this.movementReportCreateFile.module = 'Movements';
     this.movementReportUpdateFile.module = 'Movements';
-    for(let i=0; i< dataArray.length; i++)
+    for(let i = 0; i < dataArray.length; i++)
     {
       let movements: Mouvements = new Mouvements();
       let compte: Compte = new Compte();
@@ -430,7 +476,7 @@ export class MovementComponent implements  OnInit{
       });
       compte.numCompte = dataArray[i].compte;
       instrument.code = dataArray[i].instruments;
-      this.positionService.getPositionByCodeInstrument(dataArray[i].instruments).subscribe( data=>{
+      this.positionService.getPositionByCodeInstrumentAndCompte(dataArray[i].instruments, String(dataArray[i].compte)).subscribe( data=>{
         if(data !== null){
           movements.position = data;
           position = data;
@@ -479,6 +525,8 @@ export class MovementComponent implements  OnInit{
     return false;
   }
   controleModuleMovement(dataArray){
+    this.isControleFile = this.controleFile(dataArray, this.fileName);
+    this.noDuplicateInstrumentCompte = this.isNoDuplicateInstrumentCompte(dataArray);
     this.compteRequired = this.isCompteRequired(dataArray);
     this.compteValid= this.isCompteCreated(dataArray);
     this.entityMereRequired = this.isEntityRequired(dataArray);
@@ -497,6 +545,8 @@ export class MovementComponent implements  OnInit{
 
   selectFile($event){
     this.spinner.show();
+    this.downloadDate = this.fillDate(new Date());
+    this.downloadHour = this.fillDateHour(new Date());
     let fileList = $event.srcElement.files;
     let file = fileList[0];
     if(file && file.name.endsWith(".csv")){
@@ -641,9 +691,32 @@ export class MovementComponent implements  OnInit{
     }
   }
 
-  public downloadPDF($event:any){
+  fillDateHour(date:any) {
+    let hour = String(new Date(Date.parse(date)).getHours());
+    let munite = String(new Date(Date.parse(date)).getMinutes());
+
+    if (Number(hour) >= 1 && Number(hour) <= 9) {
+      hour = '0' + hour;
+    }
+    if(Number(munite) >= 1 && Number(munite) <= 9) {
+      munite = '0' + munite;
+    }
+    return hour + ':' + munite;
+  }
+
+  /*public downloadPDF($event:any){
     $event.preventDefault();
     $event.stopPropagation();
     Filemanagement.downloadPDF(this.content.nativeElement.innerHTML);
+  }*/
+  public downloadPDF($event:any){
+    //let audit: Audit = new Audit();
+    this.typeOfReport = 'mouvement';
+    $event.preventDefault();
+    $event.stopPropagation();
+    Filemanagement.downloadPDF(this.content.nativeElement.innerHTML, this.typeOfReport);
+    /*this.cookieService.set('fileUploadError', this.cookieService.get('fileUploadError')+';fileUploadError'+new Date()+'.pdf');
+    audit.errorFileName = 'fileUploadError'+new Date()+'.pdf';
+    this.appService.saveAudit(audit);*/
   }
 }

@@ -37,6 +37,8 @@ export class CrudComponent implements OnInit {
 
   crudType = 'upload';
 
+  typeOfReport: string = '';
+
   errors: any = {};
 
   constructor(private cookieService: CookieService,
@@ -56,14 +58,26 @@ export class CrudComponent implements OnInit {
 
   public downloadPDF($event:any){
     let audit: Audit = new Audit();
+    this.typeOfReport = 'affiliation';
     $event.preventDefault();
     $event.stopPropagation();
-    Filemanagement.downloadPDF(this.content.nativeElement.innerHTML);
+    Filemanagement.downloadPDF(this.content.nativeElement.innerHTML, this.typeOfReport);
     this.cookieService.set('fileUploadError', this.cookieService.get('fileUploadError')+';fileUploadError'+new Date()+'.pdf');
     audit.errorFileName = 'fileUploadError'+new Date()+'.pdf';
     this.appService.saveAudit(audit);
   }
 
+  /*public downloadPDFModules($event:any){
+    let audit: Audit = new Audit();
+    this.typeOfReport = 'affiliation';
+    $event.preventDefault();
+    $event.stopPropagation();
+    Filemanagement.downloadPDFModules(this.report.nativeElement.innerHTML, this.typeOfReport);
+    this.currentStep = 4;
+    this.cookieService.set('reportFileName', this.cookieService.get('reportFileName')+';reportFile'+new Date()+'.pdf');
+    audit.reportFileName = 'reportFile'+new Date()+'.pdf';
+    this.appService.saveAudit(audit);
 
+  }*/
 
 }

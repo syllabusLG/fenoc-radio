@@ -8,5 +8,6 @@ export class Positions {
               public quantiteInstrument?: number,
               public pruInstrument?: number,
               public dateUpdate?: any,
-              public compte?: Compte){}
+              public compte?: Compte,
+              public company_CD?: string){}
 }

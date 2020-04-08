@@ -37,7 +37,7 @@ export class PositionService implements CrudService{
   search(motCle:string, page:number, size:number): Observable<any>{
     return this.http.get(API_URLS.POSITION_URL_SEARCH +'?mc='+motCle+'&size='+size+'&page='+page);
   }
-  getPositionByCodeInstrument(code: string): Observable<any>{
-    return this.http.get(API_URLS.POSITION_URL_CODE + '?code='+code);
+  getPositionByCodeInstrumentAndCompte(instrument: string, compte: string): Observable<any>{
+    return this.http.get(API_URLS.POSITION_URL_CODE + '?codeInstrument='+instrument+'&codeCompte='+compte);
   }
 }

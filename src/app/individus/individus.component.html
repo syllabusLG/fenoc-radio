@@ -20,7 +20,6 @@
           <th>Nui</th>
           <th>Civilité</th>
           <th>Nom de famille</th>
-          <th>Nom d'usage</th>
           <th>Prénom</th>
           <th>Date de naissance</th>
           <th>Lieu de naissance</th>
@@ -34,7 +33,6 @@
           <td> {{individu.nui}}</td>
           <td>{{individu.civility}}</td>
           <td>{{individu.lastName}}</td>
-          <td>{{individu.useName}}</td>
           <td>{{individu.firstName}}</td>
           <td>{{individu.birthDate}}</td>
           <td>{{individu.birthPlace}}</td>
@@ -52,11 +50,19 @@
         </tbody>
       </table>
       <div class="container">
+        <!--<ngb-pagination [collectionSize]="pages?.length" [pageSize]="size" [(page)]="currentPage" aria-label="Default Pagination">
+
+        </ngb-pagination>-->
         <ul class="nav">
           <li class="nav-item " [ngClass]="{'activePagin': i === currentPage}" *ngFor="let p of pages; let i=index">
             <a class="nav-link clickable" (click)="gotoPage(i)">{{i}}</a>
           </li>
         </ul>
+       <!-- <ul class="nav">
+          <li class="nav-item " [ngClass]="{'activePagin': i === currentPage}" *ngFor="let p of pages; let i=index">
+            <a class="nav-link clickable" (click)="gotoPage(i)">{{i}}</a>
+          </li>
+        </ul>-->
       </div>
     </div>
 

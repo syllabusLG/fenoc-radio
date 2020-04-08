@@ -5,31 +5,43 @@
   <div id="content" #content>
     <div class="row" style="margin-left: 20px">
       <div class="col-sm-10" style="font-size: small;">
+        <div class="text-center">
+          <p class="badge badge-info">Fichier chargé: {{fileName}} </p>
+        </div>
+        <div class="text-center">
+          <p class="badge badge-info">Date de chargement: {{downloadDate}} à {{downloadHour}} </p>
+        </div>
         <div *ngIf="BadHeaders==true">
           <p class=" badge-dark " style="with: 100px">Ce fichier n'est pas approprié pour ce module. Merci de rensegner le bon fichier au format suivant: REFINSTRUMENT, QUANTITEINSTRUMENT,
             PRUINSTRUMENT, DATEMODIFICATION, COMPTE</p>
         </div>
+        <div *ngIf="isControleFile === false">
+          <p class="badge-dark" style="with: 100px">Le nom du fichier est incorrect!!!</p>
+        </div>
+        <div *ngIf="noDuplicateInstrumentCompte === false">
+          <p class="badge-dark" style="with: 100px">Ligne {{noDuplicateInstrumentCompteLine}}: on peut pas avoir le même numero de compte et instrument pour la même position!!!</p>
+        </div>
       <div *ngIf="refInstrumentRequired==false">
-        <p class=" badge-dark " style="with: 100px">La référence d'instrument de la ligne {{refInstrumentRequiredLine}} n'est pas renseigné !</p>
+        <p class=" badge-dark " style="with: 100px">Ligne {{refInstrumentRequiredLine}}: la référence d'instrument n'est pas renseigné !</p>
       </div>
       <div *ngIf="quantiteInstrumentRequired==false">
-        <p class=" badge-dark " style="with: 100px">La quantité d'instrument de la ligne {{quantiteInstrumentRequiredLine}} n'est pas renseignée !</p>
+        <p class=" badge-dark " style="with: 100px">Ligne {{quantiteInstrumentRequiredLine}}: la quantité d'instrument n'est pas renseignée !</p>
       </div>
       <div *ngIf="pruInstrumentRequired==false">
-        <p class=" badge-dark " style="with: 100px">Le code PRU instrument de la ligne {{pruInstrumentRequiredLine}} n'est pas renseigné !</p>
+        <p class=" badge-dark " style="with: 100px">Ligne {{pruInstrumentRequiredLine}}: le code PRU instrument n'est pas renseigné !</p>
       </div>
       <div *ngIf="dateModificationRequired==false">
-        <p class=" badge-dark " style="with: 100px">La date de modification de la ligne {{dateModificationRequiredLine}} n'est pas renseignée !</p>
+        <p class=" badge-dark " style="with: 100px">Ligne {{dateModificationRequiredLine}}: la date de modification n'est pas renseignée !</p>
       </div>
       <div *ngIf="compteRequired==false">
-        <p class=" badge-dark " style="with: 100px">Le numéro de compte de la ligne {{compteRequiredLine}} n'est pas renseigné !</p>
+        <p class=" badge-dark " style="with: 100px">Ligne {{compteRequiredLine}}: le numéro de compte n'est pas renseigné !</p>
       </div>
         <div *ngIf="isdataNull==true && compteRequired!==false">
-          <p class=" badge-dark " style="with: 100px">Le numéro de compte de la ligne {{compteValidedLine}} n'exist pas !</p>
+          <p class=" badge-dark " style="with: 100px">Ligne {{compteValidedLine}}: le numéro de compte n'exist pas !</p>
         </div>
     </div>
       <div class="col-sm-2" style="align-self:center" *ngIf="(refInstrumentRequired == false || compteValid==false || BadHeaders == true || quantiteInstrumentRequired == false
-        || pruInstrumentRequired  == false || dateModificationRequired == false  || compteRequired == false )">
+        || pruInstrumentRequired  == false || dateModificationRequired == false  || compteRequired == false || isControleFile == false || noDuplicateInstrumentCompte == false)">
         <a href="" (click)="downloadPDF($event)">
           <i class="fa fa-arrow-circle-o-down" style="font-size:40px;color:#12899e;" ></i>
         </a>
@@ -90,6 +102,12 @@
         </div>
         <div *ngSwitchCase="3">
           <div id="report" #report>
+            <div class="text-center">
+              <p class="badge badge-info">Fichier chargé: {{fileName}} </p>
+            </div>
+            <div class="text-center">
+              <p class="badge badge-info">Date de chargement: {{downloadDate}} à {{downloadHour}} </p>
+            </div>
             <div class="text-center">
               <p class="badge badge-info">Ce fichier contient {{dataArray.length}} lignes </p>
             </div>
