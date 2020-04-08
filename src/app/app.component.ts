@@ -16,7 +16,7 @@ import {Keepalive} from '@ng-idle/keepalive';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit{
-  private isLogin = false;
+  public isLogin = false;
   idleState = 'Not started.';
   timedOut = false;
   lastPing?: Date = null;

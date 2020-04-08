@@ -38,7 +38,7 @@ export class FileComponent implements OnInit, CanDeactivateGuard {
   filesModel: DataModel[];
 
   fileForm: FormGroup;
-  constructor(private fileService: FileService,
+  constructor(public fileService: FileService,
     private fb: FormBuilder,
     private modalService: NgbModal,
     private fileUploadedService: UploadedFileService) { }

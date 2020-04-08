@@ -8,5 +8,6 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 })
 
 export class ConfirmModalComponent{
+  closeResult;
   constructor(public modal: NgbActiveModal) { }
 }
