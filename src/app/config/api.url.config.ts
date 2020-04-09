@@ -1,7 +1,7 @@
 /*const BASE = 'http://localhost';
 const PORT = 8080; */
-const PATH = '/api';
 
+const PATH = '/api';
 const BASE = 'https://amundi-file-integration-server.herokuapp.com';
 
 export const API_URLS = {
