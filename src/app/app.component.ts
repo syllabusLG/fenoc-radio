@@ -92,7 +92,7 @@ export class AppComponent implements OnInit{
           type: SAVE_PRINCIPAL,
           payload: principal
         });
-        this.router.navigateByUrl('home/(contentOutlet:file)');
+        this.router.navigateByUrl('home/(contentOutlet:lims)');
       }
     }
 }

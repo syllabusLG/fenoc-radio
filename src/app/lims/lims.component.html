@@ -1,0 +1,52 @@
+<div class="container">
+  <h3 class="h3-class">QC CHECK SAMPLE DATA INFORMATION</h3>
+  <hr>
+  <div class="row">
+    <div class="form-inline col-sm-8">
+      <div class="form-group mx-sm-3 mb-2">
+        <label for="kittube" class="sr-only">Kittube</label>
+        <input type="text" class="form-control" id="kittube" placeholder="kittube" [(ngModel)]="kittube">
+      </div>
+      <div class="form-group mx-sm-3 mb-2">
+        <label for="sstudyId" class="sr-only">Study</label>
+        <input type="text" class="form-control" id="sstudyId" placeholder="sstudyId" [(ngModel)]="sstudyId">
+      </div>
+      <button type="submit" class="btn mb-2 button" (click)="loadSamplesLIMS()">Chercher</button>
+    </div>
+    <div class="d-inline-block">
+      <a href="" data-toggle="collapse">
+        <button type="button" style="margin-bottom: 14px" class="btn button" (click)="downloadFile(checkDataArray)">Export to CSV</button>
+      </a>
+    </div>
+  </div>
+
+ <div class="col-sm-12" *ngIf="limsSamples">
+    <table class="col-sm-12 table table-hover">
+      <thead>
+      <tr class="tableColor">
+        <th>STUDYID</th>
+        <th>SAMPLE ID</th>
+        <th>SAMPLE TYPE</th>
+        <th>KIT ID</th>
+        <th>CREATION DATE</th>
+        <th>CREATION DATE</th>
+        <th>SUBJECT ID</th>
+        <th>QC</th>
+      </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let sample of checkDataArray | paginate: { itemsPerPage: 5, currentPage: p }">
+          <td> {{sample.studyID}}</td>
+          <td> {{sample.sampleId}}</td>
+          <td> {{sample.sampleType}}</td>
+          <td> {{sample.kidId}}</td>
+          <td> {{sample.createDT | date: 'dd/MM/yyyy'}}</td>
+          <td> {{sample.receivedDT | date: 'dd/MM/yyyy'}}</td>
+          <td> {{sample.sujId}}</td>
+          <td> {{sample.qc}}</td>
+      </tr>
+      </tbody>
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    </table>
+  </div>
+</div>

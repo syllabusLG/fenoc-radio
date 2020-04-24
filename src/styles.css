@@ -21,20 +21,27 @@ html, body {
 }
 
 .h3-class {
-  color: #12899e;
+  color: #ababab;
   text-align: center;
   font-weight: bold;
 }
 
 .clickable {
   cursor: pointer;
-  color: #007bff;
+  color: #ababab;
 }
 
 a.nav-link.clickable {
-  color: #007bff !important;
+  color: #ababab !important;
 }
 
 a.nav-link.not-clickable {
   color: #bfbfbf;
+}
+.button{
+  background-color: #ababab;
+  color: white;
+}
+.tableColor{
+  background-color: #ababab;
 }

@@ -1,11 +1,16 @@
 <nav class="hidden-xs-down bg-faded sidebar">
   <ul class="nav nav-pills flex-column">
     <li class="nav-item">
-      <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'file'}}]"
-                          routerLinkActive="active"
-                          *ngIf="hasRoleUser()">Affilié upload</a>
+      <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'lims'}}]"
+         routerLinkActive="active"
+         *ngIf="hasRoleUser()">QC CHECK</a>
     </li>
     <li class="nav-item">
+      <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'check'}}]"
+                          routerLinkActive="active"
+                          *ngIf="hasRoleUser()">Samples Inventory</a>
+    </li>
+   <!-- <li class="nav-item">
       <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'individu'}}]"
          routerLinkActive="active"
          *ngIf="hasRoleIndividus()|| hasRoleAdmin()">Individu</a>
@@ -34,9 +39,9 @@
       <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'compte'}}]"
          routerLinkActive="active"
          *ngIf="hasRoleCompte()|| hasRoleAdmin()">Compte upload</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link not-clickable" [routerLink]="[{outlets: { contentOutlet: 'dashboard'}}]"
+    </li>-->
+    <li class="nav-item sidebar-separator">
+      <a class="nav-link " [routerLink]="[{outlets: { contentOutlet: 'dashboard'}}]"
                           routerLinkActive="active"
                           *ngIf="hasRoleDashboard()|| hasRoleAdmin()">Dashboard</a>
     </li>

@@ -1,11 +1,11 @@
 .navbarbg{
-  background-color: #12899e;
+  background-color: #e0dede;
   background-size: contain;
 }
 
 .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
   color: #fff;
-  background-color: #12899e;
+  background-color: #bababa;
   border-bottom-style: double;
   padding-right: 10px;
   border-radius: 0rem;
@@ -14,11 +14,11 @@
 .fontAwesomeBar {
   background-color: white;
   size: auto;
-  color: #12899e;
+  color: #bababa;
 }
 
 .logBt {
-  background-color: #12899e;
+  background-color: #bababa;
   border-radius: 5px;
   box-shadow: 0 0 3px white;
 }
@@ -28,7 +28,7 @@
   }
 
 .logosmallimg {
-  background-image: url('../shared/images/logosmall.png');
+  background-image: url('../shared/images/logosmall-ibbl1.PNG');
   background-size: cover;
   width:210px;
   height:60px;
