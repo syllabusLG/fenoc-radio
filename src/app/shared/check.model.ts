@@ -6,5 +6,8 @@ export class Check {
               public sujId?: string,
               public createDT?: any,
               public receivedDT?: any,
+              public sampleIdRedCap?: string,
+              public kidIdRedCap?: string,
+              public collectionDT?: any,
               public qc?: string) {}
 }

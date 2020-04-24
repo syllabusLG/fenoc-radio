@@ -44,4 +44,11 @@ a.nav-link.not-clickable {
 }
 .tableColor{
   background-color: #ababab;
+  text-align: center;
+}
+.qcKO{
+  background-color: #f54278;
+}
+.qcOK{
+  background-color: #42f57e;
 }
