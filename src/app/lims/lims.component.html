@@ -48,14 +48,14 @@
         <th>QC</th>
       </tr>
       <tr *ngFor="let sample of checkDataArray | paginate: { itemsPerPage: 5, currentPage: p }" class="text-center">
-          <td [ngClass]="{qcKO:sample.qc==='KO', qcOK:sample.qc==='OK'}"> {{sample.sampleId}}</td>
-          <td [ngClass]="{qcKO:sample.qc==='KO', qcOK:sample.qc==='OK'}"> {{sample.kidId}}</td>
-          <td [ngClass]="{qcKO:sample.qc==='KO', qcOK:sample.qc==='OK'}"> {{sample.createDT | date: 'dd/MM/yyyy'}}</td>
-          <td [ngClass]="{qcKO:sample.qc==='KO', qcOK:sample.qc==='OK'}"> {{sample.receivedDT | date: 'dd/MM/yyyy'}}</td>
-          <td [ngClass]="{qcKO:sample.qc==='KO', qcOK:sample.qc==='OK'}"> {{sample.sampleIdRedCap}}</td>
-          <td [ngClass]="{qcKO:sample.qc==='KO', qcOK:sample.qc==='OK'}"> {{sample.kidIdRedCap}}</td>
-          <td [ngClass]="{qcKO:sample.qc==='KO', qcOK:sample.qc==='OK'}"> {{sample.collectionDT | date: 'dd/MM/yyyy'}}</td>
-          <td [ngClass]="{qcKO:sample.qc==='KO', qcOK:sample.qc==='OK'}"> {{sample.qc}}</td>
+          <td [ngClass]="{qcKO:sample.qc==='FALSE', qcOK:sample.qc==='TRUE'}"> {{sample.sampleId}}</td>
+          <td [ngClass]="{qcKO:sample.qc==='FALSE', qcOK:sample.qc==='TRUE'}"> {{sample.kidId}}</td>
+          <td [ngClass]="{qcKO:sample.qc==='FALSE', qcOK:sample.qc==='TRUE'}"> {{sample.createDT | date: 'dd/MM/yyyy'}}</td>
+          <td [ngClass]="{qcKO:sample.qc==='FALSE', qcOK:sample.qc==='TRUE'}"> {{sample.receivedDT | date: 'dd/MM/yyyy'}}</td>
+          <td [ngClass]="{qcKO:sample.qc==='FALSE', qcOK:sample.qc==='TRUE'}"> {{sample.sampleIdRedCap}}</td>
+          <td [ngClass]="{qcKO:sample.qc==='FALSE', qcOK:sample.qc==='TRUE'}"> {{sample.kidIdRedCap}}</td>
+          <td [ngClass]="{qcKO:sample.qc==='FALSE', qcOK:sample.qc==='TRUE'}"> {{sample.collectionDT | date: 'dd/MM/yyyy'}}</td>
+          <td [ngClass]="{qcKO:sample.qc==='FALSE', qcOK:sample.qc==='TRUE'}"> {{sample.qc}}</td>
       </tr>
     </table>
    <pagination-controls (pageChange)="p = $event"></pagination-controls>

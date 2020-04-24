@@ -57,7 +57,7 @@ export class LimsComponent implements OnInit {
         check.sampleIdRedCap = redcapSamples[i].sampleId;
         check.kidIdRedCap = redcapSamples[i].kidId
         check.collectionDT = redcapSamples[i].sampleCollectDateTime;
-        check.qc = "OK";
+        check.qc = "TRUE";
         this.checkDataArray.push(check);
       }else {
         check.sampleId = limsSamples[i].sampleId;
@@ -66,10 +66,21 @@ export class LimsComponent implements OnInit {
         check.studyID = limsSamples[i].sstudyId;
         check.createDT = limsSamples[i].createDT;
         check.receivedDT = limsSamples[i].receivedDT;
+        check.sampleIdRedCap = "";
+        check.kidIdRedCap = "";
+        check.collectionDT = "";
+        check.qc = "FALSE";
+        this.checkDataArray.push(check);
+        check.sampleId = "";
+        check.sampleType = "";
+        check.kidId = "";
+        check.studyID = "";
+        check.createDT = "";
+        check.receivedDT = "";
         check.sampleIdRedCap = redcapSamples[i].sampleId;
         check.kidIdRedCap = redcapSamples[i].kidId
         check.collectionDT = redcapSamples[i].sampleCollectDateTime;
-        check.qc = "KO";
+        check.qc = "FALSE";
         this.checkDataArray.push(check);
       }
     }
