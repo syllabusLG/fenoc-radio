@@ -9,11 +9,11 @@ import {API_URLS} from "../config/api.url.config";
 export class LimsService {
   constructor(private http: HttpClient) {}
 
-  getSAmples(kit: string, study: string): Observable<any>{
-    return this.http.get(API_URLS.LIMS_SAMPLE_URL + '?kit='+kit+'&study='+study);
+  getLimsSamples(kit: string, study: string, sampleType: string): Observable<any>{
+    return this.http.get(API_URLS.LIMS_SAMPLE_URL + '?kit='+kit+'&study='+study+'&sampleType='+sampleType);
   }
-  getRedCapSamples(kitid: string, studyid: string): Observable<any>{
-    return this.http.get(API_URLS.REDCAP_SAMPLE_URL + '?kit='+kitid+'&study='+studyid)
+  getRedCapSamples(kitid: string, studyid: string, sampleType: string): Observable<any>{
+    return this.http.get(API_URLS.REDCAP_SAMPLE_URL + '?kit='+kitid+'&study='+studyid+'&sampleType='+sampleType)
   }
 
 }

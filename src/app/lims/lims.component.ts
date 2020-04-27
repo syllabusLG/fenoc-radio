@@ -26,7 +26,7 @@ export class LimsComponent implements OnInit {
   ngOnInit() {
   }
   loadSamplesLIMS(){
-    this.limsService.getSAmples(this.kittube, this.sstudyId)
+    this.limsService.getLimsSamples(this.kittube, this.sstudyId, this.sampleType)
       .subscribe(data => {
         this.limsSamples = data;
         this.loadSamplesREDCAP();
@@ -35,7 +35,7 @@ export class LimsComponent implements OnInit {
       })
   }
   loadSamplesREDCAP(){
-    this.limsService.getRedCapSamples(this.kittube, this.sstudyId)
+    this.limsService.getRedCapSamples(this.kittube, this.sstudyId, this.sampleType)
       .subscribe(data=>{
         this.redcapSamples = data;
         console.log("redcap: "+this.redcapSamples)
@@ -46,11 +46,11 @@ export class LimsComponent implements OnInit {
   }
 
   buildCheckDataArray(redcapSamples, limsSamples){
-
+    this.checkDataArray = [];
     for (let i=0; i < redcapSamples.length; i++){
       for (let j=0; i < limsSamples.length; i++){
         let check: Check = new Check();
-        if(redcapSamples[i].sampleId === limsSamples[j].sampleId){
+        if((redcapSamples[i].sampleId === limsSamples[j].sampleId) && (redcapSamples[i].kidId === limsSamples[j].kitTube)){
           check.sampleId = limsSamples[j].sampleId;
           check.sampleType = limsSamples[j].sampleTypeId;
           check.kidId = limsSamples[j].kitTube;
@@ -58,7 +58,7 @@ export class LimsComponent implements OnInit {
           check.createDT = limsSamples[j].createDT;
           check.receivedDT = limsSamples[j].receivedDT;
           check.sampleIdRedCap = redcapSamples[i].sampleId;
-          check.kidIdRedCap = redcapSamples[i].kidId
+          check.kidIdRedCap = redcapSamples[i].kidId;
           check.collectionDT = redcapSamples[i].sampleCollectDateTime;
           check.qc = "OK";
           this.checkDataArray.push(check);
@@ -70,7 +70,7 @@ export class LimsComponent implements OnInit {
           check.createDT = limsSamples[j].createDT;
           check.receivedDT = limsSamples[j].receivedDT;
           check.sampleIdRedCap = redcapSamples[i].sampleId;
-          check.kidIdRedCap = redcapSamples[i].kidId
+          check.kidIdRedCap = redcapSamples[i].kidId;
           check.collectionDT = redcapSamples[i].sampleCollectDateTime;
           check.qc = "KO";
           this.checkDataArray.push(check);
