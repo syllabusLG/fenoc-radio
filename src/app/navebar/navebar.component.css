@@ -1,10 +1,10 @@
 .navbarbg{
-  background-color: #e0dede;
+  background-color: #6d97ac;
   background-size: contain;
 }
 
 .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
-  color: #fff;
+  color: #6d97ac;
   background-color: #bababa;
   border-bottom-style: double;
   padding-right: 10px;
@@ -28,15 +28,14 @@
   }
 
 .logosmallimg {
-  background-image: url('../shared/images/logosmall-ibbl1.PNG');
+  background-image: url('../shared/images/IBBLLogo.png');
   background-size: cover;
   width:210px;
-  height:60px;
+  height:20px;
 }
 
 p.thicker {
   font-weight: 900;
   color:#FFFFFF;
   font-size: larger;
-
 }

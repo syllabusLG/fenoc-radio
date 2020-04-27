@@ -75,12 +75,12 @@ button:hover {
 }
 
 .ibblLogo {
-  background-image: url('../shared/images/ibbl.jpg');
+  background-image: url('../shared/images/IBBLLogo.png');
   background-size: contain;
   background-repeat: no-repeat;
   margin-top: 20px;
-  margin-left: 150px;
-  height: 120px;
+  margin-left: 40%;
+  height: 100px;
 }
 
 img.avatar {

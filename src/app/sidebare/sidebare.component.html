@@ -3,7 +3,7 @@
     <li class="nav-item">
       <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'lims'}}]"
          routerLinkActive="active"
-         *ngIf="hasRoleUser()">QC CHECK</a>
+         *ngIf="hasRoleUser()">Quality Check</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'check'}}]"
@@ -56,10 +56,10 @@
          *ngIf="hasRoleAdmin()">Habilitation</a>
     </li>
 
-    <li class="nav-item">
+    <!--<li class="nav-item">
       <a class="nav-link  not-clickable" [routerLink]="[{outlets: { contentOutlet: 'audit'}}]"
          routerLinkActive="active"
          *ngIf="hasRoleAdmin()">Audit</a>
-    </li>
+    </li>-->
   </ul>
 </nav>

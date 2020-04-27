@@ -1,13 +1,25 @@
 .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
   color: #fff;
-  background-color: #e0dede;
+  background-color:#6d97ac;
   border-bottom-style: double;
-  padding-right: 50px;
+  padding-right: 0px;
+  width: 202px;
+}
+.nav-item{
+  width: 202px;
 }
 .sidebar-separator{
-  border-bottom: 1px solid black;
+  border-bottom: 0px solid black;
 }
+
 .side-color{
   background-color: #e0dede;
 }
+
+a.nav-link {
+  color: #706D6D;
+}
+
+
+
 

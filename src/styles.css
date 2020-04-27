@@ -3,7 +3,6 @@
 html, body {
   height: 100%;
 }
-
 .align-content-vertical-parent {
   display: table;
   width: 100%;
@@ -13,6 +12,7 @@ html, body {
   vertical-align: middle;
   display: table-cell;
 }
+
 
 .activePagin, .li:hover .li {
   background-color: #7ac8bc;
@@ -29,30 +29,4 @@ html, body {
 .clickable {
   cursor: pointer;
   color: #ababab;
-}
-
-a.nav-link.clickable {
-  color: #ababab !important;
-}
-
-a.nav-link.not-clickable {
-  color: #bfbfbf;
-}
-.button{
-  background-color: #ababab;
-  color: white;
-}
-.tableColor{
-  background-color: #ababab;
-  text-align: center;
-}
-.qcKO{
-  background-color: #FF5E4D;
-}
-.qcOK{
-  background-color: #B0F2B6;
-}
-td{
-  font-size: 12px;
-  font-weight: bold;
 }
