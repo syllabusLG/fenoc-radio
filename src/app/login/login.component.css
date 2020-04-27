@@ -53,24 +53,25 @@ button:hover {
 }
 
 .iscotrackTextUp {
-  vertical-align: center;
   text-align: center;
   font-size: 50px;
   font-weight: bold;
   color: #5e0525;
+  font-family: "Segoe UI";
 }
 
 .iscotrackTextDown {
-  vertical-align: center;
   text-align: center;
   font-size: medium;
   color: black;
+  font-family: "Segoe UI Black";
+  margin-bottom: 20px;
 }
 
 .iscoTrackLogo{
-  margin-top: 50px;
-  margin-left: 60px;
-  text-align: center;
+  margin-top: 10px;
+  margin-left: 100px;
+  width: 450px;
 }
 
 .ibblLogo {
@@ -78,8 +79,8 @@ button:hover {
   background-size: contain;
   background-repeat: no-repeat;
   margin-top: 20px;
+  margin-left: 150px;
   height: 120px;
-  margin-left: 30px;
 }
 
 img.avatar {
@@ -93,10 +94,15 @@ img.avatar {
   margin-right: auto;
 }
 
+.bottomContainer{
+  padding: 5px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .globalcontainer {
   margin-left: auto;
   margin-right: auto;
-  /*width: 35%;*/
 }
 
 span.psw {
