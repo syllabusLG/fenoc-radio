@@ -25,6 +25,13 @@ export class LimsComponent implements OnInit {
 
   ngOnInit() {
   }
+  callSample(){
+    if(this.dateSample === undefined){
+      this.loadSamplesLIMS();
+    }else {
+      this.loadSamplesLIMSDate();
+    }
+  }
   loadSamplesLIMS(){
     this.limsService.getLimsSamples(this.kittube, this.sstudyId, this.sampleType)
       .subscribe(data => {
@@ -34,11 +41,31 @@ export class LimsComponent implements OnInit {
         console.log(error);
       })
   }
+  loadSamplesLIMSDate(){
+    let dateLims = this.fillDate(this.dateSample);
+    this.limsService.getLimsSampleDate(dateLims, this.kittube, this.sstudyId, this.sampleType)
+      .subscribe(data => {
+        this.limsSamples = data;
+        this.loadSampleREDCAPDate();
+      }, error => {
+        console.log(error);
+      })
+  }
   loadSamplesREDCAP(){
     this.limsService.getRedCapSamples(this.kittube, this.sstudyId, this.sampleType)
       .subscribe(data=>{
         this.redcapSamples = data;
-        console.log("redcap: "+this.redcapSamples)
+        console.log("redcap: "+this.redcapSamples);
+        this.buildCheckDataArray(this.redcapSamples, this.limsSamples);
+      }, error => {
+        console.log(error);
+      })
+  }
+  loadSampleREDCAPDate(){
+    let dateRedcap = this.fillDate(this.dateSample);
+    this.limsService.getRedCapSampleDate(dateRedcap, this.kittube, this.sstudyId, this.sampleType)
+      .subscribe(data => {
+        this.redcapSamples = data;
         this.buildCheckDataArray(this.redcapSamples, this.limsSamples);
       }, error => {
         console.log(error);
@@ -90,6 +117,20 @@ export class LimsComponent implements OnInit {
     let csvArray = csv.join('\r\n');
     var blob = new Blob([csvArray], {type: 'text/csv'})
     saveAs(blob, file);
+  }
+  fillDate(date:any){
+    if(date && (date.indexOf('-') > -1)) {
+      let year = new Date(Date.parse(date)).getFullYear();
+      let month = String(new Date(Date.parse(date)).getMonth() + 1);
+      let day = String(new Date(Date.parse(date)).getDate());
+      if (Number(day) >= 1 && Number(day) <= 9) {
+        day = '0' + day;
+      }
+      if(Number(month) >= 1 && Number(month) <= 9) {
+        month = '0' + month;
+      }
+      return day + '/' + month + '/' + year
+    }
   }
 
 }

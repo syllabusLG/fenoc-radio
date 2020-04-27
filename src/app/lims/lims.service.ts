@@ -12,8 +12,15 @@ export class LimsService {
   getLimsSamples(kit: string, study: string, sampleType: string): Observable<any>{
     return this.http.get(API_URLS.LIMS_SAMPLE_URL + '?kit='+kit+'&study='+study+'&sampleType='+sampleType);
   }
+
+  getLimsSampleDate(date: any, kit: string, study: string, sampleType: string): Observable<any>{
+    return this.http.get(API_URLS.LIMS_SAMPLE_DATE_URL + '?date='+date+'&kit='+kit+'&study='+study+'&sampleType='+sampleType)
+  }
   getRedCapSamples(kitid: string, studyid: string, sampleType: string): Observable<any>{
     return this.http.get(API_URLS.REDCAP_SAMPLE_URL + '?kit='+kitid+'&study='+studyid+'&sampleType='+sampleType)
+  }
+  getRedCapSampleDate(date: any, kitid: string, studyid: string, sampleType: string): Observable<any>{
+    return this.http.get(API_URLS.REDCAP_SAMPLE_DATE_URL + '?date='+date+'&kit='+kitid+'&study='+studyid+'&sampleType='+sampleType)
   }
 
 }
