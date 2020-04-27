@@ -20,6 +20,9 @@ a.nav-link {
   color: #706D6D;
 }
 
+a.subItem.nav-link{
+  padding-left: 40px;
+}
 
 
 

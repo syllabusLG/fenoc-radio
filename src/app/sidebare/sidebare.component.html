@@ -1,14 +1,24 @@
 <nav class="hidden-xs-down bg-faded sidebar">
   <ul class="nav nav-pills flex-column">
     <li class="nav-item">
-      <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'lims'}}]"
-         routerLinkActive="active"
-         *ngIf="hasRoleUser()">Quality Check</a>
+      <a class="nav-link" [routerLink]=""
+         routerLinkActive="" *ngIf="hasRoleUser()"
+         (click)="isSampleInventoryOpen()">Samples Inventory</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'check'}}]"
-                          routerLinkActive="active"
-                          *ngIf="hasRoleUser()">Samples Inventory</a>
+      <a class="nav-link subItem" [routerLink]="[{outlets: { contentOutlet: 'lims'}}]"
+         routerLinkActive="active"
+         *ngIf="isSIOpen">Quality Check</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link subItem" [routerLink]="[{outlets: { contentOutlet: ''}}]"
+         routerLinkActive="active"
+         *ngIf="isSIOpen">Recap</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link subItem" [routerLink]="[{outlets: { contentOutlet: ''}}]"
+         routerLinkActive="active"
+         *ngIf="isSIOpen">Data Management</a>
     </li>
    <!-- <li class="nav-item">
       <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'individu'}}]"
@@ -40,21 +50,27 @@
          routerLinkActive="active"
          *ngIf="hasRoleCompte()|| hasRoleAdmin()">Compte upload</a>
     </li>-->
-    <li class="nav-item sidebar-separator">
+    <!--<li class="nav-item sidebar-separator">
       <a class="nav-link " [routerLink]="[{outlets: { contentOutlet: 'dashboard'}}]"
                           routerLinkActive="active"
                           *ngIf="hasRoleDashboard()|| hasRoleAdmin()">Dashboard</a>
+    </li>-->
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]=""
+         routerLinkActive="" *ngIf="hasRoleUser()"
+         (click)="isAdministrationOpen()">Administration</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link not-clickable" [routerLink]="[{outlets: { contentOutlet: 'user'}}]"
+      <a class="nav-link subItem" [routerLink]="[{outlets: { contentOutlet: 'user'}}]"
                           routerLinkActive="active"
-                          *ngIf="hasRoleAdmin()">Utilisateurs</a>
+                          *ngIf="hasRoleAdmin() && isAdminOpen">Users</a>
     </li>
-    <li class="nav-item">
+
+    <!--<li class="nav-item">
       <a class="nav-link  not-clickable" [routerLink]="[{outlets: { contentOutlet: 'habilitation'}}]"
          routerLinkActive="active"
          *ngIf="hasRoleAdmin()">Habilitation</a>
-    </li>
+    </li>-->
 
     <!--<li class="nav-item">
       <a class="nav-link  not-clickable" [routerLink]="[{outlets: { contentOutlet: 'audit'}}]"
