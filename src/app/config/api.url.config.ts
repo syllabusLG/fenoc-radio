@@ -7,7 +7,7 @@ const PATH3 = '/redcap/api'
 const PATH = '/api';
 
 export const API_URLS = {
-  LIMS_SAMPLE_URL: BASE + ':' + PORT2 + PATH2 + '/sampleDate',
+  LIMS_SAMPLE_URL: BASE + ':' + PORT2 + PATH2 + '/limsSamples',
   REDCAP_SAMPLE_URL: BASE + ':' + PORT3 + PATH3 + '/redcapSamples',
   USER_URL: BASE + ':' + PORT + PATH + '/user',
   PAYS_URL: BASE + ':' + PORT + PATH + '/pays',

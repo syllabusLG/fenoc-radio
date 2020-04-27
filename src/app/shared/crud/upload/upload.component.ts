@@ -4,7 +4,6 @@ import {CrudService} from '../../crud.service';
 import {COUNTRY} from '../../countries.code';
 import * as jsPDF from 'jspdf';
 import {Individus} from '../../individus.model';
-import {Salarie} from '../../salarie.model';
 import {Contact} from '../../contact.model';
 import {Payment} from '../../payment.model';
 import {Compte} from '../../compte.model';
@@ -62,9 +61,6 @@ export class UploadComponent implements OnInit {
   individusDataArray: Individus[] = [];
   individusCreatedDataArray: Individus[] = [];
   individusUpdatedDataArray: Individus[] = [];
-  salarieDataArray: Salarie[] = [];
-  salarieCreatedDataArray: Salarie[] = [];
-  salarieUpdatedDataArray: Salarie[] = [];
   contactDataArray: Contact[] = [];
   contactCreatedDataArray: Contact[] = [];
   contactUpdatedDataArray: Contact[] = [];
