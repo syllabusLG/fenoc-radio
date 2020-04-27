@@ -2,13 +2,16 @@ const BASE = 'http://localhost';
 const PORT = 8080;
 const PORT2 = 8082;
 const PORT3 = 8083;
-const PATH2 = '/ibbl/api'
-const PATH3 = '/redcap/api'
+const PROXY = 8180
+const PATH2 = '/pevodata/ibbl/api'
+const PATH3 = '/redcap/redcap/api'
 const PATH = '/api';
 
 export const API_URLS = {
-  LIMS_SAMPLE_URL: BASE + ':' + PORT2 + PATH2 + '/sampleDate',
-  REDCAP_SAMPLE_URL: BASE + ':' + PORT3 + PATH3 + '/redcapSamples',
+  LIMS_SAMPLE_URL: BASE + ':' + PROXY + PATH2 + '/limsSamples',
+  LIMS_SAMPLE_DATE_URL: BASE + ':' + PROXY + PATH2 + '/limsSamplesDate',
+  REDCAP_SAMPLE_URL: BASE + ':' + PROXY + PATH3 + '/redcapSamples',
+  REDCAP_SAMPLE_DATE_URL: BASE + ':' + PROXY + PATH3 + '/redcapSamplesDate',
   USER_URL: BASE + ':' + PORT + PATH + '/user',
   PAYS_URL: BASE + ':' + PORT + PATH + '/pays',
   INDIVIDUS_URL: BASE + ':' + PORT + PATH + '/individus',
