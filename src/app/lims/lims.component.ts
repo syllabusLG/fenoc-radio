@@ -19,6 +19,7 @@ export class LimsComponent implements OnInit {
   public redcapSamples: Redcapsample[] = [];
   p:number=1;
   sampleType:string='';
+  dateSample: any;
 
   constructor(private limsService: LimsService) { }
 
