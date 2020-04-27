@@ -18,6 +18,7 @@ export class LimsComponent implements OnInit {
   public limsSamples: any;
   public redcapSamples: Redcapsample[] = [];
   p:number=1;
+  sampleType:string='';
 
   constructor(private limsService: LimsService) { }
 
@@ -46,32 +47,35 @@ export class LimsComponent implements OnInit {
   buildCheckDataArray(redcapSamples, limsSamples){
 
     for (let i=0; i < redcapSamples.length; i++){
-      let check: Check = new Check();
-      if(redcapSamples[i].sampleId === limsSamples[i].sampleId){
-        check.sampleId = limsSamples[i].sampleId;
-        check.sampleType = limsSamples[i].sampleTypeId;
-        check.kidId = limsSamples[i].kitTube;
-        check.studyID = limsSamples[i].sstudyId;
-        check.createDT = limsSamples[i].createDT;
-        check.receivedDT = limsSamples[i].receivedDT;
-        check.sampleIdRedCap = redcapSamples[i].sampleId;
-        check.kidIdRedCap = redcapSamples[i].kidId
-        check.collectionDT = redcapSamples[i].sampleCollectDateTime;
-        check.qc = "OK";
-        this.checkDataArray.push(check);
-      }else {
-        check.sampleId = limsSamples[i].sampleId;
-        check.sampleType = limsSamples[i].sampleTypeId;
-        check.kidId = limsSamples[i].kitTube;
-        check.studyID = limsSamples[i].sstudyId;
-        check.createDT = limsSamples[i].createDT;
-        check.receivedDT = limsSamples[i].receivedDT;
-        check.sampleIdRedCap = redcapSamples[i].sampleId;
-        check.kidIdRedCap = redcapSamples[i].kidId
-        check.collectionDT = redcapSamples[i].sampleCollectDateTime;
-        check.qc = "KO";
-        this.checkDataArray.push(check);
+      for (let j=0; i < limsSamples.length; i++){
+        let check: Check = new Check();
+        if(redcapSamples[i].sampleId === limsSamples[j].sampleId){
+          check.sampleId = limsSamples[j].sampleId;
+          check.sampleType = limsSamples[j].sampleTypeId;
+          check.kidId = limsSamples[j].kitTube;
+          check.studyID = limsSamples[j].sstudyId;
+          check.createDT = limsSamples[j].createDT;
+          check.receivedDT = limsSamples[j].receivedDT;
+          check.sampleIdRedCap = redcapSamples[i].sampleId;
+          check.kidIdRedCap = redcapSamples[i].kidId
+          check.collectionDT = redcapSamples[i].sampleCollectDateTime;
+          check.qc = "OK";
+          this.checkDataArray.push(check);
+        }else {
+          check.sampleId = limsSamples[j].sampleId;
+          check.sampleType = limsSamples[j].sampleTypeId;
+          check.kidId = limsSamples[j].kitTube;
+          check.studyID = limsSamples[j].sstudyId;
+          check.createDT = limsSamples[j].createDT;
+          check.receivedDT = limsSamples[j].receivedDT;
+          check.sampleIdRedCap = redcapSamples[i].sampleId;
+          check.kidIdRedCap = redcapSamples[i].kidId
+          check.collectionDT = redcapSamples[i].sampleCollectDateTime;
+          check.qc = "KO";
+          this.checkDataArray.push(check);
+        }
       }
+
     }
     console.log(this.checkDataArray);
   }
