@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-lg-2" *ngIf="showHideSideBar">
+  <div class="col-lg-2 sidebar" *ngIf="showHideSideBar">
     <app-sidebare></app-sidebare>
   </div>
   <div [ngClass]="{'col-lg-12': showHideSideBar == false, 'col-lg-10': showHideSideBar}">

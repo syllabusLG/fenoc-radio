@@ -9,64 +9,75 @@
 </head>
 <body>
 <div class="container">
-  <h3 class="h3-class">QC CHECK SAMPLE DATA INFORMATION</h3>
+  <h3 class="topTitle h3-class">QUALITY CHECK SAMPLE DATA INFORMATION</h3>
   <hr>
   <div class="row">
-    <div class="form-inline col-sm-10">
-      <div class="form-group mx-sm-3 mb-2">
-        <label for="kittube" class="sr-only">Kittube</label>
-        <input type="text" class="form-control" id="kittube" placeholder="kittube" [(ngModel)]="kittube">
-      </div>
-      <div class="form-group mx-sm-3 mb-2">
-        <label for="sstudyId" class="sr-only">Study</label>
-        <input type="text" class="form-control" id="sstudyId" placeholder="sstudyId" [(ngModel)]="sstudyId">
-      </div>
-      <div class="form-group mx-sm-3 mb-2">
-        <label for="sampleType" class="sr-only">SampleType</label>
-        <input type="text" class="form-control" id="sampleType" placeholder="sampleType" [(ngModel)]="sampleType">
-      </div>
-      <div class="form-group mx-sm-3 mb-2">
-        <input type="date" step="1" class="form-control" id="date1"  [(ngModel)]="dateSample"/>
-      </div>
-      <button type="submit" class="btn mb-2 button" (click)="callSample()">Chercher</button>
+    <div class="col-9">
+      <table>
+        <tr>
+          <th colspan="4" class="tableColor">LIMS SAMPLE DATA INFORMATION </th>
+          <th colspan="3" class="tableColor">SAMPLE COLLECTION DATA INFORMATION</th>
+          <th class="tableColor"></th>
+        </tr>
+        <tr class="tableColor">
+          <th width="300px">SAMPLE ID</th>
+          <th width="150px">KIT ID</th>
+          <th width="80px">CREATION</th>
+          <th width="80px">RECEPTION</th>
+          <th width="300px">SAMPLE ID</th>
+          <th width="150px">KIT ID</th>
+          <th width="80px">COLLECTION</th>
+          <th width="50px">QC</th>
+        </tr>
+        <tr *ngFor="let sample of checkDataArray | paginate: { itemsPerPage: 5, currentPage: p }" class="text-center">
+          <td [ngClass]="{qcKO:sample.qc==='FALSE', qcOK:sample.qc==='TRUE'}"> {{sample.sampleId}} </td>
+          <td [ngClass]="{qcKO:sample.qc==='FALSE', qcOK:sample.qc==='TRUE'}"> {{sample.kidId}}</td>
+          <td
+            [ngClass]="{qcKO:sample.qc==='FALSE', qcOK:sample.qc==='TRUE'}"> {{sample.createDT }}</td>
+          <td
+            [ngClass]="{qcKO:sample.qc==='FALSE', qcOK:sample.qc==='TRUE'}"> {{sample.receivedDT }}</td>
+          <td [ngClass]="{qcKO:sample.qc==='FALSE', qcOK:sample.qc==='TRUE'}"> {{sample.sampleIdRedCap}}</td>
+          <td [ngClass]="{qcKO:sample.qc==='FALSE', qcOK:sample.qc==='TRUE'}"> {{sample.kidIdRedCap}}</td>
+          <td
+            [ngClass]="{qcKO:sample.qc==='FALSE', qcOK:sample.qc==='TRUE'}"> {{sample.collectionDT }}</td>
+          <td [ngClass]="{qcKO:sample.qc==='FALSE', qcOK:sample.qc==='TRUE'}"> {{sample.qc}}</td>
+        </tr>
+      </table>
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
     </div>
-    <div class="d-inline-block col-sm-2" *ngIf="limsSamples">
-      <a href="" data-toggle="collapse">
-        <button type="button"  class="btn button" (click)="downloadFile(checkDataArray)">Export to CSV</button>
-      </a>
+    <div class="row col-3 filter">
+      <div class="container">
+        <div class="filterTitle">FILTER</div>
+        <div class="form-group">
+          <label for="kittube">Kit </label>
+          <input type="text" class="form-control" id="kittube" placeholder="Kit Id" [(ngModel)]="kittube">
+        </div>
+        <div class="form-group">
+          <label for="sstudyId" >Study</label>
+          <input type="text" class="form-control" id="sstudyId" placeholder="Study Id" [(ngModel)]="sstudyId">
+        </div>
+        <div class="form-group">
+          <label for="sampleType" class="sr-only">SampleType</label>
+          <input type="text" class="form-control" id="sampleType" placeholder="sampleType" [(ngModel)]="sampleType">
+        </div>
+        <div class="form-group">
+          <input type="date" step="1" class="form-control" id="date1"  [(ngModel)]="dateSample"/>
+        </div>
+        <div class="search">
+          <button type="submit" class="btn mb-2 button" (click)="callSample()">Search</button>
+        </div>
+        <div class="exportCsv" *ngIf="limsSamples">
+          <a href="" data-toggle="collapse">
+            <button type="button" style="margin-bottom: 14px" class="btn button" (click)="downloadFile(checkDataArray)">
+              Export to CSV
+            </button>
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 
- <div *ngIf="limsSamples">
-    <table>
-      <tr>
-        <th colspan="4" class="tableColor">LIMS SAMPLE DATA INFORMATION</th>
-        <th colspan="3" class="tableColor">SAMPLE COLLECTION DATA INFORMATION</th>
-        <th class="tableColor"></th>
-      </tr>
-      <tr class="tableColor">
-        <th width="290px">SAMPLE ID</th>
-        <th width="220px">KIT ID</th>
-        <th>CREATION DATE</th>
-        <th>RECEPTION DATE</th>
-        <th width="290px">SAMPLE ID</th>
-        <th width="220px">KIT ID</th>
-        <th>COLLECTION DATE</th>
-        <th>QC</th>
-      </tr>
-      <tr *ngFor="let sample of checkDataArray | paginate: { itemsPerPage: 5, currentPage: p }" class="text-center">
-          <td [ngClass]="{qcKO:sample.qc==='KO', qcOK:sample.qc==='OK'}"> {{sample.sampleId}}</td>
-          <td [ngClass]="{qcKO:sample.qc==='KO', qcOK:sample.qc==='OK'}"> {{sample.kidId}}</td>
-          <td [ngClass]="{qcKO:sample.qc==='KO', qcOK:sample.qc==='OK'}"> {{sample.createDT }}</td>
-          <td [ngClass]="{qcKO:sample.qc==='KO', qcOK:sample.qc==='OK'}"> {{sample.receivedDT}}</td>
-          <td [ngClass]="{qcKO:sample.qc==='KO', qcOK:sample.qc==='OK'}"> {{sample.sampleIdRedCap}}</td>
-          <td [ngClass]="{qcKO:sample.qc==='KO', qcOK:sample.qc==='OK'}"> {{sample.kidIdRedCap}}</td>
-          <td [ngClass]="{qcKO:sample.qc==='KO', qcOK:sample.qc==='OK'}"> {{sample.collectionDT}}</td>
-          <td [ngClass]="{qcKO:sample.qc==='KO', qcOK:sample.qc==='OK'}"> {{sample.qc}}</td>
-      </tr>
-    </table>
-   <pagination-controls (pageChange)="p = $event"></pagination-controls>
-  </div>
 </div>
 </body>
 </html>
+

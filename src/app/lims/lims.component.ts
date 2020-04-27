@@ -25,6 +25,7 @@ export class LimsComponent implements OnInit {
 
   ngOnInit() {
   }
+
   callSample(){
     if(this.dateSample === undefined){
       this.loadSamplesLIMS();
@@ -87,7 +88,7 @@ export class LimsComponent implements OnInit {
           check.sampleIdRedCap = redcapSamples[i].sampleId;
           check.kidIdRedCap = redcapSamples[i].kidId;
           check.collectionDT = redcapSamples[i].sampleCollectDateTime;
-          check.qc = "OK";
+          check.qc = "TRUE";
           this.checkDataArray.push(check);
         }else {
           check.sampleId = limsSamples[j].sampleId;
@@ -96,10 +97,20 @@ export class LimsComponent implements OnInit {
           check.studyID = limsSamples[j].sstudyId;
           check.createDT = limsSamples[j].createDT;
           check.receivedDT = limsSamples[j].receivedDT;
+          check.sampleIdRedCap = "";
+          check.kidIdRedCap =  ""
+          check.collectionDT = "";
+          check.qc = "FALSE";
+          check.sampleId = "";
+          check.sampleType = "";
+          check.kidId = "";
+          check.studyID = "";
+          check.createDT = "";
+          check.receivedDT = "";
           check.sampleIdRedCap = redcapSamples[i].sampleId;
           check.kidIdRedCap = redcapSamples[i].kidId;
           check.collectionDT = redcapSamples[i].sampleCollectDateTime;
-          check.qc = "KO";
+          check.qc = "FALSE";
           this.checkDataArray.push(check);
         }
       }

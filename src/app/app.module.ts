@@ -40,6 +40,7 @@ import { LimsComponent } from './lims/lims.component';
 import {NgxPaginationModule} from "ngx-pagination";
 import {UploadComponent} from "./shared/crud/upload/upload.component";
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -79,7 +80,7 @@ import {UploadComponent} from "./shared/crud/upload/upload.component";
     NgIdleKeepaliveModule.forRoot(),
     NgxSpinnerModule,
     NgbModule,
-    NgxPaginationModule
+    NgxPaginationModule,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: XhrInterceptor, multi: true},

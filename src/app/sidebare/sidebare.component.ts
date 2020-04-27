@@ -11,12 +11,22 @@ import {Principal} from '../shared/principal.model';
 export class SidebareComponent implements OnInit {
 
   private principal: Principal;
+  private isSIOpen: boolean = true
+  private isAdminOpen: boolean = false;
   constructor(private store: Store<PrincipalState>) { }
 
   ngOnInit() {
     this.store.select('principal').subscribe(principal =>{
       this.principal = principal;
     })
+  }
+
+  isAdministrationOpen(){
+    this.isAdminOpen = !this.isAdminOpen;
+  }
+
+  isSampleInventoryOpen(){
+    this.isSIOpen = !this.isSIOpen;
   }
 
   hasRoleUser(){
