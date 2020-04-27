@@ -23,6 +23,15 @@ a.nav-link {
 a.subItem.nav-link{
   padding-left: 40px;
 }
+.mainItem{
+  /*background-color: #e8f0fe;*/
+}
+
+.sidebar {
+  background-color: #e8f0fe;
+  width: fit-content;
+  height: 100%;
+}
 
 
 
