@@ -1,12 +1,16 @@
 <div class="bg-image align-content-vertical-parent">
   <div class="align-content-vertical-child">
+    <div class="row">
+      <div class="col-sm-6 ibblLogo"></div>
+      <div class="iscoTrackLogo align-content-vertical-child ">
+        <div class="row iscotrackTextUp">ISCOTRACK</div>
+        <div class="row iscotrackTextDown">IBBL Sample Collection & Tracking</div>
+      </div>
+    </div>
     <div class="row container align-content-vertical-child">
       <div class="col-lg-5 globalcontainer">
 
         <form [formGroup]="loginForm" (submit)="login()" class="loginForm">
-          <div class="imgcontainer">
-            <img>
-          </div>
           <div class="container">
             <input type="text" placeholder="Username" id="username" name="username" formControlName="username"
                    [(ngModel)]="credentials.username">
@@ -22,12 +26,13 @@
 
           <div class="container" style="background-color:#f1f1f1">
             <button type="button" class="cancelbtn">{{'CANCEL' | translate}}</button>
-            <span class="psw">Forgot <a href="#">password?</a></span>
+            <span class="psw">Forgot password?</span>
           </div>
         </form>
       </div>
 
     </div>
+
   </div>
 </div>
 

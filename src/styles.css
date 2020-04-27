@@ -52,3 +52,7 @@ a.nav-link.not-clickable {
 .qcOK{
   background-color: #B0F2B6;
 }
+td{
+  font-size: 12px;
+  font-weight: bold;
+}

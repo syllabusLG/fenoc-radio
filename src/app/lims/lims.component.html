@@ -48,7 +48,7 @@
         <th>QC</th>
       </tr>
       <tr *ngFor="let sample of checkDataArray | paginate: { itemsPerPage: 5, currentPage: p }" class="text-center">
-          <td [ngClass]="{qcKO:sample.qc==='FALSE', qcOK:sample.qc==='TRUE'}"> {{sample.sampleId}}</td>
+          <td [ngClass]="{qcKO:sample.qc==='FALSE', qcOK:sample.qc==='TRUE'}"> §{{sample.sampleId}}</td>
           <td [ngClass]="{qcKO:sample.qc==='FALSE', qcOK:sample.qc==='TRUE'}"> {{sample.kidId}}</td>
           <td [ngClass]="{qcKO:sample.qc==='FALSE', qcOK:sample.qc==='TRUE'}"> {{sample.createDT | date: 'dd/MM/yyyy'}}</td>
           <td [ngClass]="{qcKO:sample.qc==='FALSE', qcOK:sample.qc==='TRUE'}"> {{sample.receivedDT | date: 'dd/MM/yyyy'}}</td>
