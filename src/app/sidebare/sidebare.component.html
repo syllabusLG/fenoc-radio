@@ -1,7 +1,7 @@
 <nav class="hidden-xs-down bg-faded sidebar">
   <ul class="nav nav-pills flex-column">
-    <li class="nav-item">
-      <a class="nav-link" [routerLink]=""
+    <li class="nav-item ">
+      <a class="nav-link dropdown-toggle" data-toggle="collapse" aria-expanded="false" [routerLink]=""
          routerLinkActive="" *ngIf="hasRoleUser()"
          (click)="isSampleInventoryOpen()">Samples Inventory</a>
     </li>
@@ -55,8 +55,8 @@
                           routerLinkActive="active"
                           *ngIf="hasRoleDashboard()|| hasRoleAdmin()">Dashboard</a>
     </li>-->
-    <li class="nav-item">
-      <a class="nav-link" [routerLink]=""
+    <li class="nav-item mainItem">
+      <a class="nav-link dropdown-toggle" data-toggle="collapse" aria-expanded="false" [routerLink]=""
          routerLinkActive="" *ngIf="hasRoleUser()"
          (click)="isAdministrationOpen()">Administration</a>
     </li>
