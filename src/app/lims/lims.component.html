@@ -20,13 +20,13 @@
           <th class="tableColor"></th>
         </tr>
         <tr class="tableColor">
-          <th width="300px">SAMPLE ID</th>
+          <th width="320px">SAMPLE ID</th>
           <th width="150px">KIT ID</th>
-          <th width="80px">CREATION</th>
-          <th width="80px">RECEPTION</th>
-          <th width="300px">SAMPLE ID</th>
+          <th width="65px">CREATION</th>
+          <th width="65px">RECEPTION</th>
+          <th width="320px">SAMPLE ID</th>
           <th width="150px">KIT ID</th>
-          <th width="80px">COLLECTION</th>
+          <th width="65px">COLLECTION</th>
           <th width="50px">QC</th>
         </tr>
         <tr *ngFor="let sample of checkDataArray | paginate: { itemsPerPage: 5, currentPage: p }" class="text-center">
@@ -44,24 +44,31 @@
         </tr>
       </table>
       <pagination-controls (pageChange)="p = $event"></pagination-controls>
+      <!--<div class="container">
+        <div class="progress-loader" [hidden]="false">
+          <mat-progress-spinner [mode]="'indeterminate'"></mat-progress-spinner>
+        </div>
+      </div>-->
+
     </div>
     <div class="row col-3 filter">
-      <div class="container">
+      <div class="">
         <div class="filterTitle">FILTER</div>
+        <div class=" firstFilter form-group">
+          <label for="sstudyId">Study</label>
+          <input type="text" class="form-control" id="sstudyId" placeholder="Study Id" [(ngModel)]="sstudyId">
+        </div>
         <div class="form-group">
           <label for="kittube">Kit </label>
           <input type="text" class="form-control" id="kittube" placeholder="Kit Id" [(ngModel)]="kittube">
         </div>
         <div class="form-group">
-          <label for="sstudyId">Study</label>
-          <input type="text" class="form-control" id="sstudyId" placeholder="Study Id" [(ngModel)]="sstudyId">
-        </div>
-        <div class="form-group">
-          <label for="sampleType" class="sr-only">SampleType</label>
+          <label for="sampleType" >Sample Type</label>
           <input type="text" class="form-control" id="sampleType" placeholder="sampleType" [(ngModel)]="sampleType">
         </div>
         <div class="form-group">
-          <input type="date" step="1" class="form-control" id="date1" [(ngModel)]="dateSample"/>
+          <label for="dateSample"> Collection Date</label>
+          <input type="date" step="1" class="form-control" id="dateSample" [(ngModel)]="dateSample"/>
         </div>
         <div class="search">
           <button type="submit" class="btn mb-2 button" (click)="callSample()">Search</button>
