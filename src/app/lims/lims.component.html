@@ -13,6 +13,14 @@
   <hr>
   <div class="row">
     <div class="col-9">
+      <div class="input-group mb-3">
+        <input class="form-control py-2" type="search" placeholder="Search" id="example-search-input" [(ngModel)]="search">
+        <span class="input-group-append">
+          <button class="btn btn-outline-secondary" type="button" (click)="callSample()">
+            <i class="fa fa-search"></i>
+          </button>
+        </span>
+      </div>
       <table>
         <tr>
           <th colspan="4" class="tableColor">LIMS SAMPLE DATA INFORMATION</th>
