@@ -3,16 +3,16 @@ import { Router} from '@angular/router';
 import {AppService} from '../app.service';
 import {CookieService} from 'ngx-cookie-service';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {User} from "../shared/user.model";
+import {User} from "../model/user.model";
 import {UserService} from "../user/user.service";
 import {matchOtherValidator} from "./password.validator";
 
 @Component({
   selector: 'app-navebar',
-  templateUrl: './navebar.component.html',
-  styleUrls: ['./navebar.component.css']
+  templateUrl: './navbar.component.html',
+  styleUrls: ['./navbar.component.css']
 })
-export class NavebarComponent implements OnInit {
+export class NavbarComponent implements OnInit {
 
   @Input()
   showSideBar:boolean;

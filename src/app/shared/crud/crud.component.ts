@@ -1,8 +1,8 @@
 import {Component, OnInit, Input, ViewChild, ElementRef} from '@angular/core';
 import { FormGroup} from '@angular/forms';
 
-import { CrudService } from '../crud.service';
-import { DataModel } from '../data.model';
+import { CrudService } from '../../model/crud.service';
+import { DataModel } from '../../model/data.model';
 import {Filemanagement} from "../../common/filemanagement";
 import {CookieService} from 'ngx-cookie-service';
 import {AppService} from '../../app.service';

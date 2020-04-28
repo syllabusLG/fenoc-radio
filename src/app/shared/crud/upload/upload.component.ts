@@ -1,6 +1,6 @@
 import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {DataModel} from '../../data.model';
-import {CrudService} from '../../crud.service';
+import {DataModel} from '../../../model/data.model';
+import {CrudService} from '../../../model/crud.service';
 import {Filemanagement} from "../../../common/filemanagement";
 import {CookieService} from 'ngx-cookie-service';
 import {AppService} from '../../../app.service';

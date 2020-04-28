@@ -1,4 +1,4 @@
-import {CrudService} from '../shared/crud.service';
+import {CrudService} from '../model/crud.service';
 import {API_URLS} from '../config/api.url.config';
 import {Observable} from 'rxjs';
 import {Injectable} from '@angular/core';

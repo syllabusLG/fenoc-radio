@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import {Store} from '@ngrx/store';
 import {PrincipalState} from '../shared/principal.state';
-import {Principal} from '../shared/principal.model';
+import {Principal} from '../model/principal.model';
 
 @Component({
   selector: 'app-sidebare',
-  templateUrl: './sidebare.component.html',
-  styleUrls: ['./sidebare.component.css']
+  templateUrl: './sidebar.component.html',
+  styleUrls: ['./sidebar.component.css']
 })
-export class SidebareComponent implements OnInit {
+export class SidebarComponent implements OnInit {
 
   private principal: Principal;
   private isSIOpen: boolean = true
