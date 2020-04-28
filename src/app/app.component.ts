@@ -3,8 +3,6 @@ import {AppService} from './app.service';
 import {NavigationEnd,Router} from '@angular/router';
 import {DEFAULT_INTERRUPTSOURCES, Idle} from "@ng-idle/core";
 import {CookieService} from 'ngx-cookie-service';
-import {Audit} from './shared/audit.model';
-import {AuditService} from './audit/audit.service';
 import {SAVE_PRINCIPAL} from "./shared/save.principal.action";
 import {Store} from "@ngrx/store";
 import {PrincipalState} from "./shared/principal.state";
@@ -20,18 +18,10 @@ export class AppComponent implements OnInit{
   idleState = 'Not started.';
   timedOut = false;
   lastPing?: Date = null;
-  audit: Audit = new Audit();
 
-  @HostListener('window:unload', ['$event'])
-  unloadHandler(event) {
-    this.audit = this.appService.setAudit(this.audit);
-    this.auditService.add(this.audit).subscribe();
-    // this.cookieService.deleteAll('http://localhost:4200');
-  }
 
   constructor(private appService: AppService,
               private cookieService: CookieService,
-              private auditService: AuditService,
               private router: Router,
               private idle: Idle,
               private keepalive: Keepalive,
@@ -74,8 +64,6 @@ export class AppComponent implements OnInit{
   }
 
   changeToLoginPage()  {
-    this.audit = this.appService.setAudit(this.audit);
-    this.auditService.add(this.audit).subscribe();
     this.cookieService.deleteAll('/');
     return this.router.navigateByUrl('/login');
 

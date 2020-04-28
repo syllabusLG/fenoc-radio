@@ -1,8 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { Router} from '@angular/router';
 import {AppService} from '../app.service';
-import {AuditService} from '../audit/audit.service';
-import {Audit} from '../shared/audit.model';
 import {CookieService} from 'ngx-cookie-service';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {User} from "../shared/user.model";
@@ -23,7 +21,6 @@ export class NavebarComponent implements OnInit {
 
   @Input()
    username: string;
-  audit: Audit = new Audit();
 
   userForm: FormGroup;
   user: User = new User();
@@ -37,7 +34,6 @@ export class NavebarComponent implements OnInit {
 
   constructor(private router: Router,
               private cookieService: CookieService,
-              private auditService: AuditService,
               private appService: AppService,
               private fb: FormBuilder,
               private userservice: UserService) {
@@ -82,8 +78,6 @@ export class NavebarComponent implements OnInit {
   logout(){
     this.appService.logout(()=>{
       this.router.navigateByUrl('/login');
-      this.audit = this.appService.setAudit(this.audit);
-      this.auditService.add(this.audit).subscribe();
       this.cookieService.deleteAll('/');
     });
   }
