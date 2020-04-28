@@ -14,7 +14,6 @@ html, body {
 }
 
 .activePagin, .li:hover .li {
-  background-color: #7ac8bc;
   color: black;
   width: 40px;
 }
@@ -28,4 +27,18 @@ html, body {
 .clickable {
   cursor: pointer;
   color: #ababab;
+}
+
+pagination-controls li.current {
+  background-color: #6d97ac !important;
+}
+
+pagination-controls a {
+  color: #6d97ac !important;
+  font-weight: bold;
+}
+
+pagination-controls li {
+  font-size: 16px !important;
+  font-family: "Segoe UI" !important;
 }
