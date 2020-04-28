@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Store} from '@ngrx/store';
 import {PrincipalState} from '../shared/principal.state';
-import {Principal} from '../shared/principal.model';
+import {Principal} from '../model/principal.model';
 
 @Component({
   selector: 'app-sidebare',

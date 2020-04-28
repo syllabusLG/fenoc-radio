@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {LimsService} from "./lims.service";
 import { saveAs } from 'file-saver';
-import {Check} from "../shared/check.model";
-import {Redcapsample} from "../shared/redcapsample.module";
+import {Check} from "../model/check.model";
+import {Redcapsample} from "../model/redcapsample.model";
 
 @Component({
   selector: 'app-lims',

@@ -1,7 +1,7 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {CrudService} from '../../crud.service';
+import {CrudService} from '../../../model/crud.service';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {DataModel} from '../../data.model';
+import {DataModel} from '../../../model/data.model';
 import { saveAs } from 'file-saver';
 import {CookieService} from 'ngx-cookie-service';
 

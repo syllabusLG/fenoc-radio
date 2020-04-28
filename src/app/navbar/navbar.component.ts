@@ -3,7 +3,7 @@ import { Router} from '@angular/router';
 import {AppService} from '../app.service';
 import {CookieService} from 'ngx-cookie-service';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {User} from "../shared/user.model";
+import {User} from "../model/user.model";
 import {UserService} from "../user/user.service";
 import {matchOtherValidator} from "./password.validator";
 
