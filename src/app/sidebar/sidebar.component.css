@@ -38,6 +38,11 @@ a.subItem.nav-link{
   height: fit-content;
 }
 
+.nav-item:hover{
+  background-color: #B1F4F9;
+  color: white !important;
+}
+
 
 
 

@@ -18,7 +18,7 @@
 }
 
 .logBt {
-  background-color: #e64329;
+  background-color: #5e0525;
   border-radius: 5px;
   box-shadow: 0 0 3px white;
 }
@@ -30,8 +30,9 @@
 .logosmallimg {
   background-image: url('../shared/images/IBBLLogo.png');
   background-size: cover;
-  width:210px;
-  height:20px;
+  width:90px;
+  height:50px;
+  background-color: transparent;
 }
 
 p.thicker {
@@ -44,3 +45,4 @@ p.thicker {
   flex: 1 1 auto;
   padding: 0rem;
 }
+
