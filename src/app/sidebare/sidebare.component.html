@@ -1,5 +1,5 @@
-<nav class="hidden-xs-down bg-faded sidebar">
-  <ul class="nav nav-pills flex-column">
+<nav class="sidebar">
+  <ul class="nav nav-pills">
     <li class="nav-item mainItem">
       <a class="nav-link dropdown-toggle" data-toggle="collapse" aria-expanded="false" [routerLink]=""
          routerLinkActive="" *ngIf="hasRoleUser()"
@@ -10,7 +10,7 @@
          routerLinkActive="active"
          *ngIf="isSIOpen">Quality Check</a>
     </li>
-    <li class="nav-item">
+    <!--<li class="nav-item">
       <a class="nav-link subItem" [routerLink]="[{outlets: { contentOutlet: ''}}]"
          routerLinkActive="active"
          *ngIf="isSIOpen">Recap</a>
@@ -19,7 +19,7 @@
       <a class="nav-link subItem" [routerLink]="[{outlets: { contentOutlet: ''}}]"
          routerLinkActive="active"
          *ngIf="isSIOpen">Data Management</a>
-    </li>
+    </li>-->
    <!-- <li class="nav-item">
       <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'individu'}}]"
          routerLinkActive="active"
@@ -63,7 +63,7 @@
     <li class="nav-item">
       <a class="nav-link subItem" [routerLink]="[{outlets: { contentOutlet: 'user'}}]"
                           routerLinkActive="active"
-                          *ngIf="hasRoleAdmin() && isAdminOpen">Users</a>
+                          *ngIf="hasRoleAdmin() && isAdminOpen">Manage Users</a>
     </li>
 
     <!--<li class="nav-item">

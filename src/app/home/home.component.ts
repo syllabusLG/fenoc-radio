@@ -10,7 +10,6 @@ export class HomeComponent implements OnInit {
   showHideSideBar:boolean=true;
   onShowSideBarChange(showHideSideBar){
     this.showHideSideBar = showHideSideBar;
-
   }
 
   constructor() { }

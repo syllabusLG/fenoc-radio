@@ -41,6 +41,7 @@ import {NgxPaginationModule} from "ngx-pagination";
 import {UploadComponent} from "./shared/crud/upload/upload.component";
 
 
+
 @NgModule({
   declarations: [
     AppComponent,

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {LimsService} from "./lims.service";
-import {Sample} from "../shared/sample.model";
 import { saveAs } from 'file-saver';
 import {Check} from "../shared/check.model";
 import {Redcapsample} from "../shared/redcapsample.module";
