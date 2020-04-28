@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 html, body {
   height: 100%;
 }
@@ -20,7 +20,6 @@ html, body {
 
 .h3-class {
   color: #ababab;
-  text-align: center;
   font-weight: bold;
 }
 
@@ -39,6 +38,6 @@ pagination-controls a {
 }
 
 pagination-controls li {
-  font-size: 16px !important;
+  font-size: 12px !important;
   font-family: "Segoe UI" !important;
 }

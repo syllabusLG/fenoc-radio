@@ -1,7 +1,6 @@
 .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
-  color: #fff;
-  background-color:#6d97ac;
-  border-bottom-style: double;
+  color: #706D6D;
+  background-color: #e0dede;
   padding-right: 0px;
   width: 202px;
 }
@@ -23,23 +22,23 @@ a.nav-link {
 }
 
 a.subItem.nav-link{
-  padding-left: 40px;
-  font-size: 15px;
+  padding-left: 110px;
+  font-size: 12px;
 }
 .mainItem{
   /*background-color: #e8f0fe;*/
-  padding-left: 3px;
-  font-size: 18px;;
+  padding-left: 8px;
+  font-size: 14px;;
 }
 
 .sidebar {
-  background-color: #e8f0fe;
+  background-color: #f6f6f6;
   width: fit-content;
   height: fit-content;
 }
 
 .nav-item:hover{
-  background-color: #B1F4F9;
+  background-color: #FFDDC0;
 }
 
 
