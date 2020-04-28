@@ -3,7 +3,6 @@ export class Check {
               public sampleType?: string,
               public kidId?: string,
               public studyID?: string,
-              public sujId?: string,
               public createDT?: any,
               public receivedDT?: any,
               public sampleIdRedCap?: string,

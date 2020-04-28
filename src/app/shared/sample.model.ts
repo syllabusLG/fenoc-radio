@@ -1,5 +1,3 @@
-import {Individus} from "./individus.model";
-
 export class Sample {
   constructor(public sampleId?: string,
               public sampleDesc?: string,
