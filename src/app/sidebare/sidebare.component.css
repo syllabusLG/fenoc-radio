@@ -7,6 +7,7 @@
 }
 .nav-item{
   width: 202px;
+  font-family: "Segoe UI";
 }
 .sidebar-separator{
   border-bottom: 0px solid black;
@@ -22,9 +23,12 @@ a.nav-link {
 
 a.subItem.nav-link{
   padding-left: 40px;
+  font-size: 15px;
 }
 .mainItem{
   /*background-color: #e8f0fe;*/
+  padding-left: 3px;
+  font-size: 18px;;
 }
 
 .sidebar {
