@@ -18,6 +18,7 @@ export class LimsComponent implements OnInit {
   public redcapSamples: Redcapsample[] = [];
   p:number=1;
   sampleType:string='';
+  search:string='';
   dateSample: any;
 
   constructor(private limsService: LimsService) { }
@@ -33,7 +34,7 @@ export class LimsComponent implements OnInit {
     }
   }
   loadSamplesLIMS(){
-    this.limsService.getLimsSamples(this.kittube, this.sstudyId, this.sampleType)
+    this.limsService.getLimsSamples(this.kittube, this.sstudyId, this.sampleType, this.search)
       .subscribe(data => {
         this.limsSamples = data;
         this.loadSamplesREDCAP();
@@ -43,7 +44,7 @@ export class LimsComponent implements OnInit {
   }
   loadSamplesLIMSDate(){
     let dateLims = this.fillDate(this.dateSample);
-    this.limsService.getLimsSampleDate(dateLims, this.kittube, this.sstudyId, this.sampleType)
+    this.limsService.getLimsSampleDate(dateLims, this.kittube, this.sstudyId, this.sampleType, this.search)
       .subscribe(data => {
         this.limsSamples = data;
         this.loadSampleREDCAPDate();
@@ -52,7 +53,7 @@ export class LimsComponent implements OnInit {
       })
   }
   loadSamplesREDCAP(){
-    this.limsService.getRedCapSamples(this.kittube, this.sstudyId, this.sampleType)
+    this.limsService.getRedCapSamples(this.kittube, this.sstudyId, this.sampleType, this.search)
       .subscribe(data=>{
         this.redcapSamples = data;
         console.log("redcap: "+this.redcapSamples);
@@ -63,7 +64,7 @@ export class LimsComponent implements OnInit {
   }
   loadSampleREDCAPDate(){
     let dateRedcap = this.fillDate(this.dateSample);
-    this.limsService.getRedCapSampleDate(dateRedcap, this.kittube, this.sstudyId, this.sampleType)
+    this.limsService.getRedCapSampleDate(dateRedcap, this.kittube, this.sstudyId, this.sampleType, this.search)
       .subscribe(data => {
         this.redcapSamples = data;
         this.buildCheckDataArray(this.redcapSamples, this.limsSamples);
