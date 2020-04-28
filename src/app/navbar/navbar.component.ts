@@ -11,10 +11,10 @@ import {matchOtherValidator} from "./password.validator";
 
 @Component({
   selector: 'app-navebar',
-  templateUrl: './navebar.component.html',
-  styleUrls: ['./navebar.component.css']
+  templateUrl: './navbar.component.html',
+  styleUrls: ['./navbar.component.css']
 })
-export class NavebarComponent implements OnInit {
+export class NavbarComponent implements OnInit {
 
   @Input()
   showSideBar:boolean;

@@ -5,10 +5,10 @@ import {Principal} from '../shared/principal.model';
 
 @Component({
   selector: 'app-sidebare',
-  templateUrl: './sidebare.component.html',
-  styleUrls: ['./sidebare.component.css']
+  templateUrl: './sidebar.component.html',
+  styleUrls: ['./sidebar.component.css']
 })
-export class SidebareComponent implements OnInit {
+export class SidebarComponent implements OnInit {
 
   private principal: Principal;
   private isSIOpen: boolean = true

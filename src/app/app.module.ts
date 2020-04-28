@@ -3,8 +3,8 @@ import { NgModule } from '@angular/core';
 import { AngularDraggableModule  } from 'angular2-draggable';
 
 import { AppComponent } from './app.component';
-import { SidebareComponent } from './sidebare/sidebare.component';
-import { NavebarComponent } from './navebar/navebar.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
+import { NavbarComponent } from './navbar/navbar.component';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ContentComponent } from './content/content.component';
@@ -45,8 +45,8 @@ import {UploadComponent} from "./shared/crud/upload/upload.component";
 @NgModule({
   declarations: [
     AppComponent,
-    SidebareComponent,
-    NavebarComponent,
+    SidebarComponent,
+    NavbarComponent,
     LoginComponent,
     DashboardComponent,
     ContentComponent,

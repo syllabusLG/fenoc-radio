@@ -34,7 +34,7 @@ a.subItem.nav-link{
 .sidebar {
   background-color: #e8f0fe;
   width: fit-content;
-  height: 100%;
+  height: fit-content;
 }
 
 
