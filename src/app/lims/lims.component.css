@@ -66,7 +66,12 @@ label {
   margin-top: 5px;
 }
 
-/*.progress-loader{
-  text-align: center;
-}*/
+.progress-loader ::ng-deep .mat-progress-spinner circle, .mat-spinner circle {
+  stroke: #6d97ac;
+}
 
+.mat-progress-spinner {
+  position: relative;
+  margin-left: 50%;
+  margin-right: 50%;
+}

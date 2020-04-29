@@ -3,23 +3,23 @@
     <li class="nav-item mainItem">
       <a class="nav-link dropdown-toggle" data-toggle="collapse" aria-expanded="false" [routerLink]=""
          routerLinkActive="" *ngIf="hasRoleUser()"
-         (click)="isSampleInventoryOpen()">Samples Inventory</a>
+         (click)="isSampleInventoryOpen()">Data Management</a>
     </li>
     <li class="nav-item">
       <a class="nav-link subItem" [routerLink]="[{outlets: { contentOutlet: 'lims'}}]"
          routerLinkActive="active"
          *ngIf="isSIOpen">Quality Check</a>
     </li>
-    <!--<li class="nav-item">
+    <li class="nav-item">
       <a class="nav-link subItem" [routerLink]="[{outlets: { contentOutlet: ''}}]"
          routerLinkActive="active"
-         *ngIf="isSIOpen">Recap</a>
+         *ngIf="isSIOpen">Data Recap</a>
     </li>
     <li class="nav-item">
       <a class="nav-link subItem" [routerLink]="[{outlets: { contentOutlet: ''}}]"
          routerLinkActive="active"
-         *ngIf="isSIOpen">Data Management</a>
-    </li>-->
+         *ngIf="isSIOpen">Missing Data</a>
+    </li>
    <!-- <li class="nav-item">
       <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'individu'}}]"
          routerLinkActive="active"

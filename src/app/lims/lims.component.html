@@ -52,11 +52,9 @@
         </tr>
       </table>
       <pagination-controls (pageChange)="p = $event"></pagination-controls>
-      <!--<div class="container">
-        <div class="progress-loader" [hidden]="false">
-          <mat-progress-spinner [mode]="'indeterminate'"></mat-progress-spinner>
-        </div>
-      </div>-->
+      <div class="progress-loader" [hidden]=!isLoading>
+          <mat-progress-spinner [mode]="'indeterminate'" [color]="'#ffff'" diameter="50"></mat-progress-spinner>
+      </div>
 
     </div>
     <div class="row col-3 filter">
