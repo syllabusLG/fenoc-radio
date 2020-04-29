@@ -127,9 +127,14 @@ export class LimsComponent implements OnInit {
     }
     console.log(this.checkDataArray);
   }
+  research(){
+    this.checkDataArray = this.checkDataArray.filter(data => data.sampleId.includes(this.search)
+      || data.kidId.includes(this.search) || data.sampleIdRedCap.includes(this.search)
+      || data.kidIdRedCap.includes(this.search) || data.qc.includes(this.search.toUpperCase())
+      || data.createDT.includes(this.search) || data.receivedDT.includes(this.search) || data.collectionDT.includes(this.search));
+  }
   downloadFile(data: any) {
     let file = 'QC_Check_' + new Date() + '.csv';
-    //this.cookieService.set('individuReportCSV', file);
     const replacer = (key, value) => value === null ? '' : value; // specify how you want to handle null values here
     const header = Object.keys(data[0]);
     let csv = data.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(';'));
