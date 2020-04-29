@@ -2,6 +2,7 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 html, body {
   height: 100%;
+  background-color: transparent !important;
 }
 .align-content-vertical-parent {
   display: table;
