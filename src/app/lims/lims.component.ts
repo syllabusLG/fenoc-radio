@@ -20,11 +20,11 @@ export class LimsComponent implements OnInit {
   sampleType:string='';
   search:string='';
   dateSample: any;
+  public isLoading:boolean = false;
 
   constructor(private limsService: LimsService) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   callSample(){
     if(this.dateSample === undefined){
@@ -34,22 +34,27 @@ export class LimsComponent implements OnInit {
     }
   }
   loadSamplesLIMS(){
+    this.isLoading = true;
     this.limsService.getLimsSamples(this.kittube, this.sstudyId, this.sampleType, this.search)
       .subscribe(data => {
         this.limsSamples = data;
         this.loadSamplesREDCAP();
       }, error => {
         console.log(error);
+        this.isLoading = false;
       })
   }
   loadSamplesLIMSDate(){
+    this.isLoading = true;
     let dateLims = this.fillDate(this.dateSample);
     this.limsService.getLimsSampleDate(dateLims, this.kittube, this.sstudyId, this.sampleType, this.search)
       .subscribe(data => {
         this.limsSamples = data;
         this.loadSampleREDCAPDate();
+        this.isLoading = false;
       }, error => {
         console.log(error);
+        this.isLoading = false;
       })
   }
   loadSamplesREDCAP(){
@@ -58,8 +63,10 @@ export class LimsComponent implements OnInit {
         this.redcapSamples = data;
         console.log("redcap: "+this.redcapSamples);
         this.buildCheckDataArray(this.redcapSamples, this.limsSamples);
+        this.isLoading = false;
       }, error => {
         console.log(error);
+        this.isLoading = false;
       })
   }
   loadSampleREDCAPDate(){
@@ -68,8 +75,10 @@ export class LimsComponent implements OnInit {
       .subscribe(data => {
         this.redcapSamples = data;
         this.buildCheckDataArray(this.redcapSamples, this.limsSamples);
+        this.isLoading = false;
       }, error => {
         console.log(error);
+        this.isLoading = false;
       })
   }
 
