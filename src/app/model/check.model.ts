@@ -3,10 +3,10 @@ export class Check {
               public sampleType?: string,
               public kidId?: string,
               public studyID?: string,
-              public createDT?: any,
-              public receivedDT?: any,
+              public createDT?: string,
+              public receivedDT?: string,
               public sampleIdRedCap?: string,
               public kidIdRedCap?: string,
-              public collectionDT?: any,
+              public collectionDT?: string,
               public qc?: string) {}
 }
