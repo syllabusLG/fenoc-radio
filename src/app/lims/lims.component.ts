@@ -12,6 +12,7 @@ import {Redcapsample} from "../model/redcapsample.model";
 export class LimsComponent implements OnInit {
 
   public checkDataArray: Check[] = [];
+  public saveCheckDataArray: Check[] = [];
   kittube:string='';
   sstudyId:string='';
   public limsSamples: any;
@@ -35,7 +36,7 @@ export class LimsComponent implements OnInit {
   }
   loadSamplesLIMS(){
     this.isLoading = true;
-    this.limsService.getLimsSamples(this.kittube, this.sstudyId, this.sampleType, this.search)
+    this.limsService.getLimsSamples(this.kittube, this.sstudyId, this.sampleType)
       .subscribe(data => {
         this.limsSamples = data;
         this.loadSamplesREDCAP();
@@ -47,7 +48,7 @@ export class LimsComponent implements OnInit {
   loadSamplesLIMSDate(){
     this.isLoading = true;
     let dateLims = this.fillDate(this.dateSample);
-    this.limsService.getLimsSampleDate(dateLims, this.kittube, this.sstudyId, this.sampleType, this.search)
+    this.limsService.getLimsSampleDate(dateLims, this.kittube, this.sstudyId, this.sampleType)
       .subscribe(data => {
         this.limsSamples = data;
         this.loadSampleREDCAPDate();
@@ -58,7 +59,7 @@ export class LimsComponent implements OnInit {
       })
   }
   loadSamplesREDCAP(){
-    this.limsService.getRedCapSamples(this.kittube, this.sstudyId, this.sampleType, this.search)
+    this.limsService.getRedCapSamples(this.kittube, this.sstudyId, this.sampleType)
       .subscribe(data=>{
         this.redcapSamples = data;
         console.log("redcap: "+this.redcapSamples);
@@ -71,7 +72,7 @@ export class LimsComponent implements OnInit {
   }
   loadSampleREDCAPDate(){
     let dateRedcap = this.fillDate(this.dateSample);
-    this.limsService.getRedCapSampleDate(dateRedcap, this.kittube, this.sstudyId, this.sampleType, this.search)
+    this.limsService.getRedCapSampleDate(dateRedcap, this.kittube, this.sstudyId, this.sampleType)
       .subscribe(data => {
         this.redcapSamples = data;
         this.buildCheckDataArray(this.redcapSamples, this.limsSamples);
@@ -99,6 +100,7 @@ export class LimsComponent implements OnInit {
           check.collectionDT = redcapSamples[i].sampleCollectDateTime;
           check.qc = "TRUE";
           this.checkDataArray.push(check);
+          this.saveCheckDataArray.push(check);
         }else {
           check.sampleId = limsSamples[j].sampleId;
           check.sampleType = limsSamples[j].sampleTypeId;
@@ -121,6 +123,7 @@ export class LimsComponent implements OnInit {
           check.collectionDT = redcapSamples[i].sampleCollectDateTime;
           check.qc = "FALSE";
           this.checkDataArray.push(check);
+          this.saveCheckDataArray.push(check);
         }
       }
 
@@ -128,10 +131,11 @@ export class LimsComponent implements OnInit {
     console.log(this.checkDataArray);
   }
   research(){
-    this.checkDataArray = this.checkDataArray.filter(data => data.sampleId.includes(this.search)
-      || data.kidId.includes(this.search) || data.sampleIdRedCap.includes(this.search)
-      || data.kidIdRedCap.includes(this.search) || data.qc.includes(this.search.toUpperCase())
-      || data.createDT.includes(this.search) || data.receivedDT.includes(this.search) || data.collectionDT.includes(this.search));
+    this.checkDataArray = this.saveCheckDataArray;
+    this.checkDataArray = this.checkDataArray.filter(data => data.sampleId.includes(this.search.toUpperCase())
+      || data.kidId.includes(this.search.toUpperCase()) || data.sampleIdRedCap.includes(this.search.toUpperCase())
+      || data.kidIdRedCap.includes(this.search.toUpperCase()) || data.qc.includes(this.search.toUpperCase())
+      || data.createDT.includes(this.search.toUpperCase()) || data.receivedDT.includes(this.search.toUpperCase()) || data.collectionDT.includes(this.search.toUpperCase()));
   }
   downloadFile(data: any) {
     let file = 'QC_Check_' + new Date() + '.csv';

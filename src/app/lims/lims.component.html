@@ -16,7 +16,7 @@
       <div class="input-group mb-3">
         <input class="form-control py-2" type="search" placeholder="Search" id="example-search-input" [(ngModel)]="search">
         <span class="input-group-append">
-          <button class="btn btn-outline-secondary" type="button" (click)="research()">
+          <button class="btn btn-outline-secondary" type="button" (click)="research()" (change)="callSample()">
             <i class="fa fa-search"></i>
           </button>
         </span>
@@ -37,7 +37,7 @@
           <th width="65px">COLLECTION</th>
           <th width="50px">QC</th>
         </tr>
-        <tr *ngFor="let sample of checkDataArray | paginate: { itemsPerPage: 5, currentPage: p }" class="text-center">
+        <tr *ngFor="let sample of checkDataArray | paginate: { itemsPerPage: 10, currentPage: p }" class="text-center">
           <td [ngClass]="{qcKO:sample.qc==='FALSE', qcOK:sample.qc==='TRUE'}"> {{sample.sampleId}} </td>
           <td [ngClass]="{qcKO:sample.qc==='FALSE', qcOK:sample.qc==='TRUE'}"> {{sample.kidId}}</td>
           <td
