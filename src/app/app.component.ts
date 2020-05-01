@@ -81,7 +81,8 @@ export class AppComponent implements OnInit{
 
   }
 
-  ngOnInit() {
+    ngOnInit() {
+
 
       if (!this.cookieService.get('principal')) {
         this.router.navigateByUrl('/login');
