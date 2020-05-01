@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {User} from '../shared/user.model';
+import {User} from '../model/user.model';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {UserService} from './user.service';
 import {ActivatedRoute} from '@angular/router';
-import {DataModel} from '../shared/data.model';
+import {DataModel} from '../model/data.model';
 
 @Component({
   selector: 'app-user',

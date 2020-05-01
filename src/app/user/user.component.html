@@ -1,10 +1,27 @@
-<app-crud
-
-  [title]="'Utilisateurs'"
-  [data]="users"
-  [service]="userService"
-  [initItem]="user"
-  [initForm]="userForm"
-  [dataModelList]="usersModel"
->
-</app-crud>
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    table, th, td {
+      border: 1px solid black;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <app-crud
+        [title]="'Utilisateurs'"
+        [data]="users"
+        [service]="userService"
+        [initItem]="user"
+        [initForm]="userForm"
+        [dataModelList]="usersModel"
+      >
+      </app-crud>
+    </div>
+  </div>
+</div>
+</body>
+</html>

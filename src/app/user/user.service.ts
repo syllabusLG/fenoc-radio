@@ -1,4 +1,4 @@
-import {CrudService} from '../shared/crud.service';
+import {CrudService} from '../model/crud.service';
 import {API_URLS} from '../config/api.url.config';
 import {Observable} from 'rxjs';
 import {Injectable} from '@angular/core';
@@ -35,7 +35,7 @@ export class UserService implements CrudService{
     return this.http.get(API_URLS.CRUD_USER_URL +`/${id}`);
   }
   search(motCle:string, page:number, size:number): Observable<any>{
-    return this.http.get(API_URLS.ADRESSE_URL_SEARCH+'?mc='+motCle+'&size='+size+'&page='+page);
+    return null;
   }
   getUserByUsername(username): Observable<any>{
     return this.http.get(API_URLS.USERNAME_URL+`/${username}`);

@@ -1,9 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
-
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 html, body {
   height: 100%;
+  background-color: transparent !important;
 }
-
 .align-content-vertical-parent {
   display: table;
   width: 100%;
@@ -15,14 +15,12 @@ html, body {
 }
 
 .activePagin, .li:hover .li {
-  background-color: #7ac8bc;
   color: black;
   width: 40px;
 }
 
 .h3-class {
   color: #ababab;
-  text-align: center;
   font-weight: bold;
 }
 
@@ -31,17 +29,16 @@ html, body {
   color: #ababab;
 }
 
-a.nav-link.clickable {
-  color: #ababab !important;
+pagination-controls li.current {
+  background-color: #6d97ac !important;
 }
 
-a.nav-link.not-clickable {
-  color: #bfbfbf;
+pagination-controls a {
+  color: #6d97ac !important;
+  font-weight: bold;
 }
-.button{
-  background-color: #ababab;
-  color: white;
-}
-.tableColor{
-  background-color: #ababab;
+
+pagination-controls li {
+  font-size: 12px !important;
+  font-family: "Segoe UI" !important;
 }

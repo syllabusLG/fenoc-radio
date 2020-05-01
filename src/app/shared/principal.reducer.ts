@@ -1,4 +1,4 @@
-import {Principal} from './principal.model';
+import {Principal} from '../model/principal.model';
 import {SAVE_PRINCIPAL, SavePrincipalAction} from './save.principal.action';
 
 export function principalReducer(state: Principal, action: SavePrincipalAction) {

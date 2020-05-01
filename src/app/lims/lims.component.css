@@ -1,0 +1,80 @@
+.button {
+  background-color: #6d97ac;
+  color: white;
+  font-size: 10px;
+}
+
+.topTitle {
+  color: #6d97ac;
+  margin-top: 15px;
+}
+
+.tableColor {
+  background-color: #f6f6f6;
+  text-align: center;
+  font-size: 10px;
+  color: #6a6867;
+}
+
+.qcKO {
+  background-color: #FFE7E7;
+}
+
+.qcOK {
+  background-color: #E1FACE;
+}
+
+td {
+  font-size: 10px;
+  font-weight: normal;
+}
+
+.filter {
+  background-color: #f8f8f8;
+  width: 100%;
+  margin-left: 3px;
+  font-family: "Segoe UI";
+  font-size: 12px;
+}
+
+input{
+  font-size:12px;
+  font-family: "Segoe UI";
+}
+
+
+.filterTitle {
+  background-color: #6d97ac;
+  color: white;
+  font-family: "Segoe UI";
+  padding-left: 6px;
+  font-weight: bold;
+  font-size: 12px;
+  width: 230px;
+}
+
+label {
+  display: inline-block;
+  margin-bottom: .1rem;
+}
+
+.form-group {
+  margin-bottom: 0.4rem;
+}
+
+.firstFilter{
+  margin-top: 5px;
+}
+
+.progress-loader ::ng-deep .mat-progress-spinner circle, .mat-spinner circle {
+  stroke: #6d97ac;
+}
+
+.mat-progress-spinner {
+  position: relative;
+  margin-left: 50%;
+  margin-right: 50%;
+}
+.size{
+  height : 32px;
+}

@@ -1,0 +1,81 @@
+<nav class="sidebar">
+  <ul class="nav nav-pills">
+    <li class="nav-item mainItem">
+      <a class="nav-link dropdown-toggle" data-toggle="collapse" aria-expanded="false" [routerLink]=""
+         routerLinkActive="" *ngIf="hasRoleUser()"
+         (click)="isSampleInventoryOpen()">Data Management</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link subItem" [routerLink]="[{outlets: { contentOutlet: 'lims'}}]"
+         routerLinkActive="active"
+         *ngIf="isSIOpen">Quality Check</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link subItem" [routerLink]="[{outlets: { contentOutlet: ''}}]"
+         routerLinkActive="active"
+         *ngIf="isSIOpen">Data Recap</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link subItem" [routerLink]="[{outlets: { contentOutlet: ''}}]"
+         routerLinkActive="active"
+         *ngIf="isSIOpen">Missing Data</a>
+    </li>
+   <!-- <li class="nav-item">
+      <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'individu'}}]"
+         routerLinkActive="active"
+         *ngIf="hasRoleIndividus()|| hasRoleAdmin()">Individu</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'salarie'}}]"
+         routerLinkActive="active"
+         *ngIf="hasRoleSalarie()|| hasRoleAdmin()">Salarie</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'payment'}}]"
+         routerLinkActive="active"
+         *ngIf="hasRolePayment()|| hasRoleAdmin()">Payment</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'adresse'}}]"
+         routerLinkActive="active"
+         *ngIf="hasRoleAdresse() || hasRoleAdmin()">Adresse</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'contact'}}]"
+         routerLinkActive="active"
+         *ngIf="hasRoleContact()|| hasRoleAdmin()">Contact</a>
+    </li>
+    <li class="nav-item sidebar-separator">
+      <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'compte'}}]"
+         routerLinkActive="active"
+         *ngIf="hasRoleCompte()|| hasRoleAdmin()">Compte upload</a>
+    </li>-->
+    <!--<li class="nav-item sidebar-separator">
+      <a class="nav-link " [routerLink]="[{outlets: { contentOutlet: 'dashboard'}}]"
+                          routerLinkActive="active"
+                          *ngIf="hasRoleDashboard()|| hasRoleAdmin()">Dashboard</a>
+    </li>-->
+    <li class="nav-item mainItem">
+      <a class="nav-link dropdown-toggle" data-toggle="collapse" aria-expanded="false" [routerLink]=""
+         routerLinkActive="" *ngIf="hasRoleUser()"
+         (click)="isAdministrationOpen()">Administration</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link subItem" [routerLink]="[{outlets: { contentOutlet: 'user'}}]"
+                          routerLinkActive="active"
+                          *ngIf="hasRoleAdmin() && isAdminOpen">Manage Users</a>
+    </li>
+
+    <!--<li class="nav-item">
+      <a class="nav-link  not-clickable" [routerLink]="[{outlets: { contentOutlet: 'habilitation'}}]"
+         routerLinkActive="active"
+         *ngIf="hasRoleAdmin()">Habilitation</a>
+    </li>-->
+
+    <!--<li class="nav-item">
+      <a class="nav-link  not-clickable" [routerLink]="[{outlets: { contentOutlet: 'audit'}}]"
+         routerLinkActive="active"
+         *ngIf="hasRoleAdmin()">Audit</a>
+    </li>-->
+  </ul>
+</nav>
