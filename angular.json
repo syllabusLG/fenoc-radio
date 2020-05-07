@@ -55,18 +55,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "fenoc-radio:build"
+            "browserTarget": "client-amundi-file-integration:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "fenoc-radio:build:production"
+              "browserTarget": "client-amundi-file-integration:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "fenoc-radio:build"
+            "browserTarget": "client-amundi-file-integration:build"
           }
         },
         "test": {
@@ -116,7 +116,7 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "./protractor.conf.js",
-            "devServerTarget": "fenoc-radio:serve"
+            "devServerTarget": "client-amundi-file-integration:serve"
           }
         },
         "lint": {
@@ -133,7 +133,7 @@
       }
     }
   },
-  "defaultProject": "fenoc-radio",
+  "defaultProject": "client-amundi-file-integration",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",
