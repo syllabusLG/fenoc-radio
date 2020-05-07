@@ -34,6 +34,11 @@ import {NgxPaginationModule} from "ngx-pagination";
 import {UploadComponent} from "./shared/crud/upload/upload.component";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import { RadioHomeComponent } from './radio-home/radio-home.component';
+import { ProgramsComponent } from './programs/programs.component';
+import { PurLiveComponent } from './pur-live/pur-live.component';
+import { PodcastComponent } from './podcast/podcast.component';
+import { VideosComponent } from './videos/videos.component';
 
 
 @NgModule({
@@ -53,6 +58,11 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     ConfirmModalComponent,
     CheckComponent,
     LimsComponent,
+    RadioHomeComponent,
+    ProgramsComponent,
+    PurLiveComponent,
+    PodcastComponent,
+    VideosComponent,
   ],
   imports: [
     BrowserModule,

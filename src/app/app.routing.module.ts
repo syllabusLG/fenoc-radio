@@ -8,6 +8,11 @@ import { CanDeactivateGuard } from './shared/crud/upload/can-deactivate-guard.se
 import {CheckComponent} from "./check/check.component";
 import {LimsComponent} from "./lims/lims.component";
 import {UploadComponent} from "./shared/crud/upload/upload.component";
+import {RadioHomeComponent} from "./radio-home/radio-home.component";
+import {ProgramsComponent} from "./programs/programs.component";
+import {PurLiveComponent} from "./pur-live/pur-live.component";
+import {VideosComponent} from "./videos/videos.component";
+import {PodcastComponent} from "./podcast/podcast.component";
 
 
 
@@ -24,13 +29,28 @@ export const appRoutes: Routes = [
     children: [
 
       {
-        path: 'check',
-        component: CheckComponent,
+        path: 'radio-home',
+        component: RadioHomeComponent,
         outlet: 'contentOutlet',
       },
       {
-        path: 'lims',
-        component: LimsComponent,
+        path: 'program',
+        component: ProgramsComponent,
+        outlet: 'contentOutlet',
+      },
+      {
+        path: 'video',
+        component: VideosComponent,
+        outlet: 'contentOutlet',
+      },
+      {
+        path: 'live',
+        component: PurLiveComponent,
+        outlet: 'contentOutlet',
+      },
+      {
+        path: 'podcast',
+        component: PodcastComponent,
         outlet: 'contentOutlet',
       },
       {

@@ -1,46 +1,10 @@
 .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
-  color: #706D6D;
-  background-color: #e0dede;
-  padding-right: 0px;
-  width: 202px;
-}
-.nav-item{
-  width: 202px;
-  font-family: "Segoe UI";
+  color: #fff;
+  background-color: #009933;
+  border-bottom-style: double;
+  padding-right: 50px;
 }
 
 .sidebar-separator{
-  border-bottom: 0px solid black;
+  border-bottom: 1px solid black;
 }
-
-.side-color{
-  background-color: #e0dede;
-}
-
-a.nav-link {
-  color: #706D6D;
-}
-
-a.subItem.nav-link{
-  padding-left: 50px;
-  font-size: 12px;
-}
-.mainItem{
-  /*background-color: #e8f0fe;*/
-  padding-left: 8px;
-  font-size: 14px;;
-}
-
-.sidebar {
-  background-color: #f6f6f6;
-  width: fit-content;
-  height: fit-content;
-}
-
-.nav-item:hover{
-  background-color: #FFDDC0;
-}
-
-
-
-

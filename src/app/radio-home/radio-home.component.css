@@ -1,0 +1,109 @@
+.imgcontainer1 {
+  background-image: url('../shared/images/pur1.jpg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 500px;
+  height: 200px;
+}
+.imgcontainer2 {
+  background-image: url('../shared/images/pur2.jpg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin-left: 200px;
+  margin-top: 20px;
+  width: 500px;
+  height: 80px;
+}
+.imgcontainer3 {
+  background-image: url('../shared/images/pur3.jpg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin-left: 200px;
+  margin-top: 20px;
+  width: 500px;
+  height: 300px;
+}
+.imgcontainer4 {
+  background-image: url('../shared/images/pur4.jpg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin-left: 200px;
+  margin-top: 20px;
+  width: 500px;
+  height: 300px;
+}
+
+.contain {
+  margin-left: 100px;
+  margin-top: 50px;
+  width: 70px;
+  height: 70px;
+}
+
+/* resize images */
+.container img {
+  width: 100%;
+  height: auto;
+}
+
+.submitbtn {
+  background-color: #12899e;
+  position: center;
+  border-radius: 5px;
+  box-shadow: 0 0 3px #a7bae8;
+}
+.btnCreerCompte{
+  background-color: #85c8ec;
+  border-radius: 4pt;
+  width: 225pt;
+  height: 45pt;
+  margin-bottom: 60pt;
+  margin-left: 10px;
+}
+.my-carousel-caption {
+  top: 200px;
+  bottom: auto;
+}
+
+.my-second-title{
+  text-align: center;
+  color: white;
+  width: 100%;
+  margin-top: 150px;
+  font-family: Roboto;
+  font-size: 17pt;
+  margin-left: 10px;
+  margin-right: 10px;
+  border: 0;
+  background: transparent;
+}
+.my-second-titleP{
+  color: white;
+  width: 340px;
+  margin-top: 150px;
+  font-family: Roboto;
+  font-size: 17pt;
+  margin-right: 100px;
+  border: 0;
+  background: transparent;
+}
+
+.my-second-title-bis{
+  text-align: center;
+  font-size: 17pt;
+  font-family: Roboto;
+  color: white;
+  width: 100%;
+  margin-left: 10px;
+  margin-right: 5px;
+  border: 0;
+  background: transparent;
+}
+.carousel-indicators > li {
+  border-radius: 50%;
+  height: 15px;
+  width: 15px;
+  background-color: lightblue;
+}
+
+

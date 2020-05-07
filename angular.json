@@ -11,7 +11,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/ClientAmundiFileIntegration",
+            "outputPath": "dist/fenoc-radio",
             "index": "src/index.html",
             "main": "src/main.ts",
             "tsConfig": "src/tsconfig.app.json",
@@ -55,18 +55,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "client-amundi-file-integration:build"
+            "browserTarget": "fenoc-radio:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "client-amundi-file-integration:build:production"
+              "browserTarget": "fenoc-radio:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "client-amundi-file-integration:build"
+            "browserTarget": "fenoc-radio:build"
           }
         },
         "test": {
@@ -116,7 +116,7 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "./protractor.conf.js",
-            "devServerTarget": "client-amundi-file-integration:serve"
+            "devServerTarget": "fenoc-radio:serve"
           }
         },
         "lint": {
@@ -133,7 +133,7 @@
       }
     }
   },
-  "defaultProject": "client-amundi-file-integration",
+  "defaultProject": "fenoc-radio",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",

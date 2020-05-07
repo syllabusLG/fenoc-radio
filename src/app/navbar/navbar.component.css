@@ -1,10 +1,10 @@
 .navbarbg{
-  background-color: #6d97ac;
+  background-color: #009933;
   background-size: contain;
 }
 
 .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
-  color: #6d97ac;
+  color: #009933;
   background-color: #bababa;
   border-bottom-style: double;
   padding-right: 10px;
@@ -18,7 +18,7 @@
 }
 
 .logBt {
-  background-color: #5e0525;
+  background-color: #bff542;
   border-radius: 5px;
   box-shadow: 0 0 3px white;
 }
@@ -28,9 +28,9 @@
   }
 
 .logosmallimg {
-  background-image: url('../shared/images/IBBLLogo.png');
+  background-image: url('../shared/images/logosmall.png');
   background-size: cover;
-  width:115px;
+  width:65px;
   height:60px;
   background-color: transparent;
   margin-left: 15px;
@@ -45,5 +45,11 @@ p.thicker {
 .card-body {
   flex: 1 1 auto;
   padding: 0rem;
+}
+.live-radio{
+  color: #009933;
+  background-color: #009933;
+  border-color: #009933;
+
 }
 

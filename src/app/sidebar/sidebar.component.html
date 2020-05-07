@@ -1,81 +1,25 @@
-<nav class="sidebar">
-  <ul class="nav nav-pills">
-    <li class="nav-item mainItem">
-      <a class="nav-link dropdown-toggle" data-toggle="collapse" aria-expanded="false" [routerLink]=""
-         routerLinkActive="" *ngIf="hasRoleUser()"
-         (click)="isSampleInventoryOpen()">Data Management</a>
+<nav class="hidden-xs-down bg-faded sidebar">
+  <ul class="nav nav-pills flex-column">
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'radio-home'}}]"
+         routerLinkActive="active">ACCUEIL</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link subItem" [routerLink]="[{outlets: { contentOutlet: 'lims'}}]"
-         routerLinkActive="active"
-         *ngIf="isSIOpen">Quality Check</a>
+      <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'program'}}]"
+         routerLinkActive="active">PROGRAMMES</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link subItem" [routerLink]="[{outlets: { contentOutlet: ''}}]"
-         routerLinkActive="active"
-         *ngIf="isSIOpen">Data Recap</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link subItem" [routerLink]="[{outlets: { contentOutlet: ''}}]"
-         routerLinkActive="active"
-         *ngIf="isSIOpen">Missing Data</a>
-    </li>
-   <!-- <li class="nav-item">
-      <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'individu'}}]"
-         routerLinkActive="active"
-         *ngIf="hasRoleIndividus()|| hasRoleAdmin()">Individu</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'salarie'}}]"
-         routerLinkActive="active"
-         *ngIf="hasRoleSalarie()|| hasRoleAdmin()">Salarie</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'payment'}}]"
-         routerLinkActive="active"
-         *ngIf="hasRolePayment()|| hasRoleAdmin()">Payment</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'adresse'}}]"
-         routerLinkActive="active"
-         *ngIf="hasRoleAdresse() || hasRoleAdmin()">Adresse</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'contact'}}]"
-         routerLinkActive="active"
-         *ngIf="hasRoleContact()|| hasRoleAdmin()">Contact</a>
-    </li>
-    <li class="nav-item sidebar-separator">
-      <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'compte'}}]"
-         routerLinkActive="active"
-         *ngIf="hasRoleCompte()|| hasRoleAdmin()">Compte upload</a>
-    </li>-->
-    <!--<li class="nav-item sidebar-separator">
-      <a class="nav-link " [routerLink]="[{outlets: { contentOutlet: 'dashboard'}}]"
-                          routerLinkActive="active"
-                          *ngIf="hasRoleDashboard()|| hasRoleAdmin()">Dashboard</a>
-    </li>-->
-    <li class="nav-item mainItem">
-      <a class="nav-link dropdown-toggle" data-toggle="collapse" aria-expanded="false" [routerLink]=""
-         routerLinkActive="" *ngIf="hasRoleUser()"
-         (click)="isAdministrationOpen()">Administration</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link subItem" [routerLink]="[{outlets: { contentOutlet: 'user'}}]"
-                          routerLinkActive="active"
-                          *ngIf="hasRoleAdmin() && isAdminOpen">Manage Users</a>
+      <a class="nav-link" [routerLink]="[{outlets: { contentOutlet: 'live'}}]"
+         routerLinkActive="active">PUR DIRECT</a>
     </li>
 
-    <!--<li class="nav-item">
-      <a class="nav-link  not-clickable" [routerLink]="[{outlets: { contentOutlet: 'habilitation'}}]"
-         routerLinkActive="active"
-         *ngIf="hasRoleAdmin()">Habilitation</a>
-    </li>-->
-
-    <!--<li class="nav-item">
-      <a class="nav-link  not-clickable" [routerLink]="[{outlets: { contentOutlet: 'audit'}}]"
-         routerLinkActive="active"
-         *ngIf="hasRoleAdmin()">Audit</a>
-    </li>-->
+    <li class="nav-item">
+      <a class="nav-link not-clickable" [routerLink]="[{outlets: { contentOutlet: 'podcast'}}]"
+         routerLinkActive="active">PODCASTS</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link not-clickable" [routerLink]="[{outlets: { contentOutlet: 'video'}}]"
+         routerLinkActive="active">VIDEOS</a>
+    </li>
   </ul>
 </nav>

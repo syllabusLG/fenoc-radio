@@ -27,13 +27,13 @@ export class AppComponent implements OnInit{
               private keepalive: Keepalive,
               private store: Store<PrincipalState>){
 
-    this.router.events.subscribe(
+    /*this.router.events.subscribe(
       ( event) : void => {
         if ( event instanceof NavigationEnd ) {
           this.isLogin = this.router.isActive( "/login", true );
         }
       }
-    );
+    );*/
     // sets an idle timeout of 5 seconds, for testing purposes.
     idle.setIdle(500);
     // sets a timeout period of 5 seconds. after 10 seconds of inactivity, the user will be considered timed out.
@@ -45,7 +45,7 @@ export class AppComponent implements OnInit{
     idle.onTimeout.subscribe(() => {
       this.idleState = 'Timed out!';
       this.timedOut = true;
-      this.changeToLoginPage();
+      //this.changeToLoginPage();
     });
     idle.onIdleStart.subscribe(() => this.idleState = 'You\'ve gone idle!');
     idle.onTimeoutWarning.subscribe((countdown) => this.idleState = 'You will time out in ' + countdown + ' seconds!');
@@ -63,16 +63,15 @@ export class AppComponent implements OnInit{
     this.timedOut = false;
   }
 
-  changeToLoginPage()  {
+  /*changeToLoginPage()  {
     this.cookieService.deleteAll('/');
     return this.router.navigateByUrl('/login');
 
-  }
+  }*/
 
     ngOnInit() {
-
-
-      if (!this.cookieService.get('principal')) {
+      this.router.navigateByUrl('home/(contentOutlet:radio-home)');
+     /* if (!this.cookieService.get('principal')) {
         this.router.navigateByUrl('/login');
         this.isLogin = true;
       } else {
@@ -82,6 +81,6 @@ export class AppComponent implements OnInit{
           payload: principal
         });
         this.router.navigateByUrl('home/(contentOutlet:lims)');
-      }
+      }*/
     }
 }
